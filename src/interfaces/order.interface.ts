@@ -17,7 +17,7 @@ export interface IOrder {
     already_paid: number;
     created_at: string;
     group: IGroup;
-    manager: IProfile;
+    manager?: IProfile;
     msg?: string;
     utm?: string;
     comments: IComment[];

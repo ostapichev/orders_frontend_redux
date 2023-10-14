@@ -1,14 +1,13 @@
 import {FC} from 'react';
 
-
-const Comments: FC = () => {
+const AdminPage: FC = () => {
     return (
         <div>
-            Comments
+            AdminPage
         </div>
     );
 };
 
 export {
-    Comments
+    AdminPage
 };
