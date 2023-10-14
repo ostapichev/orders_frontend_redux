@@ -1,17 +1,26 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useRef} from 'react';
 
-import {IOrder} from "../../interfaces";
+import {IOrderState} from "../../interfaces";
 import {Order} from "../Order/Order";
+import {orderActions} from "../../redux";
 import {orderService} from "../../services";
+import {useDispatch, useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
 
 
 const Orders: FC = () => {
-    const [orders, setOrders] = useState<IOrder[]>([]);
+    const dispatch = useDispatch();
+    const {orders} = useSelector((state: {orders: IOrderState}) => state.orders);
+    const [query, setQuery] = useSearchParams();
+    const setQueryRef = useRef(setQuery);
     useEffect(() => {
-        orderService.getAll()
-            .then(value => value.data)
-            .then(value => setOrders(value.result));
+        setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
+    useEffect(() => {
+        orderService.getAll(+query.get('page'))
+            .then(value => value.data)
+            .then(value => dispatch(orderActions.setOrders(value)))
+    }, [query, dispatch]);
     return (
         <div>
             {
