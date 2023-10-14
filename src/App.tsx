@@ -1,9 +1,7 @@
 import {Navigate, Route, Routes} from "react-router-dom";
 
-import {MainLayout} from "./MainLayout/MainLayout";
-import {OrdersPage} from "./pages/OrdersPage/OrdersPage";
-import {GroupsPage} from "./pages/GroupsPage/GroupsPage";
-import {AdminPage} from "./pages/AdminPage/UsersPage";
+import {MainLayout} from "./MainLayout";
+import {AdminPage, GroupsPage, OrdersPage} from "./pages";
 
 
 const App = () => {

@@ -1,6 +1,7 @@
 import {FC} from 'react';
-import {IComment} from "../../interfaces/comment.interface";
+
 import {DateFormat} from "../DateFormat/DateFormat";
+import {IComment} from "../../interfaces";
 
 interface IProps {
     commentBody: IComment;

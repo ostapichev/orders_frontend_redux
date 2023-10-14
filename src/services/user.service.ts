@@ -1,8 +1,7 @@
 import {axiosService} from "./axios.service";
-
-import {urls} from "../constants/urls";
-import {IResPaginate} from "../types/res.type";
-import {IUser} from "../interfaces/user.interface";
+import {IResPaginate} from "../types";
+import {IUser} from "../interfaces";
+import {urls} from "../constants";
 
 
 const userService = {

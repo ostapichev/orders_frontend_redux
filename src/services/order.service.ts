@@ -1,7 +1,8 @@
-import {IOrder} from "../interfaces/order.interface";
 import {axiosService} from "./axios.service";
-import {urls} from "../constants/urls";
-import {IRes, IResPaginate} from "../types/res.type";
+import {IRes, IResPaginate} from "../types";
+import {IOrder} from "../interfaces";
+import {urls} from "../constants";
+
 
 const orderService = {
     getAll: (): IResPaginate<IOrder[]> => axiosService.get(urls.orderAPI.orders),

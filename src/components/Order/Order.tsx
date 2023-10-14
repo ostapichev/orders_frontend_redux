@@ -1,13 +1,14 @@
 import {FC, useState} from 'react';
 
 import {Comment} from "../Comment/Comment";
-import {IOrder} from "../../interfaces/order.interface";
 import {DateFormat} from "../DateFormat/DateFormat";
+import {IOrder} from "../../interfaces";
 
 
 interface IProps {
     order: IOrder;
 }
+
 const Order: FC<IProps> = ({order}) => {
     const [show, setShow] = useState(false);
     const {

@@ -1,7 +1,9 @@
 import {axiosService} from "./axios.service";
-import {urls} from "../constants/urls";
-import {IGroup} from "../interfaces/group.interface";
-import {IRes, IResPaginate} from "../types/res.type";
+
+import {IGroup} from "../interfaces";
+import {IRes, IResPaginate} from "../types";
+import {urls} from "../constants";
+
 
 const groupService = {
     getAll: (): IResPaginate<IGroup[]> => axiosService.get(urls.groupAPI.groups),

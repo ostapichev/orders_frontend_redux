@@ -1,8 +1,8 @@
 import {FC, useEffect, useState} from 'react';
 
-import {IOrder} from "../../interfaces/order.interface";
-import {orderService} from "../../services/order.service";
+import {IOrder} from "../../interfaces";
 import {Order} from "../Order/Order";
+import {orderService} from "../../services";
 
 
 const Orders: FC = () => {

@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Outlet} from "react-router-dom";
 
-import {Orders} from "../../components/Orders/Orders";
+import {Orders} from "../../components";
 
 
 const OrdersPage: FC = () => {
