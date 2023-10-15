@@ -1,11 +1,11 @@
 import {FC, useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
 
 import {IOrderState} from "../../interfaces";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {orderService} from "../../services";
-import {useDispatch, useSelector} from "react-redux";
-import {useSearchParams} from "react-router-dom";
 
 
 const Orders: FC = () => {
@@ -17,7 +17,7 @@ const Orders: FC = () => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect(() => {
-        orderService.getAll(+query.get('page'))
+        orderService.getAll(query.get('page'))
             .then(value => value.data)
             .then(value => dispatch(orderActions.setOrders(value)))
     }, [query, dispatch]);

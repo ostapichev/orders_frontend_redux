@@ -1,6 +1,7 @@
+import {IComment} from "./comment.interface";
 import {IGroup} from "./group.interface";
 import {IProfile} from "./profile.interface";
-import {IComment} from "./comment.interface";
+
 
 export interface IOrder {
     id: number;
