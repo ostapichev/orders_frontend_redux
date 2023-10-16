@@ -1,12 +1,17 @@
 import {FC} from 'react';
 import {format} from 'date-fns';
 
+
 interface IProps {
-    created_at: string
+    originalDate: string;
 }
 
-const DateFormat: FC<IProps> = ({created_at}) => {
-    const formatData = format(new Date(created_at), 'MMMM dd, yyyy  HH:mm:ss');
+const DateFormat: FC<IProps> = ({originalDate}) => {
+    const formatData = format(
+        new Date(originalDate),
+        'MMMM dd, yyyy  HH:mm:ss'
+    );
+
     return (
         <div>
             {formatData}

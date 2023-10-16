@@ -1,7 +1,7 @@
 import {IOrder} from "./order.interface";
 
 export interface IOrderState {
-    orders?: IOrder[];
+    orders: IOrder[];
     nextPage?: number;
     prevPage?: number;
 }

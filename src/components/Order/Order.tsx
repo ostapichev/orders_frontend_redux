@@ -31,6 +31,7 @@ const Order: FC<IProps> = ({order}) => {
         msg,
         comments,
     } = order;
+
     return (
         <div>
             <button onClick={() => setShow(prev => !prev)}>
@@ -49,7 +50,7 @@ const Order: FC<IProps> = ({order}) => {
                     <li>sum: {sum}</li>
                     <li>already paid: {already_paid}</li>
                     <li>group: {group.name}</li>
-                    <li>created: {<DateFormat created_at={created_at}/>}</li>
+                    <li>created: {<DateFormat originalDate={created_at}/>}</li>
                     <li>manager: {manager !== null ? manager.name : 'null'}</li>
                 </ul>
             </button>

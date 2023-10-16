@@ -1,12 +1,11 @@
 import {FC} from 'react';
-import {useSelector} from "react-redux";
 
-import {IOrderState} from "../../interfaces";
 import {useSearchParams} from "react-router-dom";
+import {useAppSelector} from "../../hooks";
 
 
 const Pagination: FC = () => {
-    const {prevPage, nextPage} = useSelector((state: {orders: IOrderState}) => state.orders);
+    const {prevPage, nextPage} = useAppSelector((state) => state.orderReducer);
     const [, setQuery] = useSearchParams();
     const prev = () => {
         setQuery(prev => ({...prev, page: +prev.get('page')-1}));
@@ -14,6 +13,7 @@ const Pagination: FC = () => {
     const next = () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
+
     return (
         <div>
             <button disabled={!prevPage} onClick={prev}>prev</button>

@@ -1,16 +1,16 @@
 import {FC, useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 
-import {IOrderState} from "../../interfaces";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {orderService} from "../../services";
+import {useAppSelector} from "../../hooks";
 
 
 const Orders: FC = () => {
     const dispatch = useDispatch();
-    const {orders} = useSelector((state: {orders: IOrderState}) => state.orders);
+    const {orders} = useAppSelector(state => state.orderReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     useEffect(() => {
@@ -21,6 +21,7 @@ const Orders: FC = () => {
             .then(value => value.data)
             .then(value => dispatch(orderActions.setOrders(value)))
     }, [query, dispatch]);
+
     return (
         <div>
             {

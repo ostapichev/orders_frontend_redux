@@ -7,6 +7,7 @@ const initialState: IOrderState = {
     nextPage: null,
     prevPage: null
 };
+
 const slice = createSlice({
     name: 'orderSlice',
     initialState,
@@ -19,7 +20,8 @@ const slice = createSlice({
         }
     }
 });
-const {reducer: orderReducer, actions} = slice
+
+const {reducer: orderReducer, actions} = slice;
 const orderActions = {
     ...actions
 };

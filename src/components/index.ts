@@ -1,5 +1,6 @@
 export * from './Comment/Comment';
 export * from './DateFormat/DateFormat';
+export * from './UserForm/UserForm';
 export * from './Groups/Groups';
 export * from './Order/Order';
 export * from './Orders/Orders';
