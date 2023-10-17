@@ -1,15 +1,21 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useRef} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {User} from "../User/User";
 import {userActions} from "../../redux";
+import {useSearchParams} from "react-router-dom";
 
 const Users: FC = () => {
     const {users, trigger} = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
+    const [query, setQuery] = useSearchParams();
+    const setQueryRef = useRef(setQuery);
     useEffect(() => {
-        dispatch(userActions.getAll());
-    }, [dispatch, trigger]);
+        setQueryRef.current(prev => ({ ...prev, page: '1' }));
+    }, []);
+    useEffect(() => {
+        dispatch(userActions.getAll({page: query.get('page')}));
+    }, [trigger, query, dispatch]);
 
     return (
         <div>

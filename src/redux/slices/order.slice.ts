@@ -1,8 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IOrderState} from "../../interfaces";
+import {IOrder} from "../../interfaces";
 
 
-const initialState: IOrderState = {
+interface IState {
+    orders: IOrder[];
+    nextPage?: number;
+    prevPage?: number;
+}
+
+const initialState: IState = {
     orders: [],
     nextPage: null,
     prevPage: null

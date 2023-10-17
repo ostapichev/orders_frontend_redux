@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {Outlet, useNavigate} from "react-router-dom";
 
 import {Orders} from "../../components";
-import {Pagination} from "../../components/Pagination/Pagination";
+import {OrderPagination} from "../../components/OrderPagination/OrderPagination";
 
 
 const OrdersPage: FC = () => {
@@ -13,7 +13,7 @@ const OrdersPage: FC = () => {
             <button onClick={() => navigate('/admin')}>Admin</button>
             <Outlet/>
             <Orders/>
-            <Pagination/>
+            <OrderPagination/>
         </div>
     );
 };

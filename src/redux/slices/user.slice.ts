@@ -8,22 +8,30 @@ import {userService} from "../../services";
 interface IState {
     users: IUser[];
     errors: IError;
+    nextPage?: number;
+    prevPage?: number;
     userUpdate: boolean;
     trigger: boolean;
+}
+
+interface GetAllParams {
+    page: string;
 }
 
 const initialState: IState = {
     users: [],
     errors: null,
+    nextPage: 1,
+    prevPage: 1,
     userUpdate: null,
     trigger: false
 };
 
-const getAll = createAsyncThunk<IUser[], void>(
+const getAll = createAsyncThunk<IUser[], GetAllParams>(
     'carSlice/getAll',
-    async (_, {rejectWithValue}) => {
+    async ({page}, {rejectWithValue}) => {
         try {
-            const {data} = await userService.getAll();
+            const {data} = await userService.getAll(page);
             return data.result;
         } catch (e) {
             const err = e as AxiosError
@@ -71,7 +79,9 @@ const unban = createAsyncThunk<void, {user: IUser, id: string}>(
 const slice = createSlice({
     name: 'userSlice',
     initialState,
-    reducers: {},
+    reducers: {
+
+    },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
@@ -81,9 +91,9 @@ const slice = createSlice({
                 state.errors = null;
             })
             .addMatcher(isFulfilled(ban, unban), state => {
-                state.userUpdate =null;
+                state.userUpdate = null;
             })
-            .addMatcher(isFulfilled(create, ban, unban), state => {
+            .addMatcher(isFulfilled(create, ban, unban, getAll), state => {
                 state.trigger = !state.trigger;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
