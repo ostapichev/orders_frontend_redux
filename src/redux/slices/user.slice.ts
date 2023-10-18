@@ -1,5 +1,5 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
 import {IError, IUser} from "../../interfaces";
 import {userService} from "../../services";
@@ -12,6 +12,7 @@ interface IState {
     prevPage?: number;
     userUpdate: boolean;
     trigger: boolean;
+    loading: boolean;
 }
 
 interface GetAllParams {
@@ -21,21 +22,23 @@ interface GetAllParams {
 const initialState: IState = {
     users: [],
     errors: null,
-    nextPage: 1,
-    prevPage: 1,
+    nextPage: null,
+    prevPage: null,
     userUpdate: null,
-    trigger: false
+    trigger: false,
+    loading: false
 };
 
 const getAll = createAsyncThunk<IUser[], GetAllParams>(
-    'carSlice/getAll',
+    'userSlice/getAll',
     async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await userService.getAll(page);
+            await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
-            const err = e as AxiosError
-            return rejectWithValue(err.response.data)
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
         }
     }
 );
@@ -79,25 +82,29 @@ const unban = createAsyncThunk<void, {user: IUser, id: string}>(
 const slice = createSlice({
     name: 'userSlice',
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
                 state.users = action.payload;
             })
             .addMatcher(isFulfilled(), state => {
+                state.loading = false;
                 state.errors = null;
             })
             .addMatcher(isFulfilled(ban, unban), state => {
                 state.userUpdate = null;
             })
-            .addMatcher(isFulfilled(create, ban, unban, getAll), state => {
+            .addMatcher(isFulfilled(create, ban, unban), state => {
                 state.trigger = !state.trigger;
+            })
+            .addMatcher(isPending(), state => {
+                state.loading = true;
+                state.errors = null;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
                 state.errors = action.payload;
+                state.loading = false;
             })
 });
 

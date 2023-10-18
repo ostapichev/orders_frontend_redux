@@ -1,13 +1,13 @@
 import {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
-import {UserForm, Users} from "../../components";
+import {Loading, UserForm, Users} from "../../components";
 import {useNavigate} from "react-router-dom";
 import {UserPagination} from "../../components/UserPagination/UserPagination";
 
 
 const AdminPage: FC = () => {
-    const {errors} = useAppSelector(state => state.userReducer)
+    const {loading, errors} = useAppSelector(state => state.userReducer)
     const navigate = useNavigate();
 
     return (
@@ -17,6 +17,7 @@ const AdminPage: FC = () => {
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}
+            {loading && <Loading/>}
             <Users/>
             <UserPagination/>
         </div>

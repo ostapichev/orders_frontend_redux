@@ -1,20 +1,17 @@
 import {FC} from 'react';
 
 import {useSearchParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {userActions} from "../../redux";
+import {useAppSelector} from "../../hooks";
 
 
 const OrderPagination: FC = () => {
     const {prevPage, nextPage} = useAppSelector((state) => state.orderReducer);
     const [, setQuery] = useSearchParams();
-    const dispatch = useAppDispatch();
-    const prev = () => {
+    const prev = async () => {
         setQuery(prev => ({...prev, page: +prev.get('page')-1}));
     };
     const next = async () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
-        await dispatch(userActions.getAll({page: nextPage.toString()}))
     };
 
     return (
