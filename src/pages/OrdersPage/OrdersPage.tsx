@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {Link, Outlet} from "react-router-dom";
 
 import {Orders} from "../../components";
-import {OrderPagination} from "../../components/OrderPagination/OrderPagination";
+import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
 
 const OrdersPage: FC = () => {
@@ -14,7 +14,7 @@ const OrdersPage: FC = () => {
             </ul>
             <Outlet/>
             <Orders/>
-            <OrderPagination/>
+            <OrdersPagination/>
         </div>
     );
 };

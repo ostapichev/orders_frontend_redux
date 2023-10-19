@@ -6,8 +6,9 @@ import {urls} from "../constants";
 
 
 const groupService = {
-    getAll: (): IResPaginate<IGroup[]> => axiosService.get(urls.groupAPI.groups),
-    create: (group: IGroup): IRes<IGroup> => axiosService.post(urls.groupAPI.groups, group)
+    getAll: (page='1'): IResPaginate<IGroup[]> => axiosService.get(urls.groupsAPI.groups, {params: page}),
+    create: (group: IGroup): IRes<IGroup> => axiosService.post(urls.groupsAPI.groups, group),
+    getTotalPages: (): IResPaginate<IGroup[]> => axiosService.get(urls.groupsAPI.groups)
 };
 
 export {

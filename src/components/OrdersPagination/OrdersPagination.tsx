@@ -4,7 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {useAppSelector} from "../../hooks";
 
 
-const OrderPagination: FC = () => {
+const OrdersPagination: FC = () => {
     const {prevPage, nextPage} = useAppSelector((state) => state.orderReducer);
     const [, setQuery] = useSearchParams();
     const prev = async () => {
@@ -23,5 +23,5 @@ const OrderPagination: FC = () => {
 };
 
 export  {
-    OrderPagination
+    OrdersPagination
 };

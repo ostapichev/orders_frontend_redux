@@ -1,12 +1,12 @@
 import {FC, useEffect} from 'react';
 import {useSearchParams} from "react-router-dom";
 
-import {userActions} from "../../redux";
+import {groupActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
-const UserPagination: FC = () => {
-    const {loading, totalPages} = useAppSelector(state => state.userReducer);
+const GroupsPagination: FC = () => {
+    const {loading, totalPages} = useAppSelector(state => state.groupReducer);
     const dispatch = useAppDispatch();
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
@@ -22,7 +22,7 @@ const UserPagination: FC = () => {
     };
 
     useEffect(() => {
-        dispatch(userActions.getTotalPages());
+        dispatch(groupActions.getTotalPages());
     }, [dispatch]);
 
     return (
@@ -34,5 +34,5 @@ const UserPagination: FC = () => {
 };
 
 export  {
-    UserPagination
+    GroupsPagination
 };

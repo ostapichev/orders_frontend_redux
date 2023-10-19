@@ -7,7 +7,7 @@ import {userActions} from "../../redux";
 
 
 const UserForm: FC = () => {
-    const {handleSubmit, register, reset} = useForm();
+    const {handleSubmit, register, reset} = useForm<IUser>();
     const dispatch = useAppDispatch();
     const save: SubmitHandler<IUser> = async (user) => {
         await dispatch(userActions.create({user}));
@@ -15,12 +15,14 @@ const UserForm: FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(save)}>
-            <input type="text" placeholder={'name'} {...register('profile.name')}/>
-            <input type="text" placeholder={'surname'} {...register('profile.surname')}/>
-            <input type="text" placeholder={'email'} {...register('email')}/>
-            <button>save</button>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit(save)}>
+                <input type="text" placeholder={'name'} {...register('profile.name')}/>
+                <input type="text" placeholder={'surname'} {...register('profile.surname')}/>
+                <input type="text" placeholder={'email'} {...register('email')}/>
+                <button>save</button>
+            </form>
+        </div>
     );
 };
 
