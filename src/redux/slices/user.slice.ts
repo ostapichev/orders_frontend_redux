@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IError, IUser} from "../../interfaces";
+import {IError, IPageParams, IUser} from "../../interfaces";
 import {userService} from "../../services";
 
 
@@ -13,11 +13,10 @@ interface IState {
     userUpdate: boolean;
     trigger: boolean;
     loading: boolean;
+    totalPages: number;
 }
 
-interface GetAllParams {
-    page: string;
-}
+
 
 const initialState: IState = {
     users: [],
@@ -26,10 +25,11 @@ const initialState: IState = {
     prevPage: null,
     userUpdate: null,
     trigger: false,
-    loading: false
+    loading: false,
+    totalPages: 1
 };
 
-const getAll = createAsyncThunk<IUser[], GetAllParams>(
+const getAll = createAsyncThunk<IUser[], IPageParams>(
     'userSlice/getAll',
     async ({page}, {rejectWithValue}) => {
         try {
@@ -79,6 +79,19 @@ const unban = createAsyncThunk<void, {user: IUser, id: string}>(
     }
 )
 
+const getTotalPages = createAsyncThunk<number, void>(
+    'userSlice/getTotalPages',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await userService.getTotalPages();
+            return data.total_pages;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
 const slice = createSlice({
     name: 'userSlice',
     initialState,
@@ -87,6 +100,9 @@ const slice = createSlice({
         builder
             .addCase(getAll.fulfilled, (state, action) => {
                 state.users = action.payload;
+            })
+            .addCase(getTotalPages.fulfilled, (state, action) => {
+                state.totalPages = action.payload;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
@@ -114,7 +130,8 @@ const userActions = {
     getAll,
     create,
     ban,
-    unban
+    unban,
+    getTotalPages
 };
 
 export {

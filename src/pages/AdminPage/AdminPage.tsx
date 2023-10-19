@@ -2,17 +2,16 @@ import {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
 import {Loading, UserForm, Users} from "../../components";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {UserPagination} from "../../components/UserPagination/UserPagination";
 
 
 const AdminPage: FC = () => {
-    const {loading, errors} = useAppSelector(state => state.userReducer)
-    const navigate = useNavigate();
+    const {loading, errors} = useAppSelector(state => state.userReducer);
 
     return (
         <div>
-            <button onClick={() => navigate('/orders')}>Go to site</button>
+            <Link to={'/'}>go to site</Link>
             <UserForm/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}

@@ -1,28 +1,14 @@
-import {FC, useEffect, useState} from 'react';
-
+import {FC, useEffect} from 'react';
+import {userActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useSearchParams} from "react-router-dom";
-import {useAppSelector} from "../../hooks";
-import {userService} from "../../services";
-import {IPagination, IUser} from "../../interfaces";
 
 
 const UserPagination: FC = () => {
-    const {loading} = useAppSelector(state => state.userReducer);
+    const {loading, totalPages} = useAppSelector(state => state.userReducer);
+    const dispatch = useAppDispatch();
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
-    const [totalPages, setTotalPages] = useState(1);
-    useEffect(() => {
-        const totalPages = async () => {
-            try {
-                const {data} = await userService.getTotalPages();
-                setTotalPages(data.total_pages);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        totalPages();
-    }, []);
-
     const prev = () => {
         if (currentPage > 1) {
             setQuery(prev => ({...prev, page: +prev.get('page')-1}));
@@ -33,6 +19,10 @@ const UserPagination: FC = () => {
             setQuery(next => ({...next, page: +next.get('page')+1}));
         }
     };
+
+    useEffect(() => {
+        dispatch(userActions.getTotalPages());
+    }, [dispatch]);
 
     return (
         <div>
