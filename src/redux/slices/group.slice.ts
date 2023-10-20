@@ -73,15 +73,15 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.groups = action.payload;
             })
+            .addCase(create.fulfilled, state => {
+                state.trigger = !state.trigger;
+            })
             .addCase(getTotalPages.fulfilled, (state, action) => {
                 state.totalPages = action.payload;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
                 state.errors = null;
-            })
-            .addMatcher(isFulfilled(create), state => {
-                state.trigger = !state.trigger;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;

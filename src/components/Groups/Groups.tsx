@@ -1,9 +1,9 @@
 import {FC, useEffect, useRef} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {Group} from "../Group/Group";
 import {groupActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
-import {Group} from "../Group/Group";
 
 
 const Groups: FC = () => {
@@ -16,7 +16,7 @@ const Groups: FC = () => {
     }, []);
     useEffect(() => {
         dispatch(groupActions.getAll({page: query.get('page')}));
-    }, [trigger, query, dispatch]);
+    }, [dispatch, query, trigger]);
 
     return (
         <div>

@@ -1,8 +1,7 @@
 import {FC, useEffect} from 'react';
-import {useSearchParams} from "react-router-dom";
-
-import {groupActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {useSearchParams} from "react-router-dom";
+import {groupActions} from "../../redux";
 
 
 const GroupsPagination: FC = () => {
@@ -11,19 +10,15 @@ const GroupsPagination: FC = () => {
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = () => {
-        if (currentPage > 1) {
-            setQuery(prev => ({...prev, page: +prev.get('page')-1}));
-        }
+        setQuery(prev => ({...prev, page: +prev.get('page')-1}));
     };
     const next = async () => {
-        if (currentPage < totalPages) {
-            setQuery(next => ({...next, page: +next.get('page')+1}));
-        }
+        setQuery(next => ({...next, page: +next.get('page')+1}));
     };
-
     useEffect(() => {
         dispatch(groupActions.getTotalPages());
     }, [dispatch]);
+    console.log(totalPages);
 
     return (
         <div>

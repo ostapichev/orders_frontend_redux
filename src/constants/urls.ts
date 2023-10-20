@@ -10,7 +10,7 @@ const params = {
 
 const urls = {
     groupsAPI: {
-        groups: `${groups}`
+        groups: `${groups}${params.order_by_id}`
     },
 
     ordersAPI: {
@@ -20,7 +20,7 @@ const urls = {
 
     usersAPI: {
         users: `${users}${params.order_by_id}`,
-        createUser: `${admin}`,
+        createUser: `${admin}${users}`,
         banUser: (id: string): string => `${admin}${users}/${id}/ban`,
         unbanUser: (id: string): string => `${admin}${users}/${id}/unban`
     },

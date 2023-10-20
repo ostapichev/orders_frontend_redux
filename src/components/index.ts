@@ -2,6 +2,7 @@ export * from './Comment/Comment';
 export * from './DateFormat/DateFormat';
 export * from './Group/Group';
 export * from './Groups/Groups';
+export * from './GroupForm/GroupForm'
 export * from './GroupsPagination/GroupsPagination';
 export * from './Loading/Loading';
 export * from './Order/Order';

@@ -11,16 +11,11 @@ const UserPagination: FC = () => {
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = () => {
-        if (currentPage > 1) {
-            setQuery(prev => ({...prev, page: +prev.get('page')-1}));
-        }
+        setQuery(prev => ({...prev, page: +prev.get('page')-1}));
     };
     const next = async () => {
-        if (currentPage < totalPages) {
-            setQuery(next => ({...next, page: +next.get('page')+1}));
-        }
+        setQuery(next => ({...next, page: +next.get('page')+1}));
     };
-
     useEffect(() => {
         dispatch(userActions.getTotalPages());
     }, [dispatch]);

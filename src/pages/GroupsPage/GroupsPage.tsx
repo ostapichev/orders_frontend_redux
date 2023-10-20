@@ -1,7 +1,7 @@
 import {FC} from 'react';
-import {Link, Outlet} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-import {Groups, GroupsPagination, Loading} from "../../components";
+import {GroupForm, Groups, GroupsPagination, Loading} from "../../components";
 import {useAppSelector} from "../../hooks";
 
 
@@ -14,9 +14,9 @@ const GroupsPage: FC = () => {
                 <li><Link to={'/orders'}>orders</Link></li>
                 <li><Link to={'/admin'}>admin panel</Link></li>
             </ul>
+            <GroupForm/>
             <hr/>
             {loading && <Loading/>}
-            <Outlet/>
             <Groups/>
             <GroupsPagination/>
         </div>

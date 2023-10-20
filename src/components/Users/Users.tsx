@@ -5,6 +5,7 @@ import {User} from "../User/User";
 import {userActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
 
+
 const Users: FC = () => {
     const {users, trigger} = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const Users: FC = () => {
     }, []);
     useEffect(() => {
         dispatch(userActions.getAll({page: query.get('page')}));
-    }, [trigger, query, dispatch]);
+    }, [dispatch, query, trigger]);
 
     return (
         <div>
