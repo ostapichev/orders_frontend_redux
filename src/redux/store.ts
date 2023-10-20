@@ -3,7 +3,6 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {groupReducer, orderReducer, userReducer} from "./slices";
 
 
-
 const rootReducer = combineReducers({
     groupReducer,
     orderReducer,

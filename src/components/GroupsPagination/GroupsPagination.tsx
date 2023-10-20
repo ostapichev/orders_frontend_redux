@@ -18,7 +18,6 @@ const GroupsPagination: FC = () => {
     useEffect(() => {
         dispatch(groupActions.getTotalPages());
     }, [dispatch]);
-    console.log(totalPages);
 
     return (
         <div>
