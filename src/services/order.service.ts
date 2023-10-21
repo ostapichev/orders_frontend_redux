@@ -7,7 +7,7 @@ import {urls} from "../constants";
 const orderService = {
     getAll: (page='1'): IResPaginate<IOrder[]> => axiosService.get(urls.ordersAPI.orders, {params: {page}}),
     getById: (id: string): IRes<IOrder> => axiosService.get(urls.ordersAPI.byID(id)),
-    updateById: (id: string, order: IOrder): IRes<IOrder> => axiosService.patch(urls.ordersAPI.byID(id), order),
+    updateById: (id: string, order: IOrder): IRes<IOrder> => axiosService.patch(urls.ordersAPI.byID(id), [order, order.group.name]),
     getTotalPages: (): IResPaginate<IOrder[]> => axiosService.get(urls.ordersAPI.orders)
 }
 

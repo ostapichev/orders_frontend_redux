@@ -25,13 +25,12 @@ const initialState: IState = {
     totalPages: 1
 };
 
-const getAll = createAsyncThunk<IGroup[], {page: string}>(
+const getAll = createAsyncThunk<IGroup[], void>(
     'groupSlice/getAll',
-    async ({page}, {rejectWithValue}) => {
+    async (_, {rejectWithValue}) => {
         try {
-            const {data} = await groupService.getAll(page);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            return data.result;
+            const {data} = await groupService.getAll();
+            return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);

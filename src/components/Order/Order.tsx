@@ -3,6 +3,8 @@ import {FC, useState} from 'react';
 import {Comment} from "../Comment/Comment";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IOrder} from "../../interfaces";
+import {useAppDispatch} from "../../hooks";
+import {orderActions} from "../../redux";
 
 
 interface IProps {
@@ -10,6 +12,7 @@ interface IProps {
 }
 
 const Order: FC<IProps> = ({order}) => {
+    const dispatch = useAppDispatch();
     const [show, setShow] = useState(false);
     const {
         id,
@@ -59,12 +62,13 @@ const Order: FC<IProps> = ({order}) => {
                 <div>
                     <div>utm: {utm !== null ? utm : 'null'}</div>
                     <div>msg: {msg !== null ? msg : 'null'}</div>
+                    <button onClick={() => dispatch(orderActions.setOrderUpdate(order))}>Edit order</button>
                     <hr/>
                     <div>comments: {
                         comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
                     }
                     </div>
-                    <button>Edit order</button>
+                    <hr/>
                 </div>
             }
         </div>

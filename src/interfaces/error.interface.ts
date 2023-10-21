@@ -12,4 +12,8 @@ export interface IErrorOrder {
     name?: string[];
     surname?: string[];
     email?: string[];
+    phone?: string[];
+    age?: string[];
+    sum?: string[];
+    already_paid?: string[];
 }

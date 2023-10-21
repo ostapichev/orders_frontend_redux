@@ -10,7 +10,8 @@ interface IState {
     errors: IErrorOrder;
     nextPage?: number;
     prevPage?: number;
-    userUpdate: boolean;
+    orderUpdate: IOrder;
+    showComments: boolean
     trigger: boolean;
     loading: boolean;
     totalPages: number;
@@ -21,7 +22,8 @@ const initialState: IState = {
     errors: null,
     nextPage: null,
     prevPage: null,
-    userUpdate: null,
+    orderUpdate: null,
+    showComments: false,
     trigger: false,
     loading: false,
     totalPages: 1
@@ -41,6 +43,18 @@ const getAll = createAsyncThunk<IOrder[], {page: string}>(
     }
 );
 
+const update = createAsyncThunk<void, {order: IOrder, id: number}>(
+    'orderSlice/update',
+    async ({id, order}, {rejectWithValue}) => {
+        try {
+            await orderService.updateById(id.toString(), order)
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+)
+
 const getTotalPages = createAsyncThunk<number, void>(
     'orderSlice/getTotalPages',
     async (_, {rejectWithValue}) => {
@@ -55,9 +69,13 @@ const getTotalPages = createAsyncThunk<number, void>(
 );
 
 const slice = createSlice({
-    name: 'groupSlice',
+    name: 'orderSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setOrderUpdate: (state, action) => {
+            state.orderUpdate = action.payload;
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
@@ -65,6 +83,10 @@ const slice = createSlice({
             })
             .addCase(getTotalPages.fulfilled, (state, action) => {
                 state.totalPages = action.payload;
+            })
+            .addCase(update.fulfilled, state => {
+                state.orderUpdate = null;
+                state.trigger = !state.trigger;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
@@ -84,6 +106,7 @@ const {actions, reducer: orderReducer} = slice;
 const orderActions = {
     ...actions,
     getAll,
+    update,
     getTotalPages
 };
 

@@ -7,8 +7,8 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
 const Orders: FC = () => {
-    const {orders, trigger} = useAppSelector(state => state.orderReducer);
     const dispatch = useAppDispatch();
+    const {orders, trigger} = useAppSelector(state => state.orderReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     useEffect(() => {

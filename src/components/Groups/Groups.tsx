@@ -15,7 +15,7 @@ const Groups: FC = () => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect(() => {
-        dispatch(groupActions.getAll({page: query.get('page')}));
+        dispatch(groupActions.getAll());
     }, [dispatch, query, trigger]);
 
     return (

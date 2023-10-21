@@ -10,15 +10,7 @@ const GroupsPage: FC = () => {
 
     return (
         <div>
-            <ul>
-                <li><Link to={'/orders'}>orders</Link></li>
-                <li><Link to={'/admin'}>admin panel</Link></li>
-            </ul>
-            <GroupForm/>
-            <hr/>
-            {loading && <Loading/>}
-            <Groups/>
-            <GroupsPagination/>
+            groupPage
         </div>
     );
 };
