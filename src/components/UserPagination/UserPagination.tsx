@@ -1,8 +1,8 @@
 import {FC, useEffect} from 'react';
 import {useSearchParams} from "react-router-dom";
 
-import {userActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {userActions} from "../../redux";
 
 
 const UserPagination: FC = () => {
@@ -10,7 +10,7 @@ const UserPagination: FC = () => {
     const dispatch = useAppDispatch();
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
-    const prev = () => {
+    const prev = async () => {
         setQuery(prev => ({...prev, page: +prev.get('page')-1}));
     };
     const next = async () => {

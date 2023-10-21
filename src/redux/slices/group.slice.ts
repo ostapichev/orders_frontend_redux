@@ -1,5 +1,5 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
 
 import {IErrorGroup, IGroup} from "../../interfaces";
 import {groupService} from "../../services";
@@ -8,21 +8,13 @@ import {groupService} from "../../services";
 interface IState {
     groups: IGroup[];
     errors: IErrorGroup;
-    nextPage?: number;
-    prevPage?: number;
     trigger: boolean;
-    loading: boolean;
-    totalPages: number;
 }
 
 const initialState: IState = {
     groups: [],
     errors: null,
-    nextPage: null,
-    prevPage: null,
     trigger: false,
-    loading: false,
-    totalPages: 1
 };
 
 const getAll = createAsyncThunk<IGroup[], void>(
@@ -50,19 +42,6 @@ const create = createAsyncThunk<void, {group: IGroup}>(
     }
 );
 
-const getTotalPages = createAsyncThunk<number, void>(
-    'groupSlice/getTotalPages',
-    async (_, {rejectWithValue}) => {
-        try {
-            const {data} = await groupService.getTotalPages();
-            return data.total_pages;
-        } catch (e) {
-            const err = e as AxiosError;
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const slice = createSlice({
     name: 'groupSlice',
     initialState,
@@ -71,24 +50,13 @@ const slice = createSlice({
         builder
             .addCase(getAll.fulfilled, (state, action) => {
                 state.groups = action.payload;
+                state.errors = null;
             })
             .addCase(create.fulfilled, state => {
                 state.trigger = !state.trigger;
             })
-            .addCase(getTotalPages.fulfilled, (state, action) => {
-                state.totalPages = action.payload;
-            })
-            .addMatcher(isFulfilled(), state => {
-                state.loading = false;
-                state.errors = null;
-            })
-            .addMatcher(isPending(), state => {
-                state.loading = true;
-                state.errors = null;
-            })
             .addMatcher(isRejectedWithValue(), (state, action) => {
                 state.errors = action.payload;
-                state.loading = false;
             })
 });
 
@@ -96,8 +64,7 @@ const {actions, reducer: groupReducer} = slice;
 const groupActions = {
     ...actions,
     getAll,
-    create,
-    getTotalPages
+    create
 };
 
 export {

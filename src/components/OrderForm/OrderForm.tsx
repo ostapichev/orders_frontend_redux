@@ -4,18 +4,18 @@ import {SubmitHandler, useForm} from "react-hook-form";
 
 import {IOrder} from "../../interfaces";
 import {orderActions} from "../../redux";
-import {Groups} from "../Groups/Groups";
-import {GroupOption} from "../GroupsOption/GroupOption";
-import {GroupSelect} from "../GroupSelect/GroupSelect";
+import {GroupsSelect} from "../GroupsSelect/GroupsSelect";
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {groups} = useAppSelector(state => state.groupReducer);
     const {orderUpdate} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue} = useForm<IOrder>();
     const update: SubmitHandler<IOrder> = async (order) => {
         dispatch(orderActions.update({id: orderUpdate.id, order}));
         reset();
+    };
+    const save: SubmitHandler<IOrder> = async (order) => {
+
     };
     useEffect(() => {
         if (orderUpdate) {
@@ -26,12 +26,17 @@ const OrderForm: FC = () => {
             setValue('age', orderUpdate.age);
             setValue('sum', orderUpdate.sum);
             setValue('already_paid', orderUpdate.already_paid);
+            setValue('course', orderUpdate.course);
+            setValue('course_format', orderUpdate.course_format);
+            setValue('course_type', orderUpdate.course_type);
+            setValue('status', orderUpdate.status);
+            setValue('group', orderUpdate.group);
         }
     }, [orderUpdate, setValue]);
 
     return (
         <div>
-            <form onSubmit={handleSubmit(update)}>
+            <form onSubmit={handleSubmit(orderUpdate ? update : save)}>
                 <input type="text" placeholder={'name'}{...register('name')}/>
                 <input type="text" placeholder={'surname'}{...register('surname')}/>
                 <input type="text" placeholder={'email'}{...register('email')}/>
@@ -47,12 +52,12 @@ const OrderForm: FC = () => {
                     <option value="FE">FE</option>
                     <option value="PCX">PCX</option>
                 </select>
-                <label htmlFor="course format">Choose course format</label>
+                <label htmlFor="course_format">Choose course format</label>
                 <select name="course_format" {...register('course_format')}>
                     <option value="static">static</option>
                     <option value="online">online</option>
                 </select>
-                <label htmlFor="course type">Choose course type</label>
+                <label htmlFor="course_type">Choose course type</label>
                 <select name="course_type" {...register('course_type')}>
                     <option value="pro">pro</option>
                     <option value="minimal">minimal</option>
@@ -68,9 +73,9 @@ const OrderForm: FC = () => {
                     <option value="disagree">disagree</option>
                     <option value="dubbing">dubbing</option>
                 </select>
-                <label htmlFor="status">Choose group</label>
-                <GroupOption/>
-                <button>update</button>
+                <label htmlFor="group">Choose group</label>
+                <GroupsSelect/>
+                <button>{orderUpdate? 'Update' : 'Save'}</button>
             </form>
         </div>
     );

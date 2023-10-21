@@ -2,8 +2,8 @@ import {FC, useState} from 'react';
 
 import {Comment} from "../Comment/Comment";
 import {DateFormat} from "../DateFormat/DateFormat";
-import {IOrder} from "../../interfaces";
-import {useAppDispatch} from "../../hooks";
+import {IGroup, IOrder} from "../../interfaces";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {orderActions} from "../../redux";
 
 
@@ -12,8 +12,14 @@ interface IProps {
 }
 
 const Order: FC<IProps> = ({order}) => {
-    const dispatch = useAppDispatch();
+    const {groups} = useAppSelector((state) => state.groupReducer);
     const [show, setShow] = useState(false);
+    const dispatch = useAppDispatch();
+    const getNameGroup = (group_id: number): string => {
+        const group: IGroup = groups.find(group => group.id === group_id);
+        return group.name;
+    };
+
     const {
         id,
         name,
@@ -35,6 +41,7 @@ const Order: FC<IProps> = ({order}) => {
         comments,
     } = order;
 
+
     return (
         <div>
             <button onClick={() => setShow(prev => !prev)}>
@@ -52,7 +59,7 @@ const Order: FC<IProps> = ({order}) => {
                     <li>course: {course}</li>
                     <li>sum: {sum}</li>
                     <li>already paid: {already_paid}</li>
-                    <li>group: {group.name}</li>
+                    <li>group: {getNameGroup(group)}</li>
                     <li>created: {<DateFormat originalDate={created_at}/>}</li>
                     <li>manager: {manager !== null ? manager.name : 'null'}</li>
                 </ul>

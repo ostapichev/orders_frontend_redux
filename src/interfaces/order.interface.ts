@@ -1,5 +1,4 @@
 import {IComment} from "./comment.interface";
-import {IGroup} from "./group.interface";
 import {IProfile} from "./profile.interface";
 
 
@@ -17,7 +16,7 @@ export interface IOrder {
     sum: number;
     already_paid: number;
     created_at: string;
-    group: IGroup;
+    group: number;
     manager?: IProfile;
     msg?: string;
     utm?: string;

@@ -10,7 +10,8 @@ const params = {
 
 const urls = {
     groupsAPI: {
-        groups: `${groups}${params.order_by_id}`
+        groups: `${groups}${params.order_by_id}`,
+        createOrder: (id: string): string => `${groups}${id}/order`
     },
 
     ordersAPI: {
