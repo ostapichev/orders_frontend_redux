@@ -6,10 +6,10 @@ interface IProps {
 }
 
 const Group: FC<IProps> = ({group}) => {
-    const {name} = group;
+    const {id, name} = group;
 
     return (
-        <option value={name}>{name}</option>
+        <option value={id}>{name}</option>
     );
 };
 

@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorOrder, IOrder} from "../../interfaces";
+import {IErrorOrder, IGroup, IOrder} from "../../interfaces";
 import {orderService} from "../../services";
 
 
@@ -11,6 +11,7 @@ interface IState {
     nextPage?: number;
     prevPage?: number;
     orderUpdate: IOrder;
+    orderCreate: IGroup;
     showComments: boolean
     trigger: boolean;
     loading: boolean;
@@ -23,6 +24,7 @@ const initialState: IState = {
     nextPage: null,
     prevPage: null,
     orderUpdate: null,
+    orderCreate: null,
     showComments: false,
     trigger: false,
     loading: false,
@@ -42,6 +44,18 @@ const getAll = createAsyncThunk<IOrder[], {page: string}>(
         }
     }
 );
+
+const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
+    'orderSlice/create',
+    async ({groupId, order}, {rejectWithValue}) => {
+        try {
+            await orderService.create(groupId, order,);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+}
+)
 
 const update = createAsyncThunk<void, {order: IOrder, id: number}>(
     'orderSlice/update',
@@ -81,12 +95,15 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.orders = action.payload;
             })
-            .addCase(getTotalPages.fulfilled, (state, action) => {
-                state.totalPages = action.payload;
+            .addCase(create.fulfilled, state => {
+                state.trigger = !state.trigger;
             })
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
                 state.trigger = !state.trigger;
+            })
+            .addCase(getTotalPages.fulfilled, (state, action) => {
+                state.totalPages = action.payload;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
@@ -106,6 +123,7 @@ const {actions, reducer: orderReducer} = slice;
 const orderActions = {
     ...actions,
     getAll,
+    create,
     update,
     getTotalPages
 };

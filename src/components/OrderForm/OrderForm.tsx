@@ -3,11 +3,13 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 import {IOrder} from "../../interfaces";
-import {orderActions} from "../../redux";
-import {GroupsSelect} from "../GroupsSelect/GroupsSelect";
+import {groupActions, orderActions} from "../../redux";
+import {Group} from "../Group/Group";
+
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
+    const {groups} = useAppSelector(state => state.groupReducer);
     const {orderUpdate} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue} = useForm<IOrder>();
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -15,8 +17,12 @@ const OrderForm: FC = () => {
         reset();
     };
     const save: SubmitHandler<IOrder> = async (order) => {
-
+        await dispatch(orderActions.create({order, groupId: '3'}));
+        reset();
     };
+    useEffect(() => {
+        dispatch(groupActions.getAll());
+    }, [dispatch]);
     useEffect(() => {
         if (orderUpdate) {
             setValue('name', orderUpdate.name);
@@ -74,7 +80,11 @@ const OrderForm: FC = () => {
                     <option value="dubbing">dubbing</option>
                 </select>
                 <label htmlFor="group">Choose group</label>
-                <GroupsSelect/>
+                <select name="group" {...register("group")}>
+                    {
+                        groups.map(group => <Group key={group.id} group={group}/>)
+                    }
+                </select>
                 <button>{orderUpdate? 'Update' : 'Save'}</button>
             </form>
         </div>

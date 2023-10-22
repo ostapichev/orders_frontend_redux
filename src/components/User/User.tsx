@@ -20,8 +20,8 @@ const User: FC<IProps> = ({user}) => {
         await dispatch(userActions.unban({id: user.id.toString(), user}));
     };
     const activateUser: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(userActions.activateUser())
-    }
+        await dispatch(userActions.activateUser());
+    };
 
     return (
         <div>

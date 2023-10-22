@@ -15,11 +15,6 @@ const Order: FC<IProps> = ({order}) => {
     const {groups} = useAppSelector((state) => state.groupReducer);
     const [show, setShow] = useState(false);
     const dispatch = useAppDispatch();
-    const getNameGroup = (group_id: number): string => {
-        const group: IGroup = groups.find(group => group.id === group_id);
-        return group.name;
-    };
-
     const {
         id,
         name,
@@ -40,7 +35,11 @@ const Order: FC<IProps> = ({order}) => {
         msg,
         comments,
     } = order;
-
+    const getNameGroup = (group_id: number): string => {
+        const group: IGroup = groups.find(group => group.id === group_id);
+        return group.name;
+    };
+    const nameGroup = getNameGroup(group);
 
     return (
         <div>
@@ -59,7 +58,7 @@ const Order: FC<IProps> = ({order}) => {
                     <li>course: {course}</li>
                     <li>sum: {sum}</li>
                     <li>already paid: {already_paid}</li>
-                    <li>group: {getNameGroup(group)}</li>
+                    <li>group: {nameGroup}</li>
                     <li>created: {<DateFormat originalDate={created_at}/>}</li>
                     <li>manager: {manager !== null ? manager.name : 'null'}</li>
                 </ul>
