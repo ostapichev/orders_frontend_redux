@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Order: FC<IProps> = ({order}) => {
-    const {groups} = useAppSelector((state) => state.groupReducer);
+    const {groups} = useAppSelector(state => state.groupReducer);
     const [show, setShow] = useState(false);
     const dispatch = useAppDispatch();
     const {

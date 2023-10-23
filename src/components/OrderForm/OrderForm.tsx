@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {SubmitHandler, useForm} from "react-hook-form";
 
@@ -9,16 +9,15 @@ import {Group} from "../Group/Group";
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
-    const [groupId, setGroupId] = useState<string | null>(null);
     const {groups} = useAppSelector(state => state.groupReducer);
-    const {orderUpdate} = useAppSelector(state => state.orderReducer);
+    const {orderUpdate, orderCreate} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue} = useForm<IOrder>();
     const update: SubmitHandler<IOrder> = async (order) => {
         await dispatch(orderActions.update({id: orderUpdate.id, order}));
         reset();
     };
     const save: SubmitHandler<IOrder> = async (order) => {
-        await dispatch(orderActions.create({order, groupId}));
+        await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
     };
     useEffect(() => {
@@ -74,18 +73,18 @@ const OrderForm: FC = () => {
                 </select>
                 <label htmlFor="status">Choose status</label>
                 <select name="status" {...register('status')}>
-                    <option value="in work">in work</option>
                     <option value="new">new</option>
+                    <option value="in work">in work</option>
                     <option value="agree">agree</option>
                     <option value="disagree">disagree</option>
                     <option value="dubbing">dubbing</option>
                 </select>
                 <label htmlFor="group">Choose group</label>
                 <select name="group" {...register("group")}
-                        onChange={(event) =>setGroupId(event.target.value)}>
-                    {
-                        groups.map(group => <Group key={group.id} group={group}/>)
-                    }
+                        onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                        {
+                            groups.map(group => <Group key={group.id} group={group}/>)
+                        }
                 </select>
                 <button>{orderUpdate? 'Update' : 'Save'}</button>
             </form>

@@ -4,23 +4,20 @@ const groups = '/groups';
 const users = '/users';
 const admin = `/admin`;
 const auth = '/auth';
-const params = {
-    order_by_id: '?order_by=-id'
-}
 
 const urls = {
     groupsAPI: {
-        groups: `${groups}${params.order_by_id}`,
+        groups: `${groups}`,
         createOrder: (id: string): string => `${groups}/${id}/order`
     },
 
     ordersAPI: {
-        orders: `${orders}${params.order_by_id}`,
+        orders: `${orders}`,
         byID: (id: string): string => `${orders}/${id}`
     },
 
     usersAPI: {
-        users: `${users}${params.order_by_id}`,
+        users: `${users}`,
         createUser: `${admin}${users}`,
         banUser: (id: string): string => `${admin}${users}/${id}/ban`,
         unbanUser: (id: string): string => `${admin}${users}/${id}/unban`

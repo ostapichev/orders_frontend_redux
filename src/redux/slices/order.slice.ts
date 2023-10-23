@@ -11,9 +11,11 @@ interface IState {
     nextPage?: number;
     prevPage?: number;
     orderUpdate: IOrder;
+    orderCreate: string;
     showComments: boolean
     trigger: boolean;
     loading: boolean;
+    sorted: boolean;
     totalPages: number;
 }
 
@@ -23,17 +25,19 @@ const initialState: IState = {
     nextPage: null,
     prevPage: null,
     orderUpdate: null,
-    showComments: false,
+    orderCreate: null,
+    showComments: true,
     trigger: false,
     loading: false,
+    sorted: true,
     totalPages: 1
 };
 
-const getAll = createAsyncThunk<IOrder[], {page: string}>(
+const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string}>(
     'orderSlice/getAll',
-    async ({page}, {rejectWithValue}) => {
+    async ({page, order_by}, {rejectWithValue}) => {
         try {
-            const {data} = await orderService.getAll(page);
+            const {data} = await orderService.getAll(page, order_by);
             await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
@@ -87,6 +91,15 @@ const slice = createSlice({
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
         },
+        setOrderCreate: (state, action) => {
+            state.orderCreate = action.payload;
+        },
+        setShowComments: (state, action) => {
+            state.showComments = action.payload;
+        },
+        setOrderBy: (state) => {
+            state.sorted = !state.sorted;
+        }
     },
     extraReducers: builder =>
         builder
