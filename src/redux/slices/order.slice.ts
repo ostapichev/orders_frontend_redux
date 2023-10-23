@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorOrder, IGroup, IOrder} from "../../interfaces";
+import {IErrorOrder, IOrder} from "../../interfaces";
 import {orderService} from "../../services";
 
 
@@ -11,7 +11,6 @@ interface IState {
     nextPage?: number;
     prevPage?: number;
     orderUpdate: IOrder;
-    orderCreate: IGroup;
     showComments: boolean
     trigger: boolean;
     loading: boolean;
@@ -24,7 +23,6 @@ const initialState: IState = {
     nextPage: null,
     prevPage: null,
     orderUpdate: null,
-    orderCreate: null,
     showComments: false,
     trigger: false,
     loading: false,
@@ -49,7 +47,7 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
     'orderSlice/create',
     async ({groupId, order}, {rejectWithValue}) => {
         try {
-            await orderService.create(groupId, order,);
+            await orderService.create(groupId, order);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);

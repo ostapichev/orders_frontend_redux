@@ -55,7 +55,6 @@ const Order: FC<IProps> = ({order}) => {
                     <li>course format: {course_format}</li>
                     <li>course type: {course_type}</li>
                     <li>status: {status}</li>
-                    <li>course: {course}</li>
                     <li>sum: {sum}</li>
                     <li>already paid: {already_paid}</li>
                     <li>group: {nameGroup}</li>

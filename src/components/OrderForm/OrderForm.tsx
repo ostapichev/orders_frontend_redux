@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {SubmitHandler, useForm} from "react-hook-form";
 
@@ -9,15 +9,16 @@ import {Group} from "../Group/Group";
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
+    const [groupId, setGroupId] = useState<string | null>(null);
     const {groups} = useAppSelector(state => state.groupReducer);
     const {orderUpdate} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue} = useForm<IOrder>();
     const update: SubmitHandler<IOrder> = async (order) => {
-        dispatch(orderActions.update({id: orderUpdate.id, order}));
+        await dispatch(orderActions.update({id: orderUpdate.id, order}));
         reset();
     };
     const save: SubmitHandler<IOrder> = async (order) => {
-        await dispatch(orderActions.create({order, groupId: '3'}));
+        await dispatch(orderActions.create({order, groupId}));
         reset();
     };
     useEffect(() => {
@@ -53,7 +54,7 @@ const OrderForm: FC = () => {
                 <label htmlFor="course">Choose course</label>
                 <select name="course" {...register('course')}>
                     <option value="FS">FS</option>
-                    <option value="QASX">QASX</option>
+                    <option value="QACX">QACX</option>
                     <option value="JCX">JSCX</option>
                     <option value="FE">FE</option>
                     <option value="PCX">PCX</option>
@@ -80,7 +81,8 @@ const OrderForm: FC = () => {
                     <option value="dubbing">dubbing</option>
                 </select>
                 <label htmlFor="group">Choose group</label>
-                <select name="group" {...register("group")}>
+                <select name="group" {...register("group")}
+                        onChange={(event) =>setGroupId(event.target.value)}>
                     {
                         groups.map(group => <Group key={group.id} group={group}/>)
                     }
