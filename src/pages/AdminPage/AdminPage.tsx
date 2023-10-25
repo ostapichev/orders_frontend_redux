@@ -11,7 +11,11 @@ const AdminPage: FC = () => {
 
     return (
         <div>
-            <Link to={'/'}>go to site</Link>
+            <ul>
+                <li>
+                    <Link to={'/orders'}>go to site</Link>
+                </li>
+            </ul>
             <UserForm/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}

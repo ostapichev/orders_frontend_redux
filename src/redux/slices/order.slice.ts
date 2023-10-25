@@ -56,8 +56,8 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
         }
-}
-)
+    }
+);
 
 const update = createAsyncThunk<void, {order: IOrder, id: number}>(
     'orderSlice/update',
@@ -69,7 +69,7 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}>(
             return rejectWithValue(err.response.data);
         }
     }
-)
+);
 
 const getTotalPages = createAsyncThunk<number, void>(
     'orderSlice/getTotalPages',

@@ -24,7 +24,10 @@ const urls = {
     },
 
     authAPI: {
-        auth: `${auth}/activate`
+        auth: auth,
+        login: auth,
+        refresh: `${auth}/refresh`,
+        me: `${auth}/me`
     }
 };
 

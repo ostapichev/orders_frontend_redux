@@ -5,11 +5,13 @@ import {IRes} from "../types";
 import {urls} from "../constants";
 
 
-const groupService = {
-    getAll: (): IRes<IGroup[]> => axiosService.get(urls.groupsAPI.groups),
-    create: (group: IGroup): IRes<IGroup> => axiosService.post(urls.groupsAPI.groups, group)
-};
+class GroupService {
+    getAll(): IRes<IGroup[]> {
+        return axiosService.get(urls.groupsAPI.groups);
+    };
+    create(group: IGroup): IRes<IGroup> {
+        return axiosService.post(urls.groupsAPI.groups, group);
+    };
+}
 
-export {
-    groupService
-};
+export const groupService = new GroupService();

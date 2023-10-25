@@ -42,6 +42,7 @@ const OrderForm: FC = () => {
 
     return (
         <div>
+            <h3>Create or update order</h3>
             <form onSubmit={handleSubmit(orderUpdate ? update : save)}>
                 <input type="text" placeholder={'name'}{...register('name')}/>
                 <input type="text" placeholder={'surname'}{...register('surname')}/>
@@ -88,6 +89,7 @@ const OrderForm: FC = () => {
                 </select>
                 <button>{orderUpdate? 'Update' : 'Save'}</button>
             </form>
+            <hr/>
         </div>
     );
 };

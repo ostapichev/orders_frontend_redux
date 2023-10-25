@@ -16,12 +16,14 @@ const UserForm: FC = () => {
 
     return (
         <div>
+            <h2>Create user</h2>
             <form onSubmit={handleSubmit(save)}>
                 <input type="text" placeholder={'name'} {...register('profile.name')}/>
                 <input type="text" placeholder={'surname'} {...register('profile.surname')}/>
                 <input type="text" placeholder={'email'} {...register('email')}/>
                 <button>save</button>
             </form>
+            <hr/>
         </div>
     );
 };

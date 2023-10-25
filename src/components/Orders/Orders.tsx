@@ -93,6 +93,7 @@ const Orders: FC = () => {
                 <button onClick={orderByCreated}>created at</button>
                 <button onClick={orderByManager}>manager</button>
             </div>
+            <hr/>
             {
                 orders.map(order => <Order key={order.id} order={order}/>)
             }

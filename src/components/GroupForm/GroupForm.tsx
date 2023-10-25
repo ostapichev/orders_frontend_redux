@@ -14,10 +14,12 @@ const GroupForm: FC = () => {
 
     return (
         <div>
+            <h3>Create group</h3>
             <form onSubmit={handleSubmit(save)}>
                 <input type="text" placeholder={'name'} {...register('name')}/>
                 <button>save</button>
             </form>
+            <hr/>
         </div>
     );
 };
