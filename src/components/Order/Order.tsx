@@ -3,8 +3,8 @@ import {FC, useState} from 'react';
 import {Comment} from "../Comment/Comment";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IGroup, IOrder} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
 import {orderActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
 interface IProps {
@@ -59,14 +59,13 @@ const Order: FC<IProps> = ({order}) => {
                     <li>already paid: {already_paid}</li>
                     <li>group: {nameGroup}</li>
                     <li>created: {<DateFormat originalDate={created_at}/>}</li>
-                    <li>manager: {manager !== null ? manager.name : 'null'}</li>
+                    <li>manager: {manager !== null ? manager.name : 'no manager'}</li>
                 </ul>
             </button>
-            {
-                show &&
+            { show &&
                 <div>
-                    <div>utm: {utm !== null ? utm : 'null'}</div>
-                    <div>msg: {msg !== null ? msg : 'null'}</div>
+                    <div>utm: {utm !== null ? utm : 'no data'}</div>
+                    <div>msg: {msg !== null ? msg : 'no data'}</div>
                     <button onClick={() => dispatch(orderActions.setOrderUpdate(order))}>Edit order</button>
                     <hr/>
                     <div>comments: {

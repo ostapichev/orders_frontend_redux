@@ -27,7 +27,7 @@ const initialState: IState = {
     totalPages: 1
 };
 
-const getAll = createAsyncThunk<IUser[], {page: string}>(
+const getAll = createAsyncThunk<IUser[], {page: string}> (
     'userSlice/getAll',
     async ({page}, {rejectWithValue}) => {
         try {
@@ -41,7 +41,7 @@ const getAll = createAsyncThunk<IUser[], {page: string}>(
     }
 );
 
-const create = createAsyncThunk<void, {user: IUser}>(
+const create = createAsyncThunk<void, {user: IUser}> (
     'userSlice/create',
     async ({user}, {rejectWithValue}) => {
         try {
@@ -53,7 +53,7 @@ const create = createAsyncThunk<void, {user: IUser}>(
     }
 );
 
-const ban = createAsyncThunk<void, {user: IUser, id: string}>(
+const ban = createAsyncThunk<void, {user: IUser, id: string}> (
     'userSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -65,7 +65,7 @@ const ban = createAsyncThunk<void, {user: IUser, id: string}>(
     }
 );
 
-const unban = createAsyncThunk<void, {user: IUser, id: string}>(
+const unban = createAsyncThunk<void, {user: IUser, id: string}> (
     'userSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {

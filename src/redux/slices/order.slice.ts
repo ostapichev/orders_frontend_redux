@@ -33,7 +33,7 @@ const initialState: IState = {
     totalPages: 1
 };
 
-const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string}>(
+const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string}> (
     'orderSlice/getAll',
     async ({page, order_by}, {rejectWithValue}) => {
         try {
@@ -47,7 +47,7 @@ const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string}>(
     }
 );
 
-const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
+const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
     'orderSlice/create',
     async ({groupId, order}, {rejectWithValue}) => {
         try {
@@ -59,7 +59,7 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
     }
 );
 
-const update = createAsyncThunk<void, {order: IOrder, id: number}>(
+const update = createAsyncThunk<void, {order: IOrder, id: number}> (
     'orderSlice/update',
     async ({id, order}, {rejectWithValue}) => {
         try {
@@ -71,7 +71,7 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}>(
     }
 );
 
-const getTotalPages = createAsyncThunk<number, void>(
+const getTotalPages = createAsyncThunk<number, void> (
     'orderSlice/getTotalPages',
     async (_, {rejectWithValue}) => {
         try {
@@ -106,15 +106,14 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.orders = action.payload;
             })
-            .addCase(create.fulfilled, state => {
-                state.trigger = !state.trigger;
-            })
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
-                state.trigger = !state.trigger;
             })
             .addCase(getTotalPages.fulfilled, (state, action) => {
                 state.totalPages = action.payload;
+            })
+            .addMatcher(isFulfilled(create, update), state => {
+                state.trigger = !state.trigger;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;

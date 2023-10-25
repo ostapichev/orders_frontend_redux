@@ -1,5 +1,5 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled} from "@reduxjs/toolkit";
 
 import {IAuth, IUser} from "../../interfaces";
 import {authService} from "../../services";
@@ -13,7 +13,7 @@ const initialState: IState = {
     me: null
 };
 
-const login = createAsyncThunk<IUser, IAuth>(
+const login = createAsyncThunk<IUser, IAuth> (
     'authSlice/login',
     async (user, {rejectWithValue}) => {
         try {
@@ -23,7 +23,15 @@ const login = createAsyncThunk<IUser, IAuth>(
             return rejectWithValue(err.response.data);
         }
     }
-)
+);
+
+const me = createAsyncThunk<IUser, void> (
+    'authSlice/me',
+    async () => {
+        const {data} = await authService.me();
+        return data;
+    }
+);
 
 const slice = createSlice({
     name: 'authSlice',
@@ -31,7 +39,7 @@ const slice = createSlice({
     reducers: {},
     extraReducers: builder =>
         builder
-            .addCase(login.fulfilled, (state, action) => {
+            .addMatcher(isFulfilled(login, me), (state, action) => {
                 state.me = action.payload;
             })
 });
@@ -39,7 +47,8 @@ const slice = createSlice({
 const {actions, reducer: authReducer} = slice;
 const authActions = {
     ...actions,
-    login
+    login,
+    me
 };
 
 export {

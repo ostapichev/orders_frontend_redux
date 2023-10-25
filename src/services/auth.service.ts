@@ -17,17 +17,31 @@ class AuthService {
         return me;
     }
 
+    async refresh(): Promise<void> {
+        const refreshToken = this.getRefreshToken();
+        if (!refreshToken) {
+            throw new Error('Refresh token is not exist!');
+        }
+        const {data}: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.refresh,
+            {refresh: refreshToken});
+        this.setTokens(data);
+    };
+
     me(): IRes<IUser> {
         return axiosService.get(urls.authAPI.me);
-    }
-
-    private setTokens({access, refresh}: ITokens): void {
-        localStorage.setItem(this.accessKey, access);
-        localStorage.setItem(this.refreshKey, refresh);
     };
 
     getAccessToken(): string {
         return localStorage.getItem(this.accessKey);
+    };
+
+    private getRefreshToken(): string {
+        return localStorage.getItem(this.refreshKey);
+    };
+
+    private setTokens({access, refresh}: ITokens): void {
+        localStorage.setItem(this.accessKey, access);
+        localStorage.setItem(this.refreshKey, refresh);
     };
 
     deleteTokens(): void {
