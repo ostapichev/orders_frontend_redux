@@ -36,7 +36,12 @@ const me = createAsyncThunk<IUser, void> (
 const slice = createSlice({
     name: 'authSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        logout: state => {
+            state.me = null;
+            authService.deleteTokens();
+        }
+    },
     extraReducers: builder =>
         builder
             .addMatcher(isFulfilled(login, me), (state, action) => {

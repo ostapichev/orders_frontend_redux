@@ -33,7 +33,6 @@ axiosService.interceptors.response.use(response => {
                     afterRefresh();
                     return axiosService(request);
                 } catch (e) {
-                    console.log(history);
                     authService.deleteTokens();
                     isRefreshing = false;
                     history.replace('./login?expSession=true');

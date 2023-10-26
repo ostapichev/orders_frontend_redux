@@ -9,6 +9,9 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
+    const logout: any = () => {
+        dispatch(authActions.logout());
+    };
     useEffect(() => {
         if (!me && authService.getAccessToken()) {
             dispatch(authActions.me());
@@ -20,10 +23,12 @@ const Header: FC = () => {
             <h1>Logo</h1>
             {
                  me ?
-                    <div>
+                    <ul>
                         <h2>User: {me.profile.surname}</h2>
-                        <button>logout</button>
-                    </div>
+                        <li>
+                            <NavLink to={'login'} onClick={logout}>Logout</NavLink>
+                        </li>
+                    </ul>
                     :
                     <ul>
                         <li>

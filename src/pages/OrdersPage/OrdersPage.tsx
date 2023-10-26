@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Link} from "react-router-dom";
 
-import {GroupForm, Loading, OrderForm, Orders} from "../../components";
+import {GroupForm, Header, Loading, OrderForm, Orders} from "../../components";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 import {useAppSelector} from "../../hooks";
 

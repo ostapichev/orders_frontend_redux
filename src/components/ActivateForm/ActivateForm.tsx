@@ -5,7 +5,11 @@ const ActivateForm: FC = () => {
 
     return (
         <div>
-            ActivateForm
+            <form>
+                <input type="text" placeholder={'password'}/>
+                <input type="text" placeholder={'confirm password'}/>
+                <button>Activate</button>
+            </form>
         </div>
     );
 };
