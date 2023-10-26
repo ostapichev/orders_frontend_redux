@@ -21,7 +21,7 @@ const Header: FC = () => {
             {
                  me ?
                     <div>
-                        <span>{me.profile.surname}</span>
+                        <h2>User: {me.profile.surname}</h2>
                         <button>logout</button>
                     </div>
                     :
