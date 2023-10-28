@@ -41,6 +41,7 @@ const slice = createSlice({
     reducers: {
         logout: state => {
             state.me = null;
+            state.error = null;
             authService.deleteTokens();
         }
     },

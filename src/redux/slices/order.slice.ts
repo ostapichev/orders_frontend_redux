@@ -12,7 +12,6 @@ interface IState {
     prevPage?: number;
     orderUpdate: IOrder;
     orderCreate: string;
-    showComments: boolean
     trigger: boolean;
     loading: boolean;
     sorted: boolean;
@@ -26,7 +25,6 @@ const initialState: IState = {
     prevPage: null,
     orderUpdate: null,
     orderCreate: null,
-    showComments: true,
     trigger: false,
     loading: false,
     sorted: true,
@@ -93,9 +91,6 @@ const slice = createSlice({
         },
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
-        },
-        setShowComments: (state, action) => {
-            state.showComments = action.payload;
         },
         setOrderBy: (state) => {
             state.sorted = !state.sorted;

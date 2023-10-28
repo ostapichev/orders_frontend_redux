@@ -7,7 +7,7 @@ import {useAppSelector} from "../../hooks";
 
 
 const OrdersPage: FC = () => {
-    const {loading} = useAppSelector(state => state.userReducer);
+    const {loading, errors} = useAppSelector(state => state.userReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
 
@@ -21,6 +21,9 @@ const OrdersPage: FC = () => {
             }
             <GroupForm/>
             <OrderForm/>
+            {errors?.name && <p>{errors.name}</p>}
+            {errors?.surname && <p>{errors.name}</p>}
+            {errors?.email && <p>{errors.email}</p>}
             {loading && <Loading/>}
             <Orders/>
             <OrdersPagination/>

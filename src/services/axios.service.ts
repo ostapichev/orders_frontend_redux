@@ -27,14 +27,15 @@ axiosService.interceptors.response.use(response => {
         if (error.response.status === 401) {
             if (!isRefreshing) {
                 isRefreshing = true;
+                authService.deleteTokens();
                 try {
                     await authService.refresh();
                     isRefreshing = false;
                     afterRefresh();
                     return axiosService(request);
                 } catch (e) {
-                    authService.deleteTokens();
                     isRefreshing = false;
+                    authService.deleteTokens();
                     history.replace('./login?expSession=true');
                     return Promise.reject(error);
                 }

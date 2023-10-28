@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 
 import {groupActions} from "../../redux";
-import {groupValidator} from "../../validators/groupValidator";
+import {groupValidator} from "../../validators";
 import {IGroup} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useAppDispatch} from "../../hooks";
@@ -25,7 +25,7 @@ const GroupForm: FC = () => {
             <form onSubmit={handleSubmit(save)}>
                 <input type="text" placeholder={'name'} {...register('name')}/>
                 <button disabled={!isValid}>save</button>
-                {errors.name && <p>{errors.name.message}</p>}
+                    {errors.name && <p>{errors.name.message}</p>}
             </form>
             <hr/>
         </div>
