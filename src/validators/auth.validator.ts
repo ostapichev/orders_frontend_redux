@@ -6,7 +6,7 @@ const authValidator = Joi.object({
     }).required(),
     password: Joi.string().messages({
         'string.pattern.base': 'This field is must be password!'
-    })
+    }).required()
 });
 
 export {

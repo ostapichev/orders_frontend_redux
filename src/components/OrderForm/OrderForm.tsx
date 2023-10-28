@@ -9,7 +9,7 @@ import {Group} from "../Group/Group";
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {groups} = useAppSelector(state => state.groupReducer);
+    const {groups, trigger} = useAppSelector(state => state.groupReducer);
     const {orderUpdate, orderCreate} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue} = useForm<IOrder>();
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -22,7 +22,7 @@ const OrderForm: FC = () => {
     };
     useEffect(() => {
         dispatch(groupActions.getAll());
-    }, [dispatch]);
+    }, [dispatch, trigger]);
     useEffect(() => {
         if (orderUpdate) {
             setValue('name', orderUpdate.name);

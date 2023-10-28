@@ -1,8 +1,8 @@
 import {FC} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 
-import {MainLayout} from "./layouts";
 import {AdminPage, LoginPage, OrdersPage, ActivatePage} from "./pages";
+import {MainLayout} from "./layouts";
 import {RequiredAuth} from "./hoc";
 
 

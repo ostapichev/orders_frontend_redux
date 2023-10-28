@@ -1,16 +1,18 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IAuth, IUser} from "../../interfaces";
+import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 import {authService} from "../../services";
 
 
 interface IState {
     me: IUser;
+    error: IErrorAuth;
 }
 
 const initialState: IState = {
-    me: null
+    me: null,
+    error: null
 };
 
 const login = createAsyncThunk<IUser, IAuth> (
@@ -46,6 +48,9 @@ const slice = createSlice({
         builder
             .addMatcher(isFulfilled(login, me), (state, action) => {
                 state.me = action.payload;
+            })
+            .addMatcher(isRejectedWithValue(), (state, actions) => {
+                state.error = actions.payload as IErrorAuth;
             })
 });
 
