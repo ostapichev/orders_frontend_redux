@@ -1,5 +1,7 @@
 import {FC} from 'react';
+
 import {IGroup} from "../../interfaces";
+
 
 interface IProps {
     group: IGroup;

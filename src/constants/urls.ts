@@ -4,7 +4,6 @@ const groups = '/groups';
 const users = '/users';
 const admin = `/admin`;
 const auth = '/auth';
-
 const urls = {
     groupsAPI: {
         groups: `${groups}`,

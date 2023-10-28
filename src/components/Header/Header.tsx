@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, MouseEventHandler, useEffect} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {authActions} from "../../redux";
@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
-    const logout: any = () => {
+    const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         dispatch(authActions.logout());
     };
     useEffect(() => {
@@ -21,20 +21,19 @@ const Header: FC = () => {
     return (
         <div>
             <h1>Logo</h1>
-            {
-                 me ?
-                    <ul>
-                        <h2>User: {me.profile.surname}</h2>
-                        <li>
-                            <NavLink to={'login'} onClick={logout}>Logout</NavLink>
-                        </li>
-                    </ul>
-                    :
-                    <ul>
-                        <li>
-                            <NavLink to={'login'}>Login</NavLink>
-                        </li>
-                    </ul>
+            { me ?
+                <ul>
+                    <h2>User: {me.profile.surname}</h2>
+                    <li>
+                        <NavLink to={'login'} onClick={logout}>Logout</NavLink>
+                    </li>
+                </ul>
+                :
+                <ul>
+                    <li>
+                        <NavLink to={'login'}>Login</NavLink>
+                    </li>
+                </ul>
             }
         </div>
     );

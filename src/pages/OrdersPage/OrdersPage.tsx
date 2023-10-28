@@ -13,8 +13,7 @@ const OrdersPage: FC = () => {
 
     return (
         <div>
-            {
-                isAdmin &&
+            { isAdmin &&
                 <ul>
                     <li><Link to={'/admin'}>admin panel</Link></li>
                 </ul>
@@ -24,6 +23,7 @@ const OrdersPage: FC = () => {
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}
+            {errors?.phone && <p>{errors.phone}</p>}
             {loading && <Loading/>}
             <Orders/>
             <OrdersPagination/>
