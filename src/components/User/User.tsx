@@ -2,7 +2,7 @@ import {FC, MouseEventHandler} from 'react';
 
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
-import {userActions} from "../../redux";
+import {authActions, userActions} from "../../redux";
 import {useAppDispatch} from "../../hooks";
 
 
@@ -13,6 +13,7 @@ interface IProps {
 const User: FC<IProps> = ({user}) => {
     const {id, email, profile, is_active, last_login} = user;
     const dispatch = useAppDispatch();
+    const formData: FormData = new FormData();
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(userActions.ban({id: user.id.toString(), user}));
     };
@@ -20,7 +21,8 @@ const User: FC<IProps> = ({user}) => {
         await dispatch(userActions.unban({id: user.id.toString(), user}));
     };
     const activateUser: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(userActions.activateUser());
+        formData.append('email', user.email);
+        await dispatch(authActions.activateUser({formData}));
     };
 
     return (

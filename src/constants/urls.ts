@@ -2,6 +2,7 @@ const baseURL = 'http://localhost:8000/api';
 const orders = '/orders';
 const groups = '/groups';
 const users = '/users';
+const activate = '/activate';
 const admin = `/admin`;
 const auth = '/auth';
 const urls = {
@@ -23,6 +24,8 @@ const urls = {
     },
 
     authAPI: {
+        activateRequest: (token: string): string => `${auth}${activate}/${token}`,
+        activate:`${auth}${activate}`,
         auth: auth,
         login: auth,
         refresh: `${auth}/refresh`,

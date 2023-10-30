@@ -6,7 +6,9 @@ import {urls} from "../constants";
 
 class UserService {
     getAll(page='1', order_by='-id'): IResPaginate<IUser[]> {
-        return axiosService.get(urls.usersAPI.users, {params: {page, order_by}});
+        return axiosService.get(urls.usersAPI.users, {
+            params: {page, order_by}
+        });
     };
     create(user: IUser): IRes<IUser> {
         return axiosService.post(urls.usersAPI.createUser, user);
@@ -17,8 +19,10 @@ class UserService {
     unban(id: string): IRes<IUser> {
         return axiosService.patch(urls.usersAPI.unbanUser(id));
     };
-    activateUser(): IRes<IUser> {
-        return axiosService.post(urls.authAPI.auth);
+    activateUser(formData: FormData): IRes<IUser> {
+        return axiosService.post(urls.authAPI.activate, formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        });
     };
     getTotalPages(): IResPaginate<IUser[]> {
         return axiosService.get(urls.usersAPI.users);

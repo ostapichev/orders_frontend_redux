@@ -2,7 +2,7 @@ import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
 
 import {IAuth, IErrorAuth, IUser} from "../../interfaces";
-import {authService} from "../../services";
+import {authService, userService} from "../../services";
 
 
 interface IState {
@@ -20,6 +20,30 @@ const login = createAsyncThunk<IUser, IAuth> (
     async (user, {rejectWithValue}) => {
         try {
             return await authService.login(user);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+const activateUser = createAsyncThunk<void, {formData: FormData}>(
+    'userSlice/activateUser',
+    async ({formData}, {rejectWithValue}) => {
+        try {
+            await userService.activateUser(formData);
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: string}> (
+    'authSlice/activate',
+    ({formData ,token}, {rejectWithValue}) => {
+        try {
+            return authService.activateRequestUser(formData, token);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -59,6 +83,8 @@ const {actions, reducer: authReducer} = slice;
 const authActions = {
     ...actions,
     login,
+    activateUser,
+    activateRequestUser,
     me
 };
 

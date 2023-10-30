@@ -7,10 +7,10 @@ import {RequiredAuth} from "./hoc";
 
 
 const App: FC = () => {
-  return (
+    return (
       <Routes>
           <Route path={'login'} element={<LoginPage/>}/>
-          <Route path={'activate'} element={<ActivatePage/>}/>
+          <Route path={'activate/:token'} element={<ActivatePage/>}/>
           <Route path={'/'} element={<MainLayout/>}>
               <Route index element={<Navigate to={'login'}/>}/>
               <Route path={'orders'} element={

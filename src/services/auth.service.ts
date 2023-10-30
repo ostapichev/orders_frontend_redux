@@ -27,6 +27,12 @@ class AuthService {
         this.setTokens(data);
     };
 
+    activateRequestUser(formData: FormData, token: string): Promise<void> {
+        return axiosService.post(urls.authAPI.activateRequest(token), formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        });
+    };
+
     me(): IRes<IUser> {
         return axiosService.get(urls.authAPI.me);
     };

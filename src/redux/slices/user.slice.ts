@@ -77,18 +77,6 @@ const unban = createAsyncThunk<void, {user: IUser, id: string}> (
     }
 );
 
-const activateUser = createAsyncThunk<void, void>(
-    'userSlice/activateUser',
-    async (_, {rejectWithValue}) => {
-        try {
-            await userService.activateUser();
-        } catch (e) {
-            const err = e as AxiosError;
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const getTotalPages = createAsyncThunk<number, void>(
     'userSlice/getTotalPages',
     async (_, {rejectWithValue}) => {
@@ -141,7 +129,6 @@ const userActions = {
     create,
     ban,
     unban,
-    activateUser,
     getTotalPages
 };
 
