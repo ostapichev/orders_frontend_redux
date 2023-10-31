@@ -9,6 +9,7 @@ export * from './LoginForm/LoginForm';
 export * from './Order/Order';
 export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';
+export * from './RecoveryPasswordForm/RecoveryPasswordForm';
 export * from './User/User';
 export * from './UserForm/UserForm';
 export * from './Users/Users';

@@ -24,6 +24,10 @@ const User: FC<IProps> = ({user}) => {
         formData.append('email', user.email);
         await dispatch(authActions.activateUser({formData}));
     };
+    const recoveryPassword: MouseEventHandler<HTMLButtonElement> = async () => {
+        formData.append('email', user.email);
+        await dispatch(authActions.recoveryPassword({formData}));
+    };
 
     return (
         <div>
@@ -38,7 +42,8 @@ const User: FC<IProps> = ({user}) => {
                     <button onClick={(event) => is_active === true ? ban(event) : unban(event)}>
                         {is_active === true ? 'ban' : 'unban'}
                     </button>
-                    <button onClick={activateUser}>activate user</button>
+                    <button onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
+                        {is_active === true ? 'recovery password' : 'activate user'}</button>
                 </div>
             </ul>
         </div>

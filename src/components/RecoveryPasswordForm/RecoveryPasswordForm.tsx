@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate, useParams} from "react-router-dom";
 
 
-const ActivateForm: FC = () => {
+const RecoveryPasswordForm: FC = () => {
     const {token} = useParams<{token: string}>();
     const {confirmError} = useAppSelector(state => state.authReducer);
     const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
@@ -19,25 +19,25 @@ const ActivateForm: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const formData: FormData = new FormData();
-    const activateRequestUser: SubmitHandler<IAuth> = async () => {
+    const recoveryRequestUser: SubmitHandler<IAuth> = async () => {
         const {password, confirmPassword} = getValues();
         formData.append('password', password);
         if (password !== confirmPassword) {
             dispatch(authActions.setConfirmError('Password mismatch!'));
             return;
         }
-        const {meta: {requestStatus}} = await dispatch(authActions.activateRequestUser({formData, token}));
-            if (requestStatus === 'fulfilled') {
-                navigate('/login');
-            }
+        const {meta: {requestStatus}} = await dispatch(authActions.recoveryRequestPassword({formData, token}));
+        if (requestStatus === 'fulfilled') {
+            navigate('/login');
+        }
     };
 
     return (
         <div>
-            <form onSubmit={handleSubmit(activateRequestUser)}>
+            <form onSubmit={handleSubmit(recoveryRequestUser)}>
                 <input type="password" placeholder={'password'} {...register("password")}/>
                 <input type="password" placeholder={'confirm password'} {...register("confirmPassword")}/>
-                <button>Activate</button>
+                <button>Submit</button>
                     {errors.password && <p>{errors.password.message}</p>}
                     {confirmError && <p>{confirmError}</p>}
             </form>
@@ -46,5 +46,5 @@ const ActivateForm: FC = () => {
 };
 
 export {
-    ActivateForm
+    RecoveryPasswordForm
 };

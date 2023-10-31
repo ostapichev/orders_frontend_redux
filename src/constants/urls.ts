@@ -5,6 +5,7 @@ const users = '/users';
 const activate = '/activate';
 const admin = `/admin`;
 const auth = '/auth';
+const recoveryPassword = '/recovery_password';
 const urls = {
     groupsAPI: {
         groups: `${groups}`,
@@ -25,7 +26,9 @@ const urls = {
 
     authAPI: {
         activateRequest: (token: string): string => `${auth}${activate}/${token}`,
+        recoveryPasswordRequest: (token: string): string => `${auth}${recoveryPassword}/${token}`,
         activate:`${auth}${activate}`,
+        recoveryPassword: `${auth}${recoveryPassword}`,
         auth: auth,
         login: auth,
         refresh: `${auth}/refresh`,

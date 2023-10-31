@@ -19,11 +19,6 @@ class UserService {
     unban(id: string): IRes<IUser> {
         return axiosService.patch(urls.usersAPI.unbanUser(id));
     };
-    activateUser(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.activate, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-    };
     getTotalPages(): IResPaginate<IUser[]> {
         return axiosService.get(urls.usersAPI.users);
     };
