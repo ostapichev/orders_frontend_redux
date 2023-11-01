@@ -7,7 +7,7 @@ import {useAppSelector} from "../../hooks";
 
 
 const OrdersPage: FC = () => {
-    const {loading, errors} = useAppSelector(state => state.userReducer);
+    const {loading, errors} = useAppSelector(state => state.orderReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
 

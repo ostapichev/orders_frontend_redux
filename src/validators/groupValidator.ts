@@ -6,7 +6,7 @@ const groupValidator = Joi.object({
         .regex(/^[a-z]{3}-\d{4}$/)
         .required()
         .messages({
-            'string.pattern.base': 'Only format group. Example: dec-2023',
+            'string.pattern.base': 'Only special format group. For example: dec-2023',
             'string.required': "This field is required"
         })
 })

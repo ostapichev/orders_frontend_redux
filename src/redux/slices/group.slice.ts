@@ -17,7 +17,7 @@ const initialState: IState = {
     trigger: false,
 };
 
-const getAll = createAsyncThunk<IGroup[], void>(
+const getAll = createAsyncThunk<IGroup[], void> (
     'groupSlice/getAll',
     async (_, {rejectWithValue}) => {
         try {
@@ -30,7 +30,7 @@ const getAll = createAsyncThunk<IGroup[], void>(
     }
 );
 
-const create = createAsyncThunk<void, {group: IGroup}>(
+const create = createAsyncThunk<void, {group: IGroup}> (
     'groupSlice/create',
     async ({group}, {rejectWithValue}) => {
         try {

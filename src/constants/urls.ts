@@ -5,6 +5,7 @@ const users = '/users';
 const activate = '/activate';
 const admin = `/admin`;
 const auth = '/auth';
+const comments = '/comments'
 const recoveryPassword = '/recovery_password';
 const urls = {
     groupsAPI: {
@@ -33,6 +34,10 @@ const urls = {
         login: auth,
         refresh: `${auth}/refresh`,
         me: `${auth}/me`
+    },
+
+    commentsApi: {
+        createComment: (id: string): string => `${orders}/${id}${comments}`
     }
 };
 

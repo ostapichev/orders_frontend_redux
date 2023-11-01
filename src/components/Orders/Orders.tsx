@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const {orders, trigger, sorted} = useAppSelector(state => state.orderReducer);
+    const {triggerComment} = useAppSelector(state => state.commentReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const getAllOrders = useCallback((sorting: string) => {
@@ -72,7 +73,7 @@ const Orders: FC = () => {
     }, []);
     useEffect( () => {
         getAllOrders('-id');
-    }, [dispatch, getAllOrders, query, trigger]);
+    }, [dispatch, getAllOrders, query, trigger, triggerComment]);
 
     return (
         <div>

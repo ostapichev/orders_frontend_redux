@@ -1,10 +1,12 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 
 import {Comment} from "../Comment/Comment";
+import {CommentForm} from "../CommentForm/CommentForm";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IGroup, IOrder} from "../../interfaces";
-import {orderActions} from "../../redux";
+import {commentActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
+import {Loading} from "../Loading/Loading";
 
 
 interface IProps {
@@ -13,6 +15,7 @@ interface IProps {
 
 const Order: FC<IProps> = ({order}) => {
     const {groups} = useAppSelector(state => state.groupReducer);
+    const {triggerComment, loading, errors} = useAppSelector(state => state.commentReducer);
     const [show, setShow] = useState(false);
     const dispatch = useAppDispatch();
     const {
@@ -40,6 +43,9 @@ const Order: FC<IProps> = ({order}) => {
         return group.name;
     };
     const nameGroup = getNameGroup(group);
+    useEffect(() => {
+        dispatch(commentActions.getAll({order_id: id}));
+    }, [dispatch, triggerComment, id]);
 
     return (
         <div>
@@ -68,7 +74,11 @@ const Order: FC<IProps> = ({order}) => {
                     <div>msg: {msg !== null ? msg : 'no data'}</div>
                     <button onClick={() => dispatch(orderActions.setOrderUpdate(order))}>Edit order</button>
                     <hr/>
-                    <div>comments: {
+                    <CommentForm order_id={id}/>
+                        {errors && <p>{errors.comment}</p>}
+                        {loading && <Loading/>}
+                    <div>
+                        comments: { comments &&
                         comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
                     }
                     </div>
