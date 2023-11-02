@@ -6,8 +6,8 @@ import {orderActions} from "../../redux";
 
 
 const OrdersPagination: FC = () => {
-    const {loading, totalPages} = useAppSelector((state) => state.orderReducer);
     const dispatch = useAppDispatch();
+    const {loading, totalPages} = useAppSelector((state) => state.orderReducer);
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = async () => {

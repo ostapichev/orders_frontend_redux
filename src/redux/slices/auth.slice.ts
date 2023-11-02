@@ -1,5 +1,5 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
 import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 import {authService} from "../../services";
@@ -7,12 +7,14 @@ import {authService} from "../../services";
 
 interface IState {
     me: IUser;
+    loading: boolean
     error: IErrorAuth;
     confirmError?: string;
 }
 
 const initialState: IState = {
     me: null,
+    loading: false,
     error: null,
     confirmError: null
 };
@@ -101,7 +103,12 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addMatcher(isFulfilled(login, me), (state, action) => {
+                state.loading = false;
                 state.me = action.payload;
+            })
+            .addMatcher(isPending(), state => {
+                state.loading = true;
+                state.error = null;
             })
             .addMatcher(isRejectedWithValue(), (state, actions) => {
                 state.error = actions.payload as IErrorAuth;

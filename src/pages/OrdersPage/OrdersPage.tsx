@@ -2,8 +2,8 @@ import {FC} from 'react';
 import {Link} from "react-router-dom";
 
 import {GroupForm, Loading, OrderForm, Orders} from "../../components";
-import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 import {useAppSelector} from "../../hooks";
+import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
 
 const OrdersPage: FC = () => {

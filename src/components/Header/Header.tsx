@@ -10,6 +10,7 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
+        localStorage.removeItem('checkboxState');
         dispatch(authActions.logout());
     };
     useEffect(() => {

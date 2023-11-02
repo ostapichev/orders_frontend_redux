@@ -6,7 +6,7 @@ import {authActions} from "../../redux";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
 const LoginForm: FC = () => {
@@ -26,8 +26,8 @@ const LoginForm: FC = () => {
     return (
         <div>
             <form onSubmit={handleSubmit(login)}>
-                <input type="text" placeholder={'email'} {...register('email', {required: true})}/>
-                <input type="text" placeholder={'password'} {...register('password', {required: true})}/>
+                <input type="email" placeholder={'email'} {...register('email', {required: true})}/>
+                <input type="password" placeholder={'password'} {...register('password', {required: true})}/>
                 <button disabled={!isValid}>Login</button>
             </form>
         </div>

@@ -23,7 +23,7 @@ interface IState {
 const initialState: IState = {
     orders: [],
     me: null,
-    checkbox: true,
+    checkbox: false,
     errors: null,
     nextPage: null,
     prevPage: null,
@@ -40,7 +40,6 @@ const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manag
     async ({page, order_by, manager}, {rejectWithValue}) => {
         try {
             const {data} = await orderService.getAll(page, order_by, manager);
-            await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
@@ -78,6 +77,7 @@ const getTotalPages = createAsyncThunk<number, void> (
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await orderService.getTotalPages();
+            console.log(data.total_pages);
             return data.total_pages;
         } catch (e) {
             const err = e as AxiosError;
