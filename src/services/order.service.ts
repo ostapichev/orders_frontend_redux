@@ -5,8 +5,8 @@ import {urls} from "../constants";
 
 
 class OrderService {
-    getAll(page='1', order_by='-id'): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.orders, {params: {page, order_by}});
+    getAll(page='1', order_by='-id', manager=''): IResPaginate<IOrder[]> {
+        return axiosService.get(urls.ordersAPI.orders, {params: {page, order_by, manager}});
     };
     create(groupId: string, order: IOrder): IRes<IOrder> {
         return axiosService.post(urls.groupsAPI.createOrder(groupId), order);

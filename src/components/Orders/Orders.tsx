@@ -8,13 +8,17 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {orders, trigger, sorted} = useAppSelector(state => state.orderReducer);
+    const {orders, trigger, sorted, checkbox} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
+    const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
-    const getAllOrders = useCallback((sorting: string) => {
-        dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting }));
+    const getAllOrders = useCallback((sorting: string, manager='') => {
+        dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
         },[dispatch, query]);
+    const getMyOrders = useCallback((sorting: string, manager: string) => {
+        dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
+    },[dispatch, query]);
     const sortingRevers = (orderBy: string) => {
         if (sorted) {
             getAllOrders(orderBy);
@@ -23,6 +27,14 @@ const Orders: FC = () => {
         }
         dispatch(orderActions.setOrderBy());
     };
+    const sortingOrders = () => {
+        if (checkbox) {
+            getMyOrders('-id', me.profile.name);
+        } else {
+            getAllOrders('-id');
+        }
+        dispatch(orderActions.setCheckBox());
+    }
     const orderById = () => {
         sortingRevers('id');
     };
@@ -68,16 +80,23 @@ const Orders: FC = () => {
     const orderByManager = () => {
         sortingRevers('manager');
     };
+    const handler = () => {
+        sortingOrders();
+    };
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        getAllOrders('-id');
-    }, [dispatch, getAllOrders, query, trigger, triggerComment]);
+        getAllOrders('-id', me.profile.name);
+        }, [dispatch, getAllOrders, query, trigger, triggerComment]);
 
     return (
         <div>
             <div>
+                <label htmlFor="myOrders">
+                    <input type="checkbox" defaultChecked name="myOrders" onClick={handler}/>
+                    My orders
+                </label>
                 <button onClick={orderById}>id</button>
                 <button onClick={orderByName}>name</button>
                 <button onClick={orderBySurName}>surname</button>

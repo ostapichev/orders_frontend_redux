@@ -9,7 +9,7 @@ import {useAppDispatch} from "../../hooks";
 
 
 interface IProps {
-    order_id: number
+    order_id: number;
 }
 
 const CommentForm: FC<IProps> = ({order_id}) => {

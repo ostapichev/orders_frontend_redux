@@ -18,6 +18,7 @@ export interface IOrder {
     created_at: string;
     group: number;
     manager?: IProfile;
+    me: string;
     msg?: string;
     utm?: string;
     comments: IComment[];

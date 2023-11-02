@@ -12,7 +12,7 @@ import {orderValidator} from "../../validators";
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
     const {groups, trigger} = useAppSelector(state => state.groupReducer);
-    const {orderUpdate, orderCreate} = useAppSelector(state => state.orderReducer);
+    const {orderUpdate, orderCreate, me} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
         mode: "all",
         resolver: joiResolver(orderValidator)
@@ -42,8 +42,9 @@ const OrderForm: FC = () => {
             setValue('course_type', orderUpdate.course_type);
             setValue('status', orderUpdate.status);
             setValue('group', orderUpdate.group);
+            setValue('me', me);
         }
-    }, [orderUpdate, setValue]);
+    }, [orderUpdate, setValue, me]);
 
     return (
         <div>

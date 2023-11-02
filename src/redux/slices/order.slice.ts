@@ -7,6 +7,8 @@ import {orderService} from "../../services";
 
 interface IState {
     orders: IOrder[];
+    me?: string;
+    checkbox: boolean;
     errors: IErrorOrder;
     nextPage?: number;
     prevPage?: number;
@@ -20,6 +22,8 @@ interface IState {
 
 const initialState: IState = {
     orders: [],
+    me: null,
+    checkbox: false,
     errors: null,
     nextPage: null,
     prevPage: null,
@@ -31,11 +35,11 @@ const initialState: IState = {
     totalPages: 1
 };
 
-const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string}> (
+const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manager: string}> (
     'orderSlice/getAll',
-    async ({page, order_by}, {rejectWithValue}) => {
+    async ({page, order_by, manager}, {rejectWithValue}) => {
         try {
-            const {data} = await orderService.getAll(page, order_by);
+            const {data} = await orderService.getAll(page, order_by, manager);
             await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
@@ -92,8 +96,11 @@ const slice = createSlice({
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
         },
-        setOrderBy: (state) => {
+        setOrderBy: state => {
             state.sorted = !state.sorted;
+        },
+        setCheckBox: state => {
+            state.checkbox = !state.checkbox;
         }
     },
     extraReducers: builder =>
