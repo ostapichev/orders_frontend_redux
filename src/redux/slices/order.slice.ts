@@ -23,7 +23,7 @@ interface IState {
 const initialState: IState = {
     orders: [],
     me: null,
-    checkbox: false,
+    checkbox: true,
     errors: null,
     nextPage: null,
     prevPage: null,

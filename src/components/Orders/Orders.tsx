@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import {Order} from "../Order/Order";
@@ -6,7 +6,14 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
+interface CheckboxState {
+    isChecked: boolean;
+}
+
 const Orders: FC = () => {
+    const [checkboxState, setCheckboxState] = useState<CheckboxState>({
+        isChecked: localStorage.getItem('checkboxState') === 'false',
+    });
     const dispatch = useAppDispatch();
     const {orders, trigger, sorted, checkbox} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
@@ -28,6 +35,7 @@ const Orders: FC = () => {
         dispatch(orderActions.setOrderBy());
     };
     const sortingOrders = () => {
+        console.log(checkbox);
         if (checkbox) {
             getMyOrders('-id', me.profile.name);
         } else {
@@ -80,21 +88,26 @@ const Orders: FC = () => {
     const orderByManager = () => {
         sortingRevers('manager');
     };
-    const handler = () => {
+    const handler = (): void => {
+        const newState = !checkboxState.isChecked;
+        setCheckboxState({
+            isChecked: newState,
+        });
+        localStorage.setItem('checkboxState', newState.toString());
         sortingOrders();
     };
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        getAllOrders('-id', me.profile.name);
-        }, [dispatch, getAllOrders, query, trigger, triggerComment, me]);
+        checkbox ? getMyOrders('-id', me.profile.name) : getAllOrders('-id', '');
+        }, [dispatch, getAllOrders, query, trigger, triggerComment, me, checkbox, getMyOrders]);
 
     return (
         <div>
             <div>
                 <label htmlFor="myOrders">
-                    <input type="checkbox" defaultChecked name="myOrders" onClick={handler}/>
+                    <input type="checkbox" name="myOrders" onClick={handler}/>
                     My orders
                 </label>
                 <button onClick={orderById}>id</button>
