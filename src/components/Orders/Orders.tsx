@@ -88,7 +88,7 @@ const Orders: FC = () => {
     }, []);
     useEffect( () => {
         getAllOrders('-id', me.profile.name);
-        }, [dispatch, getAllOrders, query, trigger, triggerComment]);
+        }, [dispatch, getAllOrders, query, trigger, triggerComment, me]);
 
     return (
         <div>
