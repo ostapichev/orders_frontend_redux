@@ -4,6 +4,7 @@ import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
 import {authActions, userActions} from "../../redux";
 import {useAppDispatch} from "../../hooks";
+import {UserStatistic} from "../UserStatistic/UserStatistic";
 
 
 interface IProps {
@@ -38,6 +39,7 @@ const User: FC<IProps> = ({user}) => {
                 <li>surname: {profile.surname}</li>
                 <li>is active: {is_active === true ? 'yes' : 'no'}</li>
                 <li>last login: {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}</li>
+                <UserStatistic userId={id}/>
                 <div>
                     <button onClick={(event) => is_active === true ? ban(event) : unban(event)}>
                         {is_active === true ? 'ban' : 'unban'}
@@ -45,6 +47,7 @@ const User: FC<IProps> = ({user}) => {
                     <button onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
                         {is_active === true ? 'recovery password' : 'activate user'}</button>
                 </div>
+                <hr/>
             </ul>
         </div>
     );

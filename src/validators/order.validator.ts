@@ -88,7 +88,7 @@ const orderValidator = Joi.object({
             'string.required': 'Course type selection is required'
         }),
     status: Joi.string()
-        .valid('in work', 'new', 'agree', 'disagree', 'dubbing')
+        .valid('in_work', 'new_order', 'agree', 'disagree', 'dubbing')
         .required()
         .messages({
             'string.only': 'Invalid status selection',

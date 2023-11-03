@@ -38,6 +38,7 @@ const Order: FC<IProps> = ({order}) => {
         msg,
         comments,
     } = order;
+    const setUpdate = () => dispatch(orderActions.setOrderUpdate(order));
     const getNameGroup = (group_id: number): string => {
         const group: IGroup = groups.find(group => group.id === group_id);
         return group.name;
@@ -72,7 +73,7 @@ const Order: FC<IProps> = ({order}) => {
                 <div>
                     <div>utm: {utm !== null ? utm : 'no data'}</div>
                     <div>msg: {msg !== null ? msg : 'no data'}</div>
-                    <button onClick={() => dispatch(orderActions.setOrderUpdate(order))}>Edit order</button>
+                    <button onClick={setUpdate}>Edit order</button>
                     <hr/>
                     <CommentForm order_id={id}/>
                         {errors && <p>{errors.comment}</p>}

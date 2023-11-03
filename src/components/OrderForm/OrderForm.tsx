@@ -14,7 +14,7 @@ const OrderForm: FC = () => {
     const {groups, trigger} = useAppSelector(state => state.groupReducer);
     const {orderUpdate, orderCreate, me} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
-        mode: "all",
+        mode: 'all',
         resolver: joiResolver(orderValidator)
     });
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -69,6 +69,7 @@ const OrderForm: FC = () => {
                     <option value="FS">FS</option>
                     <option value="QACX">QACX</option>
                     <option value="JCX">JSCX</option>
+                    <option value="JCX">JCX</option>
                     <option value="FE">FE</option>
                     <option value="PCX">PCX</option>
                 </select>
@@ -90,8 +91,8 @@ const OrderForm: FC = () => {
                     {errors.course_type && <p>{errors.course_type.message}</p>}
                 <label htmlFor="status">Choose status</label>
                 <select name="status" {...register('status')}>
-                    <option value="new">new</option>
-                    <option value="in work">in work</option>
+                    <option value="new_order">new_order</option>
+                    <option value="in_work">in_work</option>
                     <option value="agree">agree</option>
                     <option value="disagree">disagree</option>
                     <option value="dubbing">dubbing</option>

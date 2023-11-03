@@ -7,6 +7,7 @@ const admin = `/admin`;
 const auth = '/auth';
 const comments = '/comments'
 const recoveryPassword = '/recovery_password';
+const statistic = '/statistic';
 const urls = {
     groupsAPI: {
         groups: `${groups}`,
@@ -19,10 +20,15 @@ const urls = {
     },
 
     usersAPI: {
-        users: `${users}`,
+        users: `${users}`
+    },
+
+    adminAPI: {
         createUser: `${admin}${users}`,
+        orderStatistic: `${admin}${statistic}${orders}`,
+        userStatistic: (id: string): string => `${admin}${statistic}${users}/${id}`,
         banUser: (id: string): string => `${admin}${users}/${id}/ban`,
-        unbanUser: (id: string): string => `${admin}${users}/${id}/unban`
+        unbanUser: (id: string): string => `${admin}${users}/${id}/unban`,
     },
 
     authAPI: {

@@ -11,7 +11,7 @@ const Group: FC<IProps> = ({group}) => {
     const {id, name} = group;
 
     return (
-        <option value={id}>{name}</option>
+        <option value={id}>{name.toString()}</option>
     );
 };
 

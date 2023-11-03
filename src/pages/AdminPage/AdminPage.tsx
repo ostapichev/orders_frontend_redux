@@ -1,7 +1,7 @@
 import {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
-import {Loading, UserForm, Users} from "../../components";
+import {Loading, OrderStatistic, UserForm, Users} from "../../components";
 import {Link} from "react-router-dom";
 import {UserPagination} from "../../components/UserPagination/UserPagination";
 
@@ -16,6 +16,7 @@ const AdminPage: FC = () => {
                     <Link to={'/orders'}>go to site</Link>
                 </li>
             </ul>
+            <OrderStatistic/>
             <UserForm/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}

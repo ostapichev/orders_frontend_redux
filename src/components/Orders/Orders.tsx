@@ -4,95 +4,58 @@ import {useSearchParams} from "react-router-dom";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {SubmitHandler} from "react-hook-form";
+import {IOrderBy, ISortingReverse} from "../../types";
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const {orders, trigger, sorted, checkbox} = useAppSelector(state => state.orderReducer);
-    console.log(checkbox);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const getAllOrders = useCallback((sorting: string, manager='') => {
-        console.log('getAllOrders');
         dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
         },[dispatch, query]);
     const getMyOrders = useCallback((sorting: string, manager: string) => {
-        console.log('getMyOrders');
         dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
     },[dispatch, query]);
-    const sortingRevers = (orderBy: string) => {
+    const sortingReverse: ISortingReverse = (orderBy: string) => {
         sorted ? getAllOrders(orderBy) : getAllOrders(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
     };
-    const sortingOrders = () => {
+    const sortingOrders: IOrderBy = () => {
         checkbox ? getMyOrders('-id', me.profile.name) : getAllOrders('-id');
         dispatch(orderActions.setCheckBox());
     };
-    const orderById = () => {
-        sortingRevers('id');
-    };
-    const orderByName = () => {
-        sortingRevers('name');
-    };
-    const orderBySurName = () => {
-        sortingRevers('surname');
-    };
-    const orderByEmail = () => {
-        sortingRevers('email');
-    };
-    const orderByPhone = () => {
-        sortingRevers('phone');
-    };
-    const orderByAge = () => {
-        sortingRevers('age');
-    };
-    const orderByCourse = () => {
-        sortingRevers('course');
-    };
-    const orderByCourseFormat = () => {
-        sortingRevers('course_format');
-    };
-    const orderByCourseType = () => {
-        sortingRevers('course_type');
-    };
-    const orderByStatus = () => {
-        sortingRevers('status');
-    };
-    const orderBySum = () => {
-        sortingRevers('sum');
-    };
-    const orderAlReadyPaid = () => {
-        sortingRevers('already_paid');
-    };
-    const orderByGroup: SubmitHandler<any> = () => {
-        sortingRevers('group');
-    };
-    const orderByCreated = () => {
-        sortingRevers('created_at');
-    };
-    const orderByManager = () => {
-        sortingRevers('manager');
-    };
-    const handler = (): void => {
-        sortingOrders();
-    };
+    const orderById: IOrderBy = () => sortingReverse('id');
+    const orderByName: IOrderBy = () => sortingReverse('name');
+    const orderBySurName: IOrderBy = () => sortingReverse('surname');
+    const orderByEmail: IOrderBy = () => sortingReverse('email');
+    const orderByPhone: IOrderBy = () => sortingReverse('phone');
+    const orderByAge: IOrderBy = () => sortingReverse('age');
+    const orderByCourse: IOrderBy = () => sortingReverse('course');
+    const orderByCourseFormat: IOrderBy = () => sortingReverse('course_format');
+    const orderByCourseType: IOrderBy = () => sortingReverse('course_type');
+    const orderByStatus: IOrderBy = () => sortingReverse('status');
+    const orderBySum: IOrderBy = () => sortingReverse('sum');
+    const orderAlReadyPaid: IOrderBy = () => sortingReverse('already_paid');
+    const orderByGroup: IOrderBy = () => sortingReverse('group');
+    const orderByCreated: IOrderBy = () => sortingReverse('created_at');
+    const orderByManager: IOrderBy = () => sortingReverse('manager');
+    const handler: IOrderBy = () => sortingOrders();
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        console.log('useEffect');
-        console.log(checkbox);
-        checkbox ? getAllOrders('-id', '') : getMyOrders('-id', me.profile.name);
+        checkbox ? getMyOrders('-id', me.profile.name) : getAllOrders('-id', '');
         }, [dispatch, getAllOrders, trigger, triggerComment, me, checkbox, getMyOrders]);
 
     return (
         <div>
             <div>
                 <label htmlFor="myOrders">
-                    <input type="checkbox" name="myOrders" checked={!checkbox} onChange={handler}/>
+                    <input type="checkbox" name="myOrders" checked={checkbox} onChange={handler}/>
                     My orders
                 </label>
                 <button onClick={orderById}>id</button>
