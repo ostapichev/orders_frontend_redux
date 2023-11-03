@@ -1,19 +1,20 @@
 import {FC, useEffect} from 'react';
+
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {userActions} from "../../redux";
 
 
 interface IProps {
-    userId: number;
+    id: number;
 }
 
-const UserStatistic: FC<IProps> = ({userId}) => {
+const UserStatistic: FC<IProps> = ({id}) => {
     const {userStatistic} = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
     const {count_orders, in_work, agree} = userStatistic;
     useEffect(() => {
-        dispatch(userActions.getStatisticUser({id: userId}));
-    }, [dispatch, userId]);
+        dispatch(userActions.getStatisticUser({id}));
+    }, [dispatch, id]);
 
     return (
         <div>

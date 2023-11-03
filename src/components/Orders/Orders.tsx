@@ -1,10 +1,10 @@
 import {FC, useCallback, useEffect, useRef} from 'react';
 import {useSearchParams} from "react-router-dom";
 
+import {IOrderBy, ISortingReverse} from "../../types";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {IOrderBy, ISortingReverse} from "../../types";
 
 
 const Orders: FC = () => {

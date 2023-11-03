@@ -13,6 +13,7 @@ interface IState {
     prevPage?: number;
     userUpdate: boolean;
     trigger: boolean;
+    statisticTrigger: boolean;
     loading: boolean;
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
@@ -26,6 +27,7 @@ const initialState: IState = {
     prevPage: null,
     userUpdate: null,
     trigger: false,
+    statisticTrigger: false,
     loading: false,
     orderStatistic: {},
     userStatistic: {},
@@ -37,6 +39,7 @@ const getAll = createAsyncThunk<IUser[], {page: string}> (
     async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await adminService.getAll(page);
+            await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
@@ -57,7 +60,7 @@ const create = createAsyncThunk<void, {user: IUser}> (
     }
 );
 
-const ban = createAsyncThunk<void, {user: IUser, id: string}> (
+const ban = createAsyncThunk<void, {id: string}> (
     'userSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -69,7 +72,7 @@ const ban = createAsyncThunk<void, {user: IUser, id: string}> (
     }
 );
 
-const unban = createAsyncThunk<void, {user: IUser, id: string}> (
+const unban = createAsyncThunk<void, {id: string}> (
     'userSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -98,7 +101,9 @@ const getStatisticUser = createAsyncThunk<IOrderStatistic, {id: number}> (
     'userSlice/getStatisticUser',
     async ({id}, {rejectWithValue}) => {
         try {
-            const {data} = await adminService.getStatisticUser(id.toString());
+            console.log(id);
+            const {data} = await adminService.getStatisticUser(id.toString())
+            console.log(data);
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -137,6 +142,8 @@ const slice = createSlice({
             })
             .addCase(getStatisticUser.fulfilled, (state, action) => {
                 state.userStatistic = action.payload;
+                state.loading = false;
+                state.statisticTrigger = !state.statisticTrigger;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;

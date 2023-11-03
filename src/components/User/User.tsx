@@ -16,10 +16,10 @@ const User: FC<IProps> = ({user}) => {
     const dispatch = useAppDispatch();
     const formData: FormData = new FormData();
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(userActions.ban({id: user.id.toString(), user}));
+        await dispatch(userActions.ban({id: user.id.toString()}));
     };
     const unban: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(userActions.unban({id: user.id.toString(), user}));
+        await dispatch(userActions.unban({id: user.id.toString()}));
     };
     const activateUser: MouseEventHandler<HTMLButtonElement> = async () => {
         formData.append('email', user.email);
@@ -39,13 +39,14 @@ const User: FC<IProps> = ({user}) => {
                 <li>surname: {profile.surname}</li>
                 <li>is active: {is_active === true ? 'yes' : 'no'}</li>
                 <li>last login: {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}</li>
-                <UserStatistic userId={id}/>
+                <UserStatistic id={id}/>
                 <div>
                     <button onClick={(event) => is_active === true ? ban(event) : unban(event)}>
                         {is_active === true ? 'ban' : 'unban'}
                     </button>
                     <button onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
-                        {is_active === true ? 'recovery password' : 'activate user'}</button>
+                        {is_active === true ? 'recovery password' : 'activate user'}
+                    </button>
                 </div>
                 <hr/>
             </ul>
