@@ -12,7 +12,9 @@ class OrderService {
         return axiosService.post(urls.groupsAPI.createOrder(groupId), order);
     };
     createExelFile(): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.createExel);
+        return axiosService.get(urls.ordersAPI.createExel, {
+            responseType: 'blob'
+        });
     }
     updateById(id: string, order: IOrder): IRes<IOrder> {
         return axiosService.patch(urls.ordersAPI.byID(id), order);

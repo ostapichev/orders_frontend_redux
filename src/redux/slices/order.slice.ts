@@ -24,6 +24,7 @@ interface IState {
     loading: boolean;
     sorted: boolean;
     totalPages: number;
+    fileDataURL?: string;
 }
 
 const initialState: IState = {
@@ -38,7 +39,8 @@ const initialState: IState = {
     trigger: false,
     loading: false,
     sorted: true,
-    totalPages: 1
+    totalPages: 1,
+    fileDataURL: null,
 };
 
 const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manager: string}> (
@@ -78,12 +80,15 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}> (
     }
 );
 
-const getExelFile = createAsyncThunk<IOrder[], void> (
+const getExelFile = createAsyncThunk<string, void> (
     'orderSlice/getExelFile',
     async (_, {rejectWithValue}) => {
         try {
-            const {data} = await orderService.createExelFile();
-            return data.result;
+            const response: any = await orderService.createExelFile();
+            console.log(response);
+            const blob = new Blob([response.data], { type: response.headers['content-type'] });
+            const fileDataURL = URL.createObjectURL(blob);
+            return fileDataURL;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -120,6 +125,12 @@ const slice = createSlice({
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
+        },
+        setFileData: (state, action) => {
+            state.fileDataURL = action.payload;
+        },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
         }
     },
     extraReducers: builder =>
@@ -132,6 +143,11 @@ const slice = createSlice({
             })
             .addCase(getTotalPages.fulfilled, (state, action) => {
                 state.totalPages = action.payload;
+            })
+            .addCase(getExelFile.fulfilled, (state, action) => {
+                state.fileDataURL = action.payload;
+                state.loading = false;
+                state.errors = null;
             })
             .addMatcher(isFulfilled(create, update), state => {
                 state.trigger = !state.trigger;
