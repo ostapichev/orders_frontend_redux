@@ -85,10 +85,8 @@ const getExelFile = createAsyncThunk<string, void> (
     async (_, {rejectWithValue}) => {
         try {
             const response: any = await orderService.createExelFile();
-            console.log(response);
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
-            const fileDataURL = URL.createObjectURL(blob);
-            return fileDataURL;
+            return URL.createObjectURL(blob);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -101,7 +99,6 @@ const getTotalPages = createAsyncThunk<number, void> (
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await orderService.getTotalPages();
-            console.log(data.total_pages);
             return data.total_pages;
         } catch (e) {
             const err = e as AxiosError;
