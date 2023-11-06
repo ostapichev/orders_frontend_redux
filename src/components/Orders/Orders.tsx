@@ -1,6 +1,7 @@
-import {FC, useCallback, useEffect, useRef} from 'react';
+import React, {FC, useCallback, useEffect, useRef} from 'react';
 import {useSearchParams} from "react-router-dom";
 
+import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IOrderBy, ISortingReverse} from "../../types";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
@@ -44,6 +45,9 @@ const Orders: FC = () => {
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
     const handler: IOrderBy = () => sortingOrders();
+    const createExelFile = () => {
+        dispatch(orderActions.getExelFile());
+    };
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
@@ -58,6 +62,8 @@ const Orders: FC = () => {
                     <input type="checkbox" name="myOrders" checked={checkbox} onChange={handler}/>
                     My orders
                 </label>
+                <GetExelFile/>
+                <button onClick={createExelFile}>Create exel file</button>
                 <button onClick={orderById}>id</button>
                 <button onClick={orderByName}>name</button>
                 <button onClick={orderBySurName}>surname</button>

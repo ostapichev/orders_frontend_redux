@@ -2,6 +2,7 @@ export * from './ActivateForm/ActivateForm';
 export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
 export * from './DateFormat/DateFormat';
+export * from './GetExelFile/GetExelFile';
 export * from './GroupForm/GroupForm';
 export * from './Group/Group';
 export * from './Header/Header';

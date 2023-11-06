@@ -16,6 +16,7 @@ const urls = {
 
     ordersAPI: {
         orders: `${orders}`,
+        createExel: `${orders}/exel`,
         byID: (id: string): string => `${orders}/${id}`
     },
 

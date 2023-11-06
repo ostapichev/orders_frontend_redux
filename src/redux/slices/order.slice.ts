@@ -1,5 +1,11 @@
 import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createSlice,
+    isFulfilled,
+    isPending,
+    isRejectedWithValue
+} from "@reduxjs/toolkit";
 
 import {IErrorOrder, IOrder} from "../../interfaces";
 import {orderService} from "../../services";
@@ -72,6 +78,19 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}> (
     }
 );
 
+const getExelFile = createAsyncThunk<IOrder[], void> (
+    'orderSlice/getExelFile',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await orderService.createExelFile();
+            return data.result;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
 const getTotalPages = createAsyncThunk<number, void> (
     'orderSlice/getTotalPages',
     async (_, {rejectWithValue}) => {
@@ -137,6 +156,7 @@ const orderActions = {
     getAll,
     create,
     update,
+    getExelFile,
     getTotalPages
 };
 

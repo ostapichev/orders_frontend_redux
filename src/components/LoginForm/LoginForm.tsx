@@ -6,7 +6,7 @@ import {authActions} from "../../redux";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import {useAppDispatch} from "../../hooks";
 
 
 const LoginForm: FC = () => {
