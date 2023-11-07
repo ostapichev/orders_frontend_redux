@@ -11,10 +11,12 @@ const GetExelFile: FC = () => {
     const handleDownload: MouseEventHandler<HTMLButtonElement> = async () => {
         dispatch(orderActions.getExelFile());
         if (fileDataURL) {
-            const newWindow = window.open(fileDataURL);
-            if (newWindow) {
-                newWindow.focus();
-            }
+            const downloadLink = document.createElement('a');
+            downloadLink.href = fileDataURL;
+            downloadLink.download = 'orders_data.xlsx';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         }
     };
 
