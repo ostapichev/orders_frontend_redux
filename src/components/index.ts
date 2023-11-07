@@ -1,4 +1,5 @@
 export * from './ActivateForm/ActivateForm';
+export * from './Button/Button';
 export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
 export * from './DateFormat/DateFormat';

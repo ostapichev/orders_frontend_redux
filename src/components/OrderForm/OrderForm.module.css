@@ -1,0 +1,25 @@
+.of {
+    display: none;
+    width: 300px;
+    height: 200px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.of h2 {
+    margin-bottom: 20px;
+}
+
+.of.open {
+    display: block;
+}
+
+.of.closed {
+    display: none;
+}

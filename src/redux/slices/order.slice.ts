@@ -16,15 +16,13 @@ interface IState {
     me?: string;
     checkbox: boolean;
     errors: IErrorOrder;
-    nextPage?: number;
-    prevPage?: number;
     orderUpdate: IOrder;
     orderCreate: string;
     trigger: boolean;
     loading: boolean;
     sorted: boolean;
-    totalPages: number;
     fileDataURL?: string;
+    openForm: boolean;
 }
 
 const initialState: IState = {
@@ -32,15 +30,13 @@ const initialState: IState = {
     me: null,
     checkbox: false,
     errors: null,
-    nextPage: null,
-    prevPage: null,
     orderUpdate: null,
     orderCreate: null,
     trigger: false,
     loading: false,
     sorted: true,
-    totalPages: 1,
     fileDataURL: null,
+    openForm: false,
 };
 
 const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manager: string}> (
@@ -94,25 +90,13 @@ const getExelFile = createAsyncThunk<string, void> (
     }
 );
 
-const getTotalPages = createAsyncThunk<number, void> (
-    'orderSlice/getTotalPages',
-    async (_, {rejectWithValue}) => {
-        try {
-            const {data} = await orderService.getTotalPages();
-            return data.total_pages;
-        } catch (e) {
-            const err = e as AxiosError;
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const slice = createSlice({
     name: 'orderSlice',
     initialState,
     reducers: {
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
+            state.openForm = true;
         },
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
@@ -122,7 +106,13 @@ const slice = createSlice({
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
-        }
+        },
+        openForm: (state) => {
+            state.openForm = true;
+        },
+        closeForm: (state) => {
+            state.openForm = false;
+        },
     },
     extraReducers: builder =>
         builder
@@ -131,9 +121,6 @@ const slice = createSlice({
             })
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
-            })
-            .addCase(getTotalPages.fulfilled, (state, action) => {
-                state.totalPages = action.payload;
             })
             .addCase(getExelFile.fulfilled, (state, action) => {
                 state.fileDataURL = action.payload;
@@ -163,8 +150,7 @@ const orderActions = {
     getAll,
     create,
     update,
-    getExelFile,
-    getTotalPages
+    getExelFile
 };
 
 export {

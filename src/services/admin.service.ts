@@ -21,10 +21,10 @@ class AdminService {
         return axiosService.patch(urls.adminAPI.unbanUser(id));
     };
     getStatisticOrder(): IRes<IOrderStatistic> {
-        return axiosService.get((urls.adminAPI.orderStatistic));
+        return axiosService.get(urls.adminAPI.orderStatistic);
     };
     getStatisticUser(id: string): IRes<IUserStatistic> {
-        return axiosService.get((urls.adminAPI.userStatistic(id)));
+        return axiosService.get(urls.adminAPI.userStatistic(id));
     };
     getTotalPages(): IResPaginate<IUser[]> {
         return axiosService.get(urls.usersAPI.users);

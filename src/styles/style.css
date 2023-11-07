@@ -1,0 +1,39 @@
+.form {
+    display: none;
+    width: 300px;
+    height: 200px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form h2 {
+    margin-bottom: 20px;
+}
+
+.form.open {
+    display: block;
+}
+
+.form.closed {
+    display: none;
+}
+
+.button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

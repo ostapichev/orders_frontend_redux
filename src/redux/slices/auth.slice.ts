@@ -105,6 +105,7 @@ const slice = createSlice({
             .addMatcher(isFulfilled(login, me), (state, action) => {
                 state.loading = false;
                 state.me = action.payload;
+                state.error = null;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;

@@ -1,0 +1,13 @@
+.btn_opn_f {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn_opn_f:hover {
+    background-color: #0056b3;
+}

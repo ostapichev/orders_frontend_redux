@@ -1,0 +1,7 @@
+.bg_lf {
+    background-color: #00C5CD;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

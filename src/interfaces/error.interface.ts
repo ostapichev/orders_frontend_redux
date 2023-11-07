@@ -16,7 +16,7 @@ export interface IErrorOrder extends IErrorUser {
 }
 
 export interface IErrorAuth {
-    detail?: string;
+    detail?: string[];
 }
 
 export interface IErrorComment {

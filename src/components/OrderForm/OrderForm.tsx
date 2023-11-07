@@ -12,7 +12,7 @@ import {orderValidator} from "../../validators";
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
     const {groups, trigger} = useAppSelector(state => state.groupReducer);
-    const {orderUpdate, orderCreate, me} = useAppSelector(state => state.orderReducer);
+    const {orderUpdate, orderCreate, me, openForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
         mode: 'all',
         resolver: joiResolver(orderValidator)
@@ -24,6 +24,9 @@ const OrderForm: FC = () => {
     const save: SubmitHandler<IOrder> = async (order) => {
         await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
+    };
+    const handleClose = () => {
+        dispatch(orderActions.closeForm());
     };
     useEffect(() => {
         dispatch(groupActions.getAll());
@@ -47,7 +50,7 @@ const OrderForm: FC = () => {
     }, [orderUpdate, setValue, me]);
 
     return (
-        <div>
+        <div className={`form ${openForm ? 'open' : 'closed'}`}>
             <h3>Create or update order</h3>
             <form onSubmit={handleSubmit(orderUpdate ? update : save)}>
                 <input type="text" placeholder={'name'}{...register('name')}/>
@@ -108,6 +111,7 @@ const OrderForm: FC = () => {
                     {errors.group && <p>{errors.group.message}</p>}
                 <button disabled={!isValid}>{orderUpdate? 'Update' : 'Save'}</button>
             </form>
+            <button onClick={handleClose}>Close Form</button>
             <hr/>
         </div>
     );

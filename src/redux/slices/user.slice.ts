@@ -9,8 +9,6 @@ import {IOrderStatistic, IUserStatistic} from "../../interfaces/statistic.interf
 interface IState {
     users: IUser[];
     errors: IErrorUser;
-    nextPage?: number;
-    prevPage?: number;
     userUpdate: boolean;
     trigger: boolean;
     statisticTrigger: boolean;
@@ -23,8 +21,6 @@ interface IState {
 const initialState: IState = {
     users: [],
     errors: null,
-    nextPage: null,
-    prevPage: null,
     userUpdate: null,
     trigger: false,
     statisticTrigger: false,

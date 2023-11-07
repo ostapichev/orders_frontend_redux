@@ -2,12 +2,16 @@ import {FC, useEffect} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {orderActions} from "../../redux";
+import {userActions} from "../../redux";
 
 
 const OrdersPagination: FC = () => {
     const dispatch = useAppDispatch();
-    const {loading, totalPages} = useAppSelector((state) => state.orderReducer);
+    const {loading, checkbox} = useAppSelector(state => state.orderReducer);
+    const {orderStatistic} = useAppSelector(state => state.userReducer);
+    const {item_count} = orderStatistic;
+    const lastPage = Math.ceil(item_count / 3);
+    console.log(lastPage, checkbox);
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = async () => {
@@ -17,13 +21,13 @@ const OrdersPagination: FC = () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
     useEffect(() => {
-        dispatch(orderActions.getTotalPages());
-    }, [dispatch]);
+        dispatch(userActions.getStatisticOrder());
+    }, [dispatch, checkbox]);
 
     return (
         <div>
             <button disabled={loading || currentPage === 1} onClick={prev}>prev</button>
-            <button disabled={loading || currentPage === totalPages} onClick={next}>next</button>
+            <button disabled={loading || currentPage === lastPage} onClick={next}>next</button>
         </div>
     );
 };

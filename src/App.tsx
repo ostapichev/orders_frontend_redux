@@ -4,6 +4,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {AdminPage, LoginPage, OrdersPage, ActivatePage, RecoveryPasswordPage} from "./pages";
 import {MainLayout} from "./layouts";
 import {RequiredAuth} from "./hoc";
+import './styles/style.css';
 
 
 const App: FC = () => {

@@ -1,21 +1,14 @@
 import {FC} from 'react';
-import {useSearchParams} from "react-router-dom";
 
 import {LoginForm} from "../../components";
-import {useAppSelector} from "../../hooks";
+
+import css from './LoginPage.module.css'
 
 
 const LoginPage: FC = () => {
-    const {error} = useAppSelector(state => state.authReducer)
-    const [query,] = useSearchParams();
-
     return (
-        <div>
-            {
-                query.get('expSession') && <p>Please login!</p>
-            }
+        <div className={css.bg_lf}>
             <LoginForm/>
-            {error?.detail && <p>{error.detail}</p>}
         </div>
     );
 };

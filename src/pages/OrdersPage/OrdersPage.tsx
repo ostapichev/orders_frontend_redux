@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {Link} from "react-router-dom";
 
-import {GroupForm, Loading, OrderForm, Orders} from "../../components";
+import {Button, GroupForm, Loading, OrderForm, Orders} from "../../components";
 import {useAppSelector} from "../../hooks";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
@@ -20,6 +20,7 @@ const OrdersPage: FC = () => {
             }
             <GroupForm/>
             <OrderForm/>
+            <Button/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}

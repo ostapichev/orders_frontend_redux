@@ -1,9 +1,9 @@
 import {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
-import {Loading, OrderStatistic, UserForm, Users} from "../../components";
-import {Link} from "react-router-dom";
 import {UserPagination} from "../../components/UserPagination/UserPagination";
+import {Link} from "react-router-dom";
+import {Loading, OrderStatistic, UserForm, Users} from "../../components";
 
 
 const AdminPage: FC = () => {
