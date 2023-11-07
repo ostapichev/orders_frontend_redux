@@ -45,9 +45,6 @@ const Orders: FC = () => {
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
     const handler: IOrderBy = () => sortingOrders();
-    const createExelFile = () => {
-        dispatch(orderActions.getExelFile());
-    };
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
@@ -63,7 +60,6 @@ const Orders: FC = () => {
                     My orders
                 </label>
                 <GetExelFile/>
-                <button onClick={createExelFile}>Create exel file</button>
                 <button onClick={orderById}>id</button>
                 <button onClick={orderByName}>name</button>
                 <button onClick={orderBySurName}>surname</button>

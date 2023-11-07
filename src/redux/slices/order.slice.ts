@@ -122,12 +122,6 @@ const slice = createSlice({
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
-        },
-        setFileData: (state, action) => {
-            state.fileDataURL = action.payload;
-        },
-        setLoading: (state, action) => {
-            state.loading = action.payload;
         }
     },
     extraReducers: builder =>

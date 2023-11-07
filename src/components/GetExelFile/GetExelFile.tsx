@@ -1,8 +1,8 @@
 import {FC, MouseEventHandler} from 'react';
 
+import {Loading} from "../Loading/Loading";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {orderActions} from "../../redux";
-import {Loading} from "../Loading/Loading";
 
 
 const GetExelFile: FC = () => {
