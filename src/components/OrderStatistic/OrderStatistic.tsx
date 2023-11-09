@@ -3,6 +3,8 @@ import {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {userActions} from "../../redux";
 
+import css from './OrderStatistic.module.css';
+
 
 const OrderStatistic: FC = () => {
     const {orderStatistic} = useAppSelector(state => state.userReducer);
@@ -13,14 +15,31 @@ const OrderStatistic: FC = () => {
     }, [dispatch]);
 
     return (
-        <div>
-            <h3>Orders statistic</h3>
-            <p>item count: {item_count}</p>
-            <p>in work: {in_work}</p>
-            <p>new order: {new_order}</p>
-            <p>agree: {agree}</p>
-            <p>disagree: {disagree}</p>
-            <p>dubbing: {dubbing}</p>
+        <div className={css.statistic_container}>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{item_count}</div>
+                <div className={css.count_name}>item count</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{in_work}</div>
+                <div className={css.count_name}>in work</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{new_order}</div>
+                <div className={css.count_name}>new order</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{agree}</div>
+                <div className={css.count_name}>agree</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{disagree}</div>
+                <div className={css.count_name}>disagree</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{dubbing}</div>
+                <div className={css.count_name}>dubbing</div>
+            </div>
         </div>
     );
 };

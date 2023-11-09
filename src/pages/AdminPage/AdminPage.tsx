@@ -2,20 +2,16 @@ import {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
 import {UserPagination} from "../../components/UserPagination/UserPagination";
-import {Link} from "react-router-dom";
-import {Loading, OrderStatistic, UserForm, Users} from "../../components";
+import {Button, Loading, OrderStatistic, UserForm, Users} from "../../components";
+
+import css from './AdminPage.module.css';
 
 
 const AdminPage: FC = () => {
     const {loading, errors} = useAppSelector(state => state.userReducer);
 
     return (
-        <div>
-            <ul>
-                <li>
-                    <Link to={'/orders'}>go to site</Link>
-                </li>
-            </ul>
+        <div className={css.admin_page}>
             <OrderStatistic/>
             <UserForm/>
             {errors?.name && <p>{errors.name}</p>}

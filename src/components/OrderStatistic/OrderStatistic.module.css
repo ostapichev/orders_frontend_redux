@@ -1,0 +1,30 @@
+.statistic_container {
+    width: 95vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.statistic_block {
+    align-items: center;
+    background-color: #F0EAD6;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    justify-content: center;
+    margin: 20px 0;
+    width: 150px;
+    min-width: 120px;
+}
+
+.count {
+    color: #708090;
+    font: 18pt Helvetica, sans-serif;
+}
+
+.count_name {
+    color: #696969;
+    font: 14pt Georgia, serif;
+}

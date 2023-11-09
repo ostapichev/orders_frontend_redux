@@ -1,0 +1,6 @@
+.admin_page {
+    background: #F5F5F5;
+    min-width: 800px;
+    display: flex;
+    flex-direction: column;
+}

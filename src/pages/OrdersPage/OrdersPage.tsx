@@ -1,5 +1,4 @@
 import {FC} from 'react';
-import {Link} from "react-router-dom";
 
 import {Button, GroupForm, Loading, OrderForm, Orders} from "../../components";
 import {useAppSelector} from "../../hooks";
@@ -8,19 +7,12 @@ import {OrdersPagination} from "../../components/OrdersPagination/OrdersPaginati
 
 const OrdersPage: FC = () => {
     const {loading, errors} = useAppSelector(state => state.orderReducer);
-    const {me} = useAppSelector(state => state.authReducer);
-    const isAdmin = me?.is_superuser || false;
 
     return (
         <div>
-            { isAdmin &&
-                <ul>
-                    <li><Link to={'/admin'}>admin panel</Link></li>
-                </ul>
-            }
             <GroupForm/>
             <OrderForm/>
-            <Button/>
+            <Button buttonName={'Open Form'}/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}

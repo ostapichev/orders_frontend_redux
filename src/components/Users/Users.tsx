@@ -4,6 +4,9 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {User} from "../User/User";
 import {userActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
+import {Button} from "../Button/Button";
+
+import css from './Users.module.css';
 
 
 const Users: FC = () => {
@@ -19,7 +22,13 @@ const Users: FC = () => {
     }, [dispatch, query, trigger]);
 
     return (
-        <div>
+        <div className={css.table_users}>
+            <div className={css.table_head}>
+                <div className={css.head_user}>Users</div>
+                <div className={css.btn_user_create}>
+                    <Button buttonName={'Create User'}/>
+                </div>
+            </div>
             {
                 users.map(user => <User key={user.id} user={user}/>)
             }

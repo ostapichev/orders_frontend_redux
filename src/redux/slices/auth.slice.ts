@@ -94,6 +94,7 @@ const slice = createSlice({
         logout: state => {
             state.me = null;
             state.error = null;
+            state.loading = false;
             authService.deleteTokens();
         },
         setConfirmError: (state, action) => {
@@ -107,12 +108,17 @@ const slice = createSlice({
                 state.me = action.payload;
                 state.error = null;
             })
+            .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
+                state.loading = false;
+                state.error = null;
+            })
             .addMatcher(isPending(), state => {
                 state.loading = true;
                 state.error = null;
             })
             .addMatcher(isRejectedWithValue(), (state, actions) => {
                 state.error = actions.payload as IErrorAuth;
+                state.loading = false;
             })
 });
 

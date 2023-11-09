@@ -4,15 +4,20 @@ import {orderActions} from "../../redux";
 
 import css from './Button.module.css'
 
-const Button: FC = () => {
+
+interface IProps {
+    buttonName: string;
+}
+
+const Button: FC<IProps> = ({buttonName}) => {
     const dispatch = useAppDispatch();
     const handleOpen = () => {
         dispatch(orderActions.openForm());
     };
 
     return (
-        <div>
-            <button className={css.btn_opn_f} onClick={handleOpen}>Open Form</button>
+        <div className={css.block_button}>
+            <button className={css.btn_open} onClick={handleOpen}>{buttonName}</button>
         </div>
     );
 };

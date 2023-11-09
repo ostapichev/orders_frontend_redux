@@ -1,0 +1,57 @@
+.logo {
+    height: 70px;
+    margin-left: 10px;
+}
+
+.header {
+    background: #D3EAFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 800px;
+    height: 15vh;
+}
+
+.nav_bar {
+    display: flex;
+    justify-content: flex-end;
+    width: 50vw;
+}
+
+.title_username {
+    color: #318CE7;
+    font: 16px Arial, serif;
+    display: flex;
+    align-items: center;
+}
+
+.login_name {
+    font: 25px Helvetica, sans-serif;
+    color: #3134E7;
+    display: flex;
+    align-items: center;
+}
+
+.login_link {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.logout {
+    width: 40px;
+}
+
+a img:hover {
+    transform: scale(1.2);
+}
+
+.user_name {
+    height: 100px;
+    display: flex;
+    margin-right: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

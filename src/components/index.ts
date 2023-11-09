@@ -17,4 +17,4 @@ export * from './RecoveryPasswordForm/RecoveryPasswordForm';
 export * from './User/User';
 export * from './UserForm/UserForm';
 export * from './Users/Users';
-export * from './UserStatistic/UserStatistic';
+export * from './UserStatistics/UserStatistics';

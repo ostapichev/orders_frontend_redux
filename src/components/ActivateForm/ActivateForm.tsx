@@ -13,9 +13,9 @@ import css from '../LoginForm/LoginForm.module.css'
 
 const ActivateForm: FC = () => {
     const {token} = useParams<{token: string}>();
-    const {confirmError, error} = useAppSelector(state => state.authReducer);
+    const {confirmError, error, loading} = useAppSelector(state => state.authReducer);
     const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
-        mode: 'onSubmit',
+        mode: 'all',
         resolver: joiResolver(passwordValidator)
     });
     const dispatch = useAppDispatch();
@@ -38,12 +38,13 @@ const ActivateForm: FC = () => {
         <div className={css.LoginForm}>
             <form className={css.lf} onSubmit={handleSubmit(activateRequestUser)}>
                 <h3>OKTEN IT SCHOOL</h3>
+                <label className={css.form_name}>Activate user form</label>
                 <input type="password" placeholder={'password'} {...register("password")}/>
                 <input type="password" placeholder={'confirm password'} {...register("confirmPassword")}/>
-                <button className={css.btn_login}>Activate</button>
+                <button className={css.btn_login} disabled={loading}>{loading ? 'Loading' : 'Activate'}</button>
                     {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
                     {confirmError && <p className={css.err_login}>{confirmError}</p>}
-                    {error && <p className={css.err_login}>{error.detail}</p>}
+                    {error?.detail && <p className={css.err_login}>{error.detail}</p>}
             </form>
         </div>
     );

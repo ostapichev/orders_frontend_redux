@@ -4,7 +4,9 @@ import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
 import {authActions, userActions} from "../../redux";
 import {useAppDispatch} from "../../hooks";
-import {UserStatistic} from "../UserStatistic/UserStatistic";
+import {UserStatistics} from "../UserStatistics/UserStatistics";
+
+import css from './User.module.css';
 
 
 interface IProps {
@@ -31,25 +33,31 @@ const User: FC<IProps> = ({user}) => {
     };
 
     return (
-        <div>
-            <ul>
-                <li>id: {id}</li>
-                <li>email: {email}</li>
-                <li>name: {profile.name}</li>
-                <li>surname: {profile.surname}</li>
-                <li>is active: {is_active === true ? 'yes' : 'no'}</li>
-                <li>last login: {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}</li>
-                <UserStatistic id={id}/>
-                <div>
-                    <button onClick={(event) => is_active === true ? ban(event) : unban(event)}>
-                        {is_active === true ? 'ban' : 'unban'}
-                    </button>
-                    <button onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
-                        {is_active === true ? 'recovery password' : 'activate user'}
-                    </button>
-                </div>
-                <hr/>
-            </ul>
+        <div className={css.user_container}>
+            <div className={css.block_data}>
+                <p className={css.title_stat}>User data</p>
+                <div>id: {id}</div>
+                <div>email: {email}</div>
+                <div>name: {profile.name}</div>
+                <div>surname: {profile.surname}</div>
+                <div>is active: {is_active === true ? 'yes' : 'no'}</div>
+                <div>last login: {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}</div>
+            </div>
+            <div className={css.block_stat}>
+                <p className={css.title_stat}>Statistics</p>
+                <UserStatistics id={id}/>
+            </div>
+            <div className={css.block_button}>
+                <p className={css.title_stat}>Actions</p>
+                <button className={css.btn_action}
+                        onClick={(event) => is_active === true ? ban(event) : unban(event)}>
+                            {is_active === true ? 'ban' : 'unban'}
+                </button>
+                <button className={css.btn_action}
+                        onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
+                            {is_active === true ? 'recovery password' : 'activate user'}
+                </button>
+            </div>
         </div>
     );
 };

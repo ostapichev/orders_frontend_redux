@@ -8,12 +8,14 @@ import {passwordValidator} from "../../validators";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate, useParams} from "react-router-dom";
 
+import css from "../LoginForm/LoginForm.module.css";
+
 
 const RecoveryPasswordForm: FC = () => {
     const {token} = useParams<{token: string}>();
-    const {confirmError} = useAppSelector(state => state.authReducer);
+    const {confirmError, error} = useAppSelector(state => state.authReducer);
     const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
-        mode: 'onSubmit',
+        mode: 'all',
         resolver: joiResolver(passwordValidator)
     });
     const dispatch = useAppDispatch();
@@ -33,13 +35,16 @@ const RecoveryPasswordForm: FC = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(recoveryRequestUser)}>
+        <div className={css.LoginForm}>
+            <form className={css.lf} onSubmit={handleSubmit(recoveryRequestUser)}>
+                <h3>OKTEN IT SCHOOL</h3>
+                <label className={css.form_name}>Recovery password form</label>
                 <input type="password" placeholder={'password'} {...register("password")}/>
                 <input type="password" placeholder={'confirm password'} {...register("confirmPassword")}/>
-                <button>Submit</button>
-                    {errors.password && <p>{errors.password.message}</p>}
-                    {confirmError && <p>{confirmError}</p>}
+                <button className={css.btn_login}>Submit</button>
+                    {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
+                    {confirmError && <p className={css.err_login}>{confirmError}</p>}
+                    {error?.detail && <p className={css.err_login}>{error.detail}</p>}
             </form>
         </div>
     );
