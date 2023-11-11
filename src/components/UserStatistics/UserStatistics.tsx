@@ -20,9 +20,15 @@ const UserStatistics: FC<IProps> = ({id}) => {
 
     return (
         <div className={css.user_statistics}>
-            <div>Orders: {count_orders}</div>
-            <div>In work: {in_work}</div>
-            <div>Agree: {agree}</div>
+            <div className={css.stat_content}>
+                Orders <span className={css.count_content}>{count_orders}</span>
+            </div>
+            <div className={css.stat_content}>
+                In work <span className={css.count_content}>{in_work}</span>
+            </div>
+            <div className={css.stat_content}>
+                Agree <span className={css.count_content}>{agree}</span>
+            </div>
         </div>
     );
 };

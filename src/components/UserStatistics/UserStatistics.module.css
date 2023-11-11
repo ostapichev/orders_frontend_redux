@@ -1,5 +1,16 @@
 .user_statistics {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.stat_content {
+    color: #708090;;
+    font: 18pt Georgia, serif;
+}
+
+.count_content {
+    color: #708090;
+    font: 18pt Helvetica, sans-serif;
 }
 

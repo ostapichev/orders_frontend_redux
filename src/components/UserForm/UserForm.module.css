@@ -1,0 +1,81 @@
+.user_form {
+    font: 12pt Arial, sans-serif;
+    display: none;
+    width: 350px;
+    height: 400px;
+    background-color: #EDEDED;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.user_form.open_user_form {
+    display: block;
+}
+
+.user_form.close_user_form {
+    display: none;
+}
+
+.user_form form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form_name {
+    font: bold 20pt Verdana, serif;
+}
+
+input[type="text"], input[type="email"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font: 16px Verdana, serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.err_user_form {
+    margin: 5px;
+    color: #656565;
+    font: 5px Arial, sans-serif bold;
+}
+
+.btn_user_form {
+    font: 18px Verdana, serif;
+    width: 40%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn_user_form:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn_user_form:hover:enabled {
+    background-color: #45a049;
+}
+
+.buttons_user_form {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+

@@ -1,8 +1,8 @@
 .table_head {
-    height: 10vh;
+    height: 8vh;
     width: 95vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: 1px solid cadetblue;
 }
@@ -10,15 +10,41 @@
 .table_users {
     background-color: #F0EAD6;
     border-radius: 20px;
+}
 
+.title_table {
+    margin-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    color: #656565;
+    font: 12pt Helvetica, sans-serif;
+}
+
+.title_state {
+    margin-top: 5px;
+    font: 15pt Tahoma, sans-serif;
+    width: 30%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .head_user {
     color: #0056b3;
-    margin-left: 10px;
+    margin: 0 20px;
     font: 2em Tahoma, sans-serif;
 }
 
 .btn_user_create {
-    margin-right: 10px;
+    margin-right: 20px;
+}
+
+
+.title_table > p:nth-child(2) {
+    width: 15%;
+    justify-content: center;
+}
+
+.title_table > p:last-child {
+    width: 15%;
+    justify-content: center;
 }

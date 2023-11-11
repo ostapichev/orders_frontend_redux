@@ -1,6 +1,20 @@
 .admin_page {
-    background: #F5F5F5;
-    min-width: 800px;
-    display: flex;
-    flex-direction: column;
+    position: relative;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Начальная прозрачность заднего фона */
+    display: none;
+    z-index: 1;
+    transition: background-color 0.3s ease; /* Плавное изменение прозрачности */
+}
+
+.open_user_form + .overlay {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5); /* Затемнение заднего фона с прозрачностью 0.5 */
 }

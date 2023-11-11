@@ -8,7 +8,7 @@ import {IOrderStatistic, IUserStatistic} from "../../interfaces/statistic.interf
 
 interface IState {
     users: IUser[];
-    errors: IErrorUser;
+    errorUser: IErrorUser;
     userUpdate: boolean;
     trigger: boolean;
     statisticTrigger: boolean;
@@ -16,18 +16,20 @@ interface IState {
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
     totalPages: number;
+    openUserForm: boolean;
 }
 
 const initialState: IState = {
     users: [],
-    errors: null,
+    errorUser: null,
     userUpdate: null,
     trigger: false,
     statisticTrigger: false,
     loading: false,
     orderStatistic: {},
     userStatistic: {},
-    totalPages: 1
+    totalPages: 1,
+    openUserForm: false
 };
 
 const getAll = createAsyncThunk<IUser[], {page: string}> (
@@ -108,33 +110,26 @@ const getStatisticUser = createAsyncThunk<IOrderStatistic, {id: number}> (
     }
 );
 
-const getTotalPages = createAsyncThunk<number, void> (
-    'userSlice/getTotalPages',
-    async (_, {rejectWithValue}) => {
-        try {
-            const {data} = await adminService.getTotalPages();
-            return data.total_pages;
-        } catch (e) {
-            const err = e as AxiosError;
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const slice = createSlice({
     name: 'userSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        openUserForm: state => {
+            state.openUserForm = true;
+        },
+        closeUserForm: state => {
+            state.openUserForm = false;
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
+                state.loading = false;
                 state.users = action.payload;
-            })
-            .addCase(getTotalPages.fulfilled, (state, action) => {
-                state.totalPages = action.payload;
             })
             .addCase(getStatisticOrder.fulfilled, (state, action) => {
                 state.orderStatistic = action.payload;
+                state.loading = false;
             })
             .addCase(getStatisticUser.fulfilled, (state, action) => {
                 state.userStatistic = action.payload;
@@ -143,7 +138,7 @@ const slice = createSlice({
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
-                state.errors = null;
+                state.errorUser = null;
             })
             .addMatcher(isFulfilled(ban, unban), state => {
                 state.userUpdate = null;
@@ -153,10 +148,10 @@ const slice = createSlice({
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;
-                state.errors = null;
+                state.errorUser = null;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errors = action.payload;
+                state.errorUser = action.payload;
                 state.loading = false;
             })
 });
@@ -168,7 +163,6 @@ const userActions = {
     create,
     ban,
     unban,
-    getTotalPages,
     getStatisticOrder,
     getStatisticUser
 };

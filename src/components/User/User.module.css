@@ -1,23 +1,33 @@
 .user_container {
     display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid cadetblue;;
+    justify-content: flex-start;
+    margin: 0 0 20px 20px;
 }
 
-.title_stat {
-    font: 15pt Tahoma, sans-serif;
+.block_data {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.block_stat {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
 }
 
 .block_button {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 15%;
 }
 
 .btn_action {
     background-color: #E3827F;
     border-radius: 10px;
     border: none;
-    width: 150px;
+    width: 100px;
     height: 40px;
     margin-bottom: 10px;
     color: #81ECDE;
@@ -27,4 +37,13 @@
 .btn_action:hover {
     background-color: red;
     color: white;
+}
+
+.user_content {
+    color: #708090;
+    font: bold 12pt Helvetica, sans-serif;
+}
+
+.user_data {
+    font: 15pt "Courier New", serif;
 }

@@ -1,18 +1,27 @@
 import {FC} from 'react';
 import {useAppDispatch} from "../../hooks";
-import {orderActions} from "../../redux";
+import {orderActions, userActions} from "../../redux";
 
 import css from './Button.module.css'
 
 
 interface IProps {
     buttonName: string;
+    func: string;
 }
 
-const Button: FC<IProps> = ({buttonName}) => {
+const Button: FC<IProps> = ({buttonName, func}) => {
     const dispatch = useAppDispatch();
     const handleOpen = () => {
-        dispatch(orderActions.openForm());
+        switch (func) {
+            case 'OpenOrderForm':
+                dispatch(orderActions.openForm());
+                break;
+            case 'OpenUserForm':
+                dispatch(userActions.openUserForm());
+                break;
+        }
+
     };
 
     return (

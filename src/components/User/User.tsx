@@ -35,20 +35,25 @@ const User: FC<IProps> = ({user}) => {
     return (
         <div className={css.user_container}>
             <div className={css.block_data}>
-                <p className={css.title_stat}>User data</p>
-                <div>id: {id}</div>
-                <div>email: {email}</div>
-                <div>name: {profile.name}</div>
-                <div>surname: {profile.surname}</div>
-                <div>is active: {is_active === true ? 'yes' : 'no'}</div>
-                <div>last login: {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}</div>
+                <div className={css.user_content}># - <span className={css.user_data}>{id}</span></div>
+                <div className={css.user_content}>email - <span className={css.user_data}>{email}</span></div>
+                <div className={css.user_content}>name - <span className={css.user_data}>{profile.name}</span></div>
+                <div className={css.user_content}>
+                    surname - <span className={css.user_data}>{profile.surname}</span>
+                </div>
+                <div className={css.user_content}>
+                    is active - <span className={css.user_data}>{is_active === true ? 'yes' : 'no'}</span>
+                </div>
+                <div className={css.user_content}>
+                    last login - <span className={css.user_data}>
+                        {last_login !== null ? <DateFormat originalDate={last_login}/> : 'no data'}
+                    </span>
+                </div>
             </div>
             <div className={css.block_stat}>
-                <p className={css.title_stat}>Statistics</p>
                 <UserStatistics id={id}/>
             </div>
             <div className={css.block_button}>
-                <p className={css.title_stat}>Actions</p>
                 <button className={css.btn_action}
                         onClick={(event) => is_active === true ? ban(event) : unban(event)}>
                             {is_active === true ? 'ban' : 'unban'}

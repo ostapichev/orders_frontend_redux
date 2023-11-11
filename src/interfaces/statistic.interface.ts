@@ -1,5 +1,6 @@
 export interface IOrderStatistic {
     item_count?: number;
+    user_count?: number;
     in_work?: number;
     new_order?: number;
     agree?: number;

@@ -26,8 +26,13 @@ const Users: FC = () => {
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>
-                    <Button buttonName={'Create User'}/>
+                    <Button buttonName={'Create'} func={'OpenUserForm'}/>
                 </div>
+            </div>
+            <div className={css.title_table}>
+                <p className={css.title_state}>User data</p>
+                <p className={css.title_state}>Statistics</p>
+                <p className={css.title_state}>Actions</p>
             </div>
             {
                 users.map(user => <User key={user.id} user={user}/>)

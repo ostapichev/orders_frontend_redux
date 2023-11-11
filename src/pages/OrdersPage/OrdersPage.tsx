@@ -12,7 +12,7 @@ const OrdersPage: FC = () => {
         <div>
             <GroupForm/>
             <OrderForm/>
-            <Button buttonName={'Open Form'}/>
+            <Button buttonName={'Open Form'} func={'OpenOrderForm'}/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}

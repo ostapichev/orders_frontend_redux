@@ -7,6 +7,8 @@ import {IGroup} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useAppDispatch} from "../../hooks";
 
+import css from './GroupForm.module.css';
+
 
 const GroupForm: FC = () => {
     const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IGroup>({
@@ -22,7 +24,7 @@ const GroupForm: FC = () => {
     return (
         <div>
             <h3>Create group</h3>
-            <form onSubmit={handleSubmit(save)}>
+            <form className={css.group_form} onSubmit={handleSubmit(save)}>
                 <input type="text" placeholder={'name'} {...register('name')}/>
                 <button disabled={!isValid}>save</button>
                     {errors.name && <p>{errors.name.message}</p>}

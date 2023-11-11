@@ -11,7 +11,6 @@ const OrdersPagination: FC = () => {
     const {orderStatistic} = useAppSelector(state => state.userReducer);
     const {item_count} = orderStatistic;
     const lastPage = Math.ceil(item_count / 3);
-    console.log(lastPage, checkbox);
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = async () => {

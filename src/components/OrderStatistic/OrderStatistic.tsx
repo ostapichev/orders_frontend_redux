@@ -9,7 +9,7 @@ import css from './OrderStatistic.module.css';
 const OrderStatistic: FC = () => {
     const {orderStatistic} = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
-    const {item_count, in_work, new_order, agree, disagree, dubbing} = orderStatistic;
+    const {item_count, in_work, new_order, agree, disagree, dubbing, user_count} = orderStatistic;
     useEffect(() => {
         dispatch(userActions.getStatisticOrder());
     }, [dispatch]);
@@ -19,6 +19,10 @@ const OrderStatistic: FC = () => {
             <div className={css.statistic_block}>
                 <div className={css.count}>{item_count}</div>
                 <div className={css.count_name}>item count</div>
+            </div>
+            <div className={css.statistic_block}>
+                <div className={css.count}>{user_count}</div>
+                <div className={css.count_name}>users</div>
             </div>
             <div className={css.statistic_block}>
                 <div className={css.count}>{in_work}</div>

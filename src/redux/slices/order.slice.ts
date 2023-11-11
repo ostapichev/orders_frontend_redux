@@ -107,10 +107,10 @@ const slice = createSlice({
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
         },
-        openForm: (state) => {
+        openForm: state => {
             state.openForm = true;
         },
-        closeForm: (state) => {
+        closeForm: state => {
             state.openForm = false;
         },
     },
