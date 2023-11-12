@@ -101,6 +101,7 @@ const getStatisticUser = createAsyncThunk<IOrderStatistic, {id: number}> (
         try {
             console.log(id);
             const {data} = await adminService.getStatisticUser(id.toString())
+            await new Promise(resolve => setTimeout(resolve, 1000));
             console.log(data);
             return data;
         } catch (e) {

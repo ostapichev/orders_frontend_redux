@@ -8,14 +8,15 @@ import css from './AdminPage.module.css';
 
 
 const AdminPage: FC = () => {
-    const {loading} = useAppSelector(state => state.userReducer);
+    const {loading, openUserForm} = useAppSelector(state => state.userReducer);
 
     return (
-        <div className={`${css.admin_page} ${loading} ? ${css.open_user_form} : ''}`}>
+        <div className={`${css.admin_page} ${loading} && ${css.open_user_form}`}>
             <OrderStatistic/>
-            <UserForm/>
-            <div className={css.overlay}></div>
             {loading && <Loading/>}
+            <UserPagination/>
+            <UserForm/>
+            <div className={openUserForm && css.overlay}></div>
             <Users/>
             <UserPagination/>
         </div>

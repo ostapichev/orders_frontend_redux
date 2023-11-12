@@ -1,5 +1,7 @@
 .admin_page {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .overlay {
@@ -14,7 +16,7 @@
     transition: background-color 0.3s ease; /* Плавное изменение прозрачности */
 }
 
-.open_user_form + .overlay {
+.overlay {
     display: block;
     background-color: rgba(0, 0, 0, 0.5); /* Затемнение заднего фона с прозрачностью 0.5 */
 }

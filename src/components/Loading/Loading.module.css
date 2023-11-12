@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;;
+    justify-content: center;
+}
+
+.title_loading {
+    font: bold 3em Georgia, serif;
+    color: #0056b3;
+    z-index: 100;
+}
+
+.overlay::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+.logo_loading {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    position: relative;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .logo_loading {
+        animation: logo_loading-spin infinite 20s linear;
+    }
+}
+
+@keyframes logo_loading-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

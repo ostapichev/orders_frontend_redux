@@ -12,6 +12,10 @@
     border-radius: 20px;
 }
 
+.table_none {
+    display: none;
+}
+
 .title_table {
     margin-left: 20px;
     display: flex;

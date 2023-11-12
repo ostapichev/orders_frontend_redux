@@ -10,7 +10,7 @@ import css from './Users.module.css';
 
 
 const Users: FC = () => {
-    const {users, trigger} = useAppSelector(state => state.userReducer);
+    const {users, trigger, loading} = useAppSelector(state => state.userReducer);
     const dispatch = useAppDispatch();
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
@@ -22,7 +22,7 @@ const Users: FC = () => {
     }, [dispatch, query, trigger]);
 
     return (
-        <div className={css.table_users}>
+        <div className={loading ? css.table_none : css.table_users}>
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>

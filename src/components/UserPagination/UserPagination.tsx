@@ -25,7 +25,7 @@ const UserPagination: FC = () => {
     }, [dispatch]);
 
     return (
-        <div className={css.block_paginate}>
+        <div className={loading ? css.block_loading : css.block_paginate}>
             <button className={css.btn_paginate} disabled={loading || currentPage === 1} onClick={prev}></button>
             <button className={css.btn_paginate} disabled={loading || currentPage === lastPage} onClick={next}></button>
         </div>
