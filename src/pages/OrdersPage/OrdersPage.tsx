@@ -11,6 +11,7 @@ const OrdersPage: FC = () => {
     return (
         <div>
             <GroupForm/>
+            <Button buttonName={'Create group'} func={'OpenGroupForm'}/>
             <OrderForm/>
             <Button buttonName={'Open Form'} func={'OpenOrderForm'}/>
             {errors?.name && <p>{errors.name}</p>}

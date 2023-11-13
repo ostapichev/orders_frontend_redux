@@ -97,9 +97,11 @@ const slice = createSlice({
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
             state.openForm = true;
+            state.loading = false;
         },
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
+            state.loading = false;
         },
         setOrderBy: state => {
             state.sorted = !state.sorted;
@@ -109,9 +111,11 @@ const slice = createSlice({
         },
         openForm: state => {
             state.openForm = true;
+            state.loading = false;
         },
         closeForm: state => {
             state.openForm = false;
+            state.loading = false;
         },
     },
     extraReducers: builder =>

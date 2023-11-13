@@ -2,12 +2,22 @@
     display: flex;
     flex-direction: column;;
     justify-content: center;
+    align-items: center;
 }
 
 .title_loading {
     font: bold 3em Georgia, serif;
     color: #0056b3;
-    z-index: 100;
+    z-index: 2;
+}
+
+.logo_loading {
+    width: 50%;
+    height: 50%;
+    z-index: 2;
+    position: relative;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 .overlay::before {
@@ -20,15 +30,6 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
     transition: background-color 0.3s ease;
-}
-
-.logo_loading {
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    position: relative;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {

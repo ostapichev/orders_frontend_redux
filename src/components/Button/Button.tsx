@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {useAppDispatch} from "../../hooks";
-import {orderActions, userActions} from "../../redux";
+import {groupActions, orderActions, userActions} from "../../redux";
 
 import css from './Button.module.css'
 
@@ -19,6 +19,9 @@ const Button: FC<IProps> = ({buttonName, func}) => {
                 break;
             case 'OpenUserForm':
                 dispatch(userActions.openUserForm());
+                break;
+            case 'OpenGroupForm':
+                dispatch((groupActions.openGroupForm()));
                 break;
         }
 

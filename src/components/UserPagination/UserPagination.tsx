@@ -12,6 +12,7 @@ const UserPagination: FC = () => {
     const {loading, orderStatistic} = useAppSelector(state => state.userReducer);
     const {user_count} = orderStatistic;
     const lastPage = Math.ceil((user_count / 3) - 1);
+    console.log(lastPage);
     const [query, setQuery] = useSearchParams();
     const currentPage = +query.get('page');
     const prev = async () => {

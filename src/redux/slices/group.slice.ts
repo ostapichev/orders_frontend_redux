@@ -9,12 +9,16 @@ interface IState {
     groups: IGroup[];
     errors: IErrorGroup;
     trigger: boolean;
+    openForm: boolean;
+    loading: boolean;
 }
 
 const initialState: IState = {
     groups: [],
     errors: null,
     trigger: false,
+    openForm: false,
+    loading: false
 };
 
 const getAll = createAsyncThunk<IGroup[], void> (
@@ -45,7 +49,16 @@ const create = createAsyncThunk<void, {group: IGroup}> (
 const slice = createSlice({
     name: 'groupSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        openGroupForm: state => {
+            state.openForm = true;
+            state.loading = false;
+        },
+        closeGroupForm: state => {
+            state.openForm = false;
+            state.loading = false;
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {

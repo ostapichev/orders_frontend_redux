@@ -1,9 +1,9 @@
-import {FC, MouseEventHandler} from 'react';
+import {FC, MouseEventHandler, useEffect} from 'react';
 
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
 import {authActions, userActions} from "../../redux";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {UserStatistics} from "../UserStatistics/UserStatistics";
 
 import css from './User.module.css';
@@ -16,6 +16,8 @@ interface IProps {
 const User: FC<IProps> = ({user}) => {
     const {id, email, profile, is_active, last_login} = user;
     const dispatch = useAppDispatch();
+    const {userStatistic} = useAppSelector(state => state.userReducer);
+    const {count_orders, in_work, agree} = userStatistic;
     const formData: FormData = new FormData();
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(userActions.ban({id: user.id.toString()}));
@@ -31,6 +33,9 @@ const User: FC<IProps> = ({user}) => {
         formData.append('email', user.email);
         await dispatch(authActions.recoveryPassword({formData}));
     };
+    useEffect(() => {
+        dispatch(userActions.getStatisticUser({id}));
+    }, [dispatch, id]);
 
     return (
         <div className={css.user_container}>
@@ -51,7 +56,17 @@ const User: FC<IProps> = ({user}) => {
                 </div>
             </div>
             <div className={css.block_stat}>
-                <UserStatistics id={id}/>
+                <div className={css.user_statistics}>
+                    <div className={css.stat_content}>
+                        Orders <span className={css.count_content}>{count_orders}</span>
+                    </div>
+                    <div className={css.stat_content}>
+                        In work <span className={css.count_content}>{in_work}</span>
+                    </div>
+                    <div className={css.stat_content}>
+                        Agree <span className={css.count_content}>{agree}</span>
+                    </div>
+                </div>
             </div>
             <div className={css.block_button}>
                 <button className={css.btn_action}
