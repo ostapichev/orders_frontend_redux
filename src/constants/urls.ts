@@ -21,7 +21,7 @@ const urls = {
     },
 
     usersAPI: {
-        users: `${users}`
+        users: `${admin}${users}`
     },
 
     adminAPI: {

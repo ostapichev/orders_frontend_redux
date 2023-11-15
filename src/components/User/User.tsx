@@ -4,7 +4,6 @@ import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
 import {authActions, userActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {UserStatistics} from "../UserStatistics/UserStatistics";
 
 import css from './User.module.css';
 
