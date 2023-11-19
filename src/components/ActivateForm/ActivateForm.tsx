@@ -29,9 +29,9 @@ const ActivateForm: FC = () => {
             return;
         }
         const {meta: {requestStatus}} = await dispatch(authActions.activateRequestUser({formData, token}));
-            if (requestStatus === 'fulfilled') {
-                navigate('/login');
-            }
+        if (requestStatus === 'fulfilled') {
+            navigate('/login');
+        }
     };
 
     return (
