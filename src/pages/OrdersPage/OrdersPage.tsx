@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import {Button, GroupForm, Loading, OrderForm, Orders} from "../../components";
+import {ButtonOpenForm, GroupForm, Loading, OrderForm, Orders} from "../../components";
 import {useAppSelector} from "../../hooks";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
@@ -11,9 +11,9 @@ const OrdersPage: FC = () => {
     return (
         <div>
             <GroupForm/>
-            <Button buttonName={'Create group'} func={'OpenGroupForm'}/>
+            <ButtonOpenForm buttonName={'Create group'} func={'OpenGroupForm'}/>
             <OrderForm/>
-            <Button buttonName={'Open Form'} func={'OpenOrderForm'}/>
+            <ButtonOpenForm buttonName={'Open Form'} func={'OpenOrderForm'}/>
             {errors?.name && <p>{errors.name}</p>}
             {errors?.surname && <p>{errors.name}</p>}
             {errors?.email && <p>{errors.email}</p>}

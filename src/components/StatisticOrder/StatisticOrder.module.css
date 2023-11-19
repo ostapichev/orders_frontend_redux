@@ -1,0 +1,26 @@
+.statistic_order_container {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0 10px;
+    width: 95%;
+}
+
+.statistic_order_block {
+    align-items: center;
+    background-color: #318CE7;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 10%;
+    width: 12%;
+}
+
+.order_count {
+    font-size: 12pt;
+}
+
+.count_name {
+    font: 10pt Helvetica, serif;
+    letter-spacing: 2px;
+}

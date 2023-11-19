@@ -27,7 +27,6 @@ axiosService.interceptors.response.use(response => {
         if (error.response.status === 401) {
             if (!isRefreshing) {
                 isRefreshing = true;
-                authService.deleteTokens();
                 try {
                     await authService.refresh();
                     isRefreshing = false;

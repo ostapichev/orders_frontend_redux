@@ -1,17 +1,18 @@
 import {FC} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 
-import {AdminPage, LoginPage, OrdersPage, ActivatePage, RecoveryPasswordPage} from "./pages";
+import {AdminPage, LoginPage, OrdersPage, RegisterPage, RecoveryPasswordPage} from "./pages";
 import {MainLayout} from "./layouts";
 import {RequiredAuth} from "./hoc";
-import './styles/style.css';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App: FC = () => {
     return (
       <Routes>
           <Route path={'login'} element={<LoginPage/>}/>
-          <Route path={'activate/:token'} element={<ActivatePage/>}/>
+          <Route path={'activate/:token'} element={<RegisterPage/>}/>
           <Route path={'recovery/:token'} element={<RecoveryPasswordPage/>}/>
           <Route path={'/'} element={<MainLayout/>}>
               <Route index element={<Navigate to={'login'}/>}/>

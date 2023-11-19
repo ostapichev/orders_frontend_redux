@@ -1,18 +1,13 @@
 .btn_open {
     text-align: center;
-    background-color: #318CE7;
-    color: #81ECDE;
+    background-color: #267cb5;
+    color: white;
     border: none;
     cursor: pointer;
     border-radius: 15px;
-    width: 100px;
+    width: 130px;
     height: 30px;
     font: 10pt Tahoma, sans-serif;
-}
-
-.block_button {
-    display: flex;
-    justify-content: center;
 }
 
 .btn_open:hover {

@@ -1,7 +1,7 @@
 import {FC, useEffect} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {userActions} from "../../redux";
+import {adminActions} from "../../redux";
 
 import css from './UserStatistics.module.css';
 
@@ -11,11 +11,11 @@ interface IProps {
 }
 
 const UserStatistics: FC<IProps> = ({id}) => {
-    const {userStatistic} = useAppSelector(state => state.userReducer);
+    const {userStatistic} = useAppSelector(state => state.adminReducer);
     const dispatch = useAppDispatch();
     const {count_orders, in_work, agree} = userStatistic;
     useEffect(() => {
-        dispatch(userActions.getStatisticUser({id}));
+        dispatch(adminActions.getStatisticUser({id}));
     }, [dispatch, id]);
 
     return (

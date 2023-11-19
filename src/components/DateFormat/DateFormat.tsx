@@ -13,9 +13,9 @@ const DateFormat: FC<IProps> = ({originalDate}) => {
     );
 
     return (
-        <div>
+        <>
             {formatData}
-        </div>
+        </>
     );
 };
 

@@ -33,7 +33,7 @@ const initialState: IState = {
 };
 
 const getAll = createAsyncThunk<IUser[], {page: string}> (
-    'userSlice/getAll',
+    'adminSlice/getAll',
     async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await adminService.getAll(page);
@@ -47,7 +47,7 @@ const getAll = createAsyncThunk<IUser[], {page: string}> (
 );
 
 const create = createAsyncThunk<void, {user: IUser}> (
-    'userSlice/create',
+    'adminSlice/create',
     async ({user}, {rejectWithValue}) => {
         try {
             await adminService.create(user);
@@ -59,7 +59,7 @@ const create = createAsyncThunk<void, {user: IUser}> (
 );
 
 const ban = createAsyncThunk<void, {id: string}> (
-    'userSlice/ban',
+    'adminSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {
             await adminService.ban(id);
@@ -71,7 +71,7 @@ const ban = createAsyncThunk<void, {id: string}> (
 );
 
 const unban = createAsyncThunk<void, {id: string}> (
-    'userSlice/ban',
+    'adminSlice/ban',
     async ({id}, {rejectWithValue}) => {
         try {
             await adminService.unban(id);
@@ -83,7 +83,7 @@ const unban = createAsyncThunk<void, {id: string}> (
 );
 
 const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
-    'userSlice/getStatisticOrder',
+    'adminSlice/getStatisticOrder',
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await adminService.getStatisticOrder();
@@ -95,8 +95,8 @@ const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     }
 );
 
-const getStatisticUser = createAsyncThunk<IOrderStatistic, {id: number}> (
-    'userSlice/getStatisticUser',
+const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
+    'adminSlice/getStatisticUser',
     async ({id}, {rejectWithValue}) => {
         try {
             console.log(id);
@@ -112,7 +112,7 @@ const getStatisticUser = createAsyncThunk<IOrderStatistic, {id: number}> (
 );
 
 const slice = createSlice({
-    name: 'userSlice',
+    name: 'adminSlice',
     initialState,
     reducers: {
         openUserForm: state => {
@@ -135,7 +135,6 @@ const slice = createSlice({
             .addCase(getStatisticUser.fulfilled, (state, action) => {
                 state.userStatistic = action.payload;
                 state.loading = false;
-                state.statisticTrigger = !state.statisticTrigger;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
@@ -157,8 +156,8 @@ const slice = createSlice({
             })
 });
 
-const {actions, reducer: userReducer} = slice;
-const userActions = {
+const {actions, reducer: adminReducer} = slice;
+const adminActions = {
     ...actions,
     getAll,
     create,
@@ -169,6 +168,6 @@ const userActions = {
 };
 
 export {
-    userActions,
-    userReducer
+    adminActions,
+    adminReducer
 };

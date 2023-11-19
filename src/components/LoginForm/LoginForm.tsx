@@ -10,6 +10,8 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './LoginForm.module.css';
 
+import logo from '../../asserts/images/okten_logo.png';
+
 
 const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
@@ -28,17 +30,18 @@ const LoginForm: FC = () => {
     };
 
     return (
-        <div className={css.LoginForm}>
-            <form className={css.lf} onSubmit={handleSubmit(login)}>
-                <h3>OKTEN IT SCHOOL</h3>
-                <label className={css.form_name}>Login form</label>
-                <input type="email" placeholder={'email'} {...register('email', {required: true})}/>
-                    {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
-                <input type="password" placeholder={'password'} {...register('password', {required: true})}/>
-                    {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
-                <button className={css.btn_login} disabled={loading}>{loading ? 'Loading' : 'Login' }</button>
-                    {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
-                    {error?.detail && <p className={css.err_login}>{error.detail}</p>}
+        <div className={css.form_block} onSubmit={handleSubmit(login)}>
+            <img className={css.logo_form} src={logo} alt='logo'/>
+            <form className={css.login_form}>
+                <label>Email</label>
+                <input type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
+                {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
+                <label>Password</label>
+                <input type="password" placeholder={'enter password'} {...register('password',{required: true})}/>
+                {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
+                <button className={css.btn_submit} disabled={loading}>{loading ? 'Loading' : 'Login' }</button>
+                {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
+                {error?.detail && <p className={css.err_login}>{error.detail}</p>}
             </form>
         </div>
     );

@@ -2,13 +2,13 @@ import {FC, useEffect} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {userActions} from "../../redux";
+import {adminActions} from "../../redux";
 
 
 const OrdersPagination: FC = () => {
     const dispatch = useAppDispatch();
     const {loading, checkbox} = useAppSelector(state => state.orderReducer);
-    const {orderStatistic} = useAppSelector(state => state.userReducer);
+    const {orderStatistic} = useAppSelector(state => state.adminReducer);
     const {item_count} = orderStatistic;
     const lastPage = Math.ceil(item_count / 3);
     const [query, setQuery] = useSearchParams();
@@ -20,7 +20,7 @@ const OrdersPagination: FC = () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
     useEffect(() => {
-        dispatch(userActions.getStatisticOrder());
+        dispatch(adminActions.getStatisticOrder());
     }, [dispatch, checkbox]);
 
     return (

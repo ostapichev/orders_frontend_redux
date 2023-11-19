@@ -4,7 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 
 import {IUser} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {userActions} from "../../redux";
+import {adminActions} from "../../redux";
 import {userValidator} from "../../validators";
 
 import css from './UserForm.module.css';
@@ -12,16 +12,16 @@ import css from './UserForm.module.css';
 
 const UserForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {openUserForm, errorUser} = useAppSelector(state => state.userReducer);
+    const {openUserForm, errorUser} = useAppSelector(state => state.adminReducer);
     const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IUser>({
         mode: 'all',
         resolver: joiResolver(userValidator)
     });
     const handleClose = () => {
-        dispatch(userActions.closeUserForm());
+        dispatch(adminActions.closeUserForm());
     };
     const save: SubmitHandler<IUser> = async (user) => {
-        await dispatch(userActions.create({user}));
+        await dispatch(adminActions.create({user}));
         reset();
     };
 

@@ -5,14 +5,14 @@ import {RegisterForm} from "../../components";
 import css from '../LoginPage/LoginPage.module.css';
 
 
-const RecoveryPasswordPage: FC = () => {
+const RegisterPage: FC = () => {
     return (
         <div className={css.login_page}>
-            <RegisterForm funcName={'RecoveryPasswordPage'}/>
+            <RegisterForm funcName={'activateRequestUser'}/>
         </div>
     );
 };
 
 export {
-    RecoveryPasswordPage
+    RegisterPage
 };

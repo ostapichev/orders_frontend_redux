@@ -2,14 +2,14 @@ import {FC, useEffect} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {userActions} from "../../redux";
+import {adminActions} from "../../redux";
 
 import css from './UserPagination.module.css';
 
 
 const UserPagination: FC = () => {
     const dispatch = useAppDispatch();
-    const {loading, orderStatistic} = useAppSelector(state => state.userReducer);
+    const {loading, orderStatistic} = useAppSelector(state => state.adminReducer);
     const {user_count} = orderStatistic;
     const lastPage = Math.ceil((user_count / 3) - 1);
     console.log(lastPage);
@@ -22,7 +22,7 @@ const UserPagination: FC = () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
     useEffect(() => {
-        dispatch(userActions.getStatisticOrder());
+        dispatch(adminActions.getStatisticOrder());
     }, [dispatch]);
 
     return (

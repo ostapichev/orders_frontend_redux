@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {useAppDispatch} from "../../hooks";
-import {groupActions, orderActions, userActions} from "../../redux";
+import {groupActions, orderActions, adminActions} from "../../redux";
 
-import css from './Button.module.css'
+import css from './ButtonOpenForm.module.css'
 
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
     func: string;
 }
 
-const Button: FC<IProps> = ({buttonName, func}) => {
+const ButtonOpenForm: FC<IProps> = ({buttonName, func}) => {
     const dispatch = useAppDispatch();
     const handleOpen = () => {
         switch (func) {
@@ -18,7 +18,7 @@ const Button: FC<IProps> = ({buttonName, func}) => {
                 dispatch(orderActions.openForm());
                 break;
             case 'OpenUserForm':
-                dispatch(userActions.openUserForm());
+                dispatch(adminActions.openUserForm());
                 break;
             case 'OpenGroupForm':
                 dispatch((groupActions.openGroupForm()));
@@ -28,12 +28,12 @@ const Button: FC<IProps> = ({buttonName, func}) => {
     };
 
     return (
-        <div className={css.block_button}>
+        <>
             <button className={css.btn_open} onClick={handleOpen}>{buttonName}</button>
-        </div>
+        </>
     );
 };
 
 export {
-    Button
+    ButtonOpenForm
 };

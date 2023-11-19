@@ -7,7 +7,7 @@ import css from './LoginPage.module.css'
 
 const LoginPage: FC = () => {
     return (
-        <div className={css.bg_lf}>
+        <div className={css.login_page}>
             <LoginForm/>
         </div>
     );

@@ -1,15 +1,15 @@
 .table_head {
-    height: 8vh;
-    width: 95vw;
-    display: flex;
-    justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid cadetblue;
+    border-bottom: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
 }
 
 .table_users {
-    background-color: #F0EAD6;
-    border-radius: 20px;
+    background-color: #E6E6E3;
+    width: 95%;
+    border-radius: 10px;
 }
 
 .table_none {
@@ -33,9 +33,8 @@
 }
 
 .head_user {
-    color: #0056b3;
-    margin: 0 20px;
-    font: 2em Tahoma, sans-serif;
+    font: 16pt Verdana, serif;
+    margin-left: 10px;
 }
 
 .btn_user_create {

@@ -1,4 +1,4 @@
-export * from './ActivatePage/ActivatePage';
+export * from './RegisterPage/RegisterPage';
 export * from './AdminPage/AdminPage';
 export * from './LoginPage/LoginPage';
 export * from './OrdersPage/OrdersPage';
