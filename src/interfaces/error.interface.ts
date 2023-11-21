@@ -6,10 +6,13 @@ export interface IErrorUser {
     email?: string[];
     name?: string[];
     surname?: string[];
-    phone?: string[];
 }
 
-export interface IErrorOrder extends IErrorUser {
+export interface IErrorOrder {
+    email?: string[];
+    name?: string[];
+    surname?: string[];
+    phone?: string[];
     age?: string[];
     sum?: string[];
     already_paid?: string[];

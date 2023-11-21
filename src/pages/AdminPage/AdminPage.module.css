@@ -10,13 +10,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0); /* Начальная прозрачность заднего фона */
-    display: none;
+    background-color: rgba(0, 0, 0, 0.5); /* Начальная прозрачность заднего фона */
+    display: block;
     z-index: 1;
     transition: background-color 0.3s ease; /* Плавное изменение прозрачности */
-}
-
-.overlay {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.5); /* Затемнение заднего фона с прозрачностью 0.5 */
 }

@@ -1,7 +1,7 @@
 .user_form {
-    font: 12pt Arial, sans-serif;
+    font: 10pt Arial, sans-serif;
     display: none;
-    width: 350px;
+    width: 300px;
     height: 400px;
     background-color: #EDEDED;
     border: 1px solid #ccc;
@@ -15,6 +15,10 @@
     z-index: 2;
 }
 
+label {
+    margin: 10px 0 5px;
+}
+
 .user_form.open_user_form {
     display: block;
 }
@@ -23,26 +27,15 @@
     display: none;
 }
 
-.user_form form {
-    height: 100%;
+.user_form_block {
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: flex-start
 }
 
 .form_name {
     font: bold 20pt Verdana, serif;
-}
-
-input[type="text"], input[type="email"] {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    font: 16px Verdana, serif;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
 }
 
 .err_user_form {
@@ -52,7 +45,7 @@ input[type="text"], input[type="email"] {
 }
 
 .btn_user_form {
-    font: 18px Verdana, serif;
+    font: 10pt Verdana, serif;
     width: 40%;
     padding: 10px;
     background-color: #4caf50;
@@ -75,7 +68,14 @@ input[type="text"], input[type="email"] {
 .buttons_user_form {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.user_form_header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 

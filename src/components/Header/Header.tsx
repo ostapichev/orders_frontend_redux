@@ -1,8 +1,7 @@
-import {FC, MouseEventHandler, useEffect} from 'react';
+import {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {authActions} from "../../redux";
-import {authService} from "../../services";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
@@ -16,15 +15,10 @@ import admin_panel from '../../asserts/images/admin.png';
 const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
+    const isAdmin = me?.is_superuser || false;
     const logout:  MouseEventHandler<HTMLAnchorElement> = () => {
         dispatch(authActions.logout());
     };
-    const isAdmin = me?.is_superuser || false;
-    useEffect(() => {
-        if (!me && authService.getAccessToken()) {
-            dispatch(authActions.me());
-        }
-    }, [dispatch, me]);
 
     return (
         <div className={css.header}>

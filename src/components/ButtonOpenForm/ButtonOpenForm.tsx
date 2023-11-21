@@ -23,6 +23,8 @@ const ButtonOpenForm: FC<IProps> = ({buttonName, func}) => {
             case 'OpenGroupForm':
                 dispatch((groupActions.openGroupForm()));
                 break;
+            default:
+                alert('Error name function for button');
         }
 
     };

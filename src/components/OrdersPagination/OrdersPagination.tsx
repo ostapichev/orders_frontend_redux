@@ -25,8 +25,8 @@ const OrdersPagination: FC = () => {
 
     return (
         <div>
-            <button disabled={loading || currentPage === 1} onClick={prev}>prev</button>
-            <button disabled={loading || currentPage === lastPage} onClick={next}>next</button>
+            <button disabled={currentPage === 1} onClick={prev}>prev</button>
+            <button disabled={currentPage === lastPage} onClick={next}>next</button>
         </div>
     );
 };

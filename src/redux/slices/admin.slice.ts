@@ -11,7 +11,6 @@ interface IState {
     errorUser: IErrorUser;
     userUpdate: boolean;
     trigger: boolean;
-    statisticTrigger: boolean;
     loading: boolean;
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
@@ -24,7 +23,6 @@ const initialState: IState = {
     errorUser: null,
     userUpdate: null,
     trigger: false,
-    statisticTrigger: false,
     loading: false,
     orderStatistic: {},
     userStatistic: {},
@@ -141,10 +139,12 @@ const slice = createSlice({
                 state.errorUser = null;
             })
             .addMatcher(isFulfilled(ban, unban), state => {
+                state.loading = false;
                 state.userUpdate = null;
             })
             .addMatcher(isFulfilled(create, ban, unban), state => {
                 state.trigger = !state.trigger;
+                state.openUserForm = false;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;

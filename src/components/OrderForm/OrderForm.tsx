@@ -1,6 +1,8 @@
-import {FC, useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {SubmitHandler, useForm} from "react-hook-form";
+
+import Form from 'react-bootstrap/Form';
 
 import {IOrder} from "../../interfaces";
 import {groupActions, orderActions} from "../../redux";
@@ -8,13 +10,16 @@ import {Group} from "../Group/Group";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {orderValidator} from "../../validators";
 
+import css from './OrderForm.module.css';
+import css_btn from "../UserForm/UserForm.module.css";
+
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
     const {groups, trigger} = useAppSelector(state => state.groupReducer);
-    const {orderUpdate, orderCreate, me, openForm} = useAppSelector(state => state.orderReducer);
+    const {orderUpdate, errorsOrder, orderCreate, me, openOrderForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
-        mode: 'all',
+        mode: "onSubmit",
         resolver: joiResolver(orderValidator)
     });
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -27,6 +32,7 @@ const OrderForm: FC = () => {
     };
     const handleClose = () => {
         dispatch(orderActions.closeForm());
+        reset();
     };
     useEffect(() => {
         dispatch(groupActions.getAll());
@@ -50,69 +56,85 @@ const OrderForm: FC = () => {
     }, [orderUpdate, setValue, me]);
 
     return (
-        <div className={`form ${openForm ? 'open' : 'closed'}`}>
-            <h3>Create or update order</h3>
-            <form onSubmit={handleSubmit(orderUpdate ? update : save)}>
-                <input type="text" placeholder={'name'}{...register('name')}/>
-                    {errors.name && <p>{errors.name.message}</p>}
-                <input type="text" placeholder={'surname'}{...register('surname')}/>
-                    {errors.surname && <p>{errors.surname.message}</p>}
-                <input type="text" placeholder={'email'}{...register('email')}/>
-                    {errors.email && <p>{errors.email.message}</p>}
-                <input type="text" placeholder={'phone'}{...register('phone')}/>
-                    {errors.phone && <p>{errors.phone.message}</p>}
-                <input type="text" placeholder={'age'}{...register('age')}/>
-                    {errors.age && <p>{errors.age.message}</p>}
-                <input type="text" placeholder={'sum'}{...register('sum')}/>
-                    {errors.sum && <p>{errors.sum.message}</p>}
-                <input type="text" placeholder={'already_paid'}{...register('already_paid')}/>
-                    {errors.already_paid && <p>{errors.already_paid.message}</p>}
-                <label htmlFor="course">Choose course</label>
-                <select name="course" {...register('course')}>
-                    <option value="FS">FS</option>
-                    <option value="QACX">QACX</option>
-                    <option value="JCX">JSCX</option>
-                    <option value="JCX">JCX</option>
-                    <option value="FE">FE</option>
-                    <option value="PCX">PCX</option>
-                </select>
-                    {errors.course && <p>{errors.course.message}</p>}
-                <label htmlFor="course_format">Choose course format</label>
-                <select name="course_format" {...register('course_format')}>
-                    <option value="static">static</option>
-                    <option value="online">online</option>
-                </select>
-                    {errors.course_format && <p>{errors.course_format.message}</p>}
-                <label htmlFor="course_type">Choose course type</label>
-                <select name="course_type" {...register('course_type')}>
-                    <option value="pro">pro</option>
-                    <option value="minimal">minimal</option>
-                    <option value="premium">premium</option>
-                    <option value="incubator">incubator</option>
-                    <option value="vip">vip</option>
-                </select>
-                    {errors.course_type && <p>{errors.course_type.message}</p>}
-                <label htmlFor="status">Choose status</label>
-                <select name="status" {...register('status')}>
-                    <option value="new_order">new_order</option>
-                    <option value="in_work">in_work</option>
-                    <option value="agree">agree</option>
-                    <option value="disagree">disagree</option>
-                    <option value="dubbing">dubbing</option>
-                </select>
-                    {errors.status && <p>{errors.status.message}</p>}
-                <label htmlFor="group">Choose group</label>
-                <select name="group" {...register("group")}
-                        onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
-                        {
-                            groups.map(group => <Group key={group.id} group={group}/>)
-                        }
-                </select>
-                    {errors.group && <p>{errors.group.message}</p>}
-                <button disabled={!isValid}>{orderUpdate? 'Update' : 'Save'}</button>
+        <div className={`${css.order_form} ${openOrderForm ? css.open_order_form : css.close_order_form }`}>
+            <h3 className={css.order_form_header}>{orderUpdate ? 'Update' : 'Create'} order</h3>
+            <form className={css.order_form_container} onSubmit={handleSubmit(orderUpdate ? update : save)}>
+                <div className={css.form_block_left}>
+                    <label htmlFor="name">First name</label>
+                    <Form.Control size="sm" name="name" placeholder={'enter name'} {...register('name')}/>
+                        {errors.name && <div className={css.error_form}>{errors.name.message}</div>}
+                    <label htmlFor="surname">Surname</label>
+                    <Form.Control size="sm" name="surname" placeholder={'enter surname'} {...register('surname')}/>
+                        {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
+                    <label htmlFor="email">Email</label>
+                    <Form.Control size="sm" type="email" name="email" placeholder={'enter email'} {...register('email')}/>
+                        {errors.email && <div className={css.error_form}>{errors.email.message}</div>}
+                    <label htmlFor="phone">Phone</label>
+                    <Form.Control size="sm" type="number" name="phone" placeholder={'enter phone'} {...register('phone')}/>
+                        {errors.phone && <div className={css.error_form}>{errors.phone.message}</div>}
+                    <label htmlFor="age">Age</label>
+                    <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
+                        {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
+                    <label htmlFor="course">Choose course</label>
+                    <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
+                        <option value="FS">FS</option>
+                        <option value="QACX">QACX</option>
+                        <option value="JCX">JSCX</option>
+                        <option value="JCX">JCX</option>
+                        <option value="FE">FE</option>
+                        <option value="PCX">PCX</option>
+                    </Form.Select>
+                    {errors.course && <div className={css.error_form}>{errors.course.message}</div>}
+                </div>
+                <div className={css.form_block_right}>
+                    <label htmlFor="paid">Already paid</label>
+                    <Form.Control size="sm" type="number" name="paid" placeholder={'already_paid'} {...register('already_paid')}/>
+                        {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
+                    <label htmlFor="sum">Sum</label>
+                    <Form.Control size="sm" type="number" name="sum" placeholder={'sum'} {...register('sum')}/>
+                        {errors.sum && <div className={css.error_form}>{errors.sum.message}</div>}
+                    <label htmlFor="course_format">Choose course format</label>
+                    <Form.Select size="sm" name="course_format" aria-label="Default select example" {...register('course_format')}>
+                        <option value="static">static</option>
+                        <option value="online">online</option>
+                    </Form.Select>
+                        {errors.course_format && <p>{errors.course_format.message}</p>}
+                    <label htmlFor="course_type">Choose course type</label>
+                    <Form.Select size="sm" aria-label="Course_type" name="course_type" {...register('course_type')}>
+                        <option value="pro">pro</option>
+                        <option value="minimal">minimal</option>
+                        <option value="premium">premium</option>
+                        <option value="incubator">incubator</option>
+                        <option value="vip">vip</option>
+                    </Form.Select>
+                        {errors.course_type && <p>{errors.course_type.message}</p>}
+                    <label htmlFor="status">Choose status</label>
+                    <Form.Select size="sm" aria-label="Status" name="status" {...register('status')}>
+                        <option value="new_order">new_order</option>
+                        <option value="in_work">in_work</option>
+                        <option value="agree">agree</option>
+                        <option value="disagree">disagree</option>
+                        <option value="dubbing">dubbing</option>
+                    </Form.Select>
+                        {errors.status && <p>{errors.status.message}</p>}
+                    <label htmlFor="group">Choose group</label>
+                    <Form.Select size="sm" aria-label=">Choose group" name="group" {...register("group")}
+                            onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                            {
+                                groups.map(group => <Group key={group.id} group={group}/>)
+                            }
+                    </Form.Select>
+                        {errors.group && <p>{errors.group.message}</p>}
+                </div>
+                    {errorsOrder?.name && <p>{errorsOrder.name}</p>}
+                    {errorsOrder?.surname && <p>{errorsOrder.name}</p>}
+                    {errorsOrder?.email && <p>{errorsOrder.email}</p>}
+                    {errorsOrder?.phone && <p>{errorsOrder.phone}</p>}
+                <div className={css.button_block}>
+                    <button className={css_btn.btn_user_form} disabled={!isValid}>{orderUpdate? 'Update' : 'Save'}</button>
+                    <button className={css_btn.btn_user_form} onClick={handleClose}>Close</button>
+                </div>
             </form>
-            <button onClick={handleClose}>Close Form</button>
-            <hr/>
         </div>
     );
 };

@@ -1,15 +1,37 @@
+a img:hover {
+    transform: scale(1.2);
+}
+
+.header {
+    align-items: center;
+    background: #D3EAFF;
+    display: flex;
+    height: 15%;
+    justify-content: space-between;
+    min-width: 800px;
+
+}
+
 .logo {
     height: 70px;
     margin-left: 10px;
 }
 
-.header {
-    background: #D3EAFF;
-    display: flex;
-    justify-content: space-between;
+.login_name {
     align-items: center;
-    min-width: 800px;
-    height: 15%;
+    color: #3134E7;
+    display: flex;
+    font: 25px Helvetica, sans-serif;
+}
+
+.login_link {
+    align-items: center;
+    display: flex;
+    margin: 0 10px;
+}
+
+.logout {
+    width: 40px;
 }
 
 .nav_bar {
@@ -19,39 +41,17 @@
 }
 
 .title_username {
+    align-items: center;
     color: #318CE7;
+    display: flex;
     font: 16px Arial, serif;
-    display: flex;
-    align-items: center;
-}
-
-.login_name {
-    font: 25px Helvetica, sans-serif;
-    color: #3134E7;
-    display: flex;
-    align-items: center;
-}
-
-.login_link {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.logout {
-    width: 40px;
-}
-
-a img:hover {
-    transform: scale(1.2);
 }
 
 .user_name {
-    height: 100px;
+    align-items: center;
     display: flex;
-    margin-right: 10px;
+    height: 100px;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    margin-right: 10px;
 }

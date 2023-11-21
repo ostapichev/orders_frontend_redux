@@ -9,7 +9,7 @@ interface IState {
     groups: IGroup[];
     errors: IErrorGroup;
     trigger: boolean;
-    openForm: boolean;
+    openGroupForm: boolean;
     loading: boolean;
 }
 
@@ -17,7 +17,7 @@ const initialState: IState = {
     groups: [],
     errors: null,
     trigger: false,
-    openForm: false,
+    openGroupForm: false,
     loading: false
 };
 
@@ -51,11 +51,11 @@ const slice = createSlice({
     initialState,
     reducers: {
         openGroupForm: state => {
-            state.openForm = true;
+            state.openGroupForm = true;
             state.loading = false;
         },
         closeGroupForm: state => {
-            state.openForm = false;
+            state.openGroupForm = false;
             state.loading = false;
         }
     },
@@ -64,6 +64,7 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.groups = action.payload;
                 state.errors = null;
+                state.loading = false;
             })
             .addCase(create.fulfilled, state => {
                 state.trigger = !state.trigger;

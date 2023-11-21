@@ -1,26 +1,33 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 
-import {ButtonOpenForm, GroupForm, Loading, OrderForm, Orders} from "../../components";
+import {ButtonOpenForm, GetExelFile, GroupForm, Loading, OrderForm, Orders} from "../../components";
 import {useAppSelector} from "../../hooks";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
+import css from './OrdersPage.module.css';
+import css_page from '../AdminPage/AdminPage.module.css';
+
 
 const OrdersPage: FC = () => {
-    const {loading, errors} = useAppSelector(state => state.orderReducer);
+    const {loading, openOrderForm} = useAppSelector(state => state.orderReducer);
+    const {openGroupForm} = useAppSelector(state => state.groupReducer);
 
     return (
-        <div>
-            <GroupForm/>
-            <ButtonOpenForm buttonName={'Create group'} func={'OpenGroupForm'}/>
-            <OrderForm/>
-            <ButtonOpenForm buttonName={'Open Form'} func={'OpenOrderForm'}/>
-            {errors?.name && <p>{errors.name}</p>}
-            {errors?.surname && <p>{errors.name}</p>}
-            {errors?.email && <p>{errors.email}</p>}
-            {errors?.phone && <p>{errors.phone}</p>}
+        <div className={css.order_page}>
             {loading && <Loading/>}
-            <Orders/>
-            <OrdersPagination/>
+            <GroupForm/>
+            <OrderForm/>
+            <div className={loading ? css.orders_none : css.button_block}>
+                <h3 className={css.actions_header}>Actions</h3>
+                <ButtonOpenForm buttonName={'Create group'} func={'OpenGroupForm'}/>
+                <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
+                <GetExelFile/>
+            </div>
+            <div className={loading ? css.orders_none : css.orders_block}>
+                <Orders/>
+                <OrdersPagination/>
+            </div>
+            <div className={(openGroupForm || openOrderForm) && css_page.overlay}></div>
         </div>
     );
 };

@@ -1,25 +1,56 @@
-.of {
+.order_form {
+    font: 12pt Arial, sans-serif;
     display: none;
-    width: 300px;
-    height: 200px;
-    background-color: #ffffff;
+    width: 700px;
+    height: 600px;
+    background-color: #EDEDED;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
 }
 
-.of h2 {
-    margin-bottom: 20px;
+.order_form_header {
+    text-align: center;
+    font-weight: bold;
 }
 
-.of.open {
+.order_form.open_order_form {
     display: block;
 }
 
-.of.closed {
+.group_form.close_order_form {
     display: none;
 }
+
+.order_form_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.error_form {
+    color: #656565;
+    font-size: 8pt;
+    margin: 2px;
+}
+
+.form_block_left, .form_block_right {
+    width: 45%;
+}
+
+.button_block {
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.button_block button {
+    margin: 10px;
+}
+

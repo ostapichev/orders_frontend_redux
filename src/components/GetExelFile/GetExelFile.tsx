@@ -1,12 +1,13 @@
 import {FC, MouseEventHandler} from 'react';
 
-import {Loading} from "../Loading/Loading";
-import {useAppDispatch, useAppSelector} from "../../hooks";
 import {orderActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+
+import css from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
 
 const GetExelFile: FC = () => {
-    const {loading, fileDataURL, errors} = useAppSelector(state => state.orderReducer);
+    const {loading, fileDataURL} = useAppSelector(state => state.orderReducer);
     const dispatch = useAppDispatch();
     const handleDownload: MouseEventHandler<HTMLButtonElement> = async () => {
         dispatch(orderActions.getExelFile());
@@ -21,12 +22,9 @@ const GetExelFile: FC = () => {
     };
 
     return (
-        <div>
-            <button onClick={handleDownload} disabled={loading}>
-                {loading ? <Loading/> : 'Download file'}
-            </button>
-            {errors && <div style={{ color: 'red' }}>{errors.name}</div>}
-        </div>
+        <>
+            <button className={css.btn_open} onClick={handleDownload} disabled={loading}>Get exel file</button>
+        </>
     );
 };
 

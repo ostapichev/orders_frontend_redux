@@ -2,6 +2,8 @@ import {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
+import Form from 'react-bootstrap/Form';
+
 import {authActions} from "../../redux";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
@@ -34,14 +36,14 @@ const LoginForm: FC = () => {
             <img className={css.logo_form} src={logo} alt='logo'/>
             <form className={css.login_form}>
                 <label>Email</label>
-                <input type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
-                {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
+                <Form.Control size="sm" type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
+                    {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
                 <label>Password</label>
-                <input type="password" placeholder={'enter password'} {...register('password',{required: true})}/>
-                {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
+                <Form.Control size="sm" type="password" placeholder={'enter password'} {...register('password',{required: true})}/>
+                    {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
                 <button className={css.btn_submit} disabled={loading}>{loading ? 'Loading' : 'Login' }</button>
-                {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
-                {error?.detail && <p className={css.err_login}>{error.detail}</p>}
+                    {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
+                    {error?.detail && <p className={css.err_login}>{error.detail}</p>}
             </form>
         </div>
     );

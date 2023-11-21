@@ -15,28 +15,28 @@ interface IState {
     orders: IOrder[];
     me?: string;
     checkbox: boolean;
-    errors: IErrorOrder;
+    errorsOrder: IErrorOrder;
     orderUpdate: IOrder;
     orderCreate: string;
     trigger: boolean;
     loading: boolean;
     sorted: boolean;
     fileDataURL?: string;
-    openForm: boolean;
+    openOrderForm: boolean;
 }
 
 const initialState: IState = {
     orders: [],
     me: null,
     checkbox: false,
-    errors: null,
+    errorsOrder: null,
     orderUpdate: null,
     orderCreate: null,
     trigger: false,
     loading: false,
     sorted: true,
     fileDataURL: null,
-    openForm: false,
+    openOrderForm: false,
 };
 
 const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manager: string}> (
@@ -96,12 +96,10 @@ const slice = createSlice({
     reducers: {
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
-            state.openForm = true;
-            state.loading = false;
+            state.openOrderForm = true;
         },
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
-            state.loading = false;
         },
         setOrderBy: state => {
             state.sorted = !state.sorted;
@@ -110,18 +108,19 @@ const slice = createSlice({
             state.checkbox = !state.checkbox;
         },
         openForm: state => {
-            state.openForm = true;
+            state.openOrderForm = true;
             state.loading = false;
         },
         closeForm: state => {
-            state.openForm = false;
-            state.loading = false;
+            state.openOrderForm = false;
+            state.orderUpdate = null;
         },
     },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
                 state.orders = action.payload;
+                state.errorsOrder = null;
             })
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
@@ -129,21 +128,21 @@ const slice = createSlice({
             .addCase(getExelFile.fulfilled, (state, action) => {
                 state.fileDataURL = action.payload;
                 state.loading = false;
-                state.errors = null;
+                state.errorsOrder = null;
             })
             .addMatcher(isFulfilled(create, update), state => {
                 state.trigger = !state.trigger;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
-                state.errors = null;
+                state.errorsOrder = null;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;
-                state.errors = null;
+                state.errorsOrder = null;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errors = action.payload;
+                state.errorsOrder = action.payload;
                 state.loading = false;
             })
 });

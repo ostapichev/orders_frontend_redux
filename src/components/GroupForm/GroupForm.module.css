@@ -1,8 +1,8 @@
 .group_form {
-    font: 12pt Arial, sans-serif;
+    font: 10pt Arial, sans-serif;
     display: none;
-    width: 350px;
-    height: 400px;
+    width: 300px;
+    height: 250px;
     background-color: #EDEDED;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -23,26 +23,14 @@
     display: none;
 }
 
-.group_form form {
-    height: 100%;
+.group_form_block {
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
 }
 
 .form_group_name {
     font: bold 20pt Verdana, serif;
-}
-
-input[type="text"], input[type="email"] {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    font: 16px Verdana, serif;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
 }
 
 .err_group_form {
@@ -78,3 +66,8 @@ input[type="text"], input[type="email"] {
     justify-content: space-evenly;
 }
 
+.group_form_header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}

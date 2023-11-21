@@ -77,7 +77,6 @@ const Order: FC<IProps> = ({order}) => {
                     <hr/>
                     <CommentForm order_id={id}/>
                         {errors && <p>{errors.comment}</p>}
-                        {loading && <Loading/>}
                     <div>
                         comments: { comments &&
                         comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
