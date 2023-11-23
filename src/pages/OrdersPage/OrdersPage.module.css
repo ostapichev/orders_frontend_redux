@@ -1,37 +1,38 @@
+.order_page {
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
 .button_block {
     background-color: aquamarine;
     display: flex;
     justify-content: flex-start;
     height: 100vh;
-    margin: 10px 10px 0 0;
+    margin-top: 10px;
     padding: 10px;
-    min-width: 15%;
+    min-width: 10%;
     flex-direction: column;
     border-radius: 10px;
     align-items: center;
+    font-weight: bold;
 }
 
 .button_block button {
     margin: 20px 10px;
 }
 
-.order_page {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
 .actions_header {
     text-align: center;
 }
 
+.orders_none {
+    display: none;
+}
+
 .orders_block {
+    min-width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 85%;
-}
-
-.orders_none {
-    display: none;
 }

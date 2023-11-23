@@ -6,7 +6,6 @@ import {DateFormat} from "../DateFormat/DateFormat";
 import {IGroup, IOrder} from "../../interfaces";
 import {commentActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {Loading} from "../Loading/Loading";
 
 
 interface IProps {
@@ -15,7 +14,7 @@ interface IProps {
 
 const Order: FC<IProps> = ({order}) => {
     const {groups} = useAppSelector(state => state.groupReducer);
-    const {triggerComment, loading, errors} = useAppSelector(state => state.commentReducer);
+    const {triggerComment, errors} = useAppSelector(state => state.commentReducer);
     const [show, setShow] = useState(false);
     const dispatch = useAppDispatch();
     const {
@@ -41,7 +40,10 @@ const Order: FC<IProps> = ({order}) => {
     const setUpdate = () => dispatch(orderActions.setOrderUpdate(order));
     const getNameGroup = (group_id: number): string => {
         const group: IGroup = groups.find(group => group.id === group_id);
-        return group.name;
+        if (group && group.name) {
+            return group.name;
+        }
+        return "all groups";
     };
     const nameGroup = getNameGroup(group);
     useEffect(() => {

@@ -3,13 +3,13 @@ import {useSearchParams} from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
 
+import {Group} from "../Group/Group";
 import {IOrderBy, ISortingReverse} from "../../types";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-import {Group} from "../Group/Group";
 
 
 const Orders: FC = () => {
@@ -62,20 +62,10 @@ const Orders: FC = () => {
             <div className={css.block_filters}>
                 <div className={css.filter_order}>
                     <Form.Control size="sm" type="text" placeholder="Name"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm" type="text" placeholder="Surname"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm" type="email" placeholder="email"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm" type="text" placeholder="phone"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm" type="number" placeholder="age"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Select size="sm" aria-label="Choose course">
                         <option>all courses</option>
                         <option value="FS">FS</option>
@@ -86,14 +76,16 @@ const Orders: FC = () => {
                         <option value="PCX">PCX</option>
                     </Form.Select>
                 </div>
+                <div className={css.filter_order_check}>
+                    <Form.Check aria-label="My_orders" name="myOrders" inline checked={checkbox} onChange={handler}/>
+                    <label className={css.my} htmlFor="myOrders">My orders</label>
+                </div>
                 <div className={css.filter_order}>
                     <Form.Select size="sm" name="course_format" aria-label="Course_format">
                         <option>all formats</option>
                         <option value="static">static</option>
                         <option value="online">online</option>
                     </Form.Select>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Select size="sm" aria-label="Course_type" name="course_type">
                         <option>all types</option>
                         <option value="pro">pro</option>
@@ -102,8 +94,6 @@ const Orders: FC = () => {
                         <option value="incubator">incubator</option>
                         <option value="vip">vip</option>
                     </Form.Select>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Select size="sm" aria-label="Status" name="status">
                         <option>all statuses</option>
                         <option value="new_order">new_order</option>
@@ -112,8 +102,6 @@ const Orders: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Select size="sm" aria-label=">Choose group" name="group"
                                  onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
                         <option>all groups</option>
@@ -121,21 +109,12 @@ const Orders: FC = () => {
                             groups.map(group => <Group key={group.id} group={group}/>)
                         }
                     </Form.Select>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm"  type="datetime-local" placeholder="start date"/>
-                </div>
-                <div className={css.filter_order}>
                     <Form.Control size="sm"  type="datetime-local" placeholder="end date"/>
-                </div>
-                <div className={css.filter_order}>
-                    <label htmlFor="myOrders">My orders
-                        <Form.Check aria-label="My_orders" name="myOrders" checked={checkbox} onChange={handler}/>
-                    </label>
                 </div>
 
             </div>
-            <div>
+            <div className={css.sorting_button_block}>
                 <button onClick={orderById}>id</button>
                 <button onClick={orderByName}>name</button>
                 <button onClick={orderBySurName}>surname</button>

@@ -22,7 +22,7 @@ const Users: FC = () => {
     }, [dispatch, query, trigger]);
 
     return (
-        <div className={loading ? css.table_none : css.table_users}>
+        <div className={loading ? css.table_none.toString() : css.table_users.toString()}>
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>

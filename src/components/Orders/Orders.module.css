@@ -1,14 +1,82 @@
+* {
+    box-sizing: border-box;
+}
+
 .orders {
-    background-color:#F4CA16;
+    background-color: #E6EBEC;
     border-radius: 10px;
     margin: 10px 0;
+    width: 100%;
+    height: 95vh;
 }
 
 .filter_order {
-    width: 140px;
+    width: 90%;
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.filter_order_check {
+    width: 10%;
+    height: 100%;
+    font: bold 24pt Helvetica, serif;
+    text-align: center;
 }
 
 .block_filters {
     display: flex;
     flex-wrap: wrap;
+    padding: 10px;
+    max-width: 100vw;
+    max-height: 150px;
+    overflow: hidden;
 }
+
+.orders_none {
+    display: none;
+}
+
+.filter_order input, .filter_order select {
+    width: 15%;
+    margin-right: 10px;
+}
+
+.my {
+    font: bold 16pt Helvetica, serif;
+}
+
+.sorting_button_block {
+    display: flex;
+    width: 80vw;
+    font: 10pt Helvetica, serif;
+
+}
+
+.sorting_button_block button:nth-child(1),
+.sorting_button_block button:nth-child(6) {
+    min-width: 3vw;
+    border: none;
+}
+
+.sorting_button_block button:nth-child(2),
+.sorting_button_block button:nth-child(3),
+.sorting_button_block button:nth-child(11),
+.sorting_button_block button:nth-child(10) {
+    min-width: 7vw;
+    border: none;
+}
+
+.sorting_button_block button:nth-child(4),
+.sorting_button_block button:nth-child(7),
+.sorting_button_block button:nth-child(8),
+.sorting_button_block button:nth-child(9) {
+    min-width: 6vw;
+    border: none;
+}
+
+.sorting_button_block button:nth-child(5) {
+    min-width: 10vw;
+    border: none;
+}
+
