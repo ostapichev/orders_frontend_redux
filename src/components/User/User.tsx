@@ -61,7 +61,7 @@ const User: FC<IProps> = ({user}) => {
                 </button>
                 <button className={css_btn.btn_open}
                         onClick={(event) => is_active === true ? recoveryPassword(event) : activateUser(event)}>
-                    {is_active === true ? 'recovery password' : 'activate user'}
+                    {is_active === true ? 'recovery' : 'activate user'}
                 </button>
             </div>
         </div>

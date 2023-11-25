@@ -9,7 +9,7 @@ interface IProps {
 const DateFormat: FC<IProps> = ({originalDate}) => {
     const formatData = format(
         new Date(originalDate),
-        'MMMM dd, yyyy  HH:mm:ss'
+        'MMMM dd, yyyy'
     );
 
     return (

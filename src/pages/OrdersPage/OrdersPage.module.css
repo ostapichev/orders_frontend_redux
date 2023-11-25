@@ -4,35 +4,6 @@
     min-height: 100vh;
 }
 
-.button_block {
-    background-color: aquamarine;
-    display: flex;
-    justify-content: flex-start;
-    height: 100vh;
-    margin-top: 10px;
-    padding: 10px;
-    min-width: 10%;
-    flex-direction: column;
-    border-radius: 10px;
-    align-items: center;
-    font-weight: bold;
-}
-
-.button_block button {
-    margin: 20px 10px;
-}
-
-.actions_header {
-    text-align: center;
-}
-
 .orders_none {
     display: none;
-}
-
-.orders_block {
-    min-width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

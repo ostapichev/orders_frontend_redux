@@ -1,8 +1,12 @@
-import React, {FC, useCallback, useEffect, useRef} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
+import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
+import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {Group} from "../Group/Group";
 import {IOrderBy, ISortingReverse} from "../../types";
 import {Order} from "../Order/Order";
@@ -10,10 +14,16 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
+import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
+
+import okten_logo from '../../asserts/images/okten_loading1.png';
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const {orders, trigger, sorted, checkbox} = useAppSelector(state => state.orderReducer);
     const {groups} = useAppSelector(state => state.groupReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
@@ -59,6 +69,19 @@ const Orders: FC = () => {
 
     return (
         <div className={css.orders}>
+            <Offcanvas className={css.container_actions} show={show} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title className={css.actions_header}>Actions</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body className={css.body_actions}>
+                    <div className={css.buttons_block} onClick={handleClose}>
+                        <ButtonOpenForm buttonName={'Create group'} func={'OpenGroupForm'}/>
+                        <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
+                        <GetExelFile/>
+                    </div>
+                    <img className={css.okten_logo} src={okten_logo} alt="okten"/>
+                </Offcanvas.Body>
+            </Offcanvas>
             <div className={css.block_filters}>
                 <div className={css.filter_order}>
                     <Form.Control size="sm" type="text" placeholder="Name"/>
@@ -86,7 +109,7 @@ const Orders: FC = () => {
                         <option value="static">static</option>
                         <option value="online">online</option>
                     </Form.Select>
-                    <Form.Select size="sm" aria-label="Course_type" name="course_type">
+                    <Form.Select size="sm" name="course_type" aria-label="Course_type">
                         <option>all types</option>
                         <option value="pro">pro</option>
                         <option value="minimal">minimal</option>
@@ -94,7 +117,7 @@ const Orders: FC = () => {
                         <option value="incubator">incubator</option>
                         <option value="vip">vip</option>
                     </Form.Select>
-                    <Form.Select size="sm" aria-label="Status" name="status">
+                    <Form.Select size="sm" name="status" aria-label="Status">
                         <option>all statuses</option>
                         <option value="new_order">new_order</option>
                         <option value="in_work">in_work</option>
@@ -102,38 +125,34 @@ const Orders: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                    <Form.Select size="sm" aria-label=">Choose group" name="group"
+                    <Form.Select size="sm" name="group" aria-label=">Choose group"
                                  onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
-                        <option>all groups</option>
-                        {
-                            groups.map(group => <Group key={group.id} group={group}/>)
-                        }
+                            {groups.map(group => <Group key={group.id} group={group}/>)}
                     </Form.Select>
-                    <Form.Control size="sm"  type="datetime-local" placeholder="start date"/>
-                    <Form.Control size="sm"  type="datetime-local" placeholder="end date"/>
+                    <Form.Control size="sm" type="datetime-local" placeholder="start date"/>
+                    <Form.Control size="sm" type="datetime-local" placeholder="end date"/>
                 </div>
-
+                <button className={css_button.btn_open} onClick={handleShow}>Actions</button>
             </div>
-            <div className={css.sorting_button_block}>
-                <button onClick={orderById}>id</button>
-                <button onClick={orderByName}>name</button>
-                <button onClick={orderBySurName}>surname</button>
-                <button onClick={orderByEmail}>email</button>
-                <button onClick={orderByPhone}>phone</button>
-                <button onClick={orderByAge}>age</button>
-                <button onClick={orderByCourse}>course</button>
-                <button onClick={orderByCourseFormat}>course format</button>
-                <button onClick={orderByCourseType}>course type</button>
-                <button onClick={orderByStatus}>status</button>
-                <button onClick={orderBySum}>sum</button>
-                <button onClick={orderAlReadyPaid}>already paid</button>
-                <button onClick={orderByGroup}>group</button>
-                <button onClick={orderByCreated}>created at</button>
-                <button onClick={orderByManager}>manager</button>
+            <ListGroup className={css.list_buttons} horizontal>
+                <ListGroup.Item onClick={orderById}>id</ListGroup.Item>
+                <ListGroup.Item onClick={orderByName}>name</ListGroup.Item>
+                <ListGroup.Item onClick={orderBySurName}>surname</ListGroup.Item>
+                <ListGroup.Item onClick={orderByEmail}>email</ListGroup.Item>
+                <ListGroup.Item onClick={orderByAge}>phone</ListGroup.Item>
+                <ListGroup.Item onClick={orderByCourse}>age</ListGroup.Item>
+                <ListGroup.Item onClick={orderByCourseFormat}>course</ListGroup.Item>
+                <ListGroup.Item onClick={orderByCourseType}>course type</ListGroup.Item>
+                <ListGroup.Item onClick={orderByStatus}>status</ListGroup.Item>
+                <ListGroup.Item onClick={orderBySum}>sum</ListGroup.Item>
+                <ListGroup.Item onClick={orderAlReadyPaid}>already paid</ListGroup.Item>
+                <ListGroup.Item onClick={orderByGroup}>group</ListGroup.Item>
+                <ListGroup.Item onClick={orderByCreated}>created at</ListGroup.Item>
+                <ListGroup.Item onClick={orderByManager}>manager</ListGroup.Item>
+            </ListGroup>
+            <div className={css.order_detail}>
+                {orders.map(order => <Order key={order.id} order={order}/>)}
             </div>
-            {
-                orders.map(order => <Order key={order.id} order={order}/>)
-            }
         </div>
     );
 };

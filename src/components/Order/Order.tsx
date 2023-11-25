@@ -1,4 +1,6 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect} from 'react';
+
+import Accordion from 'react-bootstrap/Accordion';
 
 import {Comment} from "../Comment/Comment";
 import {CommentForm} from "../CommentForm/CommentForm";
@@ -6,6 +8,8 @@ import {DateFormat} from "../DateFormat/DateFormat";
 import {IGroup, IOrder} from "../../interfaces";
 import {commentActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
+
+import css from './Order.module.css';
 
 
 interface IProps {
@@ -15,7 +19,6 @@ interface IProps {
 const Order: FC<IProps> = ({order}) => {
     const {groups} = useAppSelector(state => state.groupReducer);
     const {triggerComment, errors} = useAppSelector(state => state.commentReducer);
-    const [show, setShow] = useState(false);
     const dispatch = useAppDispatch();
     const {
         id,
@@ -51,43 +54,45 @@ const Order: FC<IProps> = ({order}) => {
     }, [dispatch, triggerComment, id]);
 
     return (
-        <div>
-            <button onClick={() => setShow(prev => !prev)}>
-                <ul>
-                    <li>id: {id}</li>
-                    <li>name: {name}</li>
-                    <li>surname: {surname}</li>
-                    <li>email: {email}</li>
-                    <li>phone: {phone}</li>
-                    <li>age: {age}</li>
-                    <li>course: {course}</li>
-                    <li>course format: {course_format}</li>
-                    <li>course type: {course_type}</li>
-                    <li>status: {status}</li>
-                    <li>sum: {sum}</li>
-                    <li>already paid: {already_paid}</li>
-                    <li>group: {nameGroup}</li>
-                    <li>created: {<DateFormat originalDate={created_at}/>}</li>
-                    <li>manager: {manager !== null ? manager.name : 'no manager'}</li>
-                </ul>
-            </button>
-            { show &&
-                <div>
-                    <div>utm: {utm !== null ? utm : 'no data'}</div>
-                    <div>msg: {msg !== null ? msg : 'no data'}</div>
-                    <button onClick={setUpdate}>Edit order</button>
-                    <hr/>
-                    <CommentForm order_id={id}/>
-                        {errors && <p>{errors.comment}</p>}
-                    <div>
-                        comments: { comments &&
-                        comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
-                    }
-                    </div>
-                    <hr/>
-                </div>
-            }
-        </div>
+        <>
+            <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header className={css.block_table}>
+                        <div className={css.table_order}>
+                            <div>{id}</div>
+                            <div>{name}</div>
+                            <div>{surname}</div>
+                            <div>{email}</div>
+                            <div>{phone}</div>
+                            <div>{age}</div>
+                            <div>{course}</div>
+                            <div>{course_format}</div>
+                            <div>{course_type}</div>
+                            <div>{status}</div>
+                            <div>{sum}</div>
+                            <div>{already_paid}</div>
+                            <div>{nameGroup}</div>
+                            <div>{<DateFormat originalDate={created_at}/>}</div>
+                            <div>{manager !== null ? manager.name : 'no manager'}</div>
+                        </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <div>
+                            <div>utm: {utm !== null ? utm : 'no data'}</div>
+                            <div>msg: {msg !== null ? msg : 'no data'}</div>
+                            <button onClick={setUpdate}>Edit order</button>
+                            <CommentForm order_id={id}/>
+                            {errors && <p>{errors.comment}</p>}
+                            <div>
+                                comments: { comments &&
+                                comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
+                            }
+                            </div>
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        </>
     );
 };
 
