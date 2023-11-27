@@ -1,64 +1,53 @@
-.order_detail {
-   border: none;
-   font: 3pt Georgia, serif;
-   margin: 0;
+.block_data div {
+    display: block;
+    font: 10pt Verdana, serif;
+    background-color: snow;
 }
 
-* {
-   box-sizing: border-box;
+.block_data > div:hover {
+    background-color: green;
+    color: snow;
 }
 
-.accordion-button {
-   padding: 0;
+.none_data {
+    display: none;
 }
 
-.block_table {
-   padding: 0;
+.block_detail {
+    display: flex;
+    justify-content: space-between;
+    font: 10pt Verdana, serif;
+    background-color: snow;
 }
 
-.block_table button {
-   padding: 0;
+.left_block div {
+    margin: 10px;
 }
 
-.table_order {
-   display: flex;
-   font: 9pt Georgia, serif;
-
+.left_block div:nth-child(1), .left_block div:nth-child(2) {
+    font: 12pt Verdana, serif;
 }
 
-.table_order div:nth-child(1),
-.table_order div:nth-child(6) {
-   min-width: 6%;
-   padding-left: 4px;
-   overflow: hidden;
-   text-align: start;
+.right_block {
+    width: 30%;
+    margin: 10px;
 }
 
-.table_order div:nth-child(2),
-.table_order div:nth-child(3),
-.table_order div:nth-child(7),
-.table_order div:nth-child(11),
-.table_order div:nth-child(10),
-.table_order div:nth-child(13) {
-   min-width: 6%;
-   padding-left: 4px;
-   overflow: hidden;
-   text-align: start;
+.comments_field {
+    margin: 10px 0;
+    height: 60px;
+    overflow: hidden;
 }
 
-.table_order div:nth-child(4),
-.table_order div:nth-child(8),
-.table_order div:nth-child(9),
-.table_order div:nth-child(12) {
-   min-width: 6%;
-   padding-left: 4px;
-   overflow: hidden;
-   text-align: start;
+.comments_field_modal {
+    margin: 10px 0;
+    height: 100px;
+    overflow: scroll;
 }
 
-.table_order div:nth-child(15) {
-   min-width: 9%;
-   padding-left: 4px;
-   overflow: hidden;
-   text-align: start;
+.comment_content {
+    font-style: italic;
+    font-size: 14pt;
+    border-bottom: 1px solid grey;
 }
+

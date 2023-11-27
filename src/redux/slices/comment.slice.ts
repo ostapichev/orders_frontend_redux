@@ -9,14 +9,14 @@ interface IState {
     comments?: IComment[];
     triggerComment: boolean;
     loading: boolean;
-    errors: IErrorComment;
+    errorsComment?: IErrorComment;
 }
 
 const initialState: IState = {
     comments: null,
     triggerComment: false,
     loading: false,
-    errors: null
+    errorsComment: null
 };
 
 const create = createAsyncThunk<void, {order_id: number, comment: IComment}> (
@@ -58,14 +58,14 @@ const slice = createSlice({
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
-                state.errors = null;
+                state.errorsComment = null;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;
-                state.errors = null;
+                state.errorsComment = null;
             })
             .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errors = action.payload;
+                state.errorsComment = action.payload;
                 state.loading = false;
             })
     }

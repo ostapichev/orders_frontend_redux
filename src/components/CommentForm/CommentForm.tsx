@@ -1,11 +1,17 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 import {commentActions} from "../../redux";
 import {commentValidator} from "../../validators";
 import {IComment} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useAppDispatch} from "../../hooks";
+
+import css from './CommentForm.module.css';
 
 
 interface IProps {
@@ -24,13 +30,18 @@ const CommentForm: FC<IProps> = ({order_id}) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(save)}>
-                <input type="text" placeholder="Comment" {...register('comment')}/>
-                <button disabled={!isValid}>Add comment</button>
-                    {errors.comment && <p>{errors.comment.message}</p>}
-            </form>
-        </div>
+        <>
+            <InputGroup>
+                <Form.Control className={css.comment_form} placeholder="Enter comment"
+                              aria-label="Recipient's username"
+                              aria-describedby="basic-addon2"
+                              {...register('comment')}/>
+                <Button onClick={handleSubmit(save)} disabled={!isValid} variant="success" id="button-addon2">
+                    Add comment
+                </Button>
+            </InputGroup>
+            {errors.comment && <div>{errors.comment.message}</div>}
+        </>
     );
 };
 

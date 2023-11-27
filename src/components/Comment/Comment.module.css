@@ -1,0 +1,15 @@
+.comment_body {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 10pt;
+    border-bottom: 1px solid grey;
+}
+
+.comment_modal {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 12pt;
+    border-bottom: 1px solid grey;
+}

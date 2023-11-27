@@ -16,7 +16,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './Orders.module.css';
 import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
-import okten_logo from '../../asserts/images/okten_loading1.png';
+import okten_logo from '../../asserts/images/okten_loading.png';
 
 
 const Orders: FC = () => {
@@ -134,24 +134,29 @@ const Orders: FC = () => {
                 </div>
                 <button className={css_button.btn_open} onClick={handleShow}>Actions</button>
             </div>
-            <ListGroup className={css.list_buttons} horizontal>
-                <ListGroup.Item onClick={orderById}>id</ListGroup.Item>
-                <ListGroup.Item onClick={orderByName}>name</ListGroup.Item>
-                <ListGroup.Item onClick={orderBySurName}>surname</ListGroup.Item>
-                <ListGroup.Item onClick={orderByEmail}>email</ListGroup.Item>
-                <ListGroup.Item onClick={orderByAge}>phone</ListGroup.Item>
-                <ListGroup.Item onClick={orderByCourse}>age</ListGroup.Item>
-                <ListGroup.Item onClick={orderByCourseFormat}>course</ListGroup.Item>
-                <ListGroup.Item onClick={orderByCourseType}>course type</ListGroup.Item>
-                <ListGroup.Item onClick={orderByStatus}>status</ListGroup.Item>
-                <ListGroup.Item onClick={orderBySum}>sum</ListGroup.Item>
-                <ListGroup.Item onClick={orderAlReadyPaid}>already paid</ListGroup.Item>
-                <ListGroup.Item onClick={orderByGroup}>group</ListGroup.Item>
-                <ListGroup.Item onClick={orderByCreated}>created at</ListGroup.Item>
-                <ListGroup.Item onClick={orderByManager}>manager</ListGroup.Item>
-            </ListGroup>
-            <div className={css.order_detail}>
-                {orders.map(order => <Order key={order.id} order={order}/>)}
+            <div className={css.table}>
+                <div>
+                    <ListGroup className={css.table_data} horizontal>
+                        <ListGroup.Item className={css.table_header} onClick={orderById}>id</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByName}>name</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderBySurName}>surname</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByEmail}>email</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>course format</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>course type</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderAlReadyPaid}>paid</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByGroup}>group</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCreated}>created at</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
+                    </ListGroup>
+                </div>
+                <div className={css.block_data}>
+                    {orders.map(order => <Order key={order.id} order={order}/>)}
+                </div>
             </div>
         </div>
     );

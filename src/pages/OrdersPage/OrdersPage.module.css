@@ -1,9 +1,9 @@
-.order_page {
-    display: flex;
-    align-items: flex-start;
-    min-height: 100vh;
-}
-
 .orders_none {
     display: none;
+}
+
+.order_page {
+    align-items: flex-start;
+    display: flex;
+    min-height: 100vh;
 }
