@@ -12,7 +12,6 @@ import {commentActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Order.module.css';
-import css_table from '../Orders/Orders.module.css';
 import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
 
@@ -63,29 +62,27 @@ const Order: FC<IProps> = ({order}) => {
 
     return (
         <>
-            <div className={css.table_block} onClick={() => setShow(prev => !prev)}>
-                <ListGroup className={`${css_table.table_data} ${css.block_data}`} horizontal>
-                    <ListGroup.Item>{id}</ListGroup.Item>
-                    <ListGroup.Item>{name}</ListGroup.Item>
-                    <ListGroup.Item>{surname}</ListGroup.Item>
-                    <ListGroup.Item>{email}</ListGroup.Item>
-                    <ListGroup.Item>{phone}</ListGroup.Item>
-                    <ListGroup.Item>{age}</ListGroup.Item>
-                    <ListGroup.Item>{course}</ListGroup.Item>
-                    <ListGroup.Item>{course_format}</ListGroup.Item>
-                    <ListGroup.Item>{course_type}</ListGroup.Item>
-                    <ListGroup.Item>{status}</ListGroup.Item>
-                    <ListGroup.Item>{sum}</ListGroup.Item>
-                    <ListGroup.Item>{already_paid}</ListGroup.Item>
-                    <ListGroup.Item>{nameGroup}</ListGroup.Item>
-                    <ListGroup.Item>{<DateFormat originalDate={created_at}/>}</ListGroup.Item>
-                    <ListGroup.Item>{manager !== null ? manager.name : 'no manager'}</ListGroup.Item>
-                </ListGroup>
+            <div className={css.block_data} onClick={() => setShow(prev => !prev)}>
+                    <div>{id}</div>
+                    <div>{name}</div>
+                    <div>{surname}</div>
+                    <div>{email}</div>
+                    <div>{phone}</div>
+                    <div>{age}</div>
+                    <div>{course}</div>
+                    <div>{course_format}</div>
+                    <div>{course_type}</div>
+                    <div>{status}</div>
+                    <div>{sum}</div>
+                    <div>{already_paid}</div>
+                    <div>{nameGroup}</div>
+                    <div>{<DateFormat originalDate={created_at}/>}</div>
+                    <div>{manager !== null ? manager.name : 'no manager'}</div>
             </div>
             <div className={show ? css.block_detail : css.none_data}>
                 <div className={css.left_block}>
-                    <div>message: {msg !== null ? msg : 'no data'}</div>
-                    <div>utm: {utm !== null ? utm : 'no data'}</div>
+                    <div>Message: {msg !== null ? msg : 'no data'}</div>
+                    <div>UTM: {utm !== null ? utm : 'no data'}</div>
                     <div>
                         <button className={css_button.btn_open} onClick={setUpdate}>Edit</button>
                     </div>
@@ -95,7 +92,7 @@ const Order: FC<IProps> = ({order}) => {
                         <ListGroup>
                             <ListGroup.Item action variant="success">
                                 {comments &&
-                                    comments.map(commentBody => <Comment key={commentBody.id} className={'comment_body'} commentBody={commentBody}/>)
+                                    comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
                                 }
                             </ListGroup.Item>
                         </ListGroup>
@@ -109,19 +106,17 @@ const Order: FC<IProps> = ({order}) => {
                             <ListGroup>
                                 <ListGroup.Item action variant="success">
                                     {comments &&
-                                        comments.map(commentBody => <Comment key={commentBody.id} className={'comment_modal'} commentBody={commentBody}/>)
+                                        comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
                                     }
                                 </ListGroup.Item>
                             </ListGroup>
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
+                            <Button variant="secondary" onClick={handleClose}>Close</Button>
                         </Modal.Footer>
                     </Modal>
-                    <div className={css.input_comment}>
+                    <div>
                         <CommentForm order_id={id}/>
                         {errorsComment && <div>{errorsComment.comment}</div>}
                     </div>

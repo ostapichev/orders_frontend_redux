@@ -144,8 +144,8 @@ const Orders: FC = () => {
                         <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
                         <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
                         <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>course format</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>course type</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>course_format</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>course_type</ListGroup.Item>
                         <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
                         <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
                         <ListGroup.Item className={css.table_header} onClick={orderAlReadyPaid}>paid</ListGroup.Item>
@@ -154,7 +154,7 @@ const Orders: FC = () => {
                         <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
                     </ListGroup>
                 </div>
-                <div className={css.block_data}>
+                <div>
                     {orders.map(order => <Order key={order.id} order={order}/>)}
                 </div>
             </div>

@@ -33,14 +33,14 @@ const CommentForm: FC<IProps> = ({order_id}) => {
         <>
             <InputGroup>
                 <Form.Control className={css.comment_form} placeholder="Enter comment"
-                              aria-label="Recipient's username"
-                              aria-describedby="basic-addon2"
+                              aria-label="add_comment"
+                              aria-describedby="basic-addon"
                               {...register('comment')}/>
-                <Button onClick={handleSubmit(save)} disabled={!isValid} variant="success" id="button-addon2">
+                <Button className={css.comment_form} onClick={handleSubmit(save)} disabled={!isValid} variant="success" id="button-addon2">
                     Add comment
                 </Button>
             </InputGroup>
-            {errors.comment && <div>{errors.comment.message}</div>}
+            {errors.comment && <div className={css.err_comment}>{errors.comment.message}</div>}
         </>
     );
 };

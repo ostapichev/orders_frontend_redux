@@ -62,9 +62,10 @@
 .orders {
     background-color: #C5E384;
     border-radius: 10px;
-    height: 95vh;
+    min-height: 100%;
     margin: 10px 0;
-    width: 100%;
+    min-width: 1100px;
+    padding-bottom: 50px;
 }
 
 .orders_none {
@@ -78,7 +79,7 @@
 
 .table_data {
     cursor: pointer;
-    font: bold 9pt Georgia, serif;
+    font: bold 7pt Georgia, serif;
     width: 100%;
 }
 
@@ -99,6 +100,11 @@
 
 .table_data div:nth-child(2),
 .table_data div:nth-child(3),
+.table_data div:nth-child(9) {
+    min-width: 7%;
+}
+
+
 .table_data div:nth-child(8),
 .table_data div:nth-child(15) {
     min-width: 8%;
@@ -110,7 +116,6 @@
 }
 
 .table_data div:nth-child(7),
-.table_data div:nth-child(9),
 .table_data div:nth-child(10),
 .table_data div:nth-child(11),
 .table_data div:nth-child(12),

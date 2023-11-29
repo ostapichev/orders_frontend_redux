@@ -8,14 +8,13 @@ import css from './Comment.module.css';
 
 interface IProps {
     commentBody: IComment;
-    className: string;
 }
 
-const Comment: FC<IProps> = ({commentBody, className}) => {
+const Comment: FC<IProps> = ({commentBody}) => {
     const {comment, created_at, profile} = commentBody;
 
     return (
-        <div className={className === 'comment_body' ? css.comment_body : css.comment_modal}>
+        <div className={css.comment_body}>
             <div>{comment}</div>
             <div>
                 {profile.name} {profile.surname}&#44; {<DateFormat originalDate={created_at}/>}

@@ -1,9 +1,10 @@
 import {FC, useEffect} from 'react';
 
-import {adminActions} from "../../redux/slices";
+import {adminActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './StatisticOrder.module.css';
+
 
 
 const StatisticOrder: FC = () => {

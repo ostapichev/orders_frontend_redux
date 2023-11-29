@@ -6,9 +6,9 @@ import {IOrderStatistic, IUserStatistic} from "../interfaces/statistic.interface
 
 
 class AdminService {
-    getAll(page='1', order_by='-id'): IResPaginate<IUser[]> {
+    getAll(page='1'): IResPaginate<IUser[]> {
         return axiosService.get(urls.usersAPI.users, {
-            params: {page, order_by}
+            params: {page}
         });
     };
     create(user: IUser): IRes<IUser> {

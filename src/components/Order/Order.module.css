@@ -1,12 +1,52 @@
-.block_data div {
-    display: block;
-    font: 10pt Verdana, serif;
+.block_data {
+    display: flex;
+    font: 7pt Verdana, serif;
     background-color: snow;
+    border-bottom: 1px solid grey;
+    cursor: pointer;
 }
 
-.block_data > div:hover {
+.block_data div {
+    padding: 5px;
+    text-align: center;
+}
+
+.block_data:hover {
     background-color: green;
     color: snow;
+}
+
+.block_data div:nth-child(1),
+.block_data div:nth-child(6) {
+    min-width: 3%;
+}
+
+.block_data div:nth-child(2),
+.block_data div:nth-child(3),
+.block_data div:nth-child(9) {
+    min-width: 7%;
+}
+
+.block_data div:nth-child(8),
+.block_data div:nth-child(15) {
+    min-width: 8%;
+}
+
+.block_data div:nth-child(5),
+.block_data div:nth-child(14) {
+    min-width: 10%;
+}
+
+.block_data div:nth-child(7),
+.block_data div:nth-child(10),
+.block_data div:nth-child(11),
+.block_data div:nth-child(12),
+.block_data div:nth-child(13) {
+    min-width: 5%;
+}
+
+.block_data div:nth-child(4) {
+    min-width: 12%;
 }
 
 .none_data {
@@ -25,7 +65,7 @@
 }
 
 .left_block div:nth-child(1), .left_block div:nth-child(2) {
-    font: 12pt Verdana, serif;
+    font: 8pt Verdana, serif;
 }
 
 .right_block {
@@ -35,7 +75,7 @@
 
 .comments_field {
     margin: 10px 0;
-    height: 60px;
+    height: 75px;
     overflow: hidden;
 }
 
@@ -50,4 +90,3 @@
     font-size: 14pt;
     border-bottom: 1px solid grey;
 }
-

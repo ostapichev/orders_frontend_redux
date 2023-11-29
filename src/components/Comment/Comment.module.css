@@ -2,14 +2,11 @@
     display: flex;
     justify-content: space-between;
     font-style: italic;
-    font-size: 10pt;
+    font-size: 8pt;
     border-bottom: 1px solid grey;
 }
 
-.comment_modal {
-    display: flex;
-    justify-content: space-between;
-    font-style: italic;
-    font-size: 12pt;
-    border-bottom: 1px solid grey;
+.comment_body div:nth-child(1) {
+    margin-right: 30px;
 }
+
