@@ -23,6 +23,8 @@ interface IState {
     sorted: boolean;
     fileDataURL?: string;
     openOrderForm: boolean;
+    prevPage: number;
+    nextPage: number;
 }
 
 const initialState: IState = {
@@ -37,6 +39,8 @@ const initialState: IState = {
     sorted: true,
     fileDataURL: null,
     openOrderForm: false,
+    prevPage: null,
+    nextPage: null,
 };
 
 const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, manager: string}> (
@@ -107,6 +111,15 @@ const slice = createSlice({
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
         },
+        setCheckBoxDefault: (state, action) => {
+            state.checkbox = action.payload;
+        },
+        setPaginate: (state, action) => {
+            const {result, prev, next} = action.payload;
+            state.orders = result;
+            state.prevPage = prev;
+            state.nextPage = next;
+        },
         openForm: state => {
             state.openOrderForm = true;
             state.loading = false;
@@ -124,6 +137,7 @@ const slice = createSlice({
             })
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
+                state.openOrderForm = false;
             })
             .addCase(getExelFile.fulfilled, (state, action) => {
                 state.fileDataURL = action.payload;

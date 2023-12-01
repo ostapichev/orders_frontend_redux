@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from 'react-bootstrap/Button';
@@ -8,7 +8,7 @@ import {Comment} from "../Comment/Comment";
 import {CommentForm} from "../CommentForm/CommentForm";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IGroup, IOrder} from "../../interfaces";
-import {commentActions, orderActions} from "../../redux";
+import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Order.module.css';
@@ -25,7 +25,7 @@ const Order: FC<IProps> = ({order}) => {
     const [showComment, setShowComment] = useState(false);
     const handleClose = () => setShowComment(false);
     const handleShow = () => setShowComment(true);
-    const {triggerComment, errorsComment} = useAppSelector(state => state.commentReducer);
+    const {errorsComment} = useAppSelector(state => state.commentReducer);
     const dispatch = useAppDispatch();
     const {
         id,
@@ -56,9 +56,6 @@ const Order: FC<IProps> = ({order}) => {
         return "all groups";
     };
     const nameGroup = getNameGroup(group);
-    useEffect(() => {
-        dispatch(commentActions.getAll({order_id: id}));
-    }, [dispatch, triggerComment, id]);
 
     return (
         <>
@@ -87,7 +84,7 @@ const Order: FC<IProps> = ({order}) => {
                         <button className={css_button.btn_open} onClick={setUpdate}>Edit</button>
                     </div>
                 </div>
-                <div className={css.right_block}>
+                <div className={css.right_block}>Comments:
                     <div className={css.comments_field} onClick={handleShow}>
                         <ListGroup>
                             <ListGroup.Item action variant="success">

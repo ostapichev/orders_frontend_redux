@@ -1,7 +1,7 @@
 import {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
-import {authActions} from "../../redux";
+import {authActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
@@ -14,9 +14,11 @@ import admin_panel from '../../asserts/images/admin.png';
 
 const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
+    const {checkbox} = useAppSelector(state => state.orderReducer);
     const dispatch = useAppDispatch();
     const isAdmin = me?.is_superuser || false;
     const logout:  MouseEventHandler<HTMLAnchorElement> = () => {
+        dispatch(orderActions.setCheckBoxDefault(!checkbox));
         dispatch(authActions.logout());
     };
 

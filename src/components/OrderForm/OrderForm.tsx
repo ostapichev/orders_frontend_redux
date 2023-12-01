@@ -17,7 +17,7 @@ import css_btn from "../UserForm/UserForm.module.css";
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
     const {groups, trigger} = useAppSelector(state => state.groupReducer);
-    const {orderUpdate, errorsOrder, orderCreate, me, openOrderForm} = useAppSelector(state => state.orderReducer);
+    const {orderUpdate, errorsOrder, orderCreate, openOrderForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
         mode: "onSubmit",
         resolver: joiResolver(orderValidator)
@@ -51,9 +51,8 @@ const OrderForm: FC = () => {
             setValue('course_type', orderUpdate.course_type);
             setValue('status', orderUpdate.status);
             setValue('group', orderUpdate.group);
-            setValue('me', me);
         }
-    }, [orderUpdate, setValue, me]);
+    }, [orderUpdate, setValue]);
 
     return (
         <div className={`${css.order_form} ${openOrderForm ? css.open_order_form : css.close_order_form }`}>
@@ -118,8 +117,9 @@ const OrderForm: FC = () => {
                     </Form.Select>
                         {errors.status && <p>{errors.status.message}</p>}
                     <label htmlFor="group">Choose group</label>
-                    <Form.Select size="sm" aria-label=">Choose group" name="group" {...register("group")}
-                            onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                    <Form.Select size="sm" aria-label="Choose group" name="group" {...register('group')}
+                            onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                            <option>all groups</option>
                             {
                                 groups.map(group => <Group key={group.id} group={group}/>)
                             }
@@ -131,7 +131,7 @@ const OrderForm: FC = () => {
                     {errorsOrder?.email && <p>{errorsOrder.email}</p>}
                     {errorsOrder?.phone && <p>{errorsOrder.phone}</p>}
                 <div className={css.button_block}>
-                    <button className={css_btn.btn_user_form} disabled={!isValid}>{orderUpdate? 'Update' : 'Save'}</button>
+                    <button className={css_btn.btn_user_form} disabled={!isValid}>{orderUpdate ? 'Update' : 'Save'}</button>
                     <button className={css_btn.btn_user_form} onClick={handleClose}>Close</button>
                 </div>
             </form>

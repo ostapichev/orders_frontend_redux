@@ -1,32 +1,33 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {useSearchParams} from "react-router-dom";
 
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {adminActions} from "../../redux";
+import {useAppSelector} from "../../hooks";
+
+import css from './OrdersPagination.module.css';
 
 
 const OrdersPagination: FC = () => {
-    const dispatch = useAppDispatch();
-    const {loading, checkbox} = useAppSelector(state => state.orderReducer);
-    const {orderStatistic} = useAppSelector(state => state.adminReducer);
-    const {item_count} = orderStatistic;
-    const lastPage = Math.ceil(item_count / 3);
-    const [query, setQuery] = useSearchParams();
-    const currentPage = +query.get('page');
+    const {prevPage, nextPage} = useAppSelector(state => state.orderReducer);
+    const [, setQuery] = useSearchParams();
     const prev = async () => {
         setQuery(prev => ({...prev, page: +prev.get('page')-1}));
     };
     const next = async () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
-    useEffect(() => {
-        dispatch(adminActions.getStatisticOrder());
-    }, [dispatch, checkbox]);
 
     return (
-        <div>
-            <button disabled={currentPage === 1} onClick={prev}>prev</button>
-            <button disabled={currentPage === lastPage} onClick={next}>next</button>
+        <div className={css.block_pagination}>
+            <button className={css.button_paginate} disabled={!prevPage} onClick={prev}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+            <button className={css.button_paginate} disabled={!nextPage} onClick={next}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
         </div>
     );
 };

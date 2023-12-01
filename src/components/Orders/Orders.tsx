@@ -64,8 +64,8 @@ const Orders: FC = () => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        checkbox ? getMyOrders('-id', me.profile.name) : getAllOrders('-id', '');
-        }, [dispatch, getAllOrders, trigger, triggerComment, me, checkbox, getMyOrders]);
+        getAllOrders('-id');
+        }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
 
     return (
         <div className={css.orders}>
@@ -100,7 +100,7 @@ const Orders: FC = () => {
                     </Form.Select>
                 </div>
                 <div className={css.filter_order_check}>
-                    <Form.Check aria-label="My_orders" name="myOrders" inline checked={checkbox} onChange={handler}/>
+                    <Form.Check aria-label="My_orders" name="myOrders" inline checked={!checkbox} onChange={handler}/>
                     <label className={css.my} htmlFor="myOrders">My orders</label>
                 </div>
                 <div className={css.filter_order}>

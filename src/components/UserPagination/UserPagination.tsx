@@ -21,9 +21,7 @@ const UserPagination: FC = () => {
     const next = async () => {
         setQuery(next => ({...next, page: +next.get('page')+1}));
     };
-    useEffect(() => {
-        dispatch(adminActions.getStatisticOrder());
-    }, [dispatch]);
+
 
     return (
         <div className={loading ? css.block_loading : css.block_paginate}>
