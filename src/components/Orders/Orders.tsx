@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {useSearchParams} from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
@@ -16,32 +16,40 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './Orders.module.css';
 import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
-import okten_logo from '../../asserts/images/okten_loading.png';
+import {okten_logo} from '../../asserts';
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const {orders, trigger, sorted, checkbox} = useAppSelector(state => state.orderReducer);
+    const [search, setSearch] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const handleClose: IOrderBy = () => setShow(false);
+    const handleShow: IOrderBy = () => setShow(true);
+    const {orders, trigger, sorted, checkbox, inputData} = useAppSelector(state => state.orderReducer);
     const {groups} = useAppSelector(state => state.groupReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
+    const nameInputChange: any = (event: any) => {
+        const inputValue = event.target.value;
+        console.log(inputData);
+        console.log(inputValue);
+        dispatch(orderActions.setInputData(inputValue));
+    };
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const getAllOrders = useCallback((sorting: string, manager='') => {
-        dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
+        dispatch(orderActions.getAll({page: query.get('page'), name_contains: inputData, order_by: sorting, manager}));
         },[dispatch, query]);
-    const getMyOrders = useCallback((sorting: string, manager: string) => {
-        dispatch(orderActions.getAll({ page: query.get('page'), order_by: sorting, manager}));
-    },[dispatch, query]);
+    const sortingCheckBox: ISortingReverse = (orderBy: string) => {
+        checkbox ? getAllOrders(orderBy, me.profile.name) : getAllOrders(orderBy);
+    };
     const sortingReverse: ISortingReverse = (orderBy: string) => {
-        sorted ? getAllOrders(orderBy) : getAllOrders(`-${orderBy}`);
+        sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
     };
     const sortingOrders: IOrderBy = () => {
-        checkbox ? getMyOrders('-id', me.profile.name) : getAllOrders('-id');
+        checkbox ? getAllOrders('-id') : getAllOrders('-id', me.profile.name);
         dispatch(orderActions.setCheckBox());
     };
     const orderById: IOrderBy = () => sortingReverse('id');
@@ -60,6 +68,12 @@ const Orders: FC = () => {
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
     const handler: IOrderBy = () => sortingOrders();
+
+    const filterResults = () => {
+        return searchResults.filter(result =>
+            result.name.toLowerCase().includes(search.toLowerCase())
+        );
+    };
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
@@ -79,12 +93,12 @@ const Orders: FC = () => {
                         <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
                         <GetExelFile/>
                     </div>
-                    <img className={css.okten_logo} src={okten_logo} alt="okten"/>
+                    <img className={css.okten_logo} src={okten_logo} alt="okten_logo"/>
                 </Offcanvas.Body>
             </Offcanvas>
             <div className={css.block_filters}>
                 <div className={css.filter_order}>
-                    <Form.Control size="sm" type="text" placeholder="Name"/>
+                    <Form.Control size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
                     <Form.Control size="sm" type="text" placeholder="Surname"/>
                     <Form.Control size="sm" type="email" placeholder="email"/>
                     <Form.Control size="sm" type="text" placeholder="phone"/>
@@ -100,7 +114,7 @@ const Orders: FC = () => {
                     </Form.Select>
                 </div>
                 <div className={css.filter_order_check}>
-                    <Form.Check aria-label="My_orders" name="myOrders" inline checked={!checkbox} onChange={handler}/>
+                    <Form.Check aria-label="My_orders" name="myOrders" inline onChange={handler}/>
                     <label className={css.my} htmlFor="myOrders">My orders</label>
                 </div>
                 <div className={css.filter_order}>
@@ -125,8 +139,9 @@ const Orders: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                    <Form.Select size="sm" name="group" aria-label=">Choose group"
+                    <Form.Select size="sm" name="group" aria-label="Choose group"
                                  onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                            <option>all groups</option>
                             {groups.map(group => <Group key={group.id} group={group}/>)}
                     </Form.Select>
                     <Form.Control size="sm" type="datetime-local" placeholder="start date"/>

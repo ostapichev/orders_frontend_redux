@@ -2,31 +2,36 @@ import {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {authActions, orderActions} from "../../redux";
+import {IOrderBy} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
 
-import logo from '../../asserts/images/okten_logo.png';
-import log_out from '../../asserts/images/logout.png';
-import home_page from '../../asserts/images/home.png';
-import admin_panel from '../../asserts/images/admin.png';
+import {admin_panel, home_page, log_out, okten_school} from '../../asserts';
 
 
 const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
-    const {checkbox} = useAppSelector(state => state.orderReducer);
     const dispatch = useAppDispatch();
     const isAdmin = me?.is_superuser || false;
-    const logout:  MouseEventHandler<HTMLAnchorElement> = () => {
-        dispatch(orderActions.setCheckBoxDefault(!checkbox));
+    const defaultFilterOrders: IOrderBy = () => {
+        dispatch(orderActions.setCheckBoxDefault());
+        dispatch(orderActions.setOrderByDefault());
+    };
+    const logout: MouseEventHandler<HTMLAnchorElement> = () => {
+        defaultFilterOrders();
         dispatch(authActions.logout());
     };
 
     return (
         <div className={css.header}>
-            <img className={css.logo} src={logo} alt="logo"/>
             <div>
-                { me ?
+                <NavLink to={'https://owu.com.ua/'} target='_blank'>
+                    <img className={css.logo} src={okten_school} alt="okten_school"/>
+                </NavLink>
+            </div>
+            <div>
+                {me ?
                     <div className={css.nav_bar}>
                         <div className={css.user_name}>
                             <div className={css.title_username}>Current user</div>
@@ -34,7 +39,7 @@ const Header: FC = () => {
                         </div>
                         { isAdmin &&
                             <div className={css.login_link}>
-                                <NavLink to={'/admin'}>
+                                <NavLink to={'/admin'} onClick={defaultFilterOrders}>
                                     <img className={css.logout} src={admin_panel} alt="admin"/>
                                 </NavLink>
                             </div>

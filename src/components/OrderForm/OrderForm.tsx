@@ -12,6 +12,7 @@ import {orderValidator} from "../../validators";
 
 import css from './OrderForm.module.css';
 import css_btn from "../UserForm/UserForm.module.css";
+import {IOrderBy} from "../../types";
 
 
 const OrderForm: FC = () => {
@@ -30,7 +31,7 @@ const OrderForm: FC = () => {
         await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
     };
-    const handleClose = () => {
+    const handleClose: IOrderBy = () => {
         dispatch(orderActions.closeForm());
         reset();
     };
@@ -69,7 +70,7 @@ const OrderForm: FC = () => {
                     <Form.Control size="sm" type="email" name="email" placeholder={'enter email'} {...register('email')}/>
                         {errors.email && <div className={css.error_form}>{errors.email.message}</div>}
                     <label htmlFor="phone">Phone</label>
-                    <Form.Control size="sm" type="number" name="phone" placeholder={'enter phone'} {...register('phone')}/>
+                    <Form.Control size="sm" type="text" name="phone" placeholder={'enter phone'} {...register('phone')}/>
                         {errors.phone && <div className={css.error_form}>{errors.phone.message}</div>}
                     <label htmlFor="age">Age</label>
                     <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
@@ -119,7 +120,6 @@ const OrderForm: FC = () => {
                     <label htmlFor="group">Choose group</label>
                     <Form.Select size="sm" aria-label="Choose group" name="group" {...register('group')}
                             onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
-                            <option>all groups</option>
                             {
                                 groups.map(group => <Group key={group.id} group={group}/>)
                             }

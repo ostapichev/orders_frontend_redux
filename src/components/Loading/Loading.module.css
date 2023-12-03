@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;;
     justify-content: center;
+    margin-top: 15%;
     width: 100%;
 }
 
@@ -12,13 +13,13 @@
     pointer-events: none;
     width: 100px;
     transform: translate(-50%, -50%);
-    z-index: 2;
+    z-index: 5;
 }
 
 .title_loading {
     color: #0056b3;
     font: bold 3em Georgia, serif;
-    z-index: 2;
+    z-index: 5;
 }
 
 .overlay::before {
@@ -30,7 +31,7 @@
     top: 0;
     transition: background-color 0.3s ease;
     width: 100%;
-    z-index: 1;
+    z-index: 3;
 }
 
 @keyframes logo_loading-spin {

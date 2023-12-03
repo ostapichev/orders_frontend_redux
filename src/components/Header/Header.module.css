@@ -8,8 +8,9 @@ a img:hover {
     display: flex;
     height: 15%;
     justify-content: space-between;
-    min-width: 800px;
-
+    min-width: 100vw;
+    position: fixed;
+    z-index: 1;
 }
 
 .logo {
@@ -38,6 +39,7 @@ a img:hover {
     display: flex;
     justify-content: flex-end;
     width: 50vw;
+    margin-right: 10px;
 }
 
 .title_username {

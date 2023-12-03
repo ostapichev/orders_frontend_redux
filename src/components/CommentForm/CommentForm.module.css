@@ -1,5 +1,44 @@
 .err_comment {
-    color: #656565;
+    color: red;
     font-size: 8pt;
     margin: 2px;
+}
+
+.comment_form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comment_form input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid grey;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
+}
+
+.button_comment {
+    border: 1px solid grey;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    background-color: #267cb5;
+    color: snow;
+}
+
+.button_comment:hover {
+    background-color: #0056b3;
+    color: snow;
+}
+
+.button_comment[disabled] {
+    background-color: cornflowerblue;
+    color: #D3EAFF;
+    border: none;
+    cursor: not-allowed;
+}
+
+.comment_form input:focus {
+    border-color: blue;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 2.0);
 }

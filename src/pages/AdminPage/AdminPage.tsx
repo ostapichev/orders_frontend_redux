@@ -11,8 +11,8 @@ const AdminPage: FC = () => {
 
     return (
         <div className={css.admin_page}>
-            <StatisticOrder/>
             {loading && <Loading/>}
+            <StatisticOrder/>
             <UserForm/>
             <Users/>
             <div className={openUserForm && css.overlay}></div>

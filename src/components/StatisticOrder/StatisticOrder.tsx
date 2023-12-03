@@ -6,17 +6,16 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './StatisticOrder.module.css';
 
 
-
 const StatisticOrder: FC = () => {
     const dispatch = useAppDispatch();
-    const {orderStatistic} = useAppSelector(state => state.adminReducer);
+    const {orderStatistic, loading} = useAppSelector(state => state.adminReducer);
     const {item_count, in_work, new_order, agree, disagree, dubbing, user_count} = orderStatistic;
     useEffect(() => {
         dispatch(adminActions.getStatisticOrder());
     }, [dispatch]);
 
     return (
-        <div className={css.statistic_order_container}>
+        <div className={loading ? css.statistic_order_none : css.statistic_order_container}>
             <div className={css.statistic_order_block}>
                 <div className={css.order_count}>{item_count}</div>
                 <div className={css.count_name}>order count</div>

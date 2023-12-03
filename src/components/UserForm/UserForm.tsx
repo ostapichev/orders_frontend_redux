@@ -15,7 +15,7 @@ import css from './UserForm.module.css';
 const UserForm: FC = () => {
     const dispatch = useAppDispatch();
     const {openUserForm, errorUser} = useAppSelector(state => state.adminReducer);
-    const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IUser>({
+    const {handleSubmit, register, reset, formState: {isValid}} = useForm<IUser>({
         mode: 'all',
         resolver: joiResolver(userValidator)
     });

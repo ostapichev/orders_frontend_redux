@@ -17,7 +17,6 @@
 }
 
 .button_paginate:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    display: none;
 }
 

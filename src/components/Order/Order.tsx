@@ -20,13 +20,15 @@ interface IProps {
 }
 
 const Order: FC<IProps> = ({order}) => {
+    const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
-    const [show, setShow] = useState(false);
+    const {me} = useAppSelector(state => state.authReducer);
+    const [showDetail, setShowDetail] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const handleClose = () => setShowComment(false);
     const handleShow = () => setShowComment(true);
     const {errorsComment} = useAppSelector(state => state.commentReducer);
-    const dispatch = useAppDispatch();
+    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
     const {
         id,
         name,
@@ -59,7 +61,7 @@ const Order: FC<IProps> = ({order}) => {
 
     return (
         <>
-            <div className={css.block_data} onClick={() => setShow(prev => !prev)}>
+            <div className={css.block_data} onClick={() => setShowDetail(prev => !prev)}>
                     <div>{id}</div>
                     <div>{name}</div>
                     <div>{surname}</div>
@@ -76,12 +78,12 @@ const Order: FC<IProps> = ({order}) => {
                     <div>{<DateFormat originalDate={created_at}/>}</div>
                     <div>{manager !== null ? manager.name : 'no manager'}</div>
             </div>
-            <div className={show ? css.block_detail : css.none_data}>
+            <div className={showDetail ? css.block_detail : css.none_data}>
                 <div className={css.left_block}>
                     <div>Message: {msg !== null ? msg : 'no data'}</div>
                     <div>UTM: {utm !== null ? utm : 'no data'}</div>
                     <div>
-                        <button className={css_button.btn_open} onClick={setUpdate}>Edit</button>
+                        <button disabled={addValidForm} className={css_button.btn_open} onClick={setUpdate}>Edit</button>
                     </div>
                 </div>
                 <div className={css.right_block}>Comments:

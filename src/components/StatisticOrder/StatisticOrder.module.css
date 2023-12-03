@@ -1,7 +1,7 @@
 .statistic_order_container {
     display: flex;
     justify-content: space-around;
-    margin: 10px 0 10px;
+    margin: 10% 0 10px;
     width: 95%;
 }
 
@@ -14,6 +14,10 @@
     flex-direction: column;
     height: 10%;
     width: 12%;
+}
+
+.statistic_order_none {
+    display: none;
 }
 
 .order_count {

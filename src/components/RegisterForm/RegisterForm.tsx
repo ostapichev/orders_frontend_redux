@@ -10,7 +10,7 @@ import {useNavigate, useParams} from "react-router-dom";
 
 import css from "../LoginForm/LoginForm.module.css";
 
-import logo from "../../asserts/images/okten_logo.png";
+import {okten_school} from "../../asserts";
 
 
 interface IProps {
@@ -53,7 +53,7 @@ const RegisterForm: FC<IProps> = ({funcName}) => {
     return (
         <div>
             <div className={css.form_block}>
-                <img className={css.logo_form} src={logo} alt='logo'/>
+                <img className={css.logo_form} src={okten_school} alt='logo'/>
                 <form className={css.login_form}
                       onSubmit={handleSubmit(recoveryRequestUser)}>
                     <label>Password</label>

@@ -1,15 +1,11 @@
 import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-
 import {commentActions} from "../../redux";
 import {commentValidator} from "../../validators";
-import {IComment} from "../../interfaces";
+import {IComment, IOrder} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './CommentForm.module.css';
 
@@ -19,29 +15,26 @@ interface IProps {
 }
 
 const CommentForm: FC<IProps> = ({order_id}) => {
-    const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IComment>({
+    const dispatch = useAppDispatch();
+    const {handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IComment>({
         mode: "all",
         resolver: joiResolver(commentValidator)
     });
-    const dispatch = useAppDispatch();
+    const {me} = useAppSelector(state => state.authReducer);
+    const {orders} = useAppSelector(state => state.orderReducer);
     const save: SubmitHandler<IComment> = async (comment) => {
         await dispatch(commentActions.create({order_id, comment}));
-        reset();
-    }
+        setValue('comment', '');
+    };
+    const order: IOrder = orders.find(item => item.id === order_id);
+    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
 
     return (
-        <>
-            <InputGroup>
-                <Form.Control className={css.comment_form} placeholder="Enter comment"
-                              aria-label="add_comment"
-                              aria-describedby="basic-addon"
-                              {...register('comment')}/>
-                <Button className={css.comment_form} onClick={handleSubmit(save)} disabled={!isValid} variant="success" id="button-addon2">
-                    Add comment
-                </Button>
-            </InputGroup>
+        <form className={css.comment_form} onSubmit={handleSubmit(save)}>
+            <input type="text" placeholder="Enter comment" {...register('comment')}/>
+            <button className={css.button_comment} disabled={!isValid || addValidForm}>Add</button>
             {errors.comment && <div className={css.err_comment}>{errors.comment.message}</div>}
-        </>
+        </form>
     );
 };
 

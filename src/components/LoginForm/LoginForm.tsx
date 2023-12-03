@@ -4,7 +4,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
 
-import {authActions} from "../../redux";
+import {authActions, orderActions} from "../../redux";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './LoginForm.module.css';
 
-import logo from '../../asserts/images/okten_logo.png';
+import {okten_school} from '../../asserts';
 
 
 const LoginForm: FC = () => {
@@ -33,7 +33,7 @@ const LoginForm: FC = () => {
 
     return (
         <div className={css.form_block} onSubmit={handleSubmit(login)}>
-            <img className={css.logo_form} src={logo} alt='logo'/>
+            <img className={css.logo_form} src={okten_school} alt='logo'/>
             <form className={css.login_form}>
                 <label>Email</label>
                 <Form.Control size="sm" type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
