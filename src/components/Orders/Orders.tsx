@@ -22,8 +22,6 @@ import {okten_logo} from '../../asserts';
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const [show, setShow] = useState(false);
-    const [search, setSearch] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
     const handleClose: IOrderBy = () => setShow(false);
     const handleShow: IOrderBy = () => setShow(true);
     const {orders, trigger, sorted, checkbox, inputData} = useAppSelector(state => state.orderReducer);
@@ -32,24 +30,22 @@ const Orders: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const nameInputChange: any = (event: any) => {
         const inputValue = event.target.value;
-        console.log(inputData);
-        console.log(inputValue);
         dispatch(orderActions.setInputData(inputValue));
     };
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
-    const getAllOrders = useCallback((sorting: string, manager='') => {
-        dispatch(orderActions.getAll({page: query.get('page'), name_contains: inputData, order_by: sorting, manager}));
+    const getAllOrders = useCallback((sorting: string,  manager='', searchValue: string) => {
+        dispatch(orderActions.getAll({page: query.get('page'), name_contains: searchValue, order_by: sorting, manager}));
         },[dispatch, query]);
     const sortingCheckBox: ISortingReverse = (orderBy: string) => {
-        checkbox ? getAllOrders(orderBy, me.profile.name) : getAllOrders(orderBy);
+        checkbox ? getAllOrders(orderBy, me.profile.name, '') : getAllOrders(orderBy, '', '');
     };
     const sortingReverse: ISortingReverse = (orderBy: string) => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
     };
     const sortingOrders: IOrderBy = () => {
-        checkbox ? getAllOrders('-id') : getAllOrders('-id', me.profile.name);
+        checkbox ? getAllOrders('-id', '', '') : getAllOrders('-id', me.profile.name, '');
         dispatch(orderActions.setCheckBox());
     };
     const orderById: IOrderBy = () => sortingReverse('id');
@@ -68,18 +64,13 @@ const Orders: FC = () => {
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
     const handler: IOrderBy = () => sortingOrders();
-
-    const filterResults = () => {
-        return searchResults.filter(result =>
-            result.name.toLowerCase().includes(search.toLowerCase())
-        );
-    };
+    const searchValue: string = inputData ? inputData : '';
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        getAllOrders('-id');
-        }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
+        getAllOrders('-id', '', searchValue);
+        }, [dispatch, trigger, getAllOrders, triggerComment, searchValue, me.profile.name]);
 
     return (
         <div className={css.orders}>
@@ -98,7 +89,7 @@ const Orders: FC = () => {
             </Offcanvas>
             <div className={css.block_filters}>
                 <div className={css.filter_order}>
-                    <Form.Control size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
+                    <Form.Control value={inputData} size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
                     <Form.Control size="sm" type="text" placeholder="Surname"/>
                     <Form.Control size="sm" type="email" placeholder="email"/>
                     <Form.Control size="sm" type="text" placeholder="phone"/>
