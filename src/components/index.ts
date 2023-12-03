@@ -6,6 +6,7 @@ export * from './GetExelFile/GetExelFile';
 export * from './GroupForm/GroupForm';
 export * from './Group/Group';
 export * from './Header/Header';
+export * from './InputBlock/InputBlock';
 export * from './Loading/Loading';
 export * from './LoginForm/LoginForm';
 export * from './Order/Order';

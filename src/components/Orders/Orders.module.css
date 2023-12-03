@@ -6,7 +6,6 @@
 .block_filters {
     align-items: center;
     display: flex;
-    flex-wrap: wrap;
     max-width: 100vw;
     padding: 10px;
 }
@@ -31,27 +30,9 @@
     width: 100%;
 }
 
-.filter_order {
-    display: flex;
-    height: 10%;
-    justify-content: space-around;
-    width: 90%;
-}
-
-.filter_order_check {
-    font-size: 14pt;
-    height: 100%;
-    margin-top: 5px;
-    width: 10%;
-}
-
-.filter_order input, .filter_order select {
-    margin-top: 5px;
-    width: 15%;
-}
-
 .my {
     font: bold 10pt Georgia, serif;
+    width: 100%;
 }
 
 .okten_logo {
@@ -60,9 +41,7 @@
 }
 
 .orders {
-    background-color: #C5E384;
     border-radius: 10px;
-    margin: 10% 0 2%;
     min-width: 1100px;
     padding-bottom: 50px;
 }

@@ -7,31 +7,24 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
 import {GetExelFile} from "../GetExelFile/GetExelFile";
-import {Group} from "../Group/Group";
 import {IOrderBy, ISortingReverse} from "../../types";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
 import {okten_logo} from '../../asserts';
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const [show, setShow] = useState(false);
-    const handleClose: IOrderBy = () => setShow(false);
-    const handleShow: IOrderBy = () => setShow(true);
-    const {orders, trigger, sorted, checkbox, inputData} = useAppSelector(state => state.orderReducer);
-    const {groups} = useAppSelector(state => state.groupReducer);
+    const {orders, trigger, sorted, checkbox, inputData, openModal} = useAppSelector(state => state.orderReducer);
+    const handleClose: IOrderBy = () => {
+        dispatch(orderActions.setShowModal(false));
+    }
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const nameInputChange: any = (event: any) => {
-        const inputValue = event.target.value;
-        dispatch(orderActions.setInputData(inputValue));
-    };
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const getAllOrders = useCallback((sorting: string,  manager='', searchValue: string) => {
@@ -44,10 +37,7 @@ const Orders: FC = () => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
     };
-    const sortingOrders: IOrderBy = () => {
-        checkbox ? getAllOrders('-id', '', '') : getAllOrders('-id', me.profile.name, '');
-        dispatch(orderActions.setCheckBox());
-    };
+
     const orderById: IOrderBy = () => sortingReverse('id');
     const orderByName: IOrderBy = () => sortingReverse('name');
     const orderBySurName: IOrderBy = () => sortingReverse('surname');
@@ -63,7 +53,7 @@ const Orders: FC = () => {
     const orderByGroup: IOrderBy = () => sortingReverse('group');
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
-    const handler: IOrderBy = () => sortingOrders();
+
     const searchValue: string = inputData ? inputData : '';
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
@@ -74,7 +64,7 @@ const Orders: FC = () => {
 
     return (
         <div className={css.orders}>
-            <Offcanvas className={css.container_actions} show={show} onHide={handleClose}>
+            <Offcanvas className={css.container_actions} show={openModal} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title className={css.actions_header}>Actions</Offcanvas.Title>
                 </Offcanvas.Header>
@@ -87,59 +77,6 @@ const Orders: FC = () => {
                     <img className={css.okten_logo} src={okten_logo} alt="okten_logo"/>
                 </Offcanvas.Body>
             </Offcanvas>
-            <div className={css.block_filters}>
-                <div className={css.filter_order}>
-                    <Form.Control value={inputData} size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
-                    <Form.Control size="sm" type="text" placeholder="Surname"/>
-                    <Form.Control size="sm" type="email" placeholder="email"/>
-                    <Form.Control size="sm" type="text" placeholder="phone"/>
-                    <Form.Control size="sm" type="number" placeholder="age"/>
-                    <Form.Select size="sm" aria-label="Choose course">
-                        <option>all courses</option>
-                        <option value="FS">FS</option>
-                        <option value="QACX">QACX</option>
-                        <option value="JCX">JSCX</option>
-                        <option value="JCX">JCX</option>
-                        <option value="FE">FE</option>
-                        <option value="PCX">PCX</option>
-                    </Form.Select>
-                </div>
-                <div className={css.filter_order_check}>
-                    <Form.Check aria-label="My_orders" name="myOrders" inline onChange={handler}/>
-                    <label className={css.my} htmlFor="myOrders">My orders</label>
-                </div>
-                <div className={css.filter_order}>
-                    <Form.Select size="sm" name="course_format" aria-label="Course_format">
-                        <option>all formats</option>
-                        <option value="static">static</option>
-                        <option value="online">online</option>
-                    </Form.Select>
-                    <Form.Select size="sm" name="course_type" aria-label="Course_type">
-                        <option>all types</option>
-                        <option value="pro">pro</option>
-                        <option value="minimal">minimal</option>
-                        <option value="premium">premium</option>
-                        <option value="incubator">incubator</option>
-                        <option value="vip">vip</option>
-                    </Form.Select>
-                    <Form.Select size="sm" name="status" aria-label="Status">
-                        <option>all statuses</option>
-                        <option value="new_order">new_order</option>
-                        <option value="in_work">in_work</option>
-                        <option value="agree">agree</option>
-                        <option value="disagree">disagree</option>
-                        <option value="dubbing">dubbing</option>
-                    </Form.Select>
-                    <Form.Select size="sm" name="group" aria-label="Choose group"
-                                 onChange={(event) => dispatch(orderActions.setOrderCreate(event.target.value))}>
-                            <option>all groups</option>
-                            {groups.map(group => <Group key={group.id} group={group}/>)}
-                    </Form.Select>
-                    <Form.Control size="sm" type="datetime-local" placeholder="start date"/>
-                    <Form.Control size="sm" type="datetime-local" placeholder="end date"/>
-                </div>
-                <button className={css_button.btn_open} onClick={handleShow}>Actions</button>
-            </div>
             <div className={css.table}>
                 <div>
                     <ListGroup className={css.table_data} horizontal>

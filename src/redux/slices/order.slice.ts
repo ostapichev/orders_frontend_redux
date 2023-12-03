@@ -23,6 +23,7 @@ interface IState {
     sorted: boolean;
     fileDataURL?: string;
     openOrderForm: boolean;
+    openModal: boolean;
     inputData: string;
     prevPage: number;
     nextPage: number;
@@ -40,6 +41,7 @@ const initialState: IState = {
     sorted: true,
     fileDataURL: null,
     openOrderForm: false,
+    openModal: false,
     inputData: '',
     prevPage: null,
     nextPage: null,
@@ -118,6 +120,9 @@ const slice = createSlice({
         },
         setCheckBoxDefault: state => {
             state.checkbox = false;
+        },
+        setShowModal: (state, action) => {
+            state.openModal = action.payload;
         },
         setInputData: (state, action) => {
             state.inputData = action.payload;
