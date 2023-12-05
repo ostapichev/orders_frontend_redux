@@ -7,9 +7,10 @@
     display: flex;
     height: 10%;
     justify-content: space-around;
-    width: 90%;
+    width: 100%;
 }
 
 .input_container {
     margin-top: 15vh;
+    width: 100%;
 }

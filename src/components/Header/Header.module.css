@@ -6,7 +6,7 @@ a img:hover {
     align-items: center;
     background: #D3EAFF;
     display: flex;
-    height: 15%;
+    height: 12vh;
     justify-content: space-between;
     min-width: 100vw;
     position: fixed;

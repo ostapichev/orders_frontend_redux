@@ -13,3 +13,10 @@
     background-color: #C5E384;
     width: 100%;
 }
+
+.inputs_actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}

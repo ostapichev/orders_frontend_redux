@@ -23,7 +23,10 @@ interface IState {
     sorted: boolean;
     fileDataURL?: string;
     openOrderForm: boolean;
-    inputData: string;
+    openModal: boolean;
+    nameInputData: string;
+    surNameInputData: string;
+    emailInputData: string;
     prevPage: number;
     nextPage: number;
 }
@@ -40,16 +43,26 @@ const initialState: IState = {
     sorted: true,
     fileDataURL: null,
     openOrderForm: false,
-    inputData: '',
+    openModal: false,
+    nameInputData: '',
+    surNameInputData: '',
+    emailInputData: '',
     prevPage: null,
     nextPage: null,
 };
 
-const getAll = createAsyncThunk<IOrder[], {page: string, order_by: string, name_contains: string, manager: string}> (
+const getAll = createAsyncThunk<IOrder[], {
+            page: string,
+            order_by: string,
+            name_contains: string,
+            surname_contains: string,
+            email_contains: string,
+            manager: string
+        }> (
     'orderSlice/getAll',
-    async ({page, order_by, name_contains, manager}, {rejectWithValue}) => {
+    async ({page, order_by, name_contains, surname_contains, email_contains, manager}, {rejectWithValue}) => {
         try {
-            const {data} = await orderService.getAll(page, order_by, name_contains, manager);
+            const {data} = await orderService.getAll(page, order_by, name_contains, surname_contains, email_contains, manager);
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
@@ -119,8 +132,17 @@ const slice = createSlice({
         setCheckBoxDefault: state => {
             state.checkbox = false;
         },
-        setInputData: (state, action) => {
-            state.inputData = action.payload;
+        setNameInputData: (state, action) => {
+            state.nameInputData = action.payload;
+        },
+        setSurNameInputData: (state, action) => {
+            state.surNameInputData = action.payload;
+        },
+        setEmailInputData: (state, action) => {
+            state.emailInputData = action.payload;
+        },
+        setShowModal: (state, action) => {
+            state.openModal = action.payload;
         },
         setPaginate: (state, action) => {
             const {result, prev, next} = action.payload;

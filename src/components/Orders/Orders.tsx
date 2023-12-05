@@ -1,7 +1,6 @@
-import {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {FC, useCallback, useEffect, useRef} from 'react';
 import {useSearchParams} from "react-router-dom";
 
-import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
@@ -13,34 +12,35 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
 
 import {okten_logo} from '../../asserts';
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const [show, setShow] = useState(false);
-    const handleClose: IOrderBy = () => setShow(false);
-    const handleShow: IOrderBy = () => setShow(true);
-    const {orders, trigger, sorted, checkbox, inputData} = useAppSelector(state => state.orderReducer);
+    const {orders, trigger, sorted, checkbox, nameInputData, surNameInputData, emailInputData, openModal} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
-    const getAllOrders = useCallback((sorting: string,  manager='', searchValue: string) => {
-        dispatch(orderActions.getAll({page: query.get('page'), name_contains: searchValue, order_by: sorting, manager}));
+    const getAllOrders = useCallback((sorting: string,  manager='', searchName: string, searchSurname: string, searchEmail: string) => {
+        dispatch(orderActions.getAll({
+            page: query.get('page'),
+            name_contains: searchName,
+            surname_contains: searchSurname,
+            email_contains: searchEmail,
+            order_by: sorting,
+            manager}));
         },[dispatch, query]);
+    const handleClose: IOrderBy = () => {
+        dispatch(orderActions.setShowModal(false));
+    };
     const sortingCheckBox: ISortingReverse = (orderBy: string) => {
-        checkbox ? getAllOrders(orderBy, me.profile.name, '') : getAllOrders(orderBy, '', '');
+        checkbox ? getAllOrders(orderBy, me.profile.name, searchName, searchSurname, searchEmail) : getAllOrders(orderBy, '', searchName, searchSurname, searchEmail);
     };
     const sortingReverse: ISortingReverse = (orderBy: string) => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
-    };
-    const sortingOrders: IOrderBy = () => {
-        checkbox ? getAllOrders('-id', '', '') : getAllOrders('-id', me.profile.name, '');
-        dispatch(orderActions.setCheckBox());
     };
     const orderById: IOrderBy = () => sortingReverse('id');
     const orderByName: IOrderBy = () => sortingReverse('name');
@@ -57,18 +57,19 @@ const Orders: FC = () => {
     const orderByGroup: IOrderBy = () => sortingReverse('group');
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
-    const handler: IOrderBy = () => sortingOrders();
-    const searchValue: string = inputData ? inputData : '';
+    const searchName = nameInputData ? nameInputData : '';
+    const searchSurname = surNameInputData ? surNameInputData : '';
+    const searchEmail = emailInputData ? emailInputData : '';
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        getAllOrders('-id', '', searchValue);
-        }, [dispatch, trigger, getAllOrders, triggerComment, searchValue, me.profile.name]);
+        checkbox ? getAllOrders('-id', me.profile.name, searchName, searchSurname, searchEmail) : getAllOrders('-id', '', searchName, searchSurname, searchEmail);
+        }, [dispatch, trigger, getAllOrders, triggerComment, searchName, searchSurname, searchEmail, me.profile.name, checkbox]);
 
     return (
         <div className={css.orders}>
-            <Offcanvas className={css.container_actions} show={show} onHide={handleClose}>
+            <Offcanvas className={css.container_actions} show={openModal} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title className={css.actions_header}>Actions</Offcanvas.Title>
                 </Offcanvas.Header>
@@ -81,15 +82,6 @@ const Orders: FC = () => {
                     <img className={css.okten_logo} src={okten_logo} alt="okten_logo"/>
                 </Offcanvas.Body>
             </Offcanvas>
-            <div className={css.block_filters}>
-
-                <div className={css.filter_order_check}>
-                    <Form.Check aria-label="My_orders" name="myOrders" inline onChange={handler}/>
-                    <label className={css.my} htmlFor="myOrders">My orders</label>
-                </div>
-
-                <button className={css_button.btn_open} onClick={handleShow}>Actions</button>
-            </div>
             <div className={css.table}>
                 <div>
                     <ListGroup className={css.table_data} horizontal>

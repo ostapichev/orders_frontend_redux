@@ -1,8 +1,8 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 import {authService} from "../../services";
+import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 
 
 interface IState {

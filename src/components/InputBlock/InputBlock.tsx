@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {ChangeEvent, FC} from 'react';
 
 import Form from "react-bootstrap/Form";
 
@@ -12,18 +12,23 @@ import css from './InputBlock.module.css';
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
-    const {inputData} = useAppSelector(state => state.orderReducer);
-    const nameInputChange: any = (event: any) => {
-        const inputValue = event.target.value;
-        dispatch(orderActions.setInputData(inputValue));
+    const {nameInputData, surNameInputData, emailInputData} = useAppSelector(state => state.orderReducer);
+    const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(orderActions.setNameInputData(event.target.value));
+    };
+    const surNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(orderActions.setSurNameInputData(event.target.value));
+    };
+    const emailInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(orderActions.setEmailInputData(event.target.value));
     };
 
     return (
         <div className={css.input_container}>
             <div className={css.filter_order}>
-                <Form.Control value={inputData} size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
-                <Form.Control size="sm" type="text" placeholder="Surname"/>
-                <Form.Control size="sm" type="email" placeholder="email"/>
+                <Form.Control value={nameInputData} size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
+                <Form.Control value={surNameInputData} size="sm" type="text" placeholder="Surname" onChange={surNameInputChange}/>
+                <Form.Control value={emailInputData} size="sm" type="email" placeholder="email" onChange={emailInputChange}/>
                 <Form.Control size="sm" type="text" placeholder="phone"/>
                 <Form.Control size="sm" type="number" placeholder="age"/>
                 <Form.Select size="sm" aria-label="Choose course">

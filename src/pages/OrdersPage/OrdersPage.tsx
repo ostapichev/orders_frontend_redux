@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 
-import {GroupForm, InputBlock, Loading, OrderForm, Orders} from "../../components";
+import {GroupForm, InputBlock, Loading, MyBlockButton, OrderForm, Orders} from "../../components";
 import {useAppSelector} from "../../hooks";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
@@ -14,8 +14,9 @@ const OrdersPage: FC = () => {
 
     return (
         <div className={css.order_page}>
-            <div className="w-75">
+            <div className={css.inputs_actions}>
                 <InputBlock/>
+                <MyBlockButton/>
             </div>
             {loading && <Loading/>}
             <div className={loading ? css.orders_none : css.orders_block}>
