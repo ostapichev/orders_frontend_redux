@@ -1,0 +1,15 @@
+.filter_order input, .filter_order select {
+    margin-top: 5px;
+    width: 15%;
+}
+
+.filter_order {
+    display: flex;
+    height: 10%;
+    justify-content: space-around;
+    width: 90%;
+}
+
+.input_container {
+    margin-top: 15vh;
+}
