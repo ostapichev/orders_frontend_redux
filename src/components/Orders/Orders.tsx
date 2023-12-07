@@ -18,17 +18,57 @@ import {okten_logo} from '../../asserts';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {orders, trigger, sorted, checkbox, nameInputData, surNameInputData, emailInputData, openModal} = useAppSelector(state => state.orderReducer);
+    const {
+        orders,
+        trigger,
+        sorted,
+        checkbox,
+        nameInputData,
+        surNameInputData,
+        emailInputData,
+        phoneInputData,
+        ageInputData,
+        courseInputData,
+        formatCourseInputData,
+        typeCourseInputData,
+        statusInputData,
+        groupInputData,
+        startDateInputData,
+        endDateInputData,
+        openModal} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
-    const getAllOrders = useCallback((sorting: string,  manager='', searchName: string, searchSurname: string, searchEmail: string) => {
+    const getAllOrders = useCallback((
+        sorting: string,
+        manager: string,
+        searchName: string,
+        searchSurname: string,
+        searchEmail: string,
+        searchPhone: string,
+        searchAge: string,
+        searchCourse: string,
+        searchFormatCourse: string,
+        searchTypeCourse: string,
+        searchStatus: string,
+        searchGroup: string,
+        searchStartDate: string,
+        searchEndDate: string) => {
         dispatch(orderActions.getAll({
             page: query.get('page'),
             name_contains: searchName,
             surname_contains: searchSurname,
             email_contains: searchEmail,
+            phone_contains: searchPhone,
+            age_in: searchAge,
+            course: searchCourse,
+            course_format: searchFormatCourse,
+            course_type: searchTypeCourse,
+            status_in: searchStatus,
+            group: searchGroup,
+            startDate: searchStartDate,
+            endDate: searchEndDate,
             order_by: sorting,
             manager}));
         },[dispatch, query]);
@@ -36,7 +76,35 @@ const Orders: FC = () => {
         dispatch(orderActions.setShowModal(false));
     };
     const sortingCheckBox: ISortingReverse = (orderBy: string) => {
-        checkbox ? getAllOrders(orderBy, me.profile.name, searchName, searchSurname, searchEmail) : getAllOrders(orderBy, '', searchName, searchSurname, searchEmail);
+        checkbox ? getAllOrders(
+            orderBy,
+            me.profile.name,
+            searchName,
+            searchSurname,
+            searchEmail,
+            searchPhone,
+            searchAge,
+            searchCourse,
+            searchFormatCourse,
+            searchTypeCourse,
+            searchStatus,
+            startDateInputData,
+            endDateInputData,
+            searchGroup) : getAllOrders(
+                orderBy,
+                '',
+                searchName,
+                searchSurname,
+                searchEmail,
+                searchPhone,
+                searchAge,
+                searchCourse,
+                searchFormatCourse,
+                searchTypeCourse,
+                searchStatus,
+                searchGroup,
+                startDateInputData,
+                endDateInputData,);
     };
     const sortingReverse: ISortingReverse = (orderBy: string) => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
@@ -60,12 +128,68 @@ const Orders: FC = () => {
     const searchName = nameInputData ? nameInputData : '';
     const searchSurname = surNameInputData ? surNameInputData : '';
     const searchEmail = emailInputData ? emailInputData : '';
+    const searchPhone = phoneInputData ? phoneInputData : '';
+    const searchAge = ageInputData ? ageInputData : '';
+    const searchCourse = courseInputData ? courseInputData : '';
+    const searchFormatCourse = formatCourseInputData ? formatCourseInputData : '';
+    const searchTypeCourse = typeCourseInputData ? typeCourseInputData : '';
+    const searchStatus = statusInputData ? statusInputData : '';
+    const searchGroup = groupInputData ? groupInputData : '';
+    const searchStartDate = startDateInputData ? startDateInputData : '';
+    const searchEndDate = endDateInputData ? endDateInputData : '';
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        checkbox ? getAllOrders('-id', me.profile.name, searchName, searchSurname, searchEmail) : getAllOrders('-id', '', searchName, searchSurname, searchEmail);
-        }, [dispatch, trigger, getAllOrders, triggerComment, searchName, searchSurname, searchEmail, me.profile.name, checkbox]);
+        checkbox ? getAllOrders(
+            '-id',
+            me.profile.name,
+            searchName,
+            searchSurname,
+            searchEmail,
+            searchPhone,
+            searchAge,
+            searchCourse,
+            searchFormatCourse,
+            searchTypeCourse,
+            searchStatus,
+            searchGroup,
+            searchStartDate,
+            searchEndDate) : getAllOrders(
+                '-id',
+                '',
+                searchName,
+                searchSurname,
+                searchEmail,
+                searchPhone,
+                searchAge,
+                searchCourse,
+                searchFormatCourse,
+                searchTypeCourse,
+                searchStatus,
+                searchGroup,
+                searchStartDate,
+                searchEndDate);
+        }, [
+            dispatch,
+            trigger,
+            getAllOrders,
+            triggerComment,
+            searchName,
+            searchSurname,
+            searchEmail,
+            searchPhone,
+            searchAge,
+            searchCourse,
+            searchFormatCourse,
+            searchTypeCourse,
+            searchStatus,
+            searchGroup,
+            searchStartDate,
+            searchEndDate,
+            me.profile.name,
+            checkbox
+        ]);
 
     return (
         <div className={css.orders}>

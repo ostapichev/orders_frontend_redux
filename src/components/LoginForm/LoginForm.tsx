@@ -4,7 +4,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
 
-import {authActions, orderActions} from "../../redux";
+import {authActions} from "../../redux";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
 import {joiResolver} from "@hookform/resolvers/joi";
@@ -25,6 +25,9 @@ const LoginForm: FC = () => {
         resolver: joiResolver(authValidator)
     });
     const login: SubmitHandler<IAuth> = async (user) => {
+        if (localStorage.getItem('access') || localStorage.getItem('refresh')) {
+            localStorage.clear();
+        }
         const {meta: {requestStatus}} = await dispatch(authActions.login(user));
         if (requestStatus === 'fulfilled') {
             navigate('/orders');
@@ -37,13 +40,13 @@ const LoginForm: FC = () => {
             <form className={css.login_form}>
                 <label>Email</label>
                 <Form.Control size="sm" type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
-                    {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
+                {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
                 <label>Password</label>
                 <Form.Control size="sm" type="password" placeholder={'enter password'} {...register('password',{required: true})}/>
-                    {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
+                {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
                 <button className={css.btn_submit} disabled={loading}>{loading ? 'Loading' : 'Login' }</button>
-                    {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
-                    {error?.detail && <p className={css.err_login}>{error.detail}</p>}
+                {query.get('expSession') && <p className={css.err_login}>Please login!</p>}
+                {error?.detail && <p className={css.err_login}>{error.detail}</p>}
             </form>
         </div>
     );

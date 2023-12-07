@@ -27,6 +27,15 @@ interface IState {
     nameInputData: string;
     surNameInputData: string;
     emailInputData: string;
+    phoneInputData: string;
+    ageInputData: string;
+    courseInputData: string;
+    formatCourseInputData: string;
+    typeCourseInputData: string;
+    statusInputData: string;
+    groupInputData: string;
+    startDateInputData: string;
+    endDateInputData: string;
     prevPage: number;
     nextPage: number;
 }
@@ -47,6 +56,15 @@ const initialState: IState = {
     nameInputData: '',
     surNameInputData: '',
     emailInputData: '',
+    phoneInputData: '',
+    ageInputData: '',
+    courseInputData: '',
+    formatCourseInputData: '',
+    typeCourseInputData: '',
+    statusInputData: '',
+    groupInputData: '',
+    startDateInputData: '',
+    endDateInputData: '',
     prevPage: null,
     nextPage: null,
 };
@@ -57,12 +75,73 @@ const getAll = createAsyncThunk<IOrder[], {
             name_contains: string,
             surname_contains: string,
             email_contains: string,
-            manager: string
+            phone_contains: string,
+            age_in: string,
+            course: string,
+            course_format: string,
+            course_type: string,
+            status_in: string,
+            group: string,
+            startDate: string,
+            endDate: string,
+            manager: string,
         }> (
     'orderSlice/getAll',
-    async ({page, order_by, name_contains, surname_contains, email_contains, manager}, {rejectWithValue}) => {
+    async ({
+               page,
+               order_by,
+               name_contains,
+               surname_contains,
+               email_contains,
+               phone_contains,
+               age_in,
+               course,
+               course_format,
+               course_type,
+               status_in,
+               group,
+               startDate,
+               endDate,
+               manager
+           }, {rejectWithValue}) => {
         try {
-            const {data} = await orderService.getAll(page, order_by, name_contains, surname_contains, email_contains, manager);
+            const params = {
+                page,
+                order_by,
+                name_contains,
+                surname_contains,
+                email_contains,
+                phone_contains,
+                age_in,
+                course,
+                course_format,
+                course_type,
+                status_in,
+                group,
+                startDate,
+                endDate,
+                manager
+            };
+            const filteredParams = Object.fromEntries(
+                Object.entries(params).filter(([_, value]) => value !== undefined)
+            );
+
+            const {data} = await orderService.getAll(
+                page,
+                order_by,
+                name_contains,
+                surname_contains,
+                email_contains,
+                phone_contains,
+                age_in,
+                course,
+                course_format,
+                course_type,
+                status_in,
+                group,
+                startDate,
+                endDate,
+                manager);
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
@@ -140,6 +219,33 @@ const slice = createSlice({
         },
         setEmailInputData: (state, action) => {
             state.emailInputData = action.payload;
+        },
+        setPhoneInputData: (state, action) => {
+            state.phoneInputData = action.payload;
+        },
+        setAgeInputData: (state, action) => {
+            state.ageInputData = action.payload;
+        },
+        setCourseInputData: (state, action) => {
+            state.courseInputData = action.payload;
+        },
+        setFormatInputData: (state, action) => {
+            state.formatCourseInputData = action.payload;
+        },
+        setTypeInputData: (state, action) => {
+            state.typeCourseInputData = action.payload;
+        },
+        setStatusInputData: (state, action) => {
+            state.statusInputData = action.payload;
+        },
+        setGroupInputData: (state, action) => {
+            state.groupInputData = action.payload;
+        },
+        setStartDateInputData: (state, action) => {
+            state.startDateInputData = action.payload;
+        },
+        setEndDateInputData: (state, action) => {
+            state.endDateInputData = action.payload;
         },
         setShowModal: (state, action) => {
             state.openModal = action.payload;
