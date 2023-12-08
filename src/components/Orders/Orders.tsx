@@ -67,8 +67,8 @@ const Orders: FC = () => {
             course_type: searchTypeCourse,
             status_in: searchStatus,
             group: searchGroup,
-            startDate: searchStartDate,
-            endDate: searchEndDate,
+            created_at_after: searchStartDate,
+            created_at_before: searchEndDate,
             order_by: sorting,
             manager}));
         },[dispatch, query]);

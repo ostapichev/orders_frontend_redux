@@ -55,11 +55,9 @@ const InputBlock: FC = () => {
         dispatch(orderActions.setGroupInputData(event.target.value));
     };
     const startDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(startDateInputData);
         dispatch(orderActions.setStartDateInputData(event.target.value.slice(0, 10)));
     };
     const endDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(endDateInputData);
         dispatch(orderActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
 

@@ -1,13 +1,7 @@
 import {AxiosError} from "axios";
-import {
-    createAsyncThunk,
-    createSlice,
-    isFulfilled,
-    isPending,
-    isRejectedWithValue
-} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorOrder, IOrder} from "../../interfaces";
+import {IErrorOrder, IFilterOrder, IOrder} from "../../interfaces";
 import {orderService} from "../../services";
 
 
@@ -69,23 +63,7 @@ const initialState: IState = {
     nextPage: null,
 };
 
-const getAll = createAsyncThunk<IOrder[], {
-            page: string,
-            order_by: string,
-            name_contains: string,
-            surname_contains: string,
-            email_contains: string,
-            phone_contains: string,
-            age_in: string,
-            course: string,
-            course_format: string,
-            course_type: string,
-            status_in: string,
-            group: string,
-            startDate: string,
-            endDate: string,
-            manager: string,
-        }> (
+const getAll = createAsyncThunk<IOrder[], IFilterOrder> (
     'orderSlice/getAll',
     async ({
                page,
@@ -100,8 +78,8 @@ const getAll = createAsyncThunk<IOrder[], {
                course_type,
                status_in,
                group,
-               startDate,
-               endDate,
+               created_at_after,
+               created_at_before,
                manager
            }, {rejectWithValue}) => {
         try {
@@ -118,30 +96,14 @@ const getAll = createAsyncThunk<IOrder[], {
                 course_type,
                 status_in,
                 group,
-                startDate,
-                endDate,
+                created_at_after,
+                created_at_before,
                 manager
             };
             const filteredParams = Object.fromEntries(
                 Object.entries(params).filter(([_, value]) => value !== '')
             );
-
-            const {data} = await orderService.getAll(
-                page,
-                order_by,
-                name_contains,
-                surname_contains,
-                email_contains,
-                phone_contains,
-                age_in,
-                course,
-                course_format,
-                course_type,
-                status_in,
-                group,
-                startDate,
-                endDate,
-                manager);
+            const {data} = await orderService.getAll(filteredParams);
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
