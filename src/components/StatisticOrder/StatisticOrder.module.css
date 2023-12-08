@@ -1,7 +1,7 @@
 .statistic_order_container {
     display: flex;
     justify-content: space-around;
-    margin: 10% 0 10px;
+    margin: 15vh 0 5vh;
     width: 95%;
 }
 

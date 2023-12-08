@@ -1,6 +1,13 @@
 import React, {FC} from 'react';
 
-import {GroupForm, InputBlock, Loading, MyBlockButton, OrderForm, Orders} from "../../components";
+import {
+    GroupForm,
+    InputBlock,
+    Loading,
+    MyBlockButton,
+    OrderForm,
+    Orders
+} from "../../components";
 import {useAppSelector} from "../../hooks";
 import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 

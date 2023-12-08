@@ -123,7 +123,7 @@ const getAll = createAsyncThunk<IOrder[], {
                 manager
             };
             const filteredParams = Object.fromEntries(
-                Object.entries(params).filter(([_, value]) => value !== undefined)
+                Object.entries(params).filter(([_, value]) => value !== '')
             );
 
             const {data} = await orderService.getAll(
