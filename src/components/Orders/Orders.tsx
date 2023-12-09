@@ -57,6 +57,7 @@ const Orders: FC = () => {
         searchEndDate: string) => {
         dispatch(orderActions.getAll({
             page: query.get('page'),
+            order_by: sorting,
             name_contains: searchName,
             surname_contains: searchSurname,
             email_contains: searchEmail,
@@ -69,16 +70,15 @@ const Orders: FC = () => {
             group: searchGroup,
             created_at_after: searchStartDate,
             created_at_before: searchEndDate,
-            order_by: sorting,
             manager}));
         },[dispatch, query]);
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.setShowModal(false));
     };
     const sortingCheckBox: ISortingReverse = (orderBy: string) => {
-        checkbox ? getAllOrders(
+        getAllOrders(
             orderBy,
-            me.profile.name,
+            checkbox ? me.profile.name : '',
             searchName,
             searchSurname,
             searchEmail,
@@ -90,21 +90,7 @@ const Orders: FC = () => {
             searchStatus,
             startDateInputData,
             endDateInputData,
-            searchGroup) : getAllOrders(
-                orderBy,
-                '',
-                searchName,
-                searchSurname,
-                searchEmail,
-                searchPhone,
-                searchAge,
-                searchCourse,
-                searchFormatCourse,
-                searchTypeCourse,
-                searchStatus,
-                searchGroup,
-                startDateInputData,
-                endDateInputData,);
+            searchGroup);
     };
     const sortingReverse: ISortingReverse = (orderBy: string) => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
@@ -125,25 +111,25 @@ const Orders: FC = () => {
     const orderByGroup: IOrderBy = () => sortingReverse('group');
     const orderByCreated: IOrderBy = () => sortingReverse('created_at');
     const orderByManager: IOrderBy = () => sortingReverse('manager');
-    const searchName = nameInputData ? nameInputData : '';
-    const searchSurname = surNameInputData ? surNameInputData : '';
-    const searchEmail = emailInputData ? emailInputData : '';
-    const searchPhone = phoneInputData ? phoneInputData : '';
-    const searchAge = ageInputData ? ageInputData : '';
-    const searchCourse = courseInputData ? courseInputData : '';
-    const searchFormatCourse = formatCourseInputData ? formatCourseInputData : '';
-    const searchTypeCourse = typeCourseInputData ? typeCourseInputData : '';
-    const searchStatus = statusInputData ? statusInputData : '';
-    const searchGroup = groupInputData ? groupInputData : '';
-    const searchStartDate = startDateInputData ? startDateInputData : '';
-    const searchEndDate = endDateInputData ? endDateInputData : '';
+    const searchName = nameInputData || '';
+    const searchSurname = surNameInputData || '';
+    const searchEmail = emailInputData || '';
+    const searchPhone = phoneInputData || '';
+    const searchAge = ageInputData || '';
+    const searchCourse = courseInputData || '';
+    const searchFormatCourse = formatCourseInputData || '';
+    const searchTypeCourse = typeCourseInputData || '';
+    const searchStatus = statusInputData || '';
+    const searchGroup = groupInputData || '';
+    const searchStartDate = startDateInputData || '';
+    const searchEndDate = endDateInputData ||'';
     useEffect(() => {
         setQueryRef.current(prev => ({ ...prev, page: '1' }));
     }, []);
     useEffect( () => {
-        checkbox ? getAllOrders(
+        getAllOrders(
             '-id',
-            me.profile.name,
+            checkbox ? me.profile.name : '',
             searchName,
             searchSurname,
             searchEmail,
@@ -155,21 +141,7 @@ const Orders: FC = () => {
             searchStatus,
             searchGroup,
             searchStartDate,
-            searchEndDate) : getAllOrders(
-                '-id',
-                '',
-                searchName,
-                searchSurname,
-                searchEmail,
-                searchPhone,
-                searchAge,
-                searchCourse,
-                searchFormatCourse,
-                searchTypeCourse,
-                searchStatus,
-                searchGroup,
-                searchStartDate,
-                searchEndDate);
+            searchEndDate)
         }, [
             dispatch,
             trigger,

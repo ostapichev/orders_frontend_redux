@@ -21,9 +21,7 @@ const InputBlock: FC = () => {
         courseInputData,
         formatCourseInputData,
         typeCourseInputData,
-        statusInputData,
-        startDateInputData,
-        endDateInputData} = useAppSelector(state => state.orderReducer);
+        statusInputData} = useAppSelector(state => state.orderReducer);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };
