@@ -7,6 +7,7 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './InputBlock.module.css';
+import {useSearchParams} from "react-router-dom";
 
 
 const InputBlock: FC = () => {
@@ -22,6 +23,7 @@ const InputBlock: FC = () => {
         formatCourseInputData,
         typeCourseInputData,
         statusInputData} = useAppSelector(state => state.orderReducer);
+    const [query, setQuery] = useSearchParams();
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };
@@ -62,10 +64,10 @@ const InputBlock: FC = () => {
     return (
         <div className={css.input_container}>
             <div className={css.filter_order}>
-                <Form.Control value={nameInputData} size="sm" type="text" placeholder="Name" onChange={nameInputChange}/>
-                <Form.Control value={surNameInputData} size="sm" type="text" placeholder="Surname" onChange={surNameInputChange}/>
-                <Form.Control value={emailInputData} size="sm" type="email" placeholder="email" onChange={emailInputChange}/>
-                <Form.Control value={phoneInputData} size="sm" type="text" placeholder="phone" onChange={phoneInputChange}/>
+                <Form.Control value={nameInputData} size="sm" type="search" placeholder="Name" onChange={nameInputChange}/>
+                <Form.Control value={surNameInputData} size="sm" type="search" placeholder="Surname" onChange={surNameInputChange}/>
+                <Form.Control value={emailInputData} size="sm" type="search" placeholder="email" onChange={emailInputChange}/>
+                <Form.Control value={phoneInputData} size="sm" type="search" placeholder="phone" onChange={phoneInputChange}/>
                 <Form.Control value={ageInputData} size="sm" type="number" placeholder="age" onChange={ageInputChange}/>
                 <Form.Select value={courseInputData} size="sm" aria-label="Choose course" onChange={courseInputChange}>
                     <option value="">all courses</option>

@@ -67,7 +67,7 @@ const orderValidator = Joi.object({
             'number.required': 'Already paid is required'
         }),
     course: Joi.string()
-        .valid('FS', 'QACX', 'JCX', 'FE', 'PCX')
+        .valid('FS', 'QACX', 'JSCX', 'JCX', 'FE', 'PCX')
         .required()
         .messages({
             'string.only': 'Invalid course selection',

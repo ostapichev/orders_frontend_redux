@@ -1,8 +1,8 @@
 import {FC, MouseEventHandler, useEffect} from 'react';
 
+import {authActions, adminActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
-import {authActions, adminActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './User.module.css';

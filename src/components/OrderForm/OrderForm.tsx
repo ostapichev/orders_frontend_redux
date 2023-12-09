@@ -79,7 +79,7 @@ const OrderForm: FC = () => {
                     <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
                         <option value="FS">FS</option>
                         <option value="QACX">QACX</option>
-                        <option value="JCX">JSCX</option>
+                        <option value="JSCX">JSCX</option>
                         <option value="JCX">JCX</option>
                         <option value="FE">FE</option>
                         <option value="PCX">PCX</option>
