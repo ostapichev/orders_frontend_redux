@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorOrder, IFilterOrder, IOrder} from "../../interfaces";
+import {IErrorOrder, IOrder, IParams} from "../../interfaces";
 import {orderService} from "../../services";
 
 
@@ -63,47 +63,11 @@ const initialState: IState = {
     nextPage: null,
 };
 
-const getAll = createAsyncThunk<IOrder[], IFilterOrder> (
+const getAll = createAsyncThunk<IOrder[], {params: IParams}> (
     'orderSlice/getAll',
-    async ({
-               page,
-               order_by,
-               name_contains,
-               surname_contains,
-               email_contains,
-               phone_contains,
-               age_in,
-               course,
-               course_format,
-               course_type,
-               status_in,
-               group,
-               created_at_after,
-               created_at_before,
-               manager
-           }, {rejectWithValue}) => {
+    async ({params}, {rejectWithValue}) => {
         try {
-            const params = {
-                page,
-                order_by,
-                name_contains,
-                surname_contains,
-                email_contains,
-                phone_contains,
-                age_in,
-                course,
-                course_format,
-                course_type,
-                status_in,
-                group,
-                created_at_after,
-                created_at_before,
-                manager
-            };
-            const filteredParams = Object.fromEntries(
-                Object.entries(params).filter(([_, value]) => value !== '')
-            );
-            const {data} = await orderService.getAll(filteredParams);
+            const {data} = await orderService.getAll(params);
             return data.result;
         } catch (e) {
             const err = e as AxiosError;

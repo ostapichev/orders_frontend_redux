@@ -1,16 +1,16 @@
+.user_content, .user_statistics {
+    font: bold 10pt Helvetica, serif;
+}
+
 .user_statistics {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: 10%;
+    font-size: 10pt;
+    margin-bottom: 10px;
 }
 
-.stat_content {
-    color: #708090;;
-    font: 18pt Georgia, serif;
-}
-
-.count_content {
-    color: #708090;
-    font: 18pt Helvetica, sans-serif;
+.user_data, .count_content {
+    font: 12pt Helvetica, serif;
 }
 

@@ -9,6 +9,7 @@ export interface IOrderStatistic {
 }
 
 export interface IUserStatistic {
+    id?: number;
     count_orders?: number;
     in_work?: number;
     agree?: number;

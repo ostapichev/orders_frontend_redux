@@ -14,28 +14,14 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './Orders.module.css';
 
 import {okten_logo} from '../../asserts';
+import {IParams} from "../../interfaces";
 
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {
-        orders,
-        trigger,
-        sorted,
-        checkbox,
-        nameInputData,
-        surNameInputData,
-        emailInputData,
-        phoneInputData,
-        ageInputData,
-        courseInputData,
-        formatCourseInputData,
-        typeCourseInputData,
-        statusInputData,
-        groupInputData,
-        startDateInputData,
-        endDateInputData,
-        openModal} = useAppSelector(state => state.orderReducer);
+    const {orders, trigger, sorted, checkbox, nameInputData, surNameInputData, emailInputData, phoneInputData,
+        ageInputData, courseInputData, formatCourseInputData, typeCourseInputData, statusInputData, groupInputData,
+        startDateInputData, endDateInputData, openModal} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
@@ -55,7 +41,7 @@ const Orders: FC = () => {
         searchGroup: string,
         searchStartDate: string,
         searchEndDate: string) => {
-        dispatch(orderActions.getAll({
+        const params = {
             page: query.get('page'),
             order_by: sorting,
             name_contains: searchName,
@@ -70,7 +56,12 @@ const Orders: FC = () => {
             group: searchGroup,
             created_at_after: searchStartDate,
             created_at_before: searchEndDate,
-            manager}));
+            manager
+        };
+        const filteredParams: IParams = Object.fromEntries(
+            Object.entries(params).filter(([_, value]) => value !== '')
+        );
+        dispatch(orderActions.getAll({params: filteredParams}));
         },[dispatch, query]);
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.setShowModal(false));
@@ -96,8 +87,14 @@ const Orders: FC = () => {
         sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
         dispatch(orderActions.setOrderBy());
     };
-    const orderById: IOrderBy = () => sortingReverse('id');
-    const orderByName: IOrderBy = () => sortingReverse('name');
+    const orderById: IOrderBy = () => {
+        sorted ? setQueryRef.current(prev => ({ ...prev, order_by: 'id' })) : setQueryRef.current(prev => ({ ...prev, order_by: '-id' }));
+        sortingReverse('id');
+    }
+    const orderByName: IOrderBy = () => {
+        sorted ? setQueryRef.current(prev => ({ ...prev, name: 'name' })) : setQueryRef.current(prev => ({ ...prev, name: '-name' }));
+        sortingReverse('name');
+    }
     const orderBySurName: IOrderBy = () => sortingReverse('surname');
     const orderByEmail: IOrderBy = () => sortingReverse('email');
     const orderByPhone: IOrderBy = () => sortingReverse('phone');
@@ -142,26 +139,9 @@ const Orders: FC = () => {
             searchGroup,
             searchStartDate,
             searchEndDate)
-        }, [
-            dispatch,
-            trigger,
-            getAllOrders,
-            triggerComment,
-            searchName,
-            searchSurname,
-            searchEmail,
-            searchPhone,
-            searchAge,
-            searchCourse,
-            searchFormatCourse,
-            searchTypeCourse,
-            searchStatus,
-            searchGroup,
-            searchStartDate,
-            searchEndDate,
-            me.profile.name,
-            checkbox
-        ]);
+        }, [dispatch, trigger, getAllOrders, triggerComment, searchName, searchSurname, searchEmail, searchPhone,
+                    searchAge, searchCourse, searchFormatCourse, searchTypeCourse, searchStatus, searchGroup,
+                    searchStartDate, searchEndDate, me.profile.name, checkbox]);
 
     return (
         <div className={css.orders}>

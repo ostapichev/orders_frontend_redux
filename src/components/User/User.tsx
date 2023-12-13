@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './User.module.css';
 import css_btn from '../ButtonOpenForm/ButtonOpenForm.module.css'
+import {UserStatistics} from "../UserStatistics/UserStatistics";
 
 
 interface IProps {
@@ -17,7 +18,6 @@ const User: FC<IProps> = ({user}) => {
     const {id, email, profile, is_active, last_login} = user;
     const dispatch = useAppDispatch();
     const {userStatistic} = useAppSelector(state => state.adminReducer);
-    const {count_orders, in_work, agree} = userStatistic;
     const formData: FormData = new FormData();
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(adminActions.ban({id: user.id.toString()}));
@@ -49,11 +49,7 @@ const User: FC<IProps> = ({user}) => {
                     {last_login !== null ? <DateFormat originalDate={last_login}/> : ' no data'}</span>
                 </div>
             </div>
-            <div className={css.user_statistics}>
-                <div className={css.user_content}>total orders: <span className={css.user_data}>{count_orders}</span></div>
-                <div className={css.user_content}>in work: <span className={css.user_data}>{in_work}</span></div>
-                <div className={css.user_content}>agree: <span className={css.user_data}>{agree}</span></div>
-            </div>
+            <UserStatistics key={id} statistic={userStatistic}/>
             <div className={css.block_button}>
                 <button className={css_btn.btn_open}
                         onClick={(event) => is_active === true ? ban(event) : unban(event)}>
