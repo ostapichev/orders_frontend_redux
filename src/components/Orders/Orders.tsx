@@ -26,122 +26,27 @@ const Orders: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
-    const getAllOrders = useCallback((
-        sorting: string,
-        manager: string,
-        searchName: string,
-        searchSurname: string,
-        searchEmail: string,
-        searchPhone: string,
-        searchAge: string,
-        searchCourse: string,
-        searchFormatCourse: string,
-        searchTypeCourse: string,
-        searchStatus: string,
-        searchGroup: string,
-        searchStartDate: string,
-        searchEndDate: string) => {
-        const params = {
-            page: query.get('page'),
-            order_by: sorting,
-            name_contains: searchName,
-            surname_contains: searchSurname,
-            email_contains: searchEmail,
-            phone_contains: searchPhone,
-            age_in: searchAge,
-            course: searchCourse,
-            course_format: searchFormatCourse,
-            course_type: searchTypeCourse,
-            status_in: searchStatus,
-            group: searchGroup,
-            created_at_after: searchStartDate,
-            created_at_before: searchEndDate,
-            manager
-        };
-        const filteredParams: IParams = Object.fromEntries(
-            Object.entries(params).filter(([_, value]) => value !== '')
-        );
-        dispatch(orderActions.getAll({params: filteredParams}));
+    const params = {};
+    const getAllOrders = useCallback((params: IParams) => {
+        if (checkbox) {
+            params.manager = me.profile.name;
+        }
+        if (!sorted) {
+            params.order_by = query.get('order_by');
+        }
+        console.log(params);
+        dispatch(orderActions.getAll({params}));
         },[dispatch, query]);
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.setShowModal(false));
     };
-    const sortingCheckBox: ISortingReverse = (orderBy: string) => {
-        getAllOrders(
-            orderBy,
-            checkbox ? me.profile.name : '',
-            searchName,
-            searchSurname,
-            searchEmail,
-            searchPhone,
-            searchAge,
-            searchCourse,
-            searchFormatCourse,
-            searchTypeCourse,
-            searchStatus,
-            startDateInputData,
-            endDateInputData,
-            searchGroup);
-    };
-    const sortingReverse: ISortingReverse = (orderBy: string) => {
-        sorted ? sortingCheckBox(orderBy) : sortingCheckBox(`-${orderBy}`);
-        dispatch(orderActions.setOrderBy());
-    };
     const orderById: IOrderBy = () => {
         sorted ? setQueryRef.current(prev => ({ ...prev, order_by: 'id' })) : setQueryRef.current(prev => ({ ...prev, order_by: '-id' }));
-        sortingReverse('id');
+        dispatch(orderActions.setOrderBy());
     }
-    const orderByName: IOrderBy = () => {
-        sorted ? setQueryRef.current(prev => ({ ...prev, name: 'name' })) : setQueryRef.current(prev => ({ ...prev, name: '-name' }));
-        sortingReverse('name');
-    }
-    const orderBySurName: IOrderBy = () => sortingReverse('surname');
-    const orderByEmail: IOrderBy = () => sortingReverse('email');
-    const orderByPhone: IOrderBy = () => sortingReverse('phone');
-    const orderByAge: IOrderBy = () => sortingReverse('age');
-    const orderByCourse: IOrderBy = () => sortingReverse('course');
-    const orderByCourseFormat: IOrderBy = () => sortingReverse('course_format');
-    const orderByCourseType: IOrderBy = () => sortingReverse('course_type');
-    const orderByStatus: IOrderBy = () => sortingReverse('status');
-    const orderBySum: IOrderBy = () => sortingReverse('sum');
-    const orderAlReadyPaid: IOrderBy = () => sortingReverse('already_paid');
-    const orderByGroup: IOrderBy = () => sortingReverse('group');
-    const orderByCreated: IOrderBy = () => sortingReverse('created_at');
-    const orderByManager: IOrderBy = () => sortingReverse('manager');
-    const searchName = nameInputData || '';
-    const searchSurname = surNameInputData || '';
-    const searchEmail = emailInputData || '';
-    const searchPhone = phoneInputData || '';
-    const searchAge = ageInputData || '';
-    const searchCourse = courseInputData || '';
-    const searchFormatCourse = formatCourseInputData || '';
-    const searchTypeCourse = typeCourseInputData || '';
-    const searchStatus = statusInputData || '';
-    const searchGroup = groupInputData || '';
-    const searchStartDate = startDateInputData || '';
-    const searchEndDate = endDateInputData ||'';
-    useEffect(() => {
-        setQueryRef.current(prev => ({ ...prev, page: '1' }));
-    }, []);
     useEffect( () => {
-        getAllOrders(
-            '-id',
-            checkbox ? me.profile.name : '',
-            searchName,
-            searchSurname,
-            searchEmail,
-            searchPhone,
-            searchAge,
-            searchCourse,
-            searchFormatCourse,
-            searchTypeCourse,
-            searchStatus,
-            searchGroup,
-            searchStartDate,
-            searchEndDate)
-        }, [dispatch, trigger, getAllOrders, triggerComment, searchName, searchSurname, searchEmail, searchPhone,
-                    searchAge, searchCourse, searchFormatCourse, searchTypeCourse, searchStatus, searchGroup,
-                    searchStartDate, searchEndDate, me.profile.name, checkbox]);
+        getAllOrders(params);
+        }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name, checkbox]);
 
     return (
         <div className={css.orders}>
@@ -162,20 +67,20 @@ const Orders: FC = () => {
                 <div>
                     <ListGroup className={css.table_data} horizontal>
                         <ListGroup.Item className={css.table_header} onClick={orderById}>id</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByName}>name</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderBySurName}>surname</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByEmail}>email</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>course_format</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>course_type</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderAlReadyPaid}>paid</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByGroup}>group</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCreated}>created at</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >name</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >surname</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >email</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >phone</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >age</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >course</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >course_format</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >course_type</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >status</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header}>sum</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >paid</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >group</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >created at</ListGroup.Item>
+                        <ListGroup.Item className={css.table_header} >manager</ListGroup.Item>
                     </ListGroup>
                 </div>
                 <div>

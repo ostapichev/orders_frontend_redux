@@ -1,4 +1,4 @@
-import {ChangeEvent, FC} from 'react';
+import {ChangeEvent, FC, useRef} from 'react';
 
 import Form from "react-bootstrap/Form";
 
@@ -24,7 +24,9 @@ const InputBlock: FC = () => {
         typeCourseInputData,
         statusInputData} = useAppSelector(state => state.orderReducer);
     const [query, setQuery] = useSearchParams();
+    const setQueryRef = useRef(setQuery);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setQueryRef.current(prev => ({ ...prev, name: nameInputData }));
         dispatch(orderActions.setNameInputData(event.target.value));
     };
     const surNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
