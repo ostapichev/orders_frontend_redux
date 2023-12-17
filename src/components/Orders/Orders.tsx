@@ -34,7 +34,7 @@ const Orders: FC = () => {
         params.email_contains = query.get('email');
         console.log(params);
         dispatch(orderActions.getAll({params}));
-        },[dispatch, query]);
+        },[dispatch, query, checkbox, me.profile.name]);
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.setShowModal(false));
     };
