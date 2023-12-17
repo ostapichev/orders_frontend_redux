@@ -15,7 +15,7 @@ const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);
     const {checkbox} = useAppSelector(state => state.orderReducer);
-    const [query, setQuery] = useSearchParams();
+    const [, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const handleShow: IOrderBy = () => {
         dispatch(orderActions.setShowModal(true));

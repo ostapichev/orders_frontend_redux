@@ -1,4 +1,5 @@
-import {ChangeEvent, FC, useRef} from 'react';
+import {ChangeEvent, FC, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Form from "react-bootstrap/Form";
 
@@ -7,11 +8,11 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './InputBlock.module.css';
-import {useSearchParams} from "react-router-dom";
 
 
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {
         nameInputData,
@@ -23,10 +24,7 @@ const InputBlock: FC = () => {
         formatCourseInputData,
         typeCourseInputData,
         statusInputData} = useAppSelector(state => state.orderReducer);
-    const [query, setQuery] = useSearchParams();
-    const setQueryRef = useRef(setQuery);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setQueryRef.current(prev => ({ ...prev, name: nameInputData }));
         dispatch(orderActions.setNameInputData(event.target.value));
     };
     const surNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +60,15 @@ const InputBlock: FC = () => {
     const endDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
+    useEffect(() => {
+        navigate(nameInputData ? `?name=${nameInputData}` : '');
+    }, [nameInputData, navigate]);
+    useEffect(() => {
+        navigate(surNameInputData ? `?surname=${surNameInputData}` : '');
+    }, [surNameInputData, navigate]);
+    useEffect(() => {
+        navigate(emailInputData ? `?email=${emailInputData}` : '');
+    }, [emailInputData, navigate]);
 
     return (
         <div className={css.input_container}>

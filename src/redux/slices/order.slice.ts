@@ -18,6 +18,7 @@ interface IState {
     fileDataURL?: string;
     openOrderForm: boolean;
     openModal: boolean;
+    params: IParams;
     nameInputData: string;
     surNameInputData: string;
     emailInputData: string;
@@ -47,6 +48,7 @@ const initialState: IState = {
     fileDataURL: null,
     openOrderForm: false,
     openModal: false,
+    params: {},
     nameInputData: '',
     surNameInputData: '',
     emailInputData: '',
@@ -136,6 +138,9 @@ const slice = createSlice({
         },
         setCheckBoxDefault: state => {
             state.checkbox = false;
+        },
+        setParams: (state, action) => {
+            state.params = action.payload;
         },
         setNameInputData: (state, action) => {
             state.nameInputData = action.payload;
