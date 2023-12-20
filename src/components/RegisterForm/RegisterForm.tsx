@@ -11,6 +11,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import css from "../LoginForm/LoginForm.module.css";
 
 import {okten_school} from "../../asserts";
+import Form from "react-bootstrap/Form";
 
 
 interface IProps {
@@ -57,9 +58,11 @@ const RegisterForm: FC<IProps> = ({funcName}) => {
                 <form className={css.login_form}
                       onSubmit={handleSubmit(recoveryRequestUser)}>
                     <label>Password</label>
-                    <input type="password" placeholder={'enter password'} {...register("password")}/>
+                    <Form.Control size="sm" type="password" placeholder={'enter password'}
+                                  {...register('password',{required: true})}/>
                     <label>Confirm password</label>
-                    <input type="password" placeholder={'enter confirm password'} {...register("confirmPassword")}/>
+                    <Form.Control size="sm" type="password" placeholder={'enter password'}
+                                  {...register('confirmPassword',{required: true})}/>
                     <button className={css.btn_submit} disabled={loading}>Submit</button>
                     {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
                     {confirmError && <p className={css.err_login}>{confirmError}</p>}

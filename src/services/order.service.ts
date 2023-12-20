@@ -1,12 +1,12 @@
 import {axiosService} from "./axios.service";
-import {IFilterOrder, IOrder} from "../interfaces";
+import {IOrder, IParams} from "../interfaces";
 import {IRes, IResPaginate} from "../types";
 import {urls} from "../constants";
 
 
 class OrderService {
-    getAll(filteredParams: IFilterOrder): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.orders, {params: filteredParams});
+    getAll(params: IParams): IResPaginate<IOrder[]> {
+        return axiosService.get(urls.ordersAPI.orders, {params});
     };
 
     create(groupId: string, order: IOrder): IRes<IOrder> {

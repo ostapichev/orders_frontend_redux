@@ -35,7 +35,6 @@ const getAll = createAsyncThunk<IUser[], {page: string}> (
     async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await adminService.getAll(page);
-            await new Promise(resolve => setTimeout(resolve, 1000));
             return data.result;
         } catch (e) {
             const err = e as AxiosError;
@@ -99,7 +98,6 @@ const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
         try {
             console.log(id);
             const {data} = await adminService.getStatisticUser(id.toString())
-            await new Promise(resolve => setTimeout(resolve, 1000));
             console.log(data);
             return data;
         } catch (e) {

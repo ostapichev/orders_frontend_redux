@@ -1,4 +1,4 @@
-export interface IFilterOrder {
+export interface IParams {
     page?: string,
     order_by?: string,
     name_contains?: string,
