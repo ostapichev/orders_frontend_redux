@@ -63,42 +63,52 @@ const InputBlock: FC = () => {
     const endDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
+    const updateQueryString = () => {
+        const queryParams = [];
+        if (nameInputData) {
+            queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
+        }
+        if (surNameInputData) {
+            queryParams.push(`surname=${encodeURIComponent(surNameInputData)}`);
+        }
+        if (emailInputData) {
+            queryParams.push(`email=${encodeURIComponent(emailInputData)}`);
+        }
+        if (phoneInputData) {
+            queryParams.push(`phone=${encodeURIComponent(phoneInputData)}`);
+        }
+        if (ageInputData) {
+            queryParams.push(`age=${encodeURIComponent(ageInputData)}`);
+        }
+        if (courseInputData) {
+            queryParams.push(`course=${encodeURIComponent(courseInputData)}`);
+        }
+        if (formatCourseInputData) {
+            queryParams.push(`course_format=${encodeURIComponent(formatCourseInputData)}`);
+        }
+        if (typeCourseInputData) {
+            queryParams.push(`course_type=${encodeURIComponent(typeCourseInputData)}`);
+        }
+        if (statusInputData) {
+            queryParams.push(`status=${encodeURIComponent(statusInputData)}`);
+        }
+        if (groupInputData) {
+            queryParams.push(`group=${encodeURIComponent(groupInputData)}`);
+        }
+        if (startDateInputData) {
+            queryParams.push(`start_date=${encodeURIComponent(startDateInputData)}`);
+        }
+        if (endDateInputData) {
+            queryParams.push(`end_date=${encodeURIComponent(endDateInputData)}`);
+        }
+        const queryString = queryParams.join('&');
+        navigate(queryString ? `?${queryString}` : '');
+    };
     useEffect(() => {
-        navigate(nameInputData ? `?name=${nameInputData}` : '');
-    }, [nameInputData, navigate]);
-    useEffect(() => {
-        navigate(surNameInputData ? `?surname=${surNameInputData}` : '');
-    }, [surNameInputData, navigate]);
-    useEffect(() => {
-        navigate(emailInputData ? `?email=${emailInputData}` : '');
-    }, [emailInputData, navigate]);
-    useEffect(() => {
-        navigate(phoneInputData ? `?phone=${phoneInputData}` : '');
-    }, [phoneInputData, navigate]);
-    useEffect(() => {
-        navigate(ageInputData ? `?age=${ageInputData}` : '');
-    }, [ageInputData, navigate]);
-    useEffect(() => {
-        navigate(courseInputData ? `?course=${courseInputData}` : '');
-    }, [courseInputData, navigate]);
-    useEffect(() => {
-        navigate(formatCourseInputData ? `?course_format=${formatCourseInputData}` : '');
-    }, [formatCourseInputData, navigate]);
-    useEffect(() => {
-        navigate(typeCourseInputData ? `?course_type=${typeCourseInputData}` : '');
-    }, [typeCourseInputData, navigate]);
-    useEffect(() => {
-        navigate(statusInputData ? `?status=${statusInputData}` : '');
-    }, [statusInputData, navigate]);
-    useEffect(() => {
-        navigate(groupInputData ? `?group=${groupInputData}` : '');
-    }, [groupInputData, navigate]);
-    useEffect(() => {
-        navigate(startDateInputData ? `?start_date=${startDateInputData}` : '');
-    }, [startDateInputData, navigate]);
-    useEffect(() => {
-        navigate(endDateInputData ? `?end_date=${endDateInputData}` : '');
-    }, [endDateInputData, navigate]);
+        updateQueryString();
+    }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
+                formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
+                endDateInputData, navigate]);
 
     return (
         <div className={css.input_container}>
