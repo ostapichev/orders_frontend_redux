@@ -19,6 +19,7 @@ interface IState {
     openOrderForm: boolean;
     openModal: boolean;
     params: IParams;
+    queryParams: string[];
     nameInputData: string;
     surNameInputData: string;
     emailInputData: string;
@@ -49,6 +50,7 @@ const initialState: IState = {
     openOrderForm: false,
     openModal: false,
     params: {},
+    queryParams: [],
     nameInputData: '',
     surNameInputData: '',
     emailInputData: '',

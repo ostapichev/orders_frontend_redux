@@ -1,5 +1,5 @@
 import {FC, useCallback, useEffect} from 'react';
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -19,15 +19,31 @@ import {IParams} from "../../interfaces";
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {orders, trigger, sorted, checkbox, openModal} = useAppSelector(state => state.orderReducer);
+    const navigate = useNavigate();
+    const {
+        nameInputData,
+        surNameInputData,
+        emailInputData,
+        phoneInputData,
+        ageInputData,
+        courseInputData,
+        formatCourseInputData,
+        typeCourseInputData,
+        statusInputData,
+        groupInputData,
+        startDateInputData,
+        endDateInputData,
+        orders,
+        trigger,
+        sorted,
+        checkbox,
+        openModal
+    } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
     const getAllOrders = useCallback(() => {
         const params: IParams = {};
-        if (checkbox) {
-            params.manager = me.profile.name;
-        }
         params.page = query.get('page');
         params.order_by = query.get('order_by');
         params.name_contains = query.get('name');
@@ -41,7 +57,8 @@ const Orders: FC = () => {
         params.status_in = query.get('status');
         params.group = query.get('group');
         params.created_at_after = query.get('start_date');
-        params.created_at_before = query.get('end_date')
+        params.created_at_before = query.get('end_date');
+        params.manager = query.get('manager');
         console.log(params);
         dispatch(orderActions.getAll({params}));
     },[dispatch, query, checkbox, me.profile.name]);
@@ -49,11 +66,8 @@ const Orders: FC = () => {
         dispatch(orderActions.setShowModal(false));
     };
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
-        if (sorted) {
-            setQuery(prev => ({ ...prev, order_by}));
-        } else {
-            setQuery(prev => ({ ...prev, order_by: `-${order_by}`}));
-        }
+        const newOrderBy = sorted ? order_by : `-${order_by}`;
+        setQuery(prev => ({ ...prev, order_by: newOrderBy }));
         dispatch(orderActions.setOrderBy());
     }
     const orderById: IOrderBy = () => sortingOrderBy('id');
@@ -71,6 +85,59 @@ const Orders: FC = () => {
     const orderByGroup: IOrderBy = () => sortingOrderBy('group');
     const orderByCreated: IOrderBy = () => sortingOrderBy('created_at');
     const orderByManager: IOrderBy = () => sortingOrderBy('manager');
+    const updateQueryString = () => {
+        const queryParams = []
+        if (nameInputData) {
+            queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
+        }
+        if (surNameInputData) {
+            queryParams.push(`surname=${encodeURIComponent(surNameInputData)}`);
+        }
+        if (emailInputData) {
+            queryParams.push(`email=${encodeURIComponent(emailInputData)}`);
+        }
+        if (phoneInputData) {
+            queryParams.push(`phone=${encodeURIComponent(phoneInputData)}`);
+        }
+        if (ageInputData) {
+            queryParams.push(`age=${encodeURIComponent(ageInputData)}`);
+        }
+        if (courseInputData) {
+            queryParams.push(`course=${encodeURIComponent(courseInputData)}`);
+        }
+        if (formatCourseInputData) {
+            queryParams.push(`course_format=${encodeURIComponent(formatCourseInputData)}`);
+        }
+        if (typeCourseInputData) {
+            queryParams.push(`course_type=${encodeURIComponent(typeCourseInputData)}`);
+        }
+        if (statusInputData) {
+            queryParams.push(`status=${encodeURIComponent(statusInputData)}`);
+        }
+        if (groupInputData) {
+            queryParams.push(`group=${encodeURIComponent(groupInputData)}`);
+        }
+        if (startDateInputData) {
+            queryParams.push(`start_date=${encodeURIComponent(startDateInputData)}`);
+        }
+        if (endDateInputData) {
+            queryParams.push(`end_date=${encodeURIComponent(endDateInputData)}`);
+        }
+        if (query.get('order_by')) {
+            queryParams.push(`order_by=${encodeURIComponent(query.get('order_by'))}`);
+        }
+        if (query.get('manager')) {
+            queryParams.push(`manager=${encodeURIComponent(query.get('manager'))}`);
+        }
+        console.log(queryParams);
+        const queryString = queryParams.join('&');
+        navigate(queryString ? `?${queryString}` : '');
+    };
+    useEffect(() => {
+        updateQueryString();
+    }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
+        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
+        endDateInputData, navigate]);
     useEffect( () => {
         getAllOrders();
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name, checkbox]);

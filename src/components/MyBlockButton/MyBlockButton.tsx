@@ -27,7 +27,7 @@ const MyBlockButton: FC = () => {
             setQueryRef.current(prev => ({...prev, manager: me.profile.name}));
         }
         dispatch(orderActions.setCheckBox());
-    }
+    };
 
     return (
         <div className={css.block_filters}>
