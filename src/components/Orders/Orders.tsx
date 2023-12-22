@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -20,6 +20,7 @@ import {IParams} from "../../interfaces";
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [orderBy, setOrderBy] = useState<IParams>({order_by: ''});
     const {
         nameInputData,
         surNameInputData,
@@ -41,7 +42,7 @@ const Orders: FC = () => {
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const [query, setQuery] = useSearchParams();
+    const [query] = useSearchParams();
     const getAllOrders = useCallback(() => {
         const params: IParams = {};
         params.page = query.get('page');
@@ -59,15 +60,14 @@ const Orders: FC = () => {
         params.created_at_after = query.get('start_date');
         params.created_at_before = query.get('end_date');
         params.manager = query.get('manager');
-        console.log(params);
         dispatch(orderActions.getAll({params}));
-    },[dispatch, query, checkbox, me.profile.name]);
+    },[dispatch, query]);
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.setShowModal(false));
     };
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
-        setQuery(prev => ({ ...prev, order_by: newOrderBy }));
+        setOrderBy(prev => ({ ...prev, order_by: newOrderBy }));
         dispatch(orderActions.setOrderBy());
     }
     const orderById: IOrderBy = () => sortingOrderBy('id');
@@ -85,8 +85,8 @@ const Orders: FC = () => {
     const orderByGroup: IOrderBy = () => sortingOrderBy('group');
     const orderByCreated: IOrderBy = () => sortingOrderBy('created_at');
     const orderByManager: IOrderBy = () => sortingOrderBy('manager');
-    const updateQueryString = () => {
-        const queryParams = []
+    const updateQueryString = useCallback(() => {
+        const queryParams: string[] = []
         if (nameInputData) {
             queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
         }
@@ -123,24 +123,25 @@ const Orders: FC = () => {
         if (endDateInputData) {
             queryParams.push(`end_date=${encodeURIComponent(endDateInputData)}`);
         }
-        if (query.get('order_by')) {
-            queryParams.push(`order_by=${encodeURIComponent(query.get('order_by'))}`);
+        if (orderBy && orderBy.order_by !== '') {
+            queryParams.push(`order_by=${encodeURIComponent(orderBy.order_by)}`);
         }
-        if (query.get('manager')) {
-            queryParams.push(`manager=${encodeURIComponent(query.get('manager'))}`);
+        if (checkbox) {
+            queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
-        console.log(queryParams);
         const queryString = queryParams.join('&');
         navigate(queryString ? `?${queryString}` : '');
-    };
+    }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
+        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
+        endDateInputData, me.profile.name, checkbox, navigate, orderBy]);
     useEffect(() => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, navigate]);
+        endDateInputData, navigate, orderBy, checkbox,  updateQueryString]);
     useEffect( () => {
         getAllOrders();
-    }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name, checkbox]);
+    }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
 
     return (
         <div className={css.orders}>
