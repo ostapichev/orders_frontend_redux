@@ -14,9 +14,9 @@
     border-radius: 10px;
     display: flex;
     font-weight: bold;
-    justify-content: space-around;
+    justify-content: center;
     padding: 10px;
-    width: 100%;
+    min-width: 100vw;
 }
 
 .okten_logo {

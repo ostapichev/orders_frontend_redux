@@ -5,6 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import Form from 'react-bootstrap/Form';
 
 import {IOrder} from "../../interfaces";
+import {IOrderBy} from "../../types";
 import {groupActions, orderActions} from "../../redux";
 import {Group} from "../Group/Group";
 import {joiResolver} from "@hookform/resolvers/joi";
@@ -12,7 +13,6 @@ import {orderValidator} from "../../validators";
 
 import css from './OrderForm.module.css';
 import css_btn from "../UserForm/UserForm.module.css";
-import {IOrderBy} from "../../types";
 
 
 const OrderForm: FC = () => {
@@ -62,19 +62,19 @@ const OrderForm: FC = () => {
                 <div className={css.form_block_left}>
                     <label htmlFor="name">First name</label>
                     <Form.Control size="sm" name="name" placeholder={'enter name'} {...register('name')}/>
-                        {errors.name && <div className={css.error_form}>{errors.name.message}</div>}
+                    {errors.name && <div className={css.error_form}>{errors.name.message}</div>}
                     <label htmlFor="surname">Surname</label>
                     <Form.Control size="sm" name="surname" placeholder={'enter surname'} {...register('surname')}/>
-                        {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
+                    {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="email">Email</label>
                     <Form.Control size="sm" type="email" name="email" placeholder={'enter email'} {...register('email')}/>
-                        {errors.email && <div className={css.error_form}>{errors.email.message}</div>}
+                    {errors.email && <div className={css.error_form}>{errors.email.message}</div>}
                     <label htmlFor="phone">Phone</label>
                     <Form.Control size="sm" type="text" name="phone" placeholder={'enter phone'} {...register('phone')}/>
-                        {errors.phone && <div className={css.error_form}>{errors.phone.message}</div>}
+                    {errors.phone && <div className={css.error_form}>{errors.phone.message}</div>}
                     <label htmlFor="age">Age</label>
                     <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
-                        {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
+                    {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
                     <label htmlFor="course">Choose course</label>
                     <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
                         <option value="FS">FS</option>
@@ -89,16 +89,16 @@ const OrderForm: FC = () => {
                 <div className={css.form_block_right}>
                     <label htmlFor="paid">Already paid</label>
                     <Form.Control size="sm" type="number" name="paid" placeholder={'already_paid'} {...register('already_paid')}/>
-                        {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
+                    {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
                     <label htmlFor="sum">Sum</label>
                     <Form.Control size="sm" type="number" name="sum" placeholder={'sum'} {...register('sum')}/>
-                        {errors.sum && <div className={css.error_form}>{errors.sum.message}</div>}
+                    {errors.sum && <div className={css.error_form}>{errors.sum.message}</div>}
                     <label htmlFor="course_format">Choose course format</label>
                     <Form.Select size="sm" name="course_format" aria-label="Default select example" {...register('course_format')}>
                         <option value="static">static</option>
                         <option value="online">online</option>
                     </Form.Select>
-                        {errors.course_format && <p>{errors.course_format.message}</p>}
+                    {errors.course_format && <p>{errors.course_format.message}</p>}
                     <label htmlFor="course_type">Choose course type</label>
                     <Form.Select size="sm" aria-label="Course_type" name="course_type" {...register('course_type')}>
                         <option value="pro">pro</option>
@@ -107,7 +107,7 @@ const OrderForm: FC = () => {
                         <option value="incubator">incubator</option>
                         <option value="vip">vip</option>
                     </Form.Select>
-                        {errors.course_type && <p>{errors.course_type.message}</p>}
+                    {errors.course_type && <p>{errors.course_type.message}</p>}
                     <label htmlFor="status">Choose status</label>
                     <Form.Select size="sm" aria-label="Status" name="status" {...register('status')}>
                         <option value="new_order">new_order</option>
@@ -116,15 +116,16 @@ const OrderForm: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                        {errors.status && <p>{errors.status.message}</p>}
-                    <label htmlFor="group">Choose group</label>
-                    <Form.Select size="sm" aria-label="Choose group" name="group" {...register('group')}
+                    {errors.status && <p>{errors.status.message}</p>}
+                    <label htmlFor="group">Group</label>
+                    <Form.Select size="sm" aria-label="Group" name="group" {...register('group')}
                             onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                            <option>Choose group</option>
                             {
                                 groups.map(group => <Group key={group.id} group={group}/>)
                             }
                     </Form.Select>
-                        {errors.group && <p>{errors.group.message}</p>}
+                    {errors.group && <p>{errors.group.message}</p>}
                 </div>
                     {errorsOrder?.name && <p>{errorsOrder.name}</p>}
                     {errorsOrder?.surname && <p>{errorsOrder.name}</p>}

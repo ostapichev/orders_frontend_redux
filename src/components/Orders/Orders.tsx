@@ -7,6 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
 import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IOrderBy, ISortingReverse} from "../../types";
+import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
@@ -14,7 +15,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './Orders.module.css';
 
 import {okten_logo} from '../../asserts';
-import {IParams} from "../../interfaces";
 
 
 const Orders: FC = () => {
