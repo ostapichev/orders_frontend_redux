@@ -11,16 +11,20 @@ import {admin_panel, home_page, log_out, okten_school} from '../../asserts';
 
 
 const Header: FC = () => {
-    const {me} = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
+    const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
     const defaultFilterOrders: IOrderBy = () => {
         dispatch(orderActions.setCheckBoxDefault());
         dispatch(orderActions.setOrderByDefault());
+        dispatch(orderActions.resetPage());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultFilterOrders();
         dispatch(authActions.logout());
+    };
+    const paramsDefault:IOrderBy = () => {
+        defaultFilterOrders();
     };
 
     return (
@@ -45,12 +49,12 @@ const Header: FC = () => {
                             </div>
                         }
                         <div className={css.login_link}>
-                            <NavLink to={'/orders'}>
-                                <img className={css.logout} src={home_page} alt="home"/>
+                            <NavLink to={'/orders'} onClick={paramsDefault}>
+                                <img className={css.logout}  src={home_page} alt="home"/>
                             </NavLink>
                         </div>
                         <div className={css.login_link}>
-                            <NavLink to={'login'} onClick={logout}>
+                            <NavLink to={'/login'} onClick={logout}>
                                 <img className={css.logout} src={log_out} alt="logout"/>
                             </NavLink>
                         </div>

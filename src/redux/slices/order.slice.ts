@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorOrder, IOrder, IParams} from "../../interfaces";
+import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
 import {orderService} from "../../services";
 
 
@@ -32,8 +32,11 @@ interface IState {
     groupInputData: string;
     startDateInputData: string;
     endDateInputData: string;
-    prevPage: number;
-    nextPage: number;
+    page: number;
+    showParams: boolean;
+    dataInfo: IPagination<void>;
+    prevPage: string;
+    nextPage: string;
 }
 
 const initialState: IState = {
@@ -51,28 +54,31 @@ const initialState: IState = {
     openModal: false,
     params: {},
     queryParams: [],
-    nameInputData: '',
-    surNameInputData: '',
-    emailInputData: '',
-    phoneInputData: '',
-    ageInputData: '',
-    courseInputData: '',
-    formatCourseInputData: '',
-    typeCourseInputData: '',
-    statusInputData: '',
-    groupInputData: '',
-    startDateInputData: '',
-    endDateInputData: '',
+    nameInputData: null,
+    surNameInputData: null,
+    emailInputData: null,
+    phoneInputData: null,
+    ageInputData: null,
+    courseInputData: null,
+    formatCourseInputData: null,
+    typeCourseInputData: null,
+    statusInputData: null,
+    groupInputData: null,
+    startDateInputData: null,
+    endDateInputData: null,
+    page: 1,
+    showParams: false,
+    dataInfo: {},
     prevPage: null,
     nextPage: null,
 };
 
-const getAll = createAsyncThunk<IOrder[], {params: IParams}> (
+const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
     'orderSlice/getAll',
     async ({params}, {rejectWithValue}) => {
         try {
             const {data} = await orderService.getAll(params);
-            return data.result;
+            return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -183,11 +189,17 @@ const slice = createSlice({
         setShowModal: (state, action) => {
             state.openModal = action.payload;
         },
-        setPaginate: (state, action) => {
-            const {result, prev, next} = action.payload;
-            state.orders = result;
-            state.prevPage = prev;
-            state.nextPage = next;
+        decPage: state => {
+            state.page -= 1;
+            state.showParams = true;
+        },
+        incPage: state => {
+            state.page += 1;
+            state.showParams = true;
+        },
+        resetPage: state => {
+            state.page = 1;
+            state.showParams = false;
         },
         openForm: state => {
             state.openOrderForm = true;
@@ -201,7 +213,10 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                state.orders = action.payload;
+                const {prev, next, result} = action.payload;
+                state.orders = result;
+                state.prevPage = prev;
+                state.nextPage = next;
                 state.errorsOrder = null;
             })
             .addCase(update.fulfilled, state => {

@@ -1,19 +1,19 @@
 import {FC} from 'react';
-import {useSearchParams} from "react-router-dom";
 
-import {useAppSelector} from "../../hooks";
+import {orderActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './OrdersPagination.module.css';
 
 
 const OrdersPagination: FC = () => {
+    const dispatch = useAppDispatch();
     const {prevPage, nextPage} = useAppSelector(state => state.orderReducer);
-    const [, setQuery] = useSearchParams();
     const prev = async () => {
-        setQuery(prev => ({...prev, page: +prev.get('page')-1}));
+        dispatch(orderActions.decPage());
     };
     const next = async () => {
-        setQuery(next => ({...next, page: +next.get('page')+1}));
+        dispatch(orderActions.incPage());
     };
 
     return (

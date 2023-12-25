@@ -38,7 +38,9 @@ const Orders: FC = () => {
         trigger,
         sorted,
         checkbox,
-        openModal
+        openModal,
+        page,
+        showParams
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
@@ -87,6 +89,9 @@ const Orders: FC = () => {
     const orderByManager: IOrderBy = () => sortingOrderBy('manager');
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = []
+        if (showParams) {
+            queryParams.push(`page=${encodeURIComponent(page)}`);
+        }
         if (nameInputData) {
             queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
         }
@@ -133,7 +138,7 @@ const Orders: FC = () => {
         navigate(queryString ? `?${queryString}` : '');
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, me.profile.name, checkbox, navigate, orderBy]);
+        endDateInputData, me.profile.name, checkbox, navigate, orderBy, page, showParams]);
     useEffect(() => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
