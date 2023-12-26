@@ -8,11 +8,11 @@ import css from './StatisticOrder.module.css';
 
 const StatisticOrder: FC = () => {
     const dispatch = useAppDispatch();
-    const {orderStatistic, loading} = useAppSelector(state => state.adminReducer);
+    const {orderStatistic, loading, trigger} = useAppSelector(state => state.adminReducer);
     const {item_count, in_work, new_order, agree, disagree, dubbing, user_count} = orderStatistic;
     useEffect(() => {
         dispatch(adminActions.getStatisticOrder());
-    }, [dispatch]);
+    }, [dispatch, trigger]);
 
     return (
         <div className={loading ? css.statistic_order_none : css.statistic_order_container}>

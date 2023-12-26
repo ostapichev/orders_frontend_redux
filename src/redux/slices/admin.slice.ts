@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorUser, IUser} from "../../interfaces";
+import {IErrorUser, IPagination, IParams, IUser} from "../../interfaces";
 import {adminService} from "../../services";
 import {IOrderStatistic, IUserStatistic} from "../../interfaces/statistic.interface";
 
@@ -14,8 +14,12 @@ interface IState {
     loading: boolean;
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
-    totalPages: number;
     openUserForm: boolean;
+    dataInfo: IPagination<void>;
+    showParams: boolean;
+    page: number,
+    prevPageAdmin: string;
+    nextPageAdmin: string;
 }
 
 const initialState: IState = {
@@ -26,16 +30,20 @@ const initialState: IState = {
     loading: false,
     orderStatistic: {},
     userStatistic: {},
-    totalPages: 1,
-    openUserForm: false
+    openUserForm: false,
+    dataInfo: {},
+    showParams: false,
+    page: 1,
+    prevPageAdmin: null,
+    nextPageAdmin: null,
 };
 
-const getAll = createAsyncThunk<IUser[], {page: string}> (
+const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
     'adminSlice/getAll',
-    async ({page}, {rejectWithValue}) => {
+    async ({params}, {rejectWithValue}) => {
         try {
-            const {data} = await adminService.getAll(page);
-            return data.result;
+            const {data} = await adminService.getAll(params);
+            return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -116,13 +124,28 @@ const slice = createSlice({
         },
         closeUserForm: state => {
             state.openUserForm = false;
-        }
+        },
+        decPage: state => {
+            state.page -= 1;
+            state.showParams = true;
+        },
+        incPage: state => {
+            state.page += 1;
+            state.showParams = true;
+        },
+        resetPage: state => {
+            state.page = 1;
+            state.showParams = false;
+        },
     },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                state.loading = false;
-                state.users = action.payload;
+                const {prev, next, result} = action.payload;
+                state.users = result;
+                state.prevPageAdmin = prev;
+                state.nextPageAdmin = next;
+                state.errorUser = null;
             })
             .addCase(getStatisticOrder.fulfilled, (state, action) => {
                 state.orderStatistic = action.payload;

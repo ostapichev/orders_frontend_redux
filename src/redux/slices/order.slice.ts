@@ -35,8 +35,8 @@ interface IState {
     page: number;
     showParams: boolean;
     dataInfo: IPagination<void>;
-    prevPage: string;
-    nextPage: string;
+    prevPageOrders: string;
+    nextPageOrders: string;
 }
 
 const initialState: IState = {
@@ -69,8 +69,8 @@ const initialState: IState = {
     page: 1,
     showParams: false,
     dataInfo: {},
-    prevPage: null,
-    nextPage: null,
+    prevPageOrders: null,
+    nextPageOrders: null,
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -215,8 +215,8 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 const {prev, next, result} = action.payload;
                 state.orders = result;
-                state.prevPage = prev;
-                state.nextPage = next;
+                state.prevPageOrders = prev;
+                state.nextPageOrders = next;
                 state.errorsOrder = null;
             })
             .addCase(update.fulfilled, state => {

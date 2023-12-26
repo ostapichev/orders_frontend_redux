@@ -6,10 +6,10 @@ import {
     Loading,
     MyBlockButton,
     OrderForm,
-    Orders
+    Orders,
+    Pagination
 } from "../../components";
 import {useAppSelector} from "../../hooks";
-import {OrdersPagination} from "../../components/OrdersPagination/OrdersPagination";
 
 import css from './OrdersPage.module.css';
 import css_page from '../AdminPage/AdminPage.module.css';
@@ -28,7 +28,7 @@ const OrdersPage: FC = () => {
             {loading && <Loading/>}
             <div className={loading ? css.orders_none : css.orders_block}>
                 <Orders/>
-                <OrdersPagination/>
+                <Pagination namePage={'homePage'}/>
                 <GroupForm/>
                 <OrderForm/>
             </div>

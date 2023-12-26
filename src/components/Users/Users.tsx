@@ -1,25 +1,39 @@
-import {FC, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {User} from "../User/User";
 import {adminActions} from "../../redux";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
 
 import css from './Users.module.css';
+import {IParams} from "../../interfaces";
 
 
 const Users: FC = () => {
-    const {users, trigger, loading} = useAppSelector(state => state.adminReducer);
     const dispatch = useAppDispatch();
-    const [query, setQuery] = useSearchParams();
-    const setQueryRef = useRef(setQuery);
+    const navigate = useNavigate();
+    const {users, trigger, loading, showParams, page} = useAppSelector(state => state.adminReducer);
+    const [query] = useSearchParams();
+    const getAllUsers = useCallback(() => {
+        const params: IParams = {};
+        params.page = query.get('page');
+        dispatch(adminActions.getAll({params}));
+    }, [dispatch, query]);
+    const updateQueryString = useCallback(() => {
+        const queryParams: string[] = []
+        if (showParams) {
+            queryParams.push(`page=${encodeURIComponent(page)}`);
+        }
+        const queryString = queryParams.join('&');
+        navigate(queryString && `?${queryString}`);
+    }, [page, showParams, navigate]);
     useEffect(() => {
-        setQueryRef.current(prev => ({ ...prev, page: '1' }));
-    }, []);
+        updateQueryString();
+    }, [updateQueryString]);
     useEffect(() => {
-        dispatch(adminActions.getAll({page: query.get('page')}));
-    }, [dispatch, query, trigger]);
+        getAllUsers();
+    }, [dispatch, query, trigger, getAllUsers]);
 
     return (
         <div className={loading ? css.table_none.toString() : css.table_users.toString()}>

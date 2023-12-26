@@ -71,7 +71,7 @@ const Orders: FC = () => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         setOrderBy(prev => ({ ...prev, order_by: newOrderBy }));
         dispatch(orderActions.setOrderBy());
-    }
+    };
     const orderById: IOrderBy = () => sortingOrderBy('id');
     const orderByName: IOrderBy = () => sortingOrderBy('name');
     const orderBySurName: IOrderBy = () => sortingOrderBy('surname');
@@ -135,7 +135,7 @@ const Orders: FC = () => {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
         const queryString = queryParams.join('&');
-        navigate(queryString ? `?${queryString}` : '');
+        navigate(queryString && `?${queryString}`);
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
         endDateInputData, me.profile.name, checkbox, navigate, orderBy, page, showParams]);
@@ -143,7 +143,7 @@ const Orders: FC = () => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, navigate, orderBy, checkbox,  updateQueryString]);
+        endDateInputData, navigate, orderBy, checkbox, updateQueryString]);
     useEffect( () => {
         getAllOrders();
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);

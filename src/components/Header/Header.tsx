@@ -1,7 +1,7 @@
 import {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
-import {authActions, orderActions} from "../../redux";
+import {adminActions, authActions, orderActions} from "../../redux";
 import {IOrderBy} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
@@ -18,6 +18,7 @@ const Header: FC = () => {
         dispatch(orderActions.setCheckBoxDefault());
         dispatch(orderActions.setOrderByDefault());
         dispatch(orderActions.resetPage());
+        dispatch(adminActions.resetPage());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultFilterOrders();
