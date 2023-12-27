@@ -2,10 +2,6 @@ import {FC, useCallback, useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-
-import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
-import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IOrderBy, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
@@ -13,8 +9,6 @@ import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-
-import {okten_logo} from '../../asserts';
 
 
 const Orders: FC = () => {
@@ -38,7 +32,6 @@ const Orders: FC = () => {
         trigger,
         sorted,
         checkbox,
-        openModal,
         page,
         showParams
     } = useAppSelector(state => state.orderReducer);
@@ -64,9 +57,6 @@ const Orders: FC = () => {
         params.manager = query.get('manager');
         dispatch(orderActions.getAll({params}));
     },[dispatch, query]);
-    const handleClose: IOrderBy = () => {
-        dispatch(orderActions.setShowModal(false));
-    };
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         setOrderBy(prev => ({ ...prev, order_by: newOrderBy }));
@@ -150,19 +140,6 @@ const Orders: FC = () => {
 
     return (
         <div className={css.orders}>
-            <Offcanvas className={css.container_actions} show={openModal} onHide={handleClose}>
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title className={css.actions_header}>Actions</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body className={css.body_actions}>
-                    <div className={css.buttons_block} onClick={handleClose}>
-                        <ButtonOpenForm buttonName={'Create group'} func={'OpenGroupForm'}/>
-                        <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
-                        <GetExelFile/>
-                    </div>
-                    <img className={css.okten_logo} src={okten_logo} alt="okten_logo"/>
-                </Offcanvas.Body>
-            </Offcanvas>
             <div className={css.table}>
                 <div>
                     <ListGroup className={css.table_data} horizontal>

@@ -2,12 +2,12 @@ import {FC} from 'react';
 
 import Form from "react-bootstrap/Form";
 
+import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
 import {IOrderBy} from "../../types";
 import {orderActions} from "../../redux";
 import {useAppDispatch} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
-import css_button from "../ButtonOpenForm/ButtonOpenForm.module.css";
 
 
 const MyBlockButton: FC = () => {
@@ -25,7 +25,7 @@ const MyBlockButton: FC = () => {
                 <Form.Check aria-label="My_orders" name="myOrders" inline onChange={handler}/>
                 <label className={css.my} htmlFor="myOrders">My orders</label>
             </div>
-            <button className={css_button.btn_open} onClick={handleShow}>Actions</button>
+            <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
         </div>
     );
 };

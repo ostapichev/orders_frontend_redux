@@ -13,11 +13,12 @@ import {orderValidator} from "../../validators";
 
 import css from './OrderForm.module.css';
 import css_btn from "../UserForm/UserForm.module.css";
+import {GroupForm} from "../GroupForm/GroupForm";
 
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {groups, trigger} = useAppSelector(state => state.groupReducer);
+    const {groups, trigger, vision} = useAppSelector(state => state.groupReducer);
     const {orderUpdate, errorsOrder, orderCreate, openOrderForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
         mode: "onSubmit",
@@ -31,8 +32,12 @@ const OrderForm: FC = () => {
         await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
     };
+    const addGroup: any = () => {
+        dispatch(groupActions.setVision());
+    };
     const handleClose: IOrderBy = () => {
         dispatch(orderActions.closeForm());
+        dispatch(groupActions.setVisionDefault());
         reset();
     };
     useEffect(() => {
@@ -58,8 +63,25 @@ const OrderForm: FC = () => {
     return (
         <div className={`${css.order_form} ${openOrderForm ? css.open_order_form : css.close_order_form }`}>
             <h3 className={css.order_form_header}>{orderUpdate ? 'Update' : 'Create'} order</h3>
+            {vision &&
+                <div className={css.group_form}>
+                    <GroupForm/>
+                </div>
+            }
             <form className={css.order_form_container} onSubmit={handleSubmit(orderUpdate ? update : save)}>
                 <div className={css.form_block_left}>
+                    <div className={vision ? css.group_select_none : css.group_select_block}>
+                        <label htmlFor="group">Group</label>
+                        <Form.Select size="sm" aria-label="Group" name="group" {...register('group')}
+                                     onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                            <option>Choose group</option>
+                            {
+                                groups.map(group => <Group key={group.id} group={group}/>)
+                            }
+                        </Form.Select>
+                        <button className={css.btn_group} onClick={addGroup}>Add</button>
+                        {errors.group && <div className={css.error_form}>{errors.group.message}</div>}
+                    </div>
                     <label htmlFor="name">First name</label>
                     <Form.Control size="sm" name="name" placeholder={'enter name'} {...register('name')}/>
                     {errors.name && <div className={css.error_form}>{errors.name.message}</div>}
@@ -75,6 +97,8 @@ const OrderForm: FC = () => {
                     <label htmlFor="age">Age</label>
                     <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
                     {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
+                </div>
+                <div className={css.form_block_right}>
                     <label htmlFor="course">Choose course</label>
                     <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
                         <option value="FS">FS</option>
@@ -85,8 +109,6 @@ const OrderForm: FC = () => {
                         <option value="PCX">PCX</option>
                     </Form.Select>
                     {errors.course && <div className={css.error_form}>{errors.course.message}</div>}
-                </div>
-                <div className={css.form_block_right}>
                     <label htmlFor="paid">Already paid</label>
                     <Form.Control size="sm" type="number" name="paid" placeholder={'already_paid'} {...register('already_paid')}/>
                     {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
@@ -117,15 +139,6 @@ const OrderForm: FC = () => {
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
                     {errors.status && <p>{errors.status.message}</p>}
-                    <label htmlFor="group">Group</label>
-                    <Form.Select size="sm" aria-label="Group" name="group" {...register('group')}
-                            onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
-                            <option>Choose group</option>
-                            {
-                                groups.map(group => <Group key={group.id} group={group}/>)
-                            }
-                    </Form.Select>
-                    {errors.group && <p>{errors.group.message}</p>}
                 </div>
                     {errorsOrder?.name && <p>{errorsOrder.name}</p>}
                     {errorsOrder?.surname && <p>{errorsOrder.name}</p>}

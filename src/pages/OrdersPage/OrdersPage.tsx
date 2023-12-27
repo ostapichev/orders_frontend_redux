@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 
 import {
-    GroupForm,
     InputBlock,
     Loading,
     MyBlockButton,
@@ -17,7 +16,6 @@ import css_page from '../AdminPage/AdminPage.module.css';
 
 const OrdersPage: FC = () => {
     const {loading, openOrderForm} = useAppSelector(state => state.orderReducer);
-    const {openGroupForm} = useAppSelector(state => state.groupReducer);
 
     return (
         <div className={css.order_page}>
@@ -29,10 +27,9 @@ const OrdersPage: FC = () => {
             <div className={loading ? css.orders_none : css.orders_block}>
                 <Orders/>
                 <Pagination namePage={'homePage'}/>
-                <GroupForm/>
                 <OrderForm/>
             </div>
-            <div className={(openGroupForm || openOrderForm) && css_page.overlay}></div>
+            <div className={openOrderForm && css_page.overlay}></div>
         </div>
     );
 };

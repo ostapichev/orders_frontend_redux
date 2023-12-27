@@ -1,30 +1,4 @@
 .group_form {
-    font: 10pt Arial, sans-serif;
-    display: none;
-    width: 300px;
-    height: 250px;
-    background-color: #EDEDED;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-.group_form.open_group_form {
-    display: block;
-}
-
-.group_form.close_group_form {
-    display: none;
-}
-
-.group_form_block {
-    height: 80%;
     display: flex;
     flex-direction: column;
 }
@@ -34,9 +8,9 @@
 }
 
 .err_group_form {
-    margin: 5px;
-    color: #656565;
-    font: 5px Arial, sans-serif bold;
+    color: red;
+    font-size: 8pt;
+    margin: 2px;
 }
 
 .btn_group_form {
@@ -71,3 +45,22 @@
     margin-bottom: 20px;
     font-weight: bold;
 }
+
+.btn_group {
+    width: 50%;
+    background-color: #4caf50;
+    border-radius: 5px;
+    border: none;
+    color: snow;
+    font: 8pt Georgia, serif;
+}
+
+.btn_group:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn_block {
+    display: flex;
+}
+
