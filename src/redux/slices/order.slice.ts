@@ -18,8 +18,6 @@ interface IState {
     fileDataURL?: string;
     openOrderForm: boolean;
     openModal: boolean;
-    params: IParams;
-    queryParams: string[];
     nameInputData: string;
     surNameInputData: string;
     emailInputData: string;
@@ -52,8 +50,6 @@ const initialState: IState = {
     fileDataURL: null,
     openOrderForm: false,
     openModal: false,
-    params: {},
-    queryParams: [],
     nameInputData: null,
     surNameInputData: null,
     emailInputData: null,
@@ -64,8 +60,8 @@ const initialState: IState = {
     typeCourseInputData: null,
     statusInputData: null,
     groupInputData: null,
-    startDateInputData: null,
-    endDateInputData: null,
+    startDateInputData: '',
+    endDateInputData: '',
     page: 1,
     showParams: false,
     dataInfo: {},
@@ -147,9 +143,6 @@ const slice = createSlice({
         setCheckBoxDefault: state => {
             state.checkbox = false;
         },
-        setParams: (state, action) => {
-            state.params = action.payload;
-        },
         setNameInputData: (state, action) => {
             state.nameInputData = action.payload;
         },
@@ -189,6 +182,22 @@ const slice = createSlice({
         setShowModal: (state, action) => {
             state.openModal = action.payload;
         },
+        setDefaultParams: state => {
+            state.page = 1;
+            state.nameInputData = '';
+            state.surNameInputData = '';
+            state.emailInputData = '';
+            state.phoneInputData = '';
+            state.ageInputData = '';
+            state.courseInputData = '';
+            state.formatCourseInputData = '';
+            state.typeCourseInputData = '';
+            state.statusInputData = '';
+            state.groupInputData = '';
+            state.startDateInputData = '';
+            state.endDateInputData = '';
+            state.checkbox = false;
+        },
         decPage: state => {
             state.page -= 1;
             state.showParams = true;
@@ -204,6 +213,7 @@ const slice = createSlice({
         openForm: state => {
             state.openOrderForm = true;
             state.loading = false;
+            state.errorsOrder = null;
         },
         closeForm: state => {
             state.openOrderForm = false;

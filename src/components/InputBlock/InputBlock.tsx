@@ -21,7 +21,10 @@ const InputBlock: FC = () => {
         courseInputData,
         formatCourseInputData,
         typeCourseInputData,
-        statusInputData
+        statusInputData,
+        groupInputData,
+        startDateInputData,
+        endDateInputData
     } = useAppSelector(state => state.orderReducer);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setNameInputData(event.target.value));
@@ -140,22 +143,25 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
+                    value={groupInputData}
                     size="sm"
                     name="group"
                     aria-label="Choose group"
                     onChange={groupInputDataChange}>
-                        <option value=''>all groups</option>
+                        <option>all groups</option>
                         {groups.map(group => <Group key={group.id} group={group}/>)}
                 </Form.Select>
                 <Form.Control
+                    value={startDateInputData}
                     size="sm"
-                    type="datetime-local"
+                    type="date"
                     placeholder="start date"
                     onChange={startDateInputChange}
                 />
                 <Form.Control
+                    value={endDateInputData}
                     size="sm"
-                    type="datetime-local"
+                    type="date"
                     placeholder="end date"
                     onChange={endDateInputChange}
                 />

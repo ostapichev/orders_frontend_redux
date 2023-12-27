@@ -1,5 +1,5 @@
 import {FC, MouseEventHandler} from 'react';
-import {NavLink} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 
 import {adminActions, authActions, orderActions} from "../../redux";
 import {IOrderBy} from "../../types";
@@ -21,11 +21,11 @@ const Header: FC = () => {
         dispatch(adminActions.resetPage());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
-        defaultFilterOrders();
+        dispatch(orderActions.setDefaultParams());
         dispatch(authActions.logout());
     };
     const paramsDefault:IOrderBy = () => {
-        defaultFilterOrders();
+        dispatch(orderActions.setDefaultParams());
     };
 
     return (
@@ -51,7 +51,7 @@ const Header: FC = () => {
                         }
                         <div className={css.login_link}>
                             <NavLink to={'/orders'} onClick={paramsDefault}>
-                                <img className={css.logout}  src={home_page} alt="home"/>
+                                <img className={css.logout} src={home_page} alt="home"/>
                             </NavLink>
                         </div>
                         <div className={css.login_link}>

@@ -83,7 +83,10 @@ const Order: FC<IProps> = ({order}) => {
                     <div>Message: {msg !== null ? msg : 'no data'}</div>
                     <div>UTM: {utm !== null ? utm : 'no data'}</div>
                     <div>
-                        <button disabled={addValidForm} className={css_button.btn_open} onClick={setUpdate}>Edit</button>
+                        <button disabled={addValidForm || (order.manager === null)}
+                                className={css_button.btn_open}
+                                onClick={setUpdate}>Edit
+                        </button>
                     </div>
                 </div>
                 <div className={css.right_block}>Comments:

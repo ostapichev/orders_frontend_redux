@@ -1,31 +1,45 @@
-import {FC} from 'react';
+import {FC, useRef} from 'react';
+import {useSearchParams} from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 
-import {ButtonOpenForm} from "../ButtonOpenForm/ButtonOpenForm";
+import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IOrderBy} from "../../types";
 import {orderActions} from "../../redux";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
+
+import {create, reload} from '../../asserts';
 
 
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
-    const handleShow: IOrderBy = () => {
-        dispatch(orderActions.setShowModal(true));
-    };
+    const {checkbox} = useAppSelector(state => state.orderReducer);
+    const [query, setQuery] = useSearchParams();
+    const setQueryRef = useRef(setQuery);
     const handler: IOrderBy = () => {
         dispatch(orderActions.setCheckBox());
+    };
+    const createOrder: IOrderBy = () => {
+        dispatch(orderActions.openForm());
+    };
+    const resetParams: IOrderBy = () => {
+        setQueryRef.current('');
+        dispatch(orderActions.setDefaultParams());
     };
 
     return (
         <div className={css.block_filters}>
             <div className={css.filter_order_check}>
-                <Form.Check aria-label="My_orders" name="myOrders" inline onChange={handler}/>
+                <Form.Check checked={checkbox} aria-label="My_orders" name="myOrders" inline onChange={handler}/>
                 <label className={css.my} htmlFor="myOrders">My orders</label>
             </div>
-            <ButtonOpenForm buttonName={'Create order'} func={'OpenOrderForm'}/>
+            <div className={css.icon_block}>
+                <img className={css.icon} onClick={resetParams} src={reload} alt='create_icon'/>
+                <img className={css.icon} onClick={createOrder} src={create} alt='create_icon'/>
+                <GetExelFile/>
+            </div>
         </div>
     );
 };

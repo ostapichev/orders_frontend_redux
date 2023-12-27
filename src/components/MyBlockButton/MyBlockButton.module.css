@@ -13,3 +13,21 @@
 .my {
     font: bold 10pt Georgia, serif;
 }
+
+.icon {
+    width: 30px;
+    background-color: snow;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.icon:hover {
+    background-color: lightgrey;
+    transform: scale(1.2);
+}
+
+.icon_block {
+    display: flex;
+    justify-content: space-evenly;
+    width: 9vw;
+}

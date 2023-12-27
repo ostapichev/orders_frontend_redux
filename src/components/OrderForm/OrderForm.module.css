@@ -75,3 +75,12 @@
     color: snow;
     font: 8pt Georgia, serif;
 }
+
+.input_paid {
+    margin-top: 25px;
+}
+
+.form_block_right_top {
+    width: 45%;
+    margin-top: -76px;
+}

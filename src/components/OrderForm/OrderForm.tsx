@@ -21,7 +21,7 @@ const OrderForm: FC = () => {
     const {groups, trigger, vision} = useAppSelector(state => state.groupReducer);
     const {orderUpdate, errorsOrder, orderCreate, openOrderForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
-        mode: "onSubmit",
+        mode: "onChange",
         resolver: joiResolver(orderValidator)
     });
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -32,7 +32,7 @@ const OrderForm: FC = () => {
         await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
     };
-    const addGroup: any = () => {
+    const addGroup: IOrderBy = () => {
         dispatch(groupActions.setVision());
     };
     const handleClose: IOrderBy = () => {
@@ -79,7 +79,7 @@ const OrderForm: FC = () => {
                                 groups.map(group => <Group key={group.id} group={group}/>)
                             }
                         </Form.Select>
-                        <button className={css.btn_group} onClick={addGroup}>Add</button>
+                        <button className={css.btn_group} onClick={addGroup}>Add group</button>
                         {errors.group && <div className={css.error_form}>{errors.group.message}</div>}
                     </div>
                     <label htmlFor="name">First name</label>
@@ -90,15 +90,15 @@ const OrderForm: FC = () => {
                     {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="email">Email</label>
                     <Form.Control size="sm" type="email" name="email" placeholder={'enter email'} {...register('email')}/>
-                    {errors.email && <div className={css.error_form}>{errors.email.message}</div>}
+                    {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="phone">Phone</label>
                     <Form.Control size="sm" type="text" name="phone" placeholder={'enter phone'} {...register('phone')}/>
-                    {errors.phone && <div className={css.error_form}>{errors.phone.message}</div>}
+                    {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="age">Age</label>
                     <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
                     {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
                 </div>
-                <div className={css.form_block_right}>
+                <div className={vision ? css.form_block_right_top : css.form_block_right}>
                     <label htmlFor="course">Choose course</label>
                     <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
                         <option value="FS">FS</option>
@@ -109,7 +109,7 @@ const OrderForm: FC = () => {
                         <option value="PCX">PCX</option>
                     </Form.Select>
                     {errors.course && <div className={css.error_form}>{errors.course.message}</div>}
-                    <label htmlFor="paid">Already paid</label>
+                    <label className={css.input_paid} htmlFor="paid">Already paid</label>
                     <Form.Control size="sm" type="number" name="paid" placeholder={'already_paid'} {...register('already_paid')}/>
                     {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
                     <label htmlFor="sum">Sum</label>
@@ -120,7 +120,7 @@ const OrderForm: FC = () => {
                         <option value="static">static</option>
                         <option value="online">online</option>
                     </Form.Select>
-                    {errors.course_format && <p>{errors.course_format.message}</p>}
+                    {errors.course_format &&  <div className={css.error_form}>{errors.course_format.message}</div>}
                     <label htmlFor="course_type">Choose course type</label>
                     <Form.Select size="sm" aria-label="Course_type" name="course_type" {...register('course_type')}>
                         <option value="pro">pro</option>
@@ -129,7 +129,7 @@ const OrderForm: FC = () => {
                         <option value="incubator">incubator</option>
                         <option value="vip">vip</option>
                     </Form.Select>
-                    {errors.course_type && <p>{errors.course_type.message}</p>}
+                    {errors.course_type &&  <div className={css.error_form}>{errors.course_type.message}</div>}
                     <label htmlFor="status">Choose status</label>
                     <Form.Select size="sm" aria-label="Status" name="status" {...register('status')}>
                         <option value="new_order">new_order</option>
@@ -138,12 +138,12 @@ const OrderForm: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                    {errors.status && <p>{errors.status.message}</p>}
+                    {errors.status && <div className={css.error_form}>{errors.status.message}</div>}
                 </div>
-                    {errorsOrder?.name && <p>{errorsOrder.name}</p>}
-                    {errorsOrder?.surname && <p>{errorsOrder.name}</p>}
-                    {errorsOrder?.email && <p>{errorsOrder.email}</p>}
-                    {errorsOrder?.phone && <p>{errorsOrder.phone}</p>}
+                    {errorsOrder?.name && <div className={css.error_form}>{errorsOrder.name}</div>}
+                    {errorsOrder?.surname && <div className={css.error_form}>{errorsOrder.name}</div>}
+                    {errorsOrder?.email && <div className={css.error_form}>{errorsOrder.email}</div>}
+                    {errorsOrder?.phone && <div className={css.error_form}>{errorsOrder.phone}</div>}
                 <div className={css.button_block}>
                     <button className={css_btn.btn_user_form} disabled={!isValid}>{orderUpdate ? 'Update' : 'Save'}</button>
                     <button className={css_btn.btn_user_form} onClick={handleClose}>Close</button>

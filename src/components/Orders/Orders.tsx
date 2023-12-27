@@ -78,7 +78,7 @@ const Orders: FC = () => {
     const orderByCreated: IOrderBy = () => sortingOrderBy('created_at');
     const orderByManager: IOrderBy = () => sortingOrderBy('manager');
     const updateQueryString = useCallback(() => {
-        const queryParams: string[] = []
+        const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(page)}`);
         }
@@ -133,7 +133,7 @@ const Orders: FC = () => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, navigate, orderBy, checkbox, updateQueryString]);
+        endDateInputData, navigate, checkbox, updateQueryString]);
     useEffect( () => {
         getAllOrders();
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
