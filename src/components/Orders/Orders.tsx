@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect} from 'react';
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -14,7 +14,6 @@ import css from './Orders.module.css';
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [orderBy, setOrderBy] = useState<IParams>({order_by: ''});
     const {
         nameInputData,
         surNameInputData,
@@ -33,7 +32,8 @@ const Orders: FC = () => {
         sorted,
         checkbox,
         page,
-        showParams
+        showParams,
+        orderBy,
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
@@ -59,8 +59,7 @@ const Orders: FC = () => {
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
-        setOrderBy(prev => ({ ...prev, order_by: newOrderBy }));
-        dispatch(orderActions.setOrderBy());
+        dispatch(orderActions.setOrderByParams(newOrderBy));
     };
     const orderById: IOrderBy = () => sortingOrderBy('id');
     const orderByName: IOrderBy = () => sortingOrderBy('name');
@@ -118,8 +117,8 @@ const Orders: FC = () => {
         if (endDateInputData) {
             queryParams.push(`end_date=${encodeURIComponent(endDateInputData)}`);
         }
-        if (orderBy && orderBy.order_by !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(orderBy.order_by)}`);
+        if (orderBy && orderBy !== '') {
+            queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
         }
         if (checkbox) {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
@@ -139,36 +138,34 @@ const Orders: FC = () => {
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
 
     return (
-        <div className={css.orders}>
-            <div className={css.table}>
-                <div>
-                    <ListGroup className={css.table_data} horizontal>
-                        <ListGroup.Item className={css.table_header} onClick={orderById}>id</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByName}>name</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderBySurName}>surname</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByEmail}>email</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>
-                            course_format
-                        </ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>
-                            course_type
-                        </ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByPaid}>paid</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByGroup}>group</ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByCreated}>
-                            created at
-                        </ListGroup.Item>
-                        <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
-                    </ListGroup>
-                </div>
-                <div>
-                    {orders.map(order => <Order key={order.id} order={order}/>)}
-                </div>
+        <div className={css.table}>
+            <div>
+                <ListGroup className={css.table_data} horizontal>
+                    <ListGroup.Item className={css.table_header} onClick={orderById}>id</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByName}>name</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderBySurName}>surname</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByEmail}>email</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>
+                        course_format
+                    </ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>
+                        course_type
+                    </ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByPaid}>paid</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByGroup}>group</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByCreated}>
+                        created at
+                    </ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
+                </ListGroup>
+            </div>
+            <div>
+                {orders.map(order => <Order key={order.id} order={order}/>)}
             </div>
         </div>
     );

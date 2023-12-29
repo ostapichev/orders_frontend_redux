@@ -15,6 +15,10 @@ interface IState {
     trigger: boolean;
     loading: boolean;
     sorted: boolean;
+    orderBy: string;
+    page: number;
+    prevPageOrders: string;
+    nextPageOrders: string;
     fileDataURL?: string;
     openOrderForm: boolean;
     openModal: boolean;
@@ -30,11 +34,8 @@ interface IState {
     groupInputData: string;
     startDateInputData: string;
     endDateInputData: string;
-    page: number;
     showParams: boolean;
     dataInfo: IPagination<void>;
-    prevPageOrders: string;
-    nextPageOrders: string;
 }
 
 const initialState: IState = {
@@ -47,6 +48,10 @@ const initialState: IState = {
     trigger: false,
     loading: false,
     sorted: true,
+    orderBy: '',
+    page: 1,
+    prevPageOrders: null,
+    nextPageOrders: null,
     fileDataURL: null,
     openOrderForm: false,
     openModal: false,
@@ -62,11 +67,8 @@ const initialState: IState = {
     groupInputData: null,
     startDateInputData: '',
     endDateInputData: '',
-    page: 1,
     showParams: false,
     dataInfo: {},
-    prevPageOrders: null,
-    nextPageOrders: null,
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -131,17 +133,12 @@ const slice = createSlice({
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
         },
-        setOrderBy: state => {
+        setOrderByParams: (state, action) => {
+            state.orderBy = action.payload;
             state.sorted = !state.sorted;
-        },
-        setOrderByDefault: state => {
-            state.sorted = true;
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
-        },
-        setCheckBoxDefault: state => {
-            state.checkbox = false;
         },
         setNameInputData: (state, action) => {
             state.nameInputData = action.payload;
@@ -179,10 +176,9 @@ const slice = createSlice({
         setEndDateInputData: (state, action) => {
             state.endDateInputData = action.payload;
         },
-        setShowModal: (state, action) => {
-            state.openModal = action.payload;
-        },
         setDefaultParams: state => {
+            state.sorted = true;
+            state.orderBy = '';
             state.page = 1;
             state.nameInputData = '';
             state.surNameInputData = '';
@@ -197,6 +193,7 @@ const slice = createSlice({
             state.startDateInputData = '';
             state.endDateInputData = '';
             state.checkbox = false;
+            state.showParams = false;
         },
         decPage: state => {
             state.page -= 1;
@@ -206,13 +203,8 @@ const slice = createSlice({
             state.page += 1;
             state.showParams = true;
         },
-        resetPage: state => {
-            state.page = 1;
-            state.showParams = false;
-        },
         openForm: state => {
             state.openOrderForm = true;
-            state.loading = false;
             state.errorsOrder = null;
         },
         closeForm: state => {

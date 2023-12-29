@@ -16,7 +16,7 @@ import {create, reload} from '../../asserts';
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
     const {checkbox} = useAppSelector(state => state.orderReducer);
-    const [query, setQuery] = useSearchParams();
+    const [, setQuery] = useSearchParams();
     const setQueryRef = useRef(setQuery);
     const handler: IOrderBy = () => {
         dispatch(orderActions.setCheckBox());
@@ -25,7 +25,7 @@ const MyBlockButton: FC = () => {
         dispatch(orderActions.openForm());
     };
     const resetParams: IOrderBy = () => {
-        setQueryRef.current('');
+        setQueryRef.current(prev => ({...prev, order_by: '-id'}));
         dispatch(orderActions.setDefaultParams());
     };
 

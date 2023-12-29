@@ -1,7 +1,7 @@
 import {FC, MouseEventHandler} from 'react';
-import {NavLink, useSearchParams} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
-import {adminActions, authActions, orderActions} from "../../redux";
+import {authActions, orderActions} from "../../redux";
 import {IOrderBy} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
@@ -15,10 +15,7 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
     const defaultFilterOrders: IOrderBy = () => {
-        dispatch(orderActions.setCheckBoxDefault());
-        dispatch(orderActions.setOrderByDefault());
-        dispatch(orderActions.resetPage());
-        dispatch(adminActions.resetPage());
+        dispatch(orderActions.setDefaultParams());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         dispatch(orderActions.setDefaultParams());

@@ -36,8 +36,12 @@
 }
 
 .table {
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
+    min-width: 1100px;
+    padding-bottom: 50px;
+    width: 100%;
 }
 
 .table_data {
