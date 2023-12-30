@@ -7,7 +7,7 @@ export interface IOrder {
     name?: string;
     surname?: string;
     email?: string;
-    phone?: number;
+    phone?: string;
     age?: number;
     course?: string;
     course_format?: string;

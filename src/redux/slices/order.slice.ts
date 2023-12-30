@@ -1,4 +1,4 @@
-import {AxiosError} from "axios";
+import {AxiosError, AxiosResponse} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
 import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
@@ -112,8 +112,8 @@ const getExelFile = createAsyncThunk<string,{params: IParams}> (
     'orderSlice/getExelFile',
     async ({params}, {rejectWithValue}) => {
         try {
-            const response: any = await orderService.createExelFile(params);
-            const blob = new Blob([response.data], { type: response.headers['content-type'] });
+            const response: AxiosResponse = await orderService.createExelFile(params);
+            const blob = new Blob([response.data], {type: response.headers['content-type']});
             return URL.createObjectURL(blob);
         } catch (e) {
             const err = e as AxiosError;

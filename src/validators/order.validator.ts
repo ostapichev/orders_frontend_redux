@@ -23,12 +23,11 @@ const orderValidator = Joi.object({
             'string.email': 'Email must have a domain only "com" and "net"',
             'string.empty': 'Email is required'
         }),
-    phone: Joi.number()
+    phone: Joi.string()
+        .regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/)
         .required()
         .messages({
-            'number.base': 'Invalid number',
-            'number.integer': 'Number must be an integer',
-            'number.required': 'Number is required'
+            'string.empty': 'String is required'
         }),
     age: Joi.number()
         .integer()

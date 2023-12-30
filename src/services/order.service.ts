@@ -14,9 +14,7 @@ class OrderService {
     };
 
     createExelFile(params: IParams): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.createExel, {
-            responseType: 'blob', params
-        });
+        return axiosService.get(urls.ordersAPI.createExel, {responseType: 'blob', params});
     };
 
     updateById(id: string, order: IOrder): IRes<IOrder> {

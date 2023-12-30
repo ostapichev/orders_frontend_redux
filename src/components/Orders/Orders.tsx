@@ -56,6 +56,7 @@ const Orders: FC = () => {
         params.created_at_before = query.get('end_date');
         params.manager = query.get('manager');
         dispatch(orderActions.getAll({params}));
+        dispatch(orderActions.getExelFile({params}));
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;

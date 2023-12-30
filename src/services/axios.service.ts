@@ -7,8 +7,8 @@ import {IWaitList} from "../types";
 
 
 const axiosService = axios.create({baseURL});
-const waitList: IWaitList[] = [];
 const history = createBrowserHistory({window});
+const waitList: IWaitList[] = [];
 let isRefreshing = false;
 
 axiosService.interceptors.request.use(response => {
