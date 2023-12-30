@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 
-import {AdminPage, LoginPage, OrdersPage, RegisterPage, RecoveryPasswordPage} from "./pages";
+import {AdminPage, LoginPage, OrdersPage, RegisterPage, RecoveryPasswordPage, NotFoundPage} from "./pages";
 import {MainLayout} from "./layouts";
 import {RequiredAuth} from "./hoc";
 
@@ -26,6 +26,7 @@ const App: FC = () => {
                       <AdminPage/>
                   </RequiredAuth>
               }/>
+              <Route path={'*'} element={<NotFoundPage/>}/>
           </Route>
       </Routes>
   );

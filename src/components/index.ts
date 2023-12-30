@@ -10,6 +10,7 @@ export * from './InputBlock/InputBlock';
 export * from './Loading/Loading';
 export * from './LoginForm/LoginForm';
 export * from './MyBlockButton/MyBlockButton';
+export * from './NotFound/NotFound';
 export * from './Order/Order';
 export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';

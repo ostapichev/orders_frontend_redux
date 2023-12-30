@@ -1,4 +1,4 @@
-import {FC, MouseEventHandler} from 'react';
+import  {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {authActions, orderActions} from "../../redux";
@@ -7,22 +7,19 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
 
-import {admin_panel, home_page, log_out, okten_school} from '../../asserts';
+import {admin_panel, home_page, login, log_out, okten_school} from '../../asserts';
 
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
-    const defaultFilterOrders: IOrderBy = () => {
+    const defaultParamsOrders: IOrderBy = () => {
         dispatch(orderActions.setDefaultParams());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
-        dispatch(orderActions.setDefaultParams());
+        defaultParamsOrders();
         dispatch(authActions.logout());
-    };
-    const paramsDefault:IOrderBy = () => {
-        dispatch(orderActions.setDefaultParams());
     };
 
     return (
@@ -39,18 +36,20 @@ const Header: FC = () => {
                             <div className={css.title_username}>Current user</div>
                             <div className={css.login_name}>{me.profile.surname}</div>
                         </div>
-                        { isAdmin &&
+                        {isAdmin &&
                             <div className={css.login_link}>
-                                <NavLink to={'/admin'} onClick={defaultFilterOrders}>
+                                <NavLink to={'/admin'} onClick={defaultParamsOrders}>
                                     <img className={css.logout} src={admin_panel} alt="admin"/>
                                 </NavLink>
                             </div>
                         }
-                        <div className={css.login_link}>
-                            <NavLink to={'/orders'} onClick={paramsDefault}>
-                                <img className={css.logout} src={home_page} alt="home"/>
-                            </NavLink>
-                        </div>
+                        {isAdmin &&
+                            <div className={css.login_link}>
+                                <NavLink to={'/orders'} onClick={defaultParamsOrders}>
+                                    <img className={css.logout} src={home_page} alt="home"/>
+                                </NavLink>
+                            </div>
+                        }
                         <div className={css.login_link}>
                             <NavLink to={'/login'} onClick={logout}>
                                 <img className={css.logout} src={log_out} alt="logout"/>
@@ -60,7 +59,9 @@ const Header: FC = () => {
                     :
                     <div>
                         <p className={css.login_link}>
-                            <NavLink to={'login'}>Login</NavLink>
+                            <NavLink to={'login'}>
+                                <img className={css.logout} src={login} alt="logout"/>
+                            </NavLink>
                         </p>
                     </div>
                 }
