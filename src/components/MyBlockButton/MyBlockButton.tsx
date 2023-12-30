@@ -1,5 +1,4 @@
-import {FC, useRef} from 'react';
-import {useSearchParams} from "react-router-dom";
+import {FC} from 'react';
 
 import Form from "react-bootstrap/Form";
 
@@ -16,8 +15,6 @@ import {create, reload} from '../../asserts';
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
     const {checkbox} = useAppSelector(state => state.orderReducer);
-    const [, setQuery] = useSearchParams();
-    const setQueryRef = useRef(setQuery);
     const handler: IOrderBy = () => {
         dispatch(orderActions.setCheckBox());
     };
@@ -25,7 +22,6 @@ const MyBlockButton: FC = () => {
         dispatch(orderActions.openForm());
     };
     const resetParams: IOrderBy = () => {
-        setQueryRef.current(prev => ({...prev, order_by: '-id'}));
         dispatch(orderActions.setDefaultParams());
     };
 

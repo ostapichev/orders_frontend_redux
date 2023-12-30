@@ -13,9 +13,9 @@ class OrderService {
         return axiosService.post(urls.groupsAPI.createOrder(groupId), order);
     };
 
-    createExelFile(): IResPaginate<IOrder[]> {
+    createExelFile(params: IParams): IResPaginate<IOrder[]> {
         return axiosService.get(urls.ordersAPI.createExel, {
-            responseType: 'blob'
+            responseType: 'blob', params
         });
     };
 

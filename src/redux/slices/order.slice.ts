@@ -108,11 +108,11 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}> (
     }
 );
 
-const getExelFile = createAsyncThunk<string, void> (
+const getExelFile = createAsyncThunk<string,{params: IParams}> (
     'orderSlice/getExelFile',
-    async (_, {rejectWithValue}) => {
+    async ({params}, {rejectWithValue}) => {
         try {
-            const response: any = await orderService.createExelFile();
+            const response: any = await orderService.createExelFile(params);
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
             return URL.createObjectURL(blob);
         } catch (e) {
