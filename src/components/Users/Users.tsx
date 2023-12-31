@@ -13,7 +13,7 @@ import {IParams} from "../../interfaces";
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {users, trigger, loading, showParams, page} = useAppSelector(state => state.adminReducer);
+    const {users, trigger, loading, showParams, pageUsers} = useAppSelector(state => state.adminReducer);
     const [query] = useSearchParams();
     const getAllUsers = useCallback(() => {
         const params: IParams = {};
@@ -23,11 +23,11 @@ const Users: FC = () => {
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = []
         if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(page)}`);
+            queryParams.push(`page=${encodeURIComponent(pageUsers)}`);
         }
         const queryString = queryParams.join('&');
         navigate(queryString && `?${queryString}`);
-    }, [page, showParams, navigate]);
+    }, [pageUsers, showParams, navigate]);
     useEffect(() => {
         updateQueryString();
     }, [updateQueryString]);

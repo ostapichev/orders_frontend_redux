@@ -59,9 +59,11 @@ const RegisterForm: FC<IProps> = ({funcName}) => {
                       onSubmit={handleSubmit(recoveryRequestUser)}>
                     <label>Password</label>
                     <Form.Control size="sm" type="password" placeholder={'enter password'}
+                                  autoComplete='on'
                                   {...register('password',{required: true})}/>
                     <label>Confirm password</label>
                     <Form.Control size="sm" type="password" placeholder={'enter password'}
+                                  autoComplete='on'
                                   {...register('confirmPassword',{required: true})}/>
                     <button className={css.btn_submit} disabled={loading}>Submit</button>
                     {errors.password && <p className={css.err_login}>{errors.password.message}</p>}

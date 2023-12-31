@@ -39,10 +39,13 @@ const LoginForm: FC = () => {
             <img className={css.logo_form} src={okten_school} alt='logo'/>
             <form className={css.login_form}>
                 <label>Email</label>
-                <Form.Control size="sm" type="email" placeholder={'enter email'} {...register('email',{required: true})}/>
+                <Form.Control size="sm" type="email" placeholder={'enter email'}
+                              {...register('email',{required: true})}/>
                 {errors.email && <p className={css.err_login}>{errors.email.message}</p>}
                 <label>Password</label>
-                <Form.Control size="sm" type="password" placeholder={'enter password'} {...register('password',{required: true})}/>
+                <Form.Control size="sm" type="password" placeholder={'enter password'}
+                              autoComplete='on'
+                              {...register('password',{required: true})}/>
                 {errors.password && <p className={css.err_login}>{errors.password.message}</p>}
                 <button className={css.btn_submit} disabled={loading}>{loading ? 'Loading' : 'Login' }</button>
                 {query.get('expSession') && <p className={css.err_login}>Please login!</p>}

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
-import {Loading, Pagination, StatisticOrder, UserForm, Users} from "../../components";
+import {Loading, MyPagination, StatisticOrder, UserForm, Users} from "../../components";
 
 import css from './AdminPage.module.css';
 
@@ -15,9 +15,7 @@ const AdminPage: FC = () => {
             <StatisticOrder/>
             <UserForm/>
             <Users/>
-            {!loading &&
-                <Pagination namePage={'adminPage'}/>
-            }
+            <MyPagination namePage={'adminPage'}/>
             <div className={openUserForm && css.overlay}></div>
         </div>
     );

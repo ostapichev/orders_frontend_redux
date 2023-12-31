@@ -14,7 +14,7 @@ export * from './NotFound/NotFound';
 export * from './Order/Order';
 export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';
-export * from './Pagination/Pagination';
+export * from './MyPagination/MyPagination';
 export * from './StatisticOrder/StatisticOrder';
 export * from './RegisterForm/RegisterForm';
 export * from './User/User';

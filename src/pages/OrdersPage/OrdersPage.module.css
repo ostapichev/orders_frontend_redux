@@ -12,6 +12,9 @@
 .orders_block {
     background-color: #C5E384;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .inputs_actions {

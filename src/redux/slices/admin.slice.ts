@@ -17,9 +17,10 @@ interface IState {
     openUserForm: boolean;
     dataInfo: IPagination<void>;
     showParams: boolean;
-    page: number,
-    prevPageAdmin: string;
-    nextPageAdmin: string;
+    pageUsers: number,
+    prevPageUsers: string;
+    nextPageUsers: string;
+    totalPagesUsers: number;
 }
 
 const initialState: IState = {
@@ -33,9 +34,10 @@ const initialState: IState = {
     openUserForm: false,
     dataInfo: {},
     showParams: false,
-    page: 1,
-    prevPageAdmin: null,
-    nextPageAdmin: null,
+    pageUsers: 1,
+    prevPageUsers: null,
+    nextPageUsers: null,
+    totalPagesUsers: 0,
 };
 
 const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
@@ -126,15 +128,15 @@ const slice = createSlice({
             state.openUserForm = false;
         },
         decPage: state => {
-            state.page -= 1;
+            state.pageUsers -= 1;
             state.showParams = true;
         },
         incPage: state => {
-            state.page += 1;
+            state.pageUsers += 1;
             state.showParams = true;
         },
         resetPage: state => {
-            state.page = 1;
+            state.pageUsers = 1;
             state.showParams = false;
         },
     },
@@ -143,8 +145,8 @@ const slice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 const {prev, next, result} = action.payload;
                 state.users = result;
-                state.prevPageAdmin = prev;
-                state.nextPageAdmin = next;
+                state.prevPageUsers = prev;
+                state.nextPageUsers = next;
                 state.errorUser = null;
             })
             .addCase(getStatisticOrder.fulfilled, (state, action) => {

@@ -82,7 +82,6 @@
 .comments_field_modal {
     margin: 10px 0;
     height: 100px;
-    overflow: scroll;
 }
 
 .comment_content {

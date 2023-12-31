@@ -16,7 +16,8 @@ interface IState {
     loading: boolean;
     sorted: boolean;
     orderBy: string;
-    page: number;
+    totalPagesOrders: number;
+    pageOrders: number;
     prevPageOrders: string;
     nextPageOrders: string;
     fileDataURL?: string;
@@ -44,26 +45,27 @@ const initialState: IState = {
     checkbox: false,
     errorsOrder: null,
     orderUpdate: null,
-    orderCreate: null,
+    orderCreate: '',
     trigger: false,
     loading: false,
     sorted: true,
     orderBy: '',
-    page: 1,
+    totalPagesOrders: 0,
+    pageOrders: 1,
     prevPageOrders: null,
     nextPageOrders: null,
     fileDataURL: null,
     openOrderForm: false,
     openModal: false,
-    nameInputData: null,
-    surNameInputData: null,
-    emailInputData: null,
-    phoneInputData: null,
-    ageInputData: null,
-    courseInputData: null,
-    formatCourseInputData: null,
-    typeCourseInputData: null,
-    statusInputData: null,
+    nameInputData: '',
+    surNameInputData: '',
+    emailInputData: '',
+    phoneInputData: '',
+    ageInputData: '',
+    courseInputData: '',
+    formatCourseInputData: '',
+    typeCourseInputData: '',
+    statusInputData: '',
     groupInputData: null,
     startDateInputData: '',
     endDateInputData: '',
@@ -179,7 +181,7 @@ const slice = createSlice({
         setDefaultParams: state => {
             state.sorted = true;
             state.orderBy = '';
-            state.page = 1;
+            state.pageOrders = 1;
             state.nameInputData = '';
             state.surNameInputData = '';
             state.emailInputData = '';
@@ -195,12 +197,8 @@ const slice = createSlice({
             state.checkbox = false;
             state.showParams = false;
         },
-        decPage: state => {
-            state.page -= 1;
-            state.showParams = true;
-        },
-        incPage: state => {
-            state.page += 1;
+        setPage: (state, action) => {
+            state.pageOrders = action.payload;
             state.showParams = true;
         },
         openForm: state => {
@@ -215,8 +213,9 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {prev, next, result} = action.payload;
+                const {prev, next, result, total_pages} = action.payload;
                 state.orders = result;
+                state.totalPagesOrders = total_pages;
                 state.prevPageOrders = prev;
                 state.nextPageOrders = next;
                 state.errorsOrder = null;

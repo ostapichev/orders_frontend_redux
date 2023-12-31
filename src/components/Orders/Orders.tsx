@@ -31,7 +31,7 @@ const Orders: FC = () => {
         trigger,
         sorted,
         checkbox,
-        page,
+        pageOrders,
         showParams,
         orderBy,
     } = useAppSelector(state => state.orderReducer);
@@ -80,7 +80,7 @@ const Orders: FC = () => {
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = [];
         if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(page)}`);
+            queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
         }
         if (nameInputData) {
             queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
@@ -128,7 +128,7 @@ const Orders: FC = () => {
         navigate(queryString && `?${queryString}`);
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, me.profile.name, checkbox, navigate, orderBy, page, showParams]);
+        endDateInputData, me.profile.name, checkbox, navigate, orderBy, pageOrders, showParams]);
     useEffect(() => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,

@@ -58,6 +58,7 @@ const Order: FC<IProps> = ({order}) => {
         return "all groups";
     };
     const nameGroup = getNameGroup(group);
+    console.log(comments.length);
 
     return (
         <>
@@ -94,7 +95,10 @@ const Order: FC<IProps> = ({order}) => {
                         <ListGroup>
                             <ListGroup.Item action variant="success">
                                 {comments &&
-                                    comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
+                                    comments.map(commentBody => <Comment
+                                        key={commentBody.id}
+                                        commentBody={commentBody}
+                                    />)
                                 }
                             </ListGroup.Item>
                         </ListGroup>
@@ -108,7 +112,10 @@ const Order: FC<IProps> = ({order}) => {
                             <ListGroup>
                                 <ListGroup.Item action variant="success">
                                     {comments &&
-                                        comments.map(commentBody => <Comment key={commentBody.id} commentBody={commentBody}/>)
+                                        comments.map(commentBody => <Comment
+                                            key={commentBody.id}
+                                            commentBody={commentBody}
+                                        />)
                                     }
                                 </ListGroup.Item>
                             </ListGroup>
