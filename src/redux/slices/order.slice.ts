@@ -141,42 +141,55 @@ const slice = createSlice({
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
+            state.pageOrders = 1;
         },
         setNameInputData: (state, action) => {
             state.nameInputData = action.payload;
+            state.pageOrders = 1;
         },
         setSurNameInputData: (state, action) => {
             state.surNameInputData = action.payload;
+            state.pageOrders = 1;
         },
         setEmailInputData: (state, action) => {
             state.emailInputData = action.payload;
+            state.pageOrders = 1;
         },
         setPhoneInputData: (state, action) => {
             state.phoneInputData = action.payload;
+            state.pageOrders = 1;
         },
         setAgeInputData: (state, action) => {
             state.ageInputData = action.payload;
+            state.pageOrders = 1;
         },
         setCourseInputData: (state, action) => {
             state.courseInputData = action.payload;
+            state.pageOrders = 1;
         },
         setFormatInputData: (state, action) => {
             state.formatCourseInputData = action.payload;
+            state.pageOrders = 1;
         },
         setTypeInputData: (state, action) => {
             state.typeCourseInputData = action.payload;
+            state.pageOrders = 1;
         },
         setStatusInputData: (state, action) => {
             state.statusInputData = action.payload;
+            state.pageOrders = 1;
         },
         setGroupInputData: (state, action) => {
             state.groupInputData = action.payload;
+            state.pageOrders = 1;
         },
         setStartDateInputData: (state, action) => {
             state.startDateInputData = action.payload;
+            state.pageOrders = 1;
         },
         setEndDateInputData: (state, action) => {
             state.endDateInputData = action.payload;
+            state.pageOrders = 1;
         },
         setDefaultParams: state => {
             state.sorted = true;

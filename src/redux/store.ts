@@ -5,10 +5,10 @@ import {authReducer, commentReducer, groupReducer, orderReducer, adminReducer} f
 
 const rootReducer = combineReducers({
     authReducer,
+    adminReducer,
     commentReducer,
     groupReducer,
     orderReducer,
-    adminReducer
 });
 
 const setupStore = () => configureStore({

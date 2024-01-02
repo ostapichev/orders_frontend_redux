@@ -4,6 +4,20 @@
     flex-direction: column;
 }
 
+.users_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.users_block:last-child {
+
+}
+
+.users_none {
+    display: none;
+}
+
 .overlay {
     background-color: rgba(0, 0, 0, 0.5);
     display: block;

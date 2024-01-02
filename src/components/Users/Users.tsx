@@ -13,7 +13,7 @@ import {IParams} from "../../interfaces";
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {users, trigger, loading, showParams, pageUsers} = useAppSelector(state => state.adminReducer);
+    const {users, trigger, showParams, pageUsers} = useAppSelector(state => state.adminReducer);
     const [query] = useSearchParams();
     const getAllUsers = useCallback(() => {
         const params: IParams = {};
@@ -36,7 +36,7 @@ const Users: FC = () => {
     }, [dispatch, query, trigger, getAllUsers]);
 
     return (
-        <div className={loading ? css.table_none.toString() : css.table_users.toString()}>
+        <div className={css.table_users}>
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>

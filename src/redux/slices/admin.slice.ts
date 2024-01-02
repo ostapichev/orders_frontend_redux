@@ -135,6 +135,10 @@ const slice = createSlice({
             state.pageUsers += 1;
             state.showParams = true;
         },
+        setPage: (state, action) => {
+            state.pageUsers = action.payload;
+            state.showParams = true;
+        },
         resetPage: state => {
             state.pageUsers = 1;
             state.showParams = false;
@@ -143,8 +147,9 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {prev, next, result} = action.payload;
+                const {prev, next, result, total_pages} = action.payload;
                 state.users = result;
+                state.totalPagesUsers = total_pages;
                 state.prevPageUsers = prev;
                 state.nextPageUsers = next;
                 state.errorUser = null;

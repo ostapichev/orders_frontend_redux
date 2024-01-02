@@ -11,11 +11,13 @@ const AdminPage: FC = () => {
 
     return (
         <div className={css.admin_page}>
-            {loading && <Loading/>}
             <StatisticOrder/>
-            <UserForm/>
-            <Users/>
-            <MyPagination namePage={'adminPage'}/>
+            {loading && <Loading/>}
+            <div className={loading ? css.users_none : css.users_block}>
+                <UserForm/>
+                <Users/>
+                <MyPagination namePage={'adminPage'}/>
+            </div>
             <div className={openUserForm && css.overlay}></div>
         </div>
     );
