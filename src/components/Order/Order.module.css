@@ -2,7 +2,7 @@
     display: flex;
     font: 7pt Verdana, serif;
     background-color: snow;
-    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
     cursor: pointer;
 }
 

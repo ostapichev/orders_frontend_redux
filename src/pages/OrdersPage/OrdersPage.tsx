@@ -25,9 +25,9 @@ const OrdersPage: FC = () => {
             </div>
             {loading && <Loading/>}
             <div className={loading ? css.orders_none : css.orders_block}>
+                <OrderForm/>
                 <Orders/>
                 <MyPagination namePage={'homePage'}/>
-                <OrderForm/>
             </div>
             <div className={openOrderForm && css_page.overlay}></div>
         </div>

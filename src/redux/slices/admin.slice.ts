@@ -18,8 +18,6 @@ interface IState {
     dataInfo: IPagination<void>;
     showParams: boolean;
     pageUsers: number,
-    prevPageUsers: string;
-    nextPageUsers: string;
     totalPagesUsers: number;
 }
 
@@ -35,8 +33,6 @@ const initialState: IState = {
     dataInfo: {},
     showParams: false,
     pageUsers: 1,
-    prevPageUsers: null,
-    nextPageUsers: null,
     totalPagesUsers: 0,
 };
 
@@ -122,7 +118,7 @@ const slice = createSlice({
     initialState,
     reducers: {
         openUserForm: state => {
-            state.openUserForm = true;
+            state.openUserForm = !state.openUserForm;
         },
         closeUserForm: state => {
             state.openUserForm = false;
@@ -147,11 +143,9 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {prev, next, result, total_pages} = action.payload;
+                const {result, total_pages} = action.payload;
                 state.users = result;
                 state.totalPagesUsers = total_pages;
-                state.prevPageUsers = prev;
-                state.nextPageUsers = next;
                 state.errorUser = null;
             })
             .addCase(getStatisticOrder.fulfilled, (state, action) => {

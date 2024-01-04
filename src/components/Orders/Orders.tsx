@@ -165,7 +165,7 @@ const Orders: FC = () => {
                     <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
                 </ListGroup>
             </div>
-            <div>
+            <div className={css.order}>
                 {orders.map(order => <Order key={order.id} order={order}/>)}
             </div>
         </div>

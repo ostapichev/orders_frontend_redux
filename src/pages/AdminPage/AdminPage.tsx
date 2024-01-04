@@ -15,6 +15,7 @@ const AdminPage: FC = () => {
             {loading && <Loading/>}
             <div className={loading ? css.users_none : css.users_block}>
                 <UserForm/>
+                <MyPagination namePage={'adminPage'}/>
                 <Users/>
                 <MyPagination namePage={'adminPage'}/>
             </div>

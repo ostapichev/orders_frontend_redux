@@ -18,8 +18,6 @@ interface IState {
     orderBy: string;
     totalPagesOrders: number;
     pageOrders: number;
-    prevPageOrders: string;
-    nextPageOrders: string;
     fileDataURL?: string;
     openOrderForm: boolean;
     openModal: boolean;
@@ -52,8 +50,6 @@ const initialState: IState = {
     orderBy: '',
     totalPagesOrders: 0,
     pageOrders: 1,
-    prevPageOrders: null,
-    nextPageOrders: null,
     fileDataURL: null,
     openOrderForm: false,
     openModal: false,
@@ -226,11 +222,9 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {prev, next, result, total_pages} = action.payload;
+                const {result, total_pages} = action.payload;
                 state.orders = result;
                 state.totalPagesOrders = total_pages;
-                state.prevPageOrders = prev;
-                state.nextPageOrders = next;
                 state.errorsOrder = null;
             })
             .addCase(update.fulfilled, state => {
