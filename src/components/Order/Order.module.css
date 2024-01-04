@@ -69,7 +69,7 @@
 }
 
 .right_block {
-    width: 30%;
+    width: 60%;
     margin: 10px;
 }
 
@@ -88,4 +88,8 @@
     font-style: italic;
     font-size: 14pt;
     border-bottom: 1px solid grey;
+}
+
+.comments_none {
+    display: none;
 }

@@ -134,6 +134,7 @@ const slice = createSlice({
         setOrderByParams: (state, action) => {
             state.orderBy = action.payload;
             state.sorted = !state.sorted;
+            state.pageOrders = 1;
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;

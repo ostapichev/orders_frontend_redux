@@ -7,12 +7,14 @@ import Modal from 'react-bootstrap/Modal';
 import {Comment} from "../Comment/Comment";
 import {CommentForm} from "../CommentForm/CommentForm";
 import {DateFormat} from "../DateFormat/DateFormat";
-import {IGroup, IOrder} from "../../interfaces";
+import {IComment, IGroup, IOrder} from "../../interfaces";
+import {IOrderBy} from "../../types";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Order.module.css';
 import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
+import {MyPagination} from "../MyPagination/MyPagination";
 
 
 interface IProps {
@@ -23,8 +25,9 @@ const Order: FC<IProps> = ({order}) => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const [showDetail, setShowDetail] = useState(false);
-    const [showComment, setShowComment] = useState(false);
+    const {pageComments, totalPageComments} = useAppSelector(state => state.commentReducer);
+    const [showDetail, setShowDetail] = useState<boolean>(false);
+    const [showComment, setShowComment] = useState<boolean>(false);
     const handleClose = () => setShowComment(false);
     const handleShow = () => setShowComment(true);
     const {errorsComment} = useAppSelector(state => state.commentReducer);
@@ -49,7 +52,7 @@ const Order: FC<IProps> = ({order}) => {
         msg,
         comments,
     } = order;
-    const setUpdate = () => dispatch(orderActions.setOrderUpdate(order));
+    const setUpdate: IOrderBy = () => dispatch(orderActions.setOrderUpdate(order));
     const getNameGroup = (group_id: number): string => {
         const group: IGroup = groups.find(group => group.id === group_id);
         if (group && group.name) {
@@ -57,8 +60,8 @@ const Order: FC<IProps> = ({order}) => {
         }
         return "all groups";
     };
-    const nameGroup = getNameGroup(group);
-    console.log(comments.length);
+    const nameGroup: string = getNameGroup(group);
+    const lastComments: IComment[] = comments.slice(Math.max(comments.length - 3, 0));
 
     return (
         <>
@@ -90,12 +93,12 @@ const Order: FC<IProps> = ({order}) => {
                         </button>
                     </div>
                 </div>
-                <div className={css.right_block}>Comments:
-                    <div className={css.comments_field} onClick={handleShow}>
+                <div className={css.right_block}>{comments.length === 0 ? 'No comments.' : 'Comments:'}
+                    <div className={comments.length !== 0 ? css.comments_field : css.comments_none} onClick={handleShow}>
                         <ListGroup>
                             <ListGroup.Item action variant="success">
                                 {comments &&
-                                    comments.map(commentBody => <Comment
+                                    lastComments.map(commentBody => <Comment
                                         key={commentBody.id}
                                         commentBody={commentBody}
                                     />)
@@ -109,26 +112,25 @@ const Order: FC<IProps> = ({order}) => {
                         </Modal.Header>
                         <Modal.Body>
                             <div className={css.comments_field_modal} onClick={handleShow}>
-                            <ListGroup>
-                                <ListGroup.Item action variant="success">
-                                    {comments &&
-                                        comments.map(commentBody => <Comment
-                                            key={commentBody.id}
-                                            commentBody={commentBody}
-                                        />)
-                                    }
-                                </ListGroup.Item>
-                            </ListGroup>
+                                <ListGroup>
+                                    <ListGroup.Item action variant="success">
+                                        {comments &&
+                                            comments.map(commentBody => <Comment
+                                                key={commentBody.id}
+                                                commentBody={commentBody}
+                                            />)
+                                        }
+                                    </ListGroup.Item>
+                                </ListGroup>
                             </div>
                         </Modal.Body>
+                        <MyPagination namePage={'comments'}/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Close</Button>
                         </Modal.Footer>
                     </Modal>
-                    <div>
-                        <CommentForm order_id={id}/>
-                        {errorsComment && <div>{errorsComment.comment}</div>}
-                    </div>
+                    <CommentForm order_id={id}/>
+                    {errorsComment && <div>{errorsComment.comment}</div>}
                 </div>
             </div>
         </>

@@ -9,6 +9,8 @@ interface IState {
     comments?: IComment[];
     triggerComment: boolean;
     loading: boolean;
+    pageComments: number;
+    totalPageComments: number;
     errorsComment?: IErrorComment;
 }
 
@@ -16,6 +18,8 @@ const initialState: IState = {
     comments: null,
     triggerComment: false,
     loading: false,
+    pageComments: 1,
+    totalPageComments: 1,
     errorsComment: null
 };
 
@@ -46,7 +50,14 @@ const getAll = createAsyncThunk<IComment[], {order_id: number}> (
 const slice = createSlice({
     name: 'commentSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setPage: (state, action) => {
+            state.pageComments = action.payload;
+        },
+        setTotalPages: (state, action) => {
+            state.totalPageComments = action.payload;
+        },
+    },
     extraReducers: builder => {
         builder
             .addCase(create.fulfilled, state => {

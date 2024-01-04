@@ -2,7 +2,7 @@ import {FC} from 'react';
 
 import {Pagination, Stack} from '@mui/material';
 
-import {adminActions, orderActions} from "../../redux";
+import {adminActions, commentActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
@@ -14,11 +14,20 @@ const MyPagination: FC<IProps> = ({namePage}) => {
     const dispatch = useAppDispatch();
     const {totalPagesOrders, pageOrders} = useAppSelector(state => state.orderReducer);
     const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
-    const buttonDisabled = () => {
+    const {totalPageComments, pageComments, comments} = useAppSelector(state => state.commentReducer);
+    const getDataPage = () => {
         if (namePage === 'homePage') {
             return [totalPagesOrders, pageOrders];
         } else if (namePage === 'adminPage') {
             return [totalPagesUsers, pageUsers];
+        } else if (namePage === 'comments') {
+            console.log(comments);
+            if (comments) {
+                const countPages: number = Math.ceil( comments.length / 3);
+                console.log(countPages);
+                dispatch(commentActions.setTotalPages(countPages));
+            }
+            return [totalPageComments, pageComments];
         }
         console.error('disabled pagination button error');
     };
@@ -30,19 +39,21 @@ const MyPagination: FC<IProps> = ({namePage}) => {
             case 'adminPage':
                 dispatch(adminActions.setPage(num));
                 break;
+            case 'comments':
+                dispatch(commentActions.setPage(num));
+                break;
             default:
                 alert('Pagination: name page error');
         }
     };
-    const disabled = buttonDisabled();
-    console.log(disabled);
+    const dataPage = getDataPage();
 
     return (
         <Stack spacing={2} sx={{marginY: 3}}>
-            {(disabled[0] > 1) && (
+            {(dataPage[0] > 1) && (
                 <Pagination
-                    count={+disabled[0]}
-                    page={+disabled[1]}
+                    count={+dataPage[0]}
+                    page={+dataPage[1]}
                     onChange={(_, num) => setPage(num)}
                     color="primary"
                     siblingCount={2}
