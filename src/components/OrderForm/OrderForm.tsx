@@ -5,7 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import Form from 'react-bootstrap/Form';
 
 import {IOrder} from "../../interfaces";
-import {IOrderBy} from "../../types";
+import {IFuncVoid} from "../../types";
 import {groupActions, orderActions} from "../../redux";
 import {Group} from "../Group/Group";
 import {joiResolver} from "@hookform/resolvers/joi";
@@ -32,10 +32,10 @@ const OrderForm: FC = () => {
         await dispatch(orderActions.create({order, groupId: orderCreate}));
         reset();
     };
-    const addGroup: IOrderBy = () => {
+    const addGroup: IFuncVoid = () => {
         dispatch(groupActions.setVision());
     };
-    const handleClose: IOrderBy = () => {
+    const handleClose: IFuncVoid = () => {
         dispatch(orderActions.closeForm());
         dispatch(groupActions.setVisionDefault());
         reset();

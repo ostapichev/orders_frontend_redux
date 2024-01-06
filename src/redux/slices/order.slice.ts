@@ -62,7 +62,7 @@ const initialState: IState = {
     formatCourseInputData: '',
     typeCourseInputData: '',
     statusInputData: '',
-    groupInputData: null,
+    groupInputData: '',
     startDateInputData: '',
     endDateInputData: '',
     showParams: false,

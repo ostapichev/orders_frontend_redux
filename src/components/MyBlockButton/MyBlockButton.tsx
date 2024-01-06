@@ -3,7 +3,7 @@ import {FC} from 'react';
 import Form from "react-bootstrap/Form";
 
 import {GetExelFile} from "../GetExelFile/GetExelFile";
-import {IOrderBy} from "../../types";
+import {IFuncVoid} from "../../types";
 import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
@@ -15,13 +15,13 @@ import {create, reload} from '../../asserts';
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
     const {checkbox} = useAppSelector(state => state.orderReducer);
-    const handler: IOrderBy = () => {
+    const handler: IFuncVoid = () => {
         dispatch(orderActions.setCheckBox());
     };
-    const createOrder: IOrderBy = () => {
+    const createOrder: IFuncVoid = () => {
         dispatch(orderActions.openForm());
     };
-    const resetParams: IOrderBy = () => {
+    const resetParams: IFuncVoid = () => {
         dispatch(orderActions.setDefaultParams());
     };
 

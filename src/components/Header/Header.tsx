@@ -2,7 +2,7 @@ import  {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {authActions, orderActions} from "../../redux";
-import {IOrderBy} from "../../types";
+import {IFuncVoid} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
@@ -14,7 +14,7 @@ const Header: FC = () => {
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
-    const defaultParamsOrders: IOrderBy = () => {
+    const defaultParamsOrders: IFuncVoid = () => {
         dispatch(orderActions.setDefaultParams());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {

@@ -1,8 +1,8 @@
-import {FC} from 'react';
+import {ChangeEvent, FC} from 'react';
 
 import {Pagination, Stack} from '@mui/material';
 
-import {adminActions, commentActions, orderActions} from "../../redux";
+import {adminActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
@@ -10,37 +10,25 @@ interface IProps {
     namePage: string;
 }
 
-const MyPagination: FC<IProps> = ({namePage}) => {
+const PaginationApp: FC<IProps> = ({namePage}) => {
     const dispatch = useAppDispatch();
     const {totalPagesOrders, pageOrders} = useAppSelector(state => state.orderReducer);
     const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
-    const {totalPageComments, pageComments, comments} = useAppSelector(state => state.commentReducer);
     const getDataPage = () => {
         if (namePage === 'homePage') {
             return [totalPagesOrders, pageOrders];
         } else if (namePage === 'adminPage') {
             return [totalPagesUsers, pageUsers];
-        } else if (namePage === 'comments') {
-            console.log(comments);
-            if (comments) {
-                const countPages: number = Math.ceil( comments.length / 3);
-                console.log(countPages);
-                dispatch(commentActions.setTotalPages(countPages));
-            }
-            return [totalPageComments, pageComments];
         }
-        console.error('disabled pagination button error');
+        alert('Pagination: button error');
     };
-    const setPage = (num: number) => {
+    const handlerChangePage = (event: ChangeEvent<unknown>, num: number) => {
         switch (namePage) {
             case 'homePage':
                 dispatch(orderActions.setPage(num));
                 break;
             case 'adminPage':
                 dispatch(adminActions.setPage(num));
-                break;
-            case 'comments':
-                dispatch(commentActions.setPage(num));
                 break;
             default:
                 alert('Pagination: name page error');
@@ -54,7 +42,7 @@ const MyPagination: FC<IProps> = ({namePage}) => {
                 <Pagination
                     count={+dataPage[0]}
                     page={+dataPage[1]}
-                    onChange={(_, num) => setPage(num)}
+                    onChange={handlerChangePage}
                     color="primary"
                     siblingCount={2}
                     showFirstButton
@@ -66,5 +54,5 @@ const MyPagination: FC<IProps> = ({namePage}) => {
 };
 
 export  {
-    MyPagination
+    PaginationApp
 };

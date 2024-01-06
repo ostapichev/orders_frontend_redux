@@ -6,7 +6,7 @@ import {
     MyBlockButton,
     OrderForm,
     Orders,
-    MyPagination
+    PaginationApp
 } from "../../components";
 import {useAppSelector} from "../../hooks";
 
@@ -27,7 +27,7 @@ const OrdersPage: FC = () => {
             <div className={loading ? css.orders_none : css.orders_block}>
                 <OrderForm/>
                 <Orders/>
-                <MyPagination namePage={'homePage'}/>
+                <PaginationApp namePage={'homePage'}/>
             </div>
             <div className={openOrderForm && css_page.overlay}></div>
         </div>

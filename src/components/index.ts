@@ -1,6 +1,7 @@
 export * from './ButtonOpenForm/ButtonOpenForm';
 export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
+export * from './CommentsPaginate/CommentsPaginate';
 export * from './DateFormat/DateFormat';
 export * from './GetExelFile/GetExelFile';
 export * from './GroupForm/GroupForm';
@@ -14,7 +15,7 @@ export * from './NotFound/NotFound';
 export * from './Order/Order';
 export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';
-export * from './MyPagination/MyPagination';
+export * from './PaginationApp/PaginationApp';
 export * from './StatisticOrder/StatisticOrder';
 export * from './RegisterForm/RegisterForm';
 export * from './User/User';

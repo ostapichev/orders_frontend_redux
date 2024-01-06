@@ -9,6 +9,9 @@ interface IState {
     comments?: IComment[];
     triggerComment: boolean;
     loading: boolean;
+    pageSize: number;
+    startShowComment: number;
+    endShowComments: number;
     pageComments: number;
     totalPageComments: number;
     errorsComment?: IErrorComment;
@@ -17,6 +20,9 @@ interface IState {
 const initialState: IState = {
     comments: null,
     triggerComment: false,
+    pageSize: 5,
+    startShowComment: 0,
+    endShowComments: 5,
     loading: false,
     pageComments: 1,
     totalPageComments: 1,
@@ -35,24 +41,19 @@ const create = createAsyncThunk<void, {order_id: number, comment: IComment}> (
     }
 );
 
-const getAll = createAsyncThunk<IComment[], {order_id: number}> (
-    'commentSlice/getAll',
-    async ({order_id}, {rejectWithValue}) => {
-        try {
-            await commentService.getAll(order_id.toString());
-        } catch (e) {
-            const err = e as AxiosError;
-            return rejectWithValue(err.response.data);
-        }
-    }
-);
-
 const slice = createSlice({
     name: 'commentSlice',
     initialState,
     reducers: {
         setPage: (state, action) => {
             state.pageComments = action.payload;
+            state.startShowComment = (state.pageComments - 1) * state.pageSize;
+            state.endShowComments = (state.pageComments - 1) * state.pageSize + state.pageSize;
+        },
+        setDefaultPaginate: state => {
+            state.startShowComment = 0;
+            state.endShowComments = 5;
+            state.pageComments = 1;
         },
         setTotalPages: (state, action) => {
             state.totalPageComments = action.payload;
@@ -62,10 +63,6 @@ const slice = createSlice({
         builder
             .addCase(create.fulfilled, state => {
                 state.triggerComment = !state.triggerComment;
-            })
-            .addCase(getAll.fulfilled, (state, action) => {
-                state.comments = action.payload;
-                state.loading = false;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
@@ -85,8 +82,7 @@ const slice = createSlice({
 const {actions, reducer: commentReducer} = slice;
 const commentActions = {
     ...actions,
-    create,
-    getAll
+    create
 };
 
 export {

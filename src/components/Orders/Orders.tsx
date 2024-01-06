@@ -2,7 +2,7 @@ import {FC, useCallback, useEffect} from 'react';
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
-import {IOrderBy, ISortingReverse} from "../../types";
+import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
 import {orderActions} from "../../redux";
@@ -62,21 +62,21 @@ const Orders: FC = () => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
     };
-    const orderById: IOrderBy = () => sortingOrderBy('id');
-    const orderByName: IOrderBy = () => sortingOrderBy('name');
-    const orderBySurName: IOrderBy = () => sortingOrderBy('surname');
-    const orderByEmail: IOrderBy = () => sortingOrderBy('email');
-    const orderByPhone: IOrderBy = () => sortingOrderBy('phone');
-    const orderByAge: IOrderBy = () => sortingOrderBy('age');
-    const orderByCourse: IOrderBy = () => sortingOrderBy('course');
-    const orderByCourseFormat: IOrderBy = () => sortingOrderBy('course_format');
-    const orderByCourseType: IOrderBy = () => sortingOrderBy('course_type');
-    const orderByStatus: IOrderBy = () => sortingOrderBy('status');
-    const orderBySum: IOrderBy = () => sortingOrderBy('sum');
-    const orderByPaid: IOrderBy = () => sortingOrderBy('already_paid');
-    const orderByGroup: IOrderBy = () => sortingOrderBy('group');
-    const orderByCreated: IOrderBy = () => sortingOrderBy('created_at');
-    const orderByManager: IOrderBy = () => sortingOrderBy('manager');
+    const orderById: IFuncVoid = () => sortingOrderBy('id');
+    const orderByName: IFuncVoid = () => sortingOrderBy('name');
+    const orderBySurName: IFuncVoid = () => sortingOrderBy('surname');
+    const orderByEmail: IFuncVoid = () => sortingOrderBy('email');
+    const orderByPhone: IFuncVoid = () => sortingOrderBy('phone');
+    const orderByAge: IFuncVoid = () => sortingOrderBy('age');
+    const orderByCourse: IFuncVoid = () => sortingOrderBy('course');
+    const orderByCourseFormat: IFuncVoid = () => sortingOrderBy('course_format');
+    const orderByCourseType: IFuncVoid = () => sortingOrderBy('course_type');
+    const orderByStatus: IFuncVoid = () => sortingOrderBy('status');
+    const orderBySum: IFuncVoid = () => sortingOrderBy('sum');
+    const orderByPaid: IFuncVoid = () => sortingOrderBy('already_paid');
+    const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
+    const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
+    const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = [];
         if (showParams) {
@@ -124,7 +124,7 @@ const Orders: FC = () => {
         if (checkbox) {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
-        const queryString = queryParams.join('&');
+        const queryString: string = queryParams.join('&');
         navigate(queryString && `?${queryString}`);
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,

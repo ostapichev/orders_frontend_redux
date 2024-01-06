@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, MouseEventHandler, useState} from 'react';
 
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from 'react-bootstrap/Button';
@@ -6,15 +6,15 @@ import Modal from 'react-bootstrap/Modal';
 
 import {Comment} from "../Comment/Comment";
 import {CommentForm} from "../CommentForm/CommentForm";
+import {CommentsPaginate} from "../CommentsPaginate/CommentsPaginate";
+import {commentActions, orderActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IComment, IGroup, IOrder} from "../../interfaces";
-import {IOrderBy} from "../../types";
-import {orderActions} from "../../redux";
+import {IFuncVoid} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Order.module.css';
 import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
-import {MyPagination} from "../MyPagination/MyPagination";
 
 
 interface IProps {
@@ -25,13 +25,22 @@ const Order: FC<IProps> = ({order}) => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const {pageComments, totalPageComments} = useAppSelector(state => state.commentReducer);
+    const {startShowComment, endShowComments, errorsComment} = useAppSelector(state => state.commentReducer);
     const [showDetail, setShowDetail] = useState<boolean>(false);
     const [showComment, setShowComment] = useState<boolean>(false);
-    const handleClose = () => setShowComment(false);
-    const handleShow = () => setShowComment(true);
-    const {errorsComment} = useAppSelector(state => state.commentReducer);
-    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
+    const handleShow: MouseEventHandler<HTMLDivElement> = () => setShowComment(true);
+    const handleClose: IFuncVoid = () => {
+        setShowComment(false);
+        dispatch(commentActions.setDefaultPaginate());
+    };
+    const setUpdate: IFuncVoid = () => dispatch(orderActions.setOrderUpdate(order));
+    const getNameGroup = (group_id: number): string => {
+        const group: IGroup = groups.find(group => group.id === group_id);
+        if (group && group.name) {
+            return group.name;
+        }
+        return "all groups";
+    };
     const {
         id,
         name,
@@ -52,16 +61,10 @@ const Order: FC<IProps> = ({order}) => {
         msg,
         comments,
     } = order;
-    const setUpdate: IOrderBy = () => dispatch(orderActions.setOrderUpdate(order));
-    const getNameGroup = (group_id: number): string => {
-        const group: IGroup = groups.find(group => group.id === group_id);
-        if (group && group.name) {
-            return group.name;
-        }
-        return "all groups";
-    };
+    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
     const nameGroup: string = getNameGroup(group);
-    const lastComments: IComment[] = comments.slice(Math.max(comments.length - 3, 0));
+    const lastComments: IComment[] = comments.slice(0, 3);
+    const PaginateComments: IComment[] = comments.slice(startShowComment, endShowComments);
 
     return (
         <>
@@ -93,8 +96,8 @@ const Order: FC<IProps> = ({order}) => {
                         </button>
                     </div>
                 </div>
-                <div className={css.right_block}>{comments.length === 0 ? 'No comments.' : 'Comments:'}
-                    <div className={comments.length !== 0 ? css.comments_field : css.comments_none} onClick={handleShow}>
+                <div className={css.right_block}>{comments.length < 1 ? 'No comments.' : 'Comments:'}
+                    <div className={comments.length > 0 ? css.comments_field : css.comments_none} onClick={handleShow}>
                         <ListGroup>
                             <ListGroup.Item action variant="success">
                                 {comments &&
@@ -115,7 +118,7 @@ const Order: FC<IProps> = ({order}) => {
                                 <ListGroup>
                                     <ListGroup.Item action variant="success">
                                         {comments &&
-                                            comments.map(commentBody => <Comment
+                                            PaginateComments.map(commentBody => <Comment
                                                 key={commentBody.id}
                                                 commentBody={commentBody}
                                             />)
@@ -124,7 +127,7 @@ const Order: FC<IProps> = ({order}) => {
                                 </ListGroup>
                             </div>
                         </Modal.Body>
-                        <MyPagination namePage={'comments'}/>
+                        <CommentsPaginate comments={comments}/>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Close</Button>
                         </Modal.Footer>
