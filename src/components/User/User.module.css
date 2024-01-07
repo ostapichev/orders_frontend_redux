@@ -1,7 +1,7 @@
 .block_user {
     font-size: 10pt;
     margin: 0 0 10px 10px;
-    width: 35%;
+    width: 25%;
 }
 
 .user_content, .user_statistics {
@@ -12,8 +12,14 @@
     font: 12pt Helvetica, serif;
 }
 
+.container_user:last-child {
+    border-bottom: none;
+}
+
 .container_user {
     display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
 }
 
 .user_statistics {

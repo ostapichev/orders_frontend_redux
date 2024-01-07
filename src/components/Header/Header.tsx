@@ -1,7 +1,7 @@
 import  {FC, MouseEventHandler} from 'react';
 import {NavLink} from "react-router-dom";
 
-import {authActions, orderActions} from "../../redux";
+import {adminActions, authActions, orderActions} from "../../redux";
 import {IFuncVoid} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
@@ -17,8 +17,12 @@ const Header: FC = () => {
     const defaultParamsOrders: IFuncVoid = () => {
         dispatch(orderActions.setDefaultParams());
     };
+    const defaultParamsUsers: IFuncVoid = () => {
+        dispatch(adminActions.resetPage());
+    };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultParamsOrders();
+        defaultParamsUsers();
         dispatch(authActions.logout());
     };
 
@@ -38,7 +42,7 @@ const Header: FC = () => {
                         </div>
                         {isAdmin &&
                             <div className={css.login_link}>
-                                <NavLink to={'/admin'} onClick={defaultParamsOrders}>
+                                <NavLink to={'/admin'} onClick={defaultParamsUsers}>
                                     <img className={css.logout} src={admin_panel} alt="admin"/>
                                 </NavLink>
                             </div>

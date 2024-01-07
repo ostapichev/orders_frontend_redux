@@ -98,18 +98,22 @@ const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     }
 );
 
-const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
+const getStatisticUser = createAsyncThunk<IUserStatistic, { id: number }>(
     'adminSlice/getStatisticUser',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue, requestId }) => {
         try {
-            console.log(id);
-            const {data} = await adminService.getStatisticUser(id.toString())
-            console.log(data);
+            const { data } = await adminService.getStatisticUser(id.toString());
+            console.log(id, data);
             return data;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
         }
+    },
+    {
+        condition: ({ id }, { getState }): any => {
+            const {} = getState();
+        },
     }
 );
 
@@ -122,14 +126,6 @@ const slice = createSlice({
         },
         closeUserForm: state => {
             state.openUserForm = false;
-        },
-        decPage: state => {
-            state.pageUsers -= 1;
-            state.showParams = true;
-        },
-        incPage: state => {
-            state.pageUsers += 1;
-            state.showParams = true;
         },
         setPage: (state, action) => {
             state.pageUsers = action.payload;
