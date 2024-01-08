@@ -7,6 +7,7 @@ import {IUserStatistic} from "../../interfaces/statistic.interface";
 import css from './UserStatistics.module.css';
 import css_user from '../User/User.module.css';
 
+
 interface IProps {
     id: number;
 }
@@ -26,11 +27,11 @@ const UserStatistics: FC<IProps> = ({ id }) => {
             setUserStatistic(data);
         } catch (e) {
             const err = e as AxiosError;
-            console.error(err);
+            alert({err});
         }
     }, [id]);
     useEffect(() => {
-        fetchUserStatistic().then(r => console.log(r));
+        fetchUserStatistic();
     }, [fetchUserStatistic]);
 
     return (

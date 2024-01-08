@@ -188,7 +188,7 @@ const slice = createSlice({
             state.endDateInputData = action.payload;
             state.pageOrders = 1;
         },
-        setDefaultParams: state => {
+        resetParams: state => {
             state.sorted = true;
             state.orderBy = '';
             state.pageOrders = 1;

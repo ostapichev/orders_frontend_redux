@@ -15,7 +15,7 @@ const CommentsPaginate: FC<IProps> = ({comments}) => {
     const dispatch = useAppDispatch();
     const {totalPageComments, pageComments, pageSize} = useAppSelector(state => state.commentReducer);
     const countPages: number = Math.ceil( comments.length / pageSize);
-    const getDataPage = () => {
+    const getDataPage: any = () => {
         if (comments) {
             dispatch(commentActions.setTotalPages(countPages));
         }

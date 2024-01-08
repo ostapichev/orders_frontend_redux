@@ -15,10 +15,10 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = () => {
-        dispatch(orderActions.setDefaultParams());
+        dispatch(orderActions.resetParams());
     };
     const defaultParamsUsers: IFuncVoid = () => {
-        dispatch(adminActions.resetPage());
+        dispatch(adminActions.resetParams());
     };
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultParamsOrders();

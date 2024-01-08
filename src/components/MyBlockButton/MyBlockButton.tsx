@@ -21,8 +21,8 @@ const MyBlockButton: FC = () => {
     const createOrder: IFuncVoid = () => {
         dispatch(orderActions.openForm());
     };
-    const resetParams: IFuncVoid = () => {
-        dispatch(orderActions.setDefaultParams());
+    const setDefaultParams: IFuncVoid = () => {
+        dispatch(orderActions.resetParams());
     };
 
     return (
@@ -32,7 +32,7 @@ const MyBlockButton: FC = () => {
                 <label className={css.my} htmlFor="myOrders">My orders</label>
             </div>
             <div className={css.icon_block}>
-                <img className={css.icon} onClick={resetParams} src={reload} alt='create_icon'/>
+                <img className={css.icon} onClick={setDefaultParams} src={reload} alt='create_icon'/>
                 <img className={css.icon} onClick={createOrder} src={create} alt='create_icon'/>
                 <GetExelFile/>
             </div>

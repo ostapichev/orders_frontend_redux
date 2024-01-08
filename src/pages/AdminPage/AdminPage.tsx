@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 
 import {useAppSelector} from "../../hooks";
-import {Loading, PaginationApp, StatisticOrder, UserForm, Users} from "../../components";
+import {Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users} from "../../components";
 
 import css from './AdminPage.module.css';
 
@@ -15,6 +15,7 @@ const AdminPage: FC = () => {
             {loading && <Loading/>}
             <div className={loading ? css.users_none : css.users_block}>
                 <UserForm/>
+                <SearchUser/>
                 <PaginationApp namePage={'adminPage'}/>
                 <Users/>
                 <PaginationApp namePage={'adminPage'}/>
