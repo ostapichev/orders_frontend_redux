@@ -27,20 +27,13 @@ label {
     display: none;
 }
 
-.user_form_block {
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start
-}
-
 .form_name {
     font: bold 20pt Verdana, serif;
 }
 
 .err_user_form {
     margin: 5px;
-    color: #656565;
+    color: red;
     font: 5px Arial, sans-serif bold;
 }
 

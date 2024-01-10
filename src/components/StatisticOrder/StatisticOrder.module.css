@@ -12,12 +12,12 @@
     color: white;
     display: flex;
     flex-direction: column;
-    height: 10%;
+    height: 45px;
     width: 12%;
 }
 
 .order_count {
-    font-size: 12pt;
+    font-size: 13pt;
 }
 
 .count_name {

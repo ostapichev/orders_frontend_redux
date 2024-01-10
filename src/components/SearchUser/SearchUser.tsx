@@ -1,45 +1,59 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-import {useForm} from "react-hook-form";
-
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import { InputGroup } from "react-bootstrap";
 
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import css from "./SearchUser.module.css";
-import {adminActions} from "../../redux";
-
+import { adminActions } from "../../redux";
+import { IFuncVoid } from "../../types";
+import { ISearch } from "../../interfaces";
+import { searchValidator } from "../../validators";
+import {useAppDispatch } from "../../hooks";
 
 
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();
-    const {reset, formState: {isValid}} = useForm();
-    const {surnameUserInput} = useAppSelector(state => state.adminReducer);
-    const changeInput = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch(adminActions.setSearchUser(event.target.value));
+    const { register, reset, handleSubmit, formState: { isValid } } = useForm<ISearch>({
+        mode: 'all',
+        resolver: joiResolver(searchValidator)
+    });
+    const onSubmit: SubmitHandler<ISearch> = (data: ISearch) => {
+        dispatch(adminActions.setSearchUser(data.surnameUserInput));
+        reset();
     };
-    const searchUser = () => {
-        dispatch(adminActions.searchUser());
+    const resetParams: IFuncVoid = () => {
+        dispatch(adminActions.resetParams());
     };
 
     return (
-        <InputGroup className="mb-3 w-50">
-            <Form.Control
-                value={surnameUserInput}
-                onChange={changeInput}
-                type="search"
-                placeholder="Search user"
-                aria-label="Search user"
-                aria-describedby="basic-addon2"
-            />
-            <Button
-                onClick={() => searchUser()}
-                variant="primary"
-            >
+        <Form
+            className='w-50'
+            onSubmit={ handleSubmit(onSubmit) }
+        >
+            <InputGroup>
+                <Form.Control
+                    type="search"
+                    placeholder="search user by surname"
+                    { ...register('surnameUserInput') }
+                />
+                <Button
+                    disabled={ !isValid }
+                    type="submit"
+                    variant="primary"
+                >
                     Search
-            </Button>
-        </InputGroup>
+                </Button>
+                <Button
+                    type='reset'
+                    variant="outline-secondary"
+                    onClick={ resetParams }
+                >
+                    Reset
+                </Button>
+            </InputGroup>
+        </Form>
     );
 };
 

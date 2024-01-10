@@ -68,12 +68,17 @@ const OrderForm: FC = () => {
                     <GroupForm/>
                 </div>
             }
-            <form className={css.order_form_container} onSubmit={handleSubmit(orderUpdate ? update : save)}>
+            <Form className={css.order_form_container} onSubmit={handleSubmit(orderUpdate ? update : save)}>
                 <div className={css.form_block_left}>
                     <div className={vision ? css.group_select_none : css.group_select_block}>
                         <label htmlFor="group">Group</label>
-                        <Form.Select size="sm" aria-label="Group" name="group" {...register('group')}
-                                     onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}>
+                        <Form.Select
+                            size="sm"
+                            aria-label="Group"
+                            name="group"
+                            onChange={event => dispatch(orderActions.setOrderCreate(event.target.value))}
+                            {...register('group')}
+                        >
                             <option>Choose group</option>
                             {
                                 groups.map(group => <Group key={group.id} group={group}/>)
@@ -83,24 +88,56 @@ const OrderForm: FC = () => {
                         {errors.group && <div className={css.error_form}>{errors.group.message}</div>}
                     </div>
                     <label htmlFor="name">First name</label>
-                    <Form.Control size="sm" name="name" placeholder={'enter name'} {...register('name')}/>
+                    <Form.Control
+                        size="sm"
+                        name="name"
+                        placeholder={'enter name'}
+                        {...register('name')}
+                    />
                     {errors.name && <div className={css.error_form}>{errors.name.message}</div>}
                     <label htmlFor="surname">Surname</label>
-                    <Form.Control size="sm" name="surname" placeholder={'enter surname'} {...register('surname')}/>
+                    <Form.Control
+                        size="sm"
+                        name="surname"
+                        placeholder={'enter surname'}
+                        {...register('surname')}
+                    />
                     {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="email">Email</label>
-                    <Form.Control size="sm" type="email" name="email" placeholder={'enter email'} {...register('email')}/>
+                    <Form.Control
+                        size="sm"
+                        type="email"
+                        name="email"
+                        placeholder={'enter email'}
+                        {...register('email')}
+                    />
                     {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="phone">Phone</label>
-                    <Form.Control size="sm" type="text" name="phone" placeholder={'enter phone'} {...register('phone')}/>
+                    <Form.Control
+                        size="sm"
+                        type="text"
+                        name="phone"
+                        placeholder={'enter phone'}
+                        {...register('phone')}
+                    />
                     {errors.surname && <div className={css.error_form}>{errors.surname.message}</div>}
                     <label htmlFor="age">Age</label>
-                    <Form.Control size="sm" type="number" name="age" placeholder={'enter age'} {...register('age')}/>
+                    <Form.Control
+                        size="sm"
+                        type="number"
+                        name="age"
+                        placeholder={'enter age'}
+                        {...register('age')}/>
                     {errors.age && <div className={css.error_form}>{errors.age.message}</div>}
                 </div>
                 <div className={vision ? css.form_block_right_top : css.form_block_right}>
                     <label htmlFor="course">Choose course</label>
-                    <Form.Select size="sm" name="course" aria-label="Choose_course" {...register('course')}>
+                    <Form.Select
+                        size="sm"
+                        name="course"
+                        aria-label="Choose_course"
+                        {...register('course')}
+                    >
                         <option value="FS">FS</option>
                         <option value="QACX">QACX</option>
                         <option value="JSCX">JSCX</option>
@@ -110,19 +147,41 @@ const OrderForm: FC = () => {
                     </Form.Select>
                     {errors.course && <div className={css.error_form}>{errors.course.message}</div>}
                     <label className={css.input_paid} htmlFor="paid">Already paid</label>
-                    <Form.Control size="sm" type="number" name="paid" placeholder={'already_paid'} {...register('already_paid')}/>
+                    <Form.Control
+                        size="sm"
+                        type="number"
+                        name="paid"
+                        placeholder={'already_paid'}
+                        {...register('already_paid')}
+                    />
                     {errors.already_paid && <div className={css.error_form}>{errors.already_paid.message}</div>}
                     <label htmlFor="sum">Sum</label>
-                    <Form.Control size="sm" type="number" name="sum" placeholder={'sum'} {...register('sum')}/>
+                    <Form.Control
+                        size="sm"
+                        type="number"
+                        name="sum"
+                        placeholder={'sum'}
+                        {...register('sum')}
+                    />
                     {errors.sum && <div className={css.error_form}>{errors.sum.message}</div>}
                     <label htmlFor="course_format">Choose course format</label>
-                    <Form.Select size="sm" name="course_format" aria-label="Default select example" {...register('course_format')}>
+                    <Form.Select
+                        size="sm"
+                        name="course_format"
+                        aria-label="Default select example"
+                        {...register('course_format')}
+                    >
                         <option value="static">static</option>
                         <option value="online">online</option>
                     </Form.Select>
                     {errors.course_format &&  <div className={css.error_form}>{errors.course_format.message}</div>}
                     <label htmlFor="course_type">Choose course type</label>
-                    <Form.Select size="sm" aria-label="Course_type" name="course_type" {...register('course_type')}>
+                    <Form.Select
+                        size="sm"
+                        aria-label="Course_type"
+                        name="course_type"
+                        {...register('course_type')}
+                    >
                         <option value="pro">pro</option>
                         <option value="minimal">minimal</option>
                         <option value="premium">premium</option>
@@ -131,7 +190,12 @@ const OrderForm: FC = () => {
                     </Form.Select>
                     {errors.course_type &&  <div className={css.error_form}>{errors.course_type.message}</div>}
                     <label htmlFor="status">Choose status</label>
-                    <Form.Select size="sm" aria-label="Status" name="status" {...register('status')}>
+                    <Form.Select
+                        size="sm"
+                        aria-label="Status"
+                        name="status"
+                        {...register('status')}
+                    >
                         <option value="new_order">new_order</option>
                         <option value="in_work">in_work</option>
                         <option value="agree">agree</option>
@@ -148,7 +212,7 @@ const OrderForm: FC = () => {
                     <button className={css_btn.btn_user_form} disabled={!isValid}>{orderUpdate ? 'Update' : 'Save'}</button>
                     <button className={css_btn.btn_user_form} onClick={handleClose}>Close</button>
                 </div>
-            </form>
+            </Form>
         </div>
     );
 };

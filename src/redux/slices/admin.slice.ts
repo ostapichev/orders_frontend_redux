@@ -15,7 +15,6 @@ interface IState {
     userStatistic: IUserStatistic;
     openUserForm: boolean;
     surnameUserInput: string;
-    launchSearch: boolean;
     dataInfo: IPagination<void>;
     showParams: boolean;
     pageUsers: number,
@@ -32,7 +31,6 @@ const initialState: IState = {
     userStatistic: {},
     openUserForm: false,
     surnameUserInput: '',
-    launchSearch: false,
     dataInfo: {},
     showParams: false,
     pageUsers: 1,
@@ -113,6 +111,7 @@ const slice = createSlice({
         closeUserForm: state => {
             state.openUserForm = false;
             state.pageUsers = 1;
+            state.errorUser = null;
         },
         setPage: (state, action) => {
             state.pageUsers = action.payload;
@@ -120,15 +119,13 @@ const slice = createSlice({
         },
         setSearchUser: (state, action) => {
             state.surnameUserInput = action.payload;
-        },
-        searchUser: state => {
-            state.launchSearch = true;
+            state.pageUsers = 1;
         },
         resetParams: state => {
+            state.surnameUserInput = '';
             state.pageUsers = 1;
             state.showParams = false;
-            state.launchSearch = false;
-        },
+        }
     },
     extraReducers: builder =>
         builder
@@ -153,6 +150,7 @@ const slice = createSlice({
             .addMatcher(isFulfilled(create, ban, unban), state => {
                 state.trigger = !state.trigger;
                 state.openUserForm = false;
+                state.errorUser = null;
             })
             .addMatcher(isPending(), state => {
                 state.loading = true;

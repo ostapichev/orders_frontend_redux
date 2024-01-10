@@ -94,7 +94,12 @@ const InputBlock: FC = () => {
                     placeholder="phone"
                     onChange={phoneInputChange}
                 />
-                <Form.Control value={ageInputData} size="sm" type="number" placeholder="age" onChange={ageInputChange}/>
+                <Form.Control
+                    value={ageInputData}
+                    size="sm"
+                    type="number"
+                    placeholder="age"
+                    onChange={ageInputChange}/>
                 <Form.Select value={courseInputData} size="sm" aria-label="Choose course" onChange={courseInputChange}>
                     <option value="">all courses</option>
                     <option value="FS">FS</option>

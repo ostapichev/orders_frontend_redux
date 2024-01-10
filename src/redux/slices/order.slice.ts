@@ -218,6 +218,7 @@ const slice = createSlice({
         closeForm: state => {
             state.openOrderForm = false;
             state.orderUpdate = null;
+            state.errorsOrder = null;
         },
     },
     extraReducers: builder =>
@@ -231,6 +232,7 @@ const slice = createSlice({
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
                 state.openOrderForm = false;
+                state.errorsOrder = null;
             })
             .addCase(getExelFile.fulfilled, (state, action) => {
                 state.fileDataURL = action.payload;
@@ -239,6 +241,7 @@ const slice = createSlice({
             })
             .addMatcher(isFulfilled(create, update), state => {
                 state.trigger = !state.trigger;
+                state.errorsOrder = null;
             })
             .addMatcher(isFulfilled(), state => {
                 state.loading = false;
