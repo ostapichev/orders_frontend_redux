@@ -16,6 +16,7 @@ export * from './Order/Order';
 export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';
 export * from './PaginationApp/PaginationApp';
+export * from './Profile/Profile';
 export * from './RegisterForm/RegisterForm';
 export * from './StatisticOrder/StatisticOrder';
 export * from './SearchUser/SearchUser';

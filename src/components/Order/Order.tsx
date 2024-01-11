@@ -109,14 +109,13 @@ const Order: FC<IProps> = ({order}) => {
                             </ListGroup.Item>
                         </ListGroup>
                     </div>
-                    <Modal show={showComment} onHide={handleClose}>
+                    <Modal size="lg" show={showComment} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Comments</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                            <div className={css.comments_field_modal} onClick={handleShow}>
+                        <Modal.Body className={css.comments_field_modal}>
                                 <ListGroup>
-                                    <ListGroup.Item action variant="success">
+                                    <ListGroup.Item variant='info'>
                                         {comments &&
                                             PaginateComments.map(commentBody => <Comment
                                                 key={commentBody.id}
@@ -125,7 +124,6 @@ const Order: FC<IProps> = ({order}) => {
                                         }
                                     </ListGroup.Item>
                                 </ListGroup>
-                            </div>
                         </Modal.Body>
                         <CommentsPaginate comments={comments}/>
                         <Modal.Footer>

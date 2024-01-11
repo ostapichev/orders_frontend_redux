@@ -1,9 +1,9 @@
-import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {IErrorUser, IPagination, IParams, IUser} from "../../interfaces";
-import {adminService} from "../../services";
-import {IOrderStatistic, IUserStatistic} from "../../interfaces/statistic.interface";
+import { IErrorUser, IPagination, IParams, IUser } from "../../interfaces";
+import { adminService } from "../../services";
+import { IOrderStatistic, IUserStatistic } from "../../interfaces/statistic.interface";
 
 
 interface IState {
@@ -38,11 +38,11 @@ const initialState: IState = {
     errorUser: null,
 };
 
-const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
+const getAll = createAsyncThunk<IPagination<IUser[]>, { params: IParams }> (
     'adminSlice/getAll',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         try {
-            const {data} = await adminService.getAll(params);
+            const { data } = await adminService.getAll(params);
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -51,9 +51,9 @@ const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
     }
 );
 
-const create = createAsyncThunk<void, {user: IUser}> (
+const create = createAsyncThunk<void, { user: IUser }> (
     'adminSlice/create',
-    async ({user}, {rejectWithValue}) => {
+    async ({ user }, { rejectWithValue }) => {
         try {
             await adminService.create(user);
         } catch (e) {
@@ -63,9 +63,9 @@ const create = createAsyncThunk<void, {user: IUser}> (
     }
 );
 
-const ban = createAsyncThunk<void, {id: string}> (
+const ban = createAsyncThunk<void, { id: string }> (
     'adminSlice/ban',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue }) => {
         try {
             await adminService.ban(id);
         } catch (e) {
@@ -75,9 +75,9 @@ const ban = createAsyncThunk<void, {id: string}> (
     }
 );
 
-const unban = createAsyncThunk<void, {id: string}> (
+const unban = createAsyncThunk<void, { id: string }> (
     'adminSlice/ban',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue }) => {
         try {
             await adminService.unban(id);
         } catch (e) {
@@ -90,9 +90,22 @@ const unban = createAsyncThunk<void, {id: string}> (
 const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     'adminSlice/getStatisticOrder',
 
-    async (_, {rejectWithValue}) => {
+    async (_, { rejectWithValue }) => {
         try {
-            const {data} = await adminService.getStatisticOrder();
+            const { data } = await adminService.getStatisticOrder();
+            return data;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+const getStatisticUser = createAsyncThunk<IUserStatistic, { id: number }> (
+    'adminSlice/getStatisticUser',
+    async ({ id }, { rejectWithValue }) => {
+        try {
+            const { data } = await adminService.getStatisticUser(id.toString());
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -130,13 +143,17 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {result, total_pages} = action.payload;
+                const { result, total_pages } = action.payload;
                 state.users = result;
                 state.totalPagesUsers = total_pages;
                 state.errorUser = null;
             })
             .addCase(getStatisticOrder.fulfilled, (state, action) => {
                 state.orderStatistic = action.payload;
+                state.loading = false;
+            })
+            .addCase(getStatisticUser.fulfilled, (state, action) => {
+                state.userStatistic = action.payload;
                 state.loading = false;
             })
             .addMatcher(isFulfilled(), state => {
@@ -162,14 +179,15 @@ const slice = createSlice({
             })
 });
 
-const {actions, reducer: adminReducer} = slice;
+const { actions, reducer: adminReducer } = slice;
 const adminActions = {
     ...actions,
     getAll,
     create,
     ban,
     unban,
-    getStatisticOrder
+    getStatisticOrder,
+    getStatisticUser
 };
 
 export {

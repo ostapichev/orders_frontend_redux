@@ -80,8 +80,12 @@
 }
 
 .comments_field_modal {
-    margin: 10px 0;
+    margin: 10px 0 20px;
     height: 100px;
+}
+
+.comments_field_modal:hover {
+    z-index: 1;
 }
 
 .comment_content {

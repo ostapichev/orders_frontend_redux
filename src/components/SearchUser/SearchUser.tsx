@@ -10,7 +10,7 @@ import { adminActions } from "../../redux";
 import { IFuncVoid } from "../../types";
 import { ISearch } from "../../interfaces";
 import { searchValidator } from "../../validators";
-import {useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks";
 
 
 const SearchUser: FC = () => {
@@ -39,6 +39,7 @@ const SearchUser: FC = () => {
                     { ...register('surnameUserInput') }
                 />
                 <Button
+                    className='z-1'
                     disabled={ !isValid }
                     type="submit"
                     variant="primary"
@@ -46,6 +47,7 @@ const SearchUser: FC = () => {
                     Search
                 </Button>
                 <Button
+                    className='z-1'
                     type='reset'
                     variant="outline-secondary"
                     onClick={ resetParams }

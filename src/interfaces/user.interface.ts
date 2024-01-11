@@ -8,5 +8,6 @@ export interface IUser {
     is_staff: boolean;
     is_superuser: boolean;
     last_login?: string;
+    created_at: string;
     profile: IProfile;
 }

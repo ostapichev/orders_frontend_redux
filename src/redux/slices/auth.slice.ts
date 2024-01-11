@@ -8,6 +8,7 @@ import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 interface IState {
     me: IUser;
     loading: boolean
+    showAccount: boolean;
     error: IErrorAuth;
     confirmError?: string;
 }
@@ -15,6 +16,7 @@ interface IState {
 const initialState: IState = {
     me: null,
     loading: false,
+    showAccount: false,
     error: null,
     confirmError: null
 };
@@ -96,6 +98,12 @@ const slice = createSlice({
             state.error = null;
             state.loading = false;
             authService.deleteTokens();
+        },
+        setShowAccount: state => {
+            state.showAccount = true;
+        },
+        closeAccount: state => {
+            state.showAccount = false;
         },
         setConfirmError: (state, action) => {
             state.confirmError = action.payload;

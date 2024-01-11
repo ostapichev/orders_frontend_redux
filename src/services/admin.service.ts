@@ -1,13 +1,13 @@
-import {axiosService} from "./axios.service";
-import {IRes, IResPaginate} from "../types";
-import {IOrderStatistic, IUserStatistic} from "../interfaces/statistic.interface";
-import {IParams, IUser} from "../interfaces";
-import {urls} from "../constants";
+import { axiosService } from "./axios.service";
+import { IRes, IResPaginate } from "../types";
+import { IOrderStatistic, IUserStatistic } from "../interfaces/statistic.interface";
+import { IParams, IUser } from "../interfaces";
+import { urls } from "../constants";
 
 
 class AdminService {
     getAll(params: IParams): IResPaginate<IUser[]> {
-        return axiosService.get(urls.usersAPI.users, {params});
+        return axiosService.get(urls.usersAPI.users, { params });
     };
 
     create(user: IUser): IRes<IUser> {
