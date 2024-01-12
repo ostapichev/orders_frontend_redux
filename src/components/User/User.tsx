@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../hooks";
 import { UserStatistics } from "../UserStatistics/UserStatistics";
 
 import css from './User.module.css';
-import css_btn from '../ButtonOpenForm/ButtonOpenForm.module.css'
+import main_css from '../../styles/main.module.css';
 
 
 interface IProps {
@@ -50,13 +50,13 @@ const User: FC<IProps> = ({ user }) => {
             <UserStatistics id={ user.id }/>
             <div className={css.block_button}>
                 <button
-                    className={css_btn.btn_open}
+                    className={main_css.btn_open}
                     onClick={ (event) => is_active === true ? ban(event) : unban(event) }
                 >
                     {is_active === true ? 'ban' : 'unban'}
                 </button>
                 <button
-                    className={css_btn.btn_open}
+                    className={main_css.btn_open}
                     onClick={ (event) => is_active === true ? recoveryPassword(event) : activateUser(event) }
                 >
                     { is_active === true ? 'recovery' : 'activate user' }

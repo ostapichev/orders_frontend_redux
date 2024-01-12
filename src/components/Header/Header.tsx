@@ -47,7 +47,7 @@ const Header: FC = () => {
                                     to={'/admin'}
                                     onClick={ defaultParamsUsers }
                                 >
-                                    <img className={css.logout} src={admin_panel} alt="admin"/>
+                                    <img className={css.logout} src={ admin_panel } alt="admin"/>
                                 </NavLink>
                             </div>
                         }
@@ -57,7 +57,7 @@ const Header: FC = () => {
                                     to={'/orders'}
                                     onClick={ defaultParamsOrders }
                                 >
-                                    <img className={css.logout} src={home_page} alt="home"/>
+                                    <img className={css.logout} src={ home_page } alt="home"/>
                                 </NavLink>
                             </div>
                         }
@@ -66,7 +66,7 @@ const Header: FC = () => {
                                 to={'/login'}
                                 onClick={ logout }
                             >
-                                <img className={css.logout} src={log_out} alt="logout"/>
+                                <img className={css.logout} src={ log_out } alt="logout"/>
                             </NavLink>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ const Header: FC = () => {
                     <div>
                         <p className={css.login_link}>
                             <NavLink to={'/login'}>
-                                <img className={css.logout} src={login} alt="logout"/>
+                                <img className={css.logout} src={ login } alt="logout"/>
                             </NavLink>
                         </p>
                     </div>

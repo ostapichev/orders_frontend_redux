@@ -1,3 +1,28 @@
+.btn_open {
+    background-color: #267cb5;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    font: 10pt Tahoma, sans-serif;
+    margin: 5px;
+    text-align: center;
+    width: 9vw;
+}
+
+.btn_open:hover {
+    background-color: #0056b3;
+    color: snow;
+}
+
+.btn_open[disabled] {
+    background-color: cornflowerblue;
+    color: #D3EAFF;
+    border: none;
+    cursor: not-allowed;
+}
+
 .btn_submit {
     background-color: #4caf50;
     border: none;
@@ -26,10 +51,6 @@
     margin: 2px;
 }
 
-label {
-    font-size: 10pt;
-}
-
 .form_block {
     align-items: center;
     background-color: #EDEDED;
@@ -45,6 +66,10 @@ label {
     width: 300px;
 }
 
+label {
+    font-size: 10pt;
+}
+
 .logo_form {
     width: 50%;
 }
@@ -52,4 +77,13 @@ label {
 .login_form {
     height: 80%;
     width: 90%;
+}
+
+.start_page {
+    align-items: center;
+    background-color: #00C5CD;
+    display: flex;
+    height: 100vh;
+    justify-content: space-around;
+    width: 100vw;
 }

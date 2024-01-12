@@ -1,14 +1,14 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {RegisterForm} from "../../components";
+import { RegisterForm } from "../../components";
 
-import css from '../LoginPage/LoginPage.module.css';
+import main_css from '../../styles/main.module.css';
 
 
 const RegisterPage: FC = () => {
     return (
-        <div className={css.login_page}>
-            <RegisterForm funcName={'activateRequestUser'}/>
+        <div className={main_css.start_page}>
+            <RegisterForm funcName={'activateRequestUser'} />
         </div>
     );
 };

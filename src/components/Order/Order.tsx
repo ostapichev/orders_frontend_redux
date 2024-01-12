@@ -14,7 +14,7 @@ import {IFuncVoid} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Order.module.css';
-import css_button from '../ButtonOpenForm/ButtonOpenForm.module.css';
+import main_css from '../../styles/main.module.css';
 
 
 interface IProps {
@@ -91,7 +91,7 @@ const Order: FC<IProps> = ({order}) => {
                     <div>UTM: {utm !== null ? utm : 'no data'}</div>
                     <div>
                         <button disabled={addValidForm || (order.manager === null)}
-                                className={css_button.btn_open}
+                                className={main_css.btn_open}
                                 onClick={setUpdate}>Edit
                         </button>
                     </div>

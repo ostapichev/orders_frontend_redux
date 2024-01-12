@@ -1,14 +1,14 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {LoginForm} from "../../components";
+import { LoginForm } from "../../components";
 
-import css from './LoginPage.module.css'
+import main_css from '../../styles/main.module.css';
 
 
 const LoginPage: FC = () => {
     return (
-        <div className={css.login_page}>
-            <LoginForm/>
+        <div className={main_css.start_page}>
+            <LoginForm />
         </div>
     );
 };

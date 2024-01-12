@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react';
 
 import { adminActions } from "../../redux";
-import { ButtonOpenForm } from "../ButtonOpenForm/ButtonOpenForm";
+import { ButtonForm } from "../ButtonForm/ButtonForm";
 import { IParams } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -44,7 +44,7 @@ const Users: FC = () => {
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>
-                    <ButtonOpenForm
+                    <ButtonForm
                         buttonName={'Create'}
                         func={'OpenUserForm'}
                     />

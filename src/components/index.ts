@@ -1,4 +1,4 @@
-export * from './ButtonOpenForm/ButtonOpenForm';
+export * from './ButtonForm/ButtonForm';
 export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
 export * from './CommentsPaginate/CommentsPaginate';

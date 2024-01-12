@@ -1,8 +1,8 @@
-import {FC} from 'react';
-import {useAppDispatch} from "../../hooks";
-import {orderActions, adminActions} from "../../redux";
+import { FC } from 'react';
+import { useAppDispatch } from "../../hooks";
+import { orderActions, adminActions } from "../../redux";
 
-import css from './ButtonOpenForm.module.css'
+import main_css from '../../styles/main.module.css';
 
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
     func: string;
 }
 
-const ButtonOpenForm: FC<IProps> = ({buttonName, func}) => {
+const ButtonForm: FC<IProps> = ({ buttonName, func }) => {
     const dispatch = useAppDispatch();
     const handleOpen = () => {
         switch (func) {
@@ -27,11 +27,11 @@ const ButtonOpenForm: FC<IProps> = ({buttonName, func}) => {
 
     return (
         <>
-            <button className={css.btn_open} onClick={handleOpen}>{buttonName}</button>
+            <button className={main_css.btn_open} onClick={ handleOpen }>{buttonName}</button>
         </>
     );
 };
 
 export {
-    ButtonOpenForm
+    ButtonForm
 };
