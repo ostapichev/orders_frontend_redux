@@ -43,7 +43,6 @@
     }
 }
 
-
 @media (prefers-reduced-motion: no-preference) {
     .logo_loading {
         animation: logo_loading-spin infinite 20s linear;

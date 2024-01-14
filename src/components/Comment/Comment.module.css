@@ -1,12 +1,11 @@
 .comment_body {
+    border-bottom: 1px solid grey;
     display: flex;
     justify-content: space-between;
-    font-style: italic;
     font-size: 8pt;
-    border-bottom: 1px solid grey;
+    font-style: italic;
 }
 
 .comment_body div:nth-child(1) {
     margin-right: 30px;
 }
-

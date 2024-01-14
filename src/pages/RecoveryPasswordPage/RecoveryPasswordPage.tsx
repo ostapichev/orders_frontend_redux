@@ -1,6 +1,6 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {RegisterForm} from "../../components";
+import { RegisterFormApp } from "../../components";
 
 import main_css from '../../styles/main.module.css';
 
@@ -8,7 +8,7 @@ import main_css from '../../styles/main.module.css';
 const RecoveryPasswordPage: FC = () => {
     return (
         <div className={main_css.start_page}>
-            <RegisterForm funcName={'RecoveryPasswordPage'}/>
+            <RegisterFormApp funcName='recoveryPasswordPage' />
         </div>
     );
 };

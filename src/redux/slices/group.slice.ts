@@ -1,8 +1,8 @@
-import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {IErrorGroup, IGroup} from "../../interfaces";
-import {groupService} from "../../services";
+import { IErrorGroup, IGroup } from "../../interfaces";
+import { groupService } from "../../services";
 
 
 interface IState {
@@ -23,7 +23,7 @@ const initialState: IState = {
 
 const getAll = createAsyncThunk<IGroup[], void> (
     'groupSlice/getAll',
-    async (_, {rejectWithValue}) => {
+    async (_, { rejectWithValue }) => {
         try {
             const {data} = await groupService.getAll();
             return data;
@@ -34,9 +34,9 @@ const getAll = createAsyncThunk<IGroup[], void> (
     }
 );
 
-const create = createAsyncThunk<void, {group: IGroup}> (
+const create = createAsyncThunk<void, { group: IGroup }> (
     'groupSlice/create',
-    async ({group}, {rejectWithValue}) => {
+    async ({ group }, { rejectWithValue }) => {
         try {
             await groupService.create(group);
         } catch (e) {
@@ -72,7 +72,7 @@ const slice = createSlice({
             })
 });
 
-const {actions, reducer: groupReducer} = slice;
+const { actions, reducer: groupReducer } = slice;
 const groupActions = {
     ...actions,
     getAll,

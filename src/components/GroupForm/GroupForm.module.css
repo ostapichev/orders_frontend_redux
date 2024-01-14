@@ -1,66 +1,13 @@
-.group_form {
-    display: flex;
-    flex-direction: column;
-}
-
-.form_group_name {
-    font: bold 20pt Verdana, serif;
-}
-
-.err_group_form {
-    color: red;
-    font-size: 8pt;
-    margin: 2px;
-}
-
-.btn_group_form {
-    font: 18px Verdana, serif;
-    width: 40%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn_group_form:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.btn_group_form:hover:enabled {
-    background-color: #45a049;
-}
-
-.buttons_group_form {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.group_form_header {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
 .btn_group {
-    width: 50%;
     background-color: #4caf50;
-    border-radius: 5px;
     border: none;
+    border-radius: 5px;
     color: snow;
     font: 8pt Georgia, serif;
+    width: 50%;
 }
 
 .btn_group:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
-
-.btn_block {
-    display: flex;
-}
-

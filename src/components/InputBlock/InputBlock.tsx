@@ -1,17 +1,17 @@
-import {ChangeEvent, FC} from 'react';
+import { ChangeEvent, FC } from 'react';
 
 import Form from "react-bootstrap/Form";
 
-import {Group} from "../Group/Group";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { Group } from "../Group/Group";
+import { orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './InputBlock.module.css';
 
 
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
-    const {groups} = useAppSelector(state => state.groupReducer);
+    const { groups } = useAppSelector(state => state.groupReducer);
     const {
         nameInputData,
         surNameInputData,
@@ -64,43 +64,49 @@ const InputBlock: FC = () => {
     };
 
     return (
-        <div className={css.input_container}>
-            <div className={css.filter_order}>
+        <div className={ css.input_container }>
+            <div className={ css.filter_order }>
                 <Form.Control
-                    value={nameInputData}
+                    value={ nameInputData }
                     size="sm"
                     type="search"
                     placeholder="Name"
-                    onChange={nameInputChange}
+                    onChange={ nameInputChange }
                 />
                 <Form.Control
-                    value={surNameInputData}
+                    value={ surNameInputData }
                     size="sm"
                     type="search"
                     placeholder="Surname"
-                    onChange={surNameInputChange}
+                    onChange={ surNameInputChange }
                 />
                 <Form.Control
-                    value={emailInputData}
+                    value={ emailInputData }
                     size="sm"
                     type="search"
                     placeholder="email"
-                    onChange={emailInputChange}
+                    onChange={ emailInputChange }
                 />
                 <Form.Control
-                    value={phoneInputData}
+                    value={ phoneInputData }
                     size="sm"
                     type="search"
                     placeholder="phone"
-                    onChange={phoneInputChange}
+                    onChange={ phoneInputChange }
                 />
                 <Form.Control
-                    value={ageInputData}
+                    value={ ageInputData }
                     size="sm"
                     type="number"
                     placeholder="age"
-                    onChange={ageInputChange}/>
-                <Form.Select value={courseInputData} size="sm" aria-label="Choose course" onChange={courseInputChange}>
+                    onChange={ ageInputChange }
+                />
+                <Form.Select
+                    value={ courseInputData }
+                    size="sm"
+                    aria-label="Choose course"
+                    onChange={ courseInputChange }
+                >
                     <option value="">all courses</option>
                     <option value="FS">FS</option>
                     <option value="QACX">QACX</option>
@@ -110,23 +116,23 @@ const InputBlock: FC = () => {
                     <option value="PCX">PCX</option>
                 </Form.Select>
             </div>
-            <div className={css.filter_order}>
+            <div className={ css.filter_order }>
                 <Form.Select
-                    value={formatCourseInputData}
+                    value={ formatCourseInputData }
                     size="sm"
                     name="course_format"
                     aria-label="Course_format"
-                    onChange={formatCourseInputDataChange}>
+                    onChange={ formatCourseInputDataChange }>
                         <option value="">all formats</option>
                         <option value="static">static</option>
                         <option value="online">online</option>
                 </Form.Select>
                 <Form.Select
-                    value={typeCourseInputData}
+                    value={ typeCourseInputData }
                     size="sm"
                     name="course_type"
                     aria-label="Course_type"
-                    onChange={typeCourseInputDataChange}>
+                    onChange={ typeCourseInputDataChange }>
                         <option value="">all types</option>
                         <option value="pro">pro</option>
                         <option value="minimal">minimal</option>
@@ -135,11 +141,11 @@ const InputBlock: FC = () => {
                         <option value="vip">vip</option>
                 </Form.Select>
                 <Form.Select
-                    value={statusInputData}
+                    value={ statusInputData }
                     size="sm"
                     name="status"
                     aria-label="Status"
-                    onChange={statusInputDataChange}>
+                    onChange={ statusInputDataChange }>
                         <option value="">all statuses</option>
                         <option value="new_order">new_order</option>
                         <option value="in_work">in_work</option>
@@ -148,27 +154,27 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
-                    value={groupInputData}
+                    value={ groupInputData }
                     size="sm"
                     name="group"
                     aria-label="Choose group"
-                    onChange={groupInputDataChange}>
+                    onChange={ groupInputDataChange }>
                         <option value=''>all groups</option>
-                        {groups.map(group => <Group key={group.id} group={group}/>)}
+                        { groups.map(group => <Group key={ group.id } group={ group }/>) }
                 </Form.Select>
                 <Form.Control
-                    value={startDateInputData}
+                    value={ startDateInputData }
                     size="sm"
                     type="date"
                     placeholder="start date"
-                    onChange={startDateInputChange}
+                    onChange={ startDateInputChange }
                 />
                 <Form.Control
-                    value={endDateInputData}
+                    value={ endDateInputData }
                     size="sm"
                     type="date"
                     placeholder="end date"
-                    onChange={endDateInputChange}
+                    onChange={ endDateInputChange }
                 />
             </div>
         </div>

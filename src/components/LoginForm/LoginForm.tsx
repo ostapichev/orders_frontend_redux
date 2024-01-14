@@ -35,29 +35,29 @@ const LoginForm: FC = () => {
     };
 
     return (
-        <div className={main_css.form_block} onSubmit={ handleSubmit(login) }>
-            <img className={main_css.logo_form} src={okten_school} alt='logo'/>
-            <Form className={main_css.login_form}>
+        <div className={ main_css.form_block } onSubmit={ handleSubmit(login) }>
+            <img className={ main_css.logo_form } src={ okten_school } alt='logo'/>
+            <Form className={ main_css.login_form }>
                 <label>Email</label>
                 <Form.Control
                     size="sm"
                     type="email"
-                    placeholder={'enter email'}
+                    placeholder='enter email'
                     { ...register('email',{ required: true }) }
                 />
-                { errors.email && <p className={main_css.err_login}>{ errors.email.message }</p> }
+                { errors.email && <p className={main_css.err_text}>{ errors.email.message }</p> }
                 <label>Password</label>
                 <Form.Control
                     size="sm"
                     type="password"
-                    placeholder={'enter password'}
+                    placeholder='enter password'
                     autoComplete='on'
                     { ...register('password',{ required: true }) }
                 />
-                { errors.password && <p className={main_css.err_login}>{ errors.password.message }</p> }
-                <button className={main_css.btn_submit} disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
-                { query.get('expSession') && <p className={main_css.err_login}>Please login!</p> }
-                { error?.detail && <p className={main_css.err_login}>{ error.detail }</p> }
+                { errors.password && <p className={ main_css.err_text }>{ errors.password.message }</p> }
+                <button className={ main_css.btn_submit } disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
+                { query.get('expSession') && <p className={ main_css.err_text }>Please login!</p> }
+                { error?.detail && <p className={ main_css.err_text }>{ error.detail }</p> }
             </Form>
         </div>
     );

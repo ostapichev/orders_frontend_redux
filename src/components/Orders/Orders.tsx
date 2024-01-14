@@ -1,12 +1,13 @@
-import {FC, useCallback, useEffect} from 'react';
-import {useNavigate, useSearchParams} from "react-router-dom";
+import { FC, useCallback, useEffect } from 'react';
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
-import {IFuncVoid, ISortingReverse} from "../../types";
-import {IParams} from "../../interfaces";
-import {Order} from "../Order/Order";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+
+import { IFuncVoid, ISortingReverse } from "../../types";
+import { IParams } from "../../interfaces";
+import { Order } from "../Order/Order";
+import { orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './Orders.module.css';
 
@@ -35,8 +36,8 @@ const Orders: FC = () => {
         showParams,
         orderBy,
     } = useAppSelector(state => state.orderReducer);
-    const {triggerComment} = useAppSelector(state => state.commentReducer);
-    const {me} = useAppSelector(state => state.authReducer);
+    const { triggerComment } = useAppSelector(state => state.commentReducer);
+    const { me } = useAppSelector(state => state.authReducer);
     const [query] = useSearchParams();
     const getAllOrders = useCallback(() => {
         const params: IParams = {};
@@ -55,8 +56,8 @@ const Orders: FC = () => {
         params.created_at_after = query.get('start_date');
         params.created_at_before = query.get('end_date');
         params.manager = query.get('manager');
-        dispatch(orderActions.getAll({params}));
-        dispatch(orderActions.getExelFile({params}));
+        dispatch(orderActions.getAll({ params }));
+        dispatch(orderActions.getExelFile({ params }));
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
@@ -139,34 +140,34 @@ const Orders: FC = () => {
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
 
     return (
-        <div className={css.table}>
+        <div className={ css.table }>
             <div>
-                <ListGroup className={css.table_data} horizontal>
-                    <ListGroup.Item className={css.table_header} onClick={orderById}>id</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByName}>name</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderBySurName}>surname</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByEmail}>email</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByPhone}>phone</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByAge}>age</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByCourse}>course</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByCourseFormat}>
+                <ListGroup className={ css.table_data } horizontal>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderById }>id</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByName }>name</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderBySurName }>surname</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByEmail }>email</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByPhone }>phone</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByAge }>age</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByCourse }>course</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByCourseFormat }>
                         course_format
                     </ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByCourseType}>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByCourseType }>
                         course_type
                     </ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByStatus}>status</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderBySum}>sum</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByPaid}>paid</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByGroup}>group</ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByCreated}>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByStatus }>status</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderBySum }>sum</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByPaid }>paid</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByGroup }>group</ListGroup.Item>
+                    <ListGroup.Item className={ css.table_header } onClick={ orderByCreated }>
                         created at
                     </ListGroup.Item>
-                    <ListGroup.Item className={css.table_header} onClick={orderByManager}>manager</ListGroup.Item>
+                    <ListGroup.Item className={css.table_header} onClick={ orderByManager }>manager</ListGroup.Item>
                 </ListGroup>
             </div>
-            <div className={css.order}>
-                {orders.map(order => <Order key={order.id} order={order}/>)}
+            <div className='min-vw-100'>
+                { orders.map(order => <Order key={ order.id } order={ order } />) }
             </div>
         </div>
     );

@@ -15,34 +15,34 @@ const StatisticOrder: FC = () => {
     }, [dispatch, trigger]);
 
     return (
-        <div className={css.statistic_order_container}>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ item_count }</div>
-                <div className={css.count_name}>order count</div>
+        <div className={ css.statistic_order_container }>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ item_count }</div>
+                <div className={ css.count_name }>order count</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ user_count }</div>
-                <div className={css.count_name}>users</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ user_count }</div>
+                <div className={ css.count_name }>users</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ new_order }</div>
-                <div className={css.count_name}>new order</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ new_order }</div>
+                <div className={ css.count_name }>new order</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ in_work }</div>
-                <div className={css.count_name}>in work</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ in_work }</div>
+                <div className={ css.count_name }>in work</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ agree }</div>
-                <div className={css.count_name}>agree</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ agree }</div>
+                <div className={ css.count_name }>agree</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ disagree }</div>
-                <div className={css.count_name}>disagree</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ disagree }</div>
+                <div className={ css.count_name }>disagree</div>
             </div>
-            <div className={css.statistic_order_block}>
-                <div className={css.order_count}>{ dubbing }</div>
-                <div className={css.count_name}>dubbing</div>
+            <div className={ css.statistic_order_block }>
+                <div className={ css.order_count }>{ dubbing }</div>
+                <div className={ css.count_name }>dubbing</div>
             </div>
         </div>
     );

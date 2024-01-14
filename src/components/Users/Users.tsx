@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react';
 
 import { adminActions } from "../../redux";
-import { ButtonForm } from "../ButtonForm/ButtonForm";
+import { ButtonApp } from "../ButtonApp/ButtonApp";
 import { IParams } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -19,7 +19,7 @@ const Users: FC = () => {
         const params: IParams = {};
         params.page = query.get('page');
         params.surname_contains = query.get('surname_contains');
-        dispatch(adminActions.getAll({params}));
+        dispatch(adminActions.getAll({ params }));
     }, [dispatch, query]);
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = []
@@ -44,14 +44,11 @@ const Users: FC = () => {
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>
-                    <ButtonForm
-                        buttonName={'Create'}
-                        func={'OpenUserForm'}
-                    />
+                    <ButtonApp />
                 </div>
             </div>
             {
-                users.map(user => <User key={user.id} user={user}/>)
+                users.map(user => <User key={user.id} user={user} />)
             }
         </div>
     );

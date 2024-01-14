@@ -1,23 +1,25 @@
-import React, {FC, useEffect} from 'react';
+import { FC, useEffect } from 'react';
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import css from "../Header/Header.module.css";
-import {adminActions, authActions} from "../../redux";
-import {IFuncVoid} from "../../types";
-import {DateFormat} from "../DateFormat/DateFormat";
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Modal from 'react-bootstrap/Modal';
+
+import { adminActions, authActions } from "../../redux";
+import { DateFormat } from "../DateFormat/DateFormat";
+import { IFuncVoid } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+
+import css from "./Profile.module.css";
 
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
-    const {me, showAccount} = useAppSelector(state => state.authReducer);
-    const {userStatistic} = useAppSelector(state => state.adminReducer);
-    const {email, profile, created_at} = me;
-    const {id, name, surname} = profile;
-    const {count_orders, in_work, agree, disagree, dubbing} = userStatistic;
+    const { me, showAccount } = useAppSelector(state => state.authReducer);
+    const { userStatistic } = useAppSelector(state => state.adminReducer);
+    const { email, profile, created_at } = me;
+    const { id, name, surname } = profile;
+    const { count_orders, in_work, agree, disagree, dubbing } = userStatistic;
     const handleClose: IFuncVoid = () => {
         dispatch(authActions.closeAccount());
     };
@@ -25,7 +27,7 @@ const Profile: FC = () => {
         dispatch(authActions.setShowAccount());
     };
     useEffect(() => {
-        dispatch(adminActions.getStatisticUser({id}))
+        dispatch(adminActions.getStatisticUser({ id }))
     }, [dispatch, id]);
 
     return (
@@ -33,14 +35,14 @@ const Profile: FC = () => {
             <Button
                 className='d-flex flex-column align-items-center'
                 variant="light"
-                onClick={handleShow}
+                onClick={ handleShow }
             >
-                <div className={css.title_username}>Current user</div>
-                <div className={css.login_name}>{ surname }</div>
+                <div className={ css.title_username }>Current user</div>
+                <div className={ css.login_name }>{ surname }</div>
             </Button>
             <Modal
-                show={showAccount}
-                onHide={handleClose}
+                show={ showAccount }
+                onHide={ handleClose }
             >
                 <Modal.Header closeButton>
                     <Modal.Title>My profile</Modal.Title>
@@ -130,7 +132,7 @@ const Profile: FC = () => {
                 <Modal.Footer>
                     <Button
                         variant="secondary"
-                        onClick={handleClose}
+                        onClick={ handleClose }
                     >
                         Close
                     </Button>

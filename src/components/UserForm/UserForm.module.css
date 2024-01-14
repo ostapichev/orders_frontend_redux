@@ -1,61 +1,5 @@
-.user_form {
-    font: 10pt Arial, sans-serif;
-    display: none;
-    width: 300px;
-    height: 400px;
-    background-color: #EDEDED;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-}
-
 label {
     margin: 10px 0 5px;
-}
-
-.user_form.open_user_form {
-    display: block;
-}
-
-.user_form.close_user_form {
-    display: none;
-}
-
-.form_name {
-    font: bold 20pt Verdana, serif;
-}
-
-.err_user_form {
-    margin: 5px;
-    color: red;
-    font: 5px Arial, sans-serif bold;
-}
-
-.btn_user_form {
-    font: 10pt Verdana, serif;
-    width: 40%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn_user_form:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.btn_user_form:hover:enabled {
-    background-color: #45a049;
 }
 
 .buttons_user_form {
@@ -63,6 +7,11 @@ label {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
+}
+
+.user_form {
+    width: 300px;
+    height: 400px;
 }
 
 .user_form_header {

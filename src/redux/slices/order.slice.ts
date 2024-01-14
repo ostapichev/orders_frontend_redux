@@ -1,8 +1,8 @@
-import {AxiosError, AxiosResponse} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError, AxiosResponse } from "axios";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
-import {orderService} from "../../services";
+import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
+import { orderService } from "../../services";
 
 
 interface IState {
@@ -43,7 +43,7 @@ const initialState: IState = {
     checkbox: false,
     errorsOrder: null,
     orderUpdate: null,
-    orderCreate: '',
+    orderCreate: null,
     trigger: false,
     loading: false,
     sorted: true,
@@ -69,9 +69,9 @@ const initialState: IState = {
     dataInfo: {},
 };
 
-const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
+const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
     'orderSlice/getAll',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         try {
             const {data} = await orderService.getAll(params);
             return data;
@@ -82,9 +82,9 @@ const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
     }
 );
 
-const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
+const create = createAsyncThunk<void, { groupId: string, order: IOrder }> (
     'orderSlice/create',
-    async ({groupId, order}, {rejectWithValue}) => {
+    async ({ groupId, order }, { rejectWithValue }) => {
         try {
             await orderService.create(groupId, order);
         } catch (e) {
@@ -94,9 +94,9 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
     }
 );
 
-const update = createAsyncThunk<void, {order: IOrder, id: number}> (
+const update = createAsyncThunk<void, { id: number, order: IOrder }> (
     'orderSlice/update',
-    async ({id, order}, {rejectWithValue}) => {
+    async ({ id, order }, { rejectWithValue }) => {
         try {
             await orderService.updateById(id.toString(), order)
         } catch (e) {
@@ -106,12 +106,12 @@ const update = createAsyncThunk<void, {order: IOrder, id: number}> (
     }
 );
 
-const getExelFile = createAsyncThunk<string,{params: IParams}> (
+const getExelFile = createAsyncThunk<string,{ params: IParams }> (
     'orderSlice/getExelFile',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         try {
             const response: AxiosResponse = await orderService.createExelFile(params);
-            const blob = new Blob([response.data], {type: response.headers['content-type']});
+            const blob = new Blob([response.data], { type: response.headers['content-type'] });
             return URL.createObjectURL(blob);
         } catch (e) {
             const err = e as AxiosError;
@@ -224,7 +224,7 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const {result, total_pages} = action.payload;
+                const { result, total_pages } = action.payload;
                 state.orders = result;
                 state.totalPagesOrders = total_pages;
                 state.errorsOrder = null;
@@ -257,7 +257,7 @@ const slice = createSlice({
             })
 });
 
-const {actions, reducer: orderReducer} = slice;
+const { actions, reducer: orderReducer } = slice;
 const orderActions = {
     ...actions,
     getAll,

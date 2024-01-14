@@ -11,11 +11,6 @@
     text-align: center;
 }
 
-.block_data:hover {
-    background-color: green;
-    color: snow;
-}
-
 .block_data div:nth-child(1),
 .block_data div:nth-child(6) {
     min-width: 3%;
@@ -49,8 +44,9 @@
     min-width: 12%;
 }
 
-.none_data {
-    display: none;
+.block_data:hover {
+    background-color: green;
+    color: snow;
 }
 
 .block_detail {
@@ -69,31 +65,27 @@
 }
 
 .right_block {
-    width: 60%;
     margin: 10px;
+    width: 60%;
 }
 
 .comments_field {
-    margin: 10px 0;
     height: 65px;
+    margin: 10px 0;
     overflow: hidden;
 }
 
+.comment_content {
+    border-bottom: 1px solid grey;
+    font-size: 14pt;
+    font-style: italic;
+}
+
 .comments_field_modal {
-    margin: 10px 0 20px;
     height: 100px;
+    margin: 10px 0 20px;
 }
 
 .comments_field_modal:hover {
     z-index: 1;
-}
-
-.comment_content {
-    font-style: italic;
-    font-size: 14pt;
-    border-bottom: 1px solid grey;
-}
-
-.comments_none {
-    display: none;
 }

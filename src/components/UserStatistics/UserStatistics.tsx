@@ -1,11 +1,10 @@
-import {AxiosError} from "axios";
-import {FC, useEffect, useMemo, useState} from 'react';
+import { AxiosError } from "axios";
+import { FC, useEffect, useMemo, useState } from 'react';
 
-import {adminService} from "../../services";
-import {IUserStatistic} from "../../interfaces/statistic.interface";
+import { adminService } from "../../services";
+import { IUserStatistic } from "../../interfaces/statistic.interface";
 
 import css from './UserStatistics.module.css';
-import css_user from '../User/User.module.css';
 
 
 interface IProps {
@@ -20,8 +19,8 @@ const UserStatistics: FC<IProps> = ({ id }) => {
         disagree: 0,
         dubbing: 0
     });
-    const {count_orders, in_work, agree, disagree, dubbing} = userStatistic;
-    const fetchUserStatistic = useMemo(() => async () => {
+    const { count_orders, in_work, agree, disagree, dubbing } = userStatistic;
+    const queryUserStatistic = useMemo(() => async () => {
         try {
             const { data } = await adminService.getStatisticUser(id.toString());
             setUserStatistic(data);
@@ -31,25 +30,25 @@ const UserStatistics: FC<IProps> = ({ id }) => {
         }
     }, [id]);
     useEffect(() => {
-        fetchUserStatistic();
-    }, [fetchUserStatistic]);
+        queryUserStatistic().then(value => value);
+    }, [queryUserStatistic]);
 
     return (
-        <div className={css.user_statistics}>
-            <div className={(count_orders > 1) ? css_user.user_content : css.data_none}>
-                Orders: <span className={css_user.count_content}>{count_orders}</span>
+        <div className={ css.user_statistics }>
+            <div className={ (count_orders > 1) ? "fw-bolder fs-6 text-serif" : 'd-none' }>
+                Orders: <span className="fs-6 text-serif">{ count_orders }</span>
             </div>
-            <div className={(in_work > 1) ? css_user.user_content: css.data_none}>
-                In work: <span className={css_user.count_content}>{in_work}</span>
+            <div className={ (in_work > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
+                In work: <span className="fs-6 text-serif">{ in_work }</span>
             </div>
-            <div className={(agree > 1) ? css_user.user_content: css.data_none}>
-                Agree: <span className={css_user.count_content}>{agree}</span>
+            <div className={ (agree > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
+                Agree: <span className="fs-6 text-serif">{ agree }</span>
             </div>
-            <div className={(disagree > 1) ? css_user.user_content: css.data_none}>
-                Disagree: <span className={css_user.count_content}>{disagree}</span>
+            <div className={ (disagree > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
+                Disagree: <span className="fs-6 text-serif">{ disagree }</span>
             </div>
-            <div className={(dubbing > 1) ? css_user.user_content: css.data_none}>
-                Dubbing: <span className={css_user.count_content}>{dubbing}</span>
+            <div className={ (dubbing > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
+                Dubbing: <span className="fs-6 text-serif">{ dubbing }</span>
             </div>
         </div>
     );

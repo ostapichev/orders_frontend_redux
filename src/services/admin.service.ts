@@ -1,7 +1,8 @@
 import { axiosService } from "./axios.service";
-import { IRes, IResPaginate } from "../types";
+
 import { IOrderStatistic, IUserStatistic } from "../interfaces/statistic.interface";
 import { IParams, IUser } from "../interfaces";
+import { IRes, IResPaginate } from "../types";
 import { urls } from "../constants";
 
 

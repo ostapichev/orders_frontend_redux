@@ -12,12 +12,13 @@ interface IProps {
 
 const Comment: FC<IProps> = ({ commentBody }) => {
     const { comment, created_at, profile } = commentBody;
+    const { name, surname} = profile;
 
     return (
-        <div className={css.comment_body}>
+        <div className={ css.comment_body }>
             <div>{ comment }</div>
             <div>
-                { profile.name } { profile.surname }&#44; { <DateFormat originalDate={created_at} /> }
+                { name } { surname }&#44; { <DateFormat originalDate={ created_at } /> }
             </div>
         </div>
     );

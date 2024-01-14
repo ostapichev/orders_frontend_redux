@@ -28,53 +28,53 @@ const Header: FC = () => {
     };
 
     return (
-        <div className={css.header}>
+        <div className={ css.header }>
             <div>
                 <NavLink
-                    to={'https://owu.com.ua/'}
+                    to='https://owu.com.ua/'
                     target='_blank'
                 >
-                    <img className={css.logo} src={ okten_school } alt="okten_school"/>
+                    <img className={ css.logo } src={ okten_school } alt="okten_school" />
                 </NavLink>
             </div>
             <div>
                 { me ?
-                    <div className={css.nav_bar}>
+                    <div className={ css.nav_bar }>
                         <Profile/>
                         { isAdmin &&
-                            <div className={css.login_link}>
+                            <div className={ css.login_link }>
                                 <NavLink
-                                    to={'/admin'}
+                                    to='admin'
                                     onClick={ defaultParamsUsers }
                                 >
-                                    <img className={css.logout} src={ admin_panel } alt="admin"/>
+                                    <img className={ css.image_link } src={ admin_panel } alt="admin" />
                                 </NavLink>
                             </div>
                         }
                         { isAdmin &&
-                            <div className={css.login_link}>
+                            <div className={ css.login_link }>
                                 <NavLink
-                                    to={'/orders'}
+                                    to='orders'
                                     onClick={ defaultParamsOrders }
                                 >
-                                    <img className={css.logout} src={ home_page } alt="home"/>
+                                    <img className={ css.image_link } src={ home_page } alt="home" />
                                 </NavLink>
                             </div>
                         }
-                        <div className={css.login_link}>
+                        <div className={ css.login_link }>
                             <NavLink
-                                to={'/login'}
+                                to='login'
                                 onClick={ logout }
                             >
-                                <img className={css.logout} src={ log_out } alt="logout"/>
+                                <img className={ css.image_link } src={ log_out } alt="logout" />
                             </NavLink>
                         </div>
                     </div>
                     :
                     <div>
                         <p className={css.login_link}>
-                            <NavLink to={'/login'}>
-                                <img className={css.logout} src={ login } alt="logout"/>
+                            <NavLink to='login'>
+                                <img className={ css.image_link } src={ login } alt="login" />
                             </NavLink>
                         </p>
                     </div>

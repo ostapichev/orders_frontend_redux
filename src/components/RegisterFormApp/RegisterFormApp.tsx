@@ -19,16 +19,16 @@ interface IProps {
     funcName: string;
 }
 
-const RegisterForm: FC<IProps> = ({ funcName }) => {
+const RegisterFormApp: FC<IProps> = ({ funcName }) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const formData: FormData = new FormData();
     const { token } = useParams<{ token: string }>();
     const { confirmError, error, loading } = useAppSelector(state => state.authReducer);
     const { handleSubmit, register, getValues, formState: { errors } } = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(passwordValidator)
     });
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const formData: FormData = new FormData();
     const recoveryRequestUser: SubmitHandler<IAuth> = async () => {
         const { password, confirmPassword } = getValues();
         formData.append('password', password);
@@ -36,7 +36,7 @@ const RegisterForm: FC<IProps> = ({ funcName }) => {
             dispatch(authActions.setConfirmError('Password mismatch!'));
             return;
         }
-        if (funcName === 'RecoveryPasswordPage') {
+        if (funcName === 'recoveryPasswordPage') {
             const { meta: { requestStatus } } = await dispatch(authActions.recoveryRequestPassword(
                 { formData, token }
             ));
@@ -58,17 +58,17 @@ const RegisterForm: FC<IProps> = ({ funcName }) => {
 
     return (
         <div>
-            <div className={main_css.form_block}>
-                <img className={main_css.logo_form} src={ okten_school } alt='logo'/>
+            <div className={ main_css.form_block }>
+                <img className={ main_css.logo_form } src={ okten_school } alt='logo' />
                 <Form
-                    className={main_css.login_form}
+                    className={ main_css.login_form }
                     onSubmit={ handleSubmit(recoveryRequestUser) }
                 >
                     <label>Password</label>
                     <Form.Control
                         size="sm"
                         type="password"
-                        placeholder={'enter password'}
+                        placeholder='enter password'
                         autoComplete='on'
                         { ...register('password',{ required: true }) }
                     />
@@ -76,14 +76,14 @@ const RegisterForm: FC<IProps> = ({ funcName }) => {
                     <Form.Control
                         size="sm"
                         type="password"
-                        placeholder={'enter password'}
+                        placeholder='enter password'
                         autoComplete='on'
                         { ...register('confirmPassword',{ required: true }) }
                     />
-                    <button className={main_css.btn_submit} disabled={ loading }>Submit</button>
-                    { errors.password && <p className={main_css.err_login}>{ errors.password.message }</p> }
-                    { confirmError && <p className={main_css.err_login}>{ confirmError }</p> }
-                    { error?.detail && <p className={main_css.err_login}>{ error.detail }</p> }
+                    <button className= {main_css.btn_submit } disabled={ loading }>Submit</button>
+                    { errors.password && <p className={ main_css.err_text }>{ errors.password.message }</p> }
+                    { confirmError && <p className={ main_css.err_text }>{ confirmError }</p> }
+                    { error?.detail && <p className={ main_css.err_text }>{ error.detail }</p> }
                 </Form>
             </div>
         </div>
@@ -91,5 +91,5 @@ const RegisterForm: FC<IProps> = ({ funcName }) => {
 };
 
 export {
-    RegisterForm
+    RegisterFormApp
 };

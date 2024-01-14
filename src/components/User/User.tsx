@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../hooks";
 import { UserStatistics } from "../UserStatistics/UserStatistics";
 
 import css from './User.module.css';
-import main_css from '../../styles/main.module.css';
+import btn_css from '../../styles/buton.module.css';
 
 
 interface IProps {
@@ -34,29 +34,33 @@ const User: FC<IProps> = ({ user }) => {
     };
 
     return (
-        <div className={css.container_user}>
-            <div className={css.block_user}>
-                <div className={css.user_content}>id: <span className={css.user_data}>{ id }</span></div>
-                <div className={css.user_content}>email: <span className={css.user_data}>{ email }</span></div>
-                <div className={css.user_content}>name: <span className={css.user_data}>{ profile.name }</span></div>
-                <div className={css.user_content}>surname: <span className={css.user_data}>{ profile.surname }</span></div>
-                <div className={css.user_content}>is active:
-                    <span className={css.user_data}>{ is_active === true ? 'yes' : 'no' }</span>
+        <div className={ css.container_user }>
+            <div className={ css.block_user }>
+                <div className={ css.user_content }>id: <span className={ css.user_data }>{ id }</span></div>
+                <div className={ css.user_content }>email: <span className={ css.user_data }>{ email }</span></div>
+                <div className={ css.user_content }>name:
+                    <span className={ css.user_data }>{ profile.name }</span>
                 </div>
-                <div className={css.user_content}>last login: <span className={css.user_data}>
-                    { last_login !== null ? <DateFormat originalDate={last_login}/> : ' no data' }</span>
+                <div className={ css.user_content }>surname:
+                    <span className={ css.user_data }>{ profile.surname }</span>
+                </div>
+                <div className={ css.user_content }>is active:
+                    <span className={ css.user_data }>{ is_active === true ? 'yes' : 'no' }</span>
+                </div>
+                <div className={ css.user_content }>last login: <span className= { css.user_data }>
+                    { last_login !== null ? <DateFormat originalDate={ last_login }/> : ' no data' }</span>
                 </div>
             </div>
-            <UserStatistics id={ user.id }/>
-            <div className={css.block_button}>
+            <UserStatistics id={ id }/>
+            <div className={ css.block_button }>
                 <button
-                    className={main_css.btn_open}
+                    className={ btn_css.btn_open }
                     onClick={ (event) => is_active === true ? ban(event) : unban(event) }
                 >
-                    {is_active === true ? 'ban' : 'unban'}
+                    { is_active === true ? 'ban' : 'unban' }
                 </button>
                 <button
-                    className={main_css.btn_open}
+                    className={ btn_css.btn_open }
                     onClick={ (event) => is_active === true ? recoveryPassword(event) : activateUser(event) }
                 >
                     { is_active === true ? 'recovery' : 'activate user' }

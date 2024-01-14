@@ -1,4 +1,4 @@
-export * from './ButtonForm/ButtonForm';
+export * from './ButtonApp/ButtonApp';
 export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
 export * from './CommentsPaginate/CommentsPaginate';
@@ -17,7 +17,7 @@ export * from './OrderForm/OrderForm';
 export * from './Orders/Orders';
 export * from './PaginationApp/PaginationApp';
 export * from './Profile/Profile';
-export * from './RegisterForm/RegisterForm';
+export * from './RegisterFormApp/RegisterFormApp';
 export * from './StatisticOrder/StatisticOrder';
 export * from './SearchUser/SearchUser';
 export * from './User/User';

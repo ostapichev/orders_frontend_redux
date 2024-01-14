@@ -1,0 +1,67 @@
+.btn_form {
+    font: 10pt Verdana, serif;
+    width: 40%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn_form:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn_form:hover:enabled {
+    background-color: #45a049;
+}
+
+.btn_open {
+    background-color: #267cb5;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    font: 10pt Tahoma, sans-serif;
+    margin: 5px;
+    text-align: center;
+    width: 9vw;
+}
+
+.btn_open[disabled] {
+    background-color: cornflowerblue;
+    color: #D3EAFF;
+    border: none;
+    cursor: not-allowed;
+}
+
+.btn_open:hover {
+    background-color: #0056b3;
+    color: snow;
+}
+
+.btn_submit {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font: 12pt Verdana, serif;
+    margin-top: 40px;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.btn_submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn_submit:hover:enabled {
+    background-color: #45a049;
+}

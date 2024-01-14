@@ -1,57 +1,21 @@
-.actions_header {
-    color: slategrey;
-    font: bold 20pt Verdana, serif;
-}
-
-.body_actions {
-    align-items: center;
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
-}
-
-.okten_logo {
-    margin-top: 20px;
-    width: 50%;
-}
-
-.orders {
-    border-radius: 10px;
-    min-width: 100vw;
-    padding-bottom: 50px;
-}
-
-.order {
-    min-width: 100%;
-}
-
-.orders_none {
-    display: none;
-}
-
 .table {
+    align-items: center;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    min-width: 100%;
     padding-bottom: 10px;
-    min-width: 1100px;
 }
 
 .table_data {
     cursor: pointer;
     font: bold 7pt Georgia, serif;
-    min-width: 99vw;
+    min-width: 100vw;
 }
 
 .table_data div {
     padding: 5px;
     text-align: center;
-}
-
-.table_data .table_header {
-    background-color: #267cb5;
-    color: snow;
 }
 
 .table_data div:nth-child(1),
@@ -85,4 +49,9 @@
 
 .table_data div:nth-child(4) {
     min-width: 12%;
+}
+
+.table_data .table_header {
+    background-color: #267cb5;
+    color: snow;
 }

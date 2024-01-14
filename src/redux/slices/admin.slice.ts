@@ -111,6 +111,7 @@ const getStatisticUser = createAsyncThunk<IUserStatistic, { id: number }> (
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
         }
+
     }
 );
 

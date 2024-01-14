@@ -1,26 +1,26 @@
-import React, {FC} from 'react';
+import { FC } from 'react';
 
-import {useAppSelector} from "../../hooks";
-import {Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users} from "../../components";
+import { useAppSelector } from "../../hooks";
+import { Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users } from "../../components";
 
-import css from './AdminPage.module.css';
+import page_css from '../../styles/page.module.css';
 
 
 const AdminPage: FC = () => {
-    const {loading, openUserForm} = useAppSelector(state => state.adminReducer);
+    const { loading, openUserForm } = useAppSelector(state => state.adminReducer);
 
     return (
-        <div className={css.admin_page}>
-            <StatisticOrder/>
-            {loading && <Loading/>}
-            <div className={loading ? css.users_none : css.users_block}>
-                <UserForm/>
-                <SearchUser/>
-                <PaginationApp namePage={'adminPage'}/>
-                <Users/>
-                <PaginationApp namePage={'adminPage'}/>
+        <div className='d-flex flex-column align-items-center'>
+            <StatisticOrder />
+            { loading && <Loading /> }
+            <div className={ loading ? 'd-none' : 'd-flex flex-column align-items-center' }>
+                <UserForm />
+                <SearchUser />
+                <PaginationApp namePage='adminPage' />
+                <Users />
+                <PaginationApp namePage='adminPage' />
             </div>
-            <div className={openUserForm && css.overlay}></div>
+            <div className={ openUserForm && page_css.overlay }></div>
         </div>
     );
 };

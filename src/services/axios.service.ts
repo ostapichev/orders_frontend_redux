@@ -1,14 +1,14 @@
-import axios, {AxiosError} from "axios";
-import {createBrowserHistory} from 'history';
+import axios, { AxiosError } from "axios";
+import { createBrowserHistory } from 'history';
 
-import {authService} from "./auth.service";
-import {baseURL, urls} from "../constants";
-import {IWaitList} from "../types";
+import { authService } from "./auth.service";
+import { baseURL, urls } from "../constants";
+import { IFuncVoid } from "../types";
 
 
-const axiosService = axios.create({baseURL});
-const history = createBrowserHistory({window});
-const waitList: IWaitList[] = [];
+const axiosService = axios.create({ baseURL });
+const history = createBrowserHistory({ window });
+const waitList: IFuncVoid[] = [];
 let isRefreshing = false;
 
 axiosService.interceptors.request.use(response => {
@@ -52,9 +52,10 @@ axiosService.interceptors.response.use(response => {
     }
 );
 
-const subscribeToWaitList = (cb: IWaitList): void => {
+const subscribeToWaitList = (cb: IFuncVoid): void => {
     waitList.push(cb);
 }
+
 const afterRefresh = () => {
     while (waitList.length) {
         const cb = waitList.pop();

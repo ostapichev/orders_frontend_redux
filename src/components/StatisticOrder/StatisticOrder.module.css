@@ -1,8 +1,10 @@
-.statistic_order_container {
-    display: flex;
-    justify-content: space-around;
-    margin: 15vh 0 5vh;
-    width: 95%;
+.count_name {
+    font: 10pt Helvetica, serif;
+    letter-spacing: 2px;
+}
+
+.order_count {
+    font-size: 13pt;
 }
 
 .statistic_order_block {
@@ -16,11 +18,9 @@
     width: 12%;
 }
 
-.order_count {
-    font-size: 13pt;
-}
-
-.count_name {
-    font: 10pt Helvetica, serif;
-    letter-spacing: 2px;
+.statistic_order_container {
+    display: flex;
+    justify-content: space-around;
+    margin: 15vh 0 5vh;
+    width: 95%;
 }
