@@ -11,6 +11,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import main_css from '../../styles/main.module.css';
+import btn_css from '../../styles/buton.module.css';
 
 import { okten_school } from '../../asserts';
 
@@ -55,7 +56,7 @@ const LoginForm: FC = () => {
                     { ...register('password',{ required: true }) }
                 />
                 { errors.password && <p className={ main_css.err_text }>{ errors.password.message }</p> }
-                <button className={ main_css.btn_submit } disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
+                <button className={ btn_css.btn_submit } disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
                 { query.get('expSession') && <p className={ main_css.err_text }>Please login!</p> }
                 { error?.detail && <p className={ main_css.err_text }>{ error.detail }</p> }
             </Form>

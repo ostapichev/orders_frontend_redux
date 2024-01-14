@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useNavigate, useParams } from "react-router-dom";
 
 import main_css from '../../styles/main.module.css';
+import btn_css from '../../styles/buton.module.css';
 
 import { okten_school } from "../../asserts";
 
@@ -80,7 +81,7 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                         autoComplete='on'
                         { ...register('confirmPassword',{ required: true }) }
                     />
-                    <button className= {main_css.btn_submit } disabled={ loading }>Submit</button>
+                    <button className= { btn_css.btn_submit } disabled={ loading }>Submit</button>
                     { errors.password && <p className={ main_css.err_text }>{ errors.password.message }</p> }
                     { confirmError && <p className={ main_css.err_text }>{ confirmError }</p> }
                     { error?.detail && <p className={ main_css.err_text }>{ error.detail }</p> }
