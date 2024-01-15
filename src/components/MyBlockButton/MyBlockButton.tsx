@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
 
-import { create, reload } from '../../asserts';
+import {create, reload} from '../../asserts';
 
 
 const MyBlockButton: FC = () => {

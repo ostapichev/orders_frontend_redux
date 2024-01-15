@@ -8,7 +8,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './CommentForm.module.css';
-import main_css from '../../styles/main.module.css';
+import { form_css } from '../../styles/index';
 
 
 interface IProps {
@@ -34,7 +34,7 @@ const CommentForm: FC<IProps> = ({ order_id }) => {
         <form className={ css.comment_form } onSubmit={ handleSubmit(save) }>
             <input type="text" placeholder="Enter comment" { ...register('comment') }/>
             <button className={ css.button_comment } disabled={ !isValid || addValidForm }>Add</button>
-            { errors.comment && <div className={ main_css.err_text }>{ errors.comment.message }</div> }
+            { errors.comment && <div className={ form_css.err_text }>{ errors.comment.message }</div> }
         </form>
     );
 };

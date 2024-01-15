@@ -89,7 +89,6 @@ const unban = createAsyncThunk<void, { id: string }> (
 
 const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     'adminSlice/getStatisticOrder',
-
     async (_, { rejectWithValue }) => {
         try {
             const { data } = await adminService.getStatisticOrder();

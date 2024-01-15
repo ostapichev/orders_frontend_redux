@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { LoginForm } from "../../components";
 
-import page_css from '../../styles/page.module.css';
+import { page_css } from '../../styles/index';
 
 
 const LoginPage: FC = () => {

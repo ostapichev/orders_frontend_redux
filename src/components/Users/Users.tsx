@@ -24,13 +24,13 @@ const Users: FC = () => {
     const updateQueryString = useCallback(() => {
         const queryParams: string[] = []
         if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(pageUsers)}`);
+            queryParams.push(`page=${ encodeURIComponent(pageUsers) }`);
         }
         if (surnameUserInput) {
-            queryParams.push(`surname_contains=${encodeURIComponent(surnameUserInput)}`);
+            queryParams.push(`surname_contains=${ encodeURIComponent(surnameUserInput) }`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
+        navigate(queryString && `?${ queryString }`);
     }, [pageUsers, showParams, navigate, surnameUserInput]);
     useEffect(() => {
         updateQueryString();
@@ -40,15 +40,15 @@ const Users: FC = () => {
     }, [dispatch, query, trigger, getAllUsers]);
 
     return (
-        <div className={css.table_users}>
-            <div className={css.table_head}>
-                <div className={css.head_user}>Users</div>
-                <div className={css.btn_user_create}>
+        <div className={ css.table_users }>
+            <div className={ css.table_head }>
+                <div className={ css.head_user }>Users</div>
+                <div className={ css.btn_user_create }>
                     <ButtonApp />
                 </div>
             </div>
             {
-                users.map(user => <User key={user.id} user={user} />)
+                users.map(user => <User key={ user.id } user={ user } />)
             }
         </div>
     );

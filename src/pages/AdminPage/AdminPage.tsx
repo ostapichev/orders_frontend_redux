@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useAppSelector } from "../../hooks";
 import { Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users } from "../../components";
 
-import page_css from '../../styles/page.module.css';
+import { page_css } from '../../styles/index';
 
 
 const AdminPage: FC = () => {

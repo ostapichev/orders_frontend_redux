@@ -160,7 +160,12 @@ const InputBlock: FC = () => {
                     aria-label="Choose group"
                     onChange={ groupInputDataChange }>
                         <option value=''>all groups</option>
-                        { groups.map(group => <Group key={ group.id } group={ group }/>) }
+                        {
+                            groups.map(group => <Group
+                                key={ group.id }
+                                group={ group }
+                            />)
+                        }
                 </Form.Select>
                 <Form.Control
                     value={ startDateInputData }

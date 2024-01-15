@@ -1,8 +1,10 @@
-import React, { FC, MouseEventHandler, useState } from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
 
-import ListGroup from "react-bootstrap/ListGroup";
 import Button from 'react-bootstrap/Button';
+import Collapse from 'react-bootstrap/Collapse';
+import ListGroup from "react-bootstrap/ListGroup";
 import Modal from 'react-bootstrap/Modal';
+
 
 import { Comment } from "../Comment/Comment";
 import { CommentForm } from "../CommentForm/CommentForm";
@@ -13,9 +15,8 @@ import { IComment, IGroup, IOrder } from "../../interfaces";
 import { IFuncVoid } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
+import { button_css, form_css } from '../../styles/index';
 import css from './Order.module.css';
-import btn_css from '../../styles/buton.module.css';
-import main_css from '../../styles/main.module.css';
 
 
 interface IProps {
@@ -87,66 +88,71 @@ const Order: FC<IProps> = ({ order }) => {
                 <div>{ <DateFormat originalDate={ created_at } />}</div>
                 <div>{ manager !== null ? manager.name : 'no manager' }</div>
             </div>
-            <div className={ showDetail ? css.block_detail : 'd-none' }>
-                <div className={ css.left_block }>
-                    <div>Message: { msg !== null ? msg : 'no data' }</div>
-                    <div>UTM: { utm !== null ? utm : 'no data' }</div>
-                    <div>
-                        <button disabled={ addValidForm || (order.manager === null) }
-                                className={ btn_css.btn_open }
-                                onClick={ setUpdate }>Edit
-                        </button>
-                        { order.manager && order.manager.id !== me.id &&
-                            <div className={ main_css.err_text }>
-                                You cannot comment or edit this order. It belongs to another manager.
-                            </div>
-                        }
+            <Collapse
+                in={ showDetail }
+                className={ css.block_detail }
+            >
+                <div>
+                    <div className={ css.left_block }>
+                        <div>Message: { msg !== null ? msg : 'no data' }</div>
+                        <div>UTM: { utm !== null ? utm : 'no data' }</div>
+                        <div>
+                            <button disabled={ addValidForm || (order.manager === null) }
+                                    className={ button_css.btn_open }
+                                    onClick={ setUpdate }>Edit
+                            </button>
+                            { order.manager && order.manager.id !== me.id &&
+                                <div className={ form_css.err_text }>
+                                    You cannot comment or edit this order. It belongs to another manager.
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-                <div className={ css.right_block }>{ comments.length < 1 ? 'No comments.' : 'Comments:' }
-                    <div
-                        className={ comments.length > 0 ? css.comments_field : 'd-none' }
-                        onClick={ handleShow }
-                    >
-                        <ListGroup>
-                            <ListGroup.Item action variant="success">
-                                { comments &&
-                                    lastComments.map(commentBody => <Comment
-                                        key={ commentBody.id }
-                                        commentBody={ commentBody }
-                                    />)
-                                }
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </div>
-                    <Modal size="lg"
-                           show={ showComment }
-                           onHide={ handleClose }
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Comments</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body className={ css.comments_field_modal }>
+                    <div className={ css.right_block }>{ comments.length < 1 ? 'No comments.' : 'Comments:' }
+                        <div
+                            className={ comments.length > 0 ? css.comments_field : 'd-none' }
+                            onClick={ handleShow }
+                        >
                             <ListGroup>
-                                <ListGroup.Item variant='info'>
+                                <ListGroup.Item action variant="success">
                                     { comments &&
-                                        PaginateComments.map(commentBody => <Comment
+                                        lastComments.map(commentBody => <Comment
                                             key={ commentBody.id }
                                             commentBody={ commentBody }
                                         />)
                                     }
                                 </ListGroup.Item>
                             </ListGroup>
-                        </Modal.Body>
-                        <CommentsPaginate comments={ comments }/>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={ handleClose }>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
-                    <CommentForm order_id={ id }/>
-                    { errorsComment && <div>{ errorsComment.comment }</div> }
+                        </div>
+                        <Modal size="lg"
+                               show={ showComment }
+                               onHide={ handleClose }
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Comments</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className={ css.comments_field_modal }>
+                                <ListGroup>
+                                    <ListGroup.Item variant='info'>
+                                        { comments &&
+                                            PaginateComments.map(commentBody => <Comment
+                                                key={ commentBody.id }
+                                                commentBody={ commentBody }
+                                            />)
+                                        }
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Modal.Body>
+                            <CommentsPaginate comments={ comments }/>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={ handleClose }>Close</Button>
+                            </Modal.Footer>
+                        </Modal>
+                        <CommentForm order_id={ id } />
+                        { errorsComment && <div>{ errorsComment.comment }</div> }
+                    </div>
                 </div>
-            </div>
+            </Collapse>
         </>
     );
 };

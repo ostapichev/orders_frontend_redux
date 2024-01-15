@@ -1,3 +1,8 @@
 type IOrderBySorting = string;
-export type ISortingReverse = (orderBy: IOrderBySorting) => void;
-export type IFuncVoid = () => void;
+type ISortingReverse = (orderBy: IOrderBySorting) => void;
+type IFuncVoid = () => void;
+
+export type {
+    ISortingReverse,
+    IFuncVoid
+};

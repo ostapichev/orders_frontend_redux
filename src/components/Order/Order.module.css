@@ -1,9 +1,9 @@
 .block_data {
-    display: flex;
-    font: 7pt Verdana, serif;
     background-color: snow;
     border-top: 1px solid grey;
     cursor: pointer;
+    display: flex;
+    font: 7pt Verdana, serif;
 }
 
 .block_data div {
@@ -73,12 +73,6 @@
     height: 65px;
     margin: 10px 0;
     overflow: hidden;
-}
-
-.comment_content {
-    border-bottom: 1px solid grey;
-    font-size: 14pt;
-    font-style: italic;
 }
 
 .comments_field_modal {

@@ -12,9 +12,8 @@ import { GroupForm } from "../GroupForm/GroupForm";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { orderValidator } from "../../validators";
 
+import { button_css, form_css } from '../../styles/index';
 import css from './OrderForm.module.css';
-import btn_css from '../../styles/buton.module.css';
-import main_css from "../../styles/main.module.css";
 
 
 const OrderForm: FC = () => {
@@ -66,7 +65,7 @@ const OrderForm: FC = () => {
     }, [orderUpdate, setValue]);
 
     return (
-        <div className={ `${ main_css.modal_form } ${ openOrderForm ? css.order_form : 'd-none' }` }>
+        <div className={ `${ form_css.modal_form } ${ openOrderForm ? css.order_form : 'd-none' }` }>
             <h3 className={ css.order_form_header }>{ orderUpdate ? 'Update' : 'Create' } order</h3>
             {vision &&
                 <div className={ css.group_form }>
@@ -93,7 +92,7 @@ const OrderForm: FC = () => {
                             }
                         </Form.Select>
                         <button className={ css.btn_group } onClick={ addGroup }>Add group</button>
-                        { errors.group && <div className={ main_css.err_text }>{ errors.group.message }</div>}
+                        { errors.group && <div className={ form_css.err_text }>{ errors.group.message }</div>}
                     </div>
                     <label htmlFor="name">First name</label>
                     <Form.Control
@@ -102,7 +101,7 @@ const OrderForm: FC = () => {
                         placeholder='enter name'
                         { ...register('name') }
                     />
-                    { errors.name && <div className={ main_css.err_text }>{ errors.name.message }</div>}
+                    { errors.name && <div className={ form_css.err_text }>{ errors.name.message }</div>}
                     <label htmlFor="surname">Surname</label>
                     <Form.Control
                         size="sm"
@@ -110,7 +109,7 @@ const OrderForm: FC = () => {
                         placeholder='enter surname'
                         { ...register('surname') }
                     />
-                    { errors.surname && <div className={ main_css.err_text }>{ errors.surname.message }</div> }
+                    { errors.surname && <div className={ form_css.err_text }>{ errors.surname.message }</div> }
                     <label htmlFor="email">Email</label>
                     <Form.Control
                         size="sm"
@@ -119,7 +118,7 @@ const OrderForm: FC = () => {
                         placeholder='enter email'
                         { ...register('email') }
                     />
-                    { errors.surname && <div className={ main_css.err_text }>{ errors.surname.message }</div> }
+                    { errors.surname && <div className={ form_css.err_text }>{ errors.surname.message }</div> }
                     <label htmlFor="phone">Phone</label>
                     <Form.Control
                         size="sm"
@@ -128,7 +127,7 @@ const OrderForm: FC = () => {
                         placeholder='enter phone'
                         { ...register('phone') }
                     />
-                    { errors.surname && <div className={ main_css.err_text }>{ errors.surname.message }</div> }
+                    { errors.surname && <div className={ form_css.err_text }>{ errors.surname.message }</div> }
                     <label htmlFor="age">Age</label>
                     <Form.Control
                         size="sm"
@@ -136,7 +135,7 @@ const OrderForm: FC = () => {
                         name="age"
                         placeholder='enter age'
                         { ...register('age') }/>
-                    { errors.age && <div className={ main_css.err_text }>{ errors.age.message }</div> }
+                    { errors.age && <div className={ form_css.err_text }>{ errors.age.message }</div> }
                 </div>
                 <div className={ vision ? css.form_block_right_top : css.form_block_right }>
                     <label htmlFor="course">Choose course</label>
@@ -153,7 +152,7 @@ const OrderForm: FC = () => {
                         <option value="FE">FE</option>
                         <option value="PCX">PCX</option>
                     </Form.Select>
-                    { errors.course && <div className={ main_css.err_text }>{ errors.course.message }</div>}
+                    { errors.course && <div className={form_css.err_text }>{ errors.course.message }</div>}
                     <label className={css.input_paid} htmlFor="paid">Already paid</label>
                     <Form.Control
                         size="sm"
@@ -163,7 +162,7 @@ const OrderForm: FC = () => {
                         { ...register('already_paid') }
                     />
                     { errors.already_paid &&
-                        <div className={ main_css.err_text }>
+                        <div className={ form_css.err_text }>
                             { errors.already_paid.message }
                         </div>
                     }
@@ -175,7 +174,7 @@ const OrderForm: FC = () => {
                         placeholder='sum'
                         { ...register('sum') }
                     />
-                    { errors.sum && <div className={ main_css.err_text }>{ errors.sum.message }</div> }
+                    { errors.sum && <div className={ form_css.err_text }>{ errors.sum.message }</div> }
                     <label htmlFor="course_format">Choose course format</label>
                     <Form.Select
                         size="sm"
@@ -187,7 +186,7 @@ const OrderForm: FC = () => {
                         <option value="online">online</option>
                     </Form.Select>
                     { errors.course_format &&
-                        <div className={ main_css.err_text }>
+                        <div className={ form_css.err_text }>
                             { errors.course_format.message }
                         </div>
                     }
@@ -204,7 +203,7 @@ const OrderForm: FC = () => {
                         <option value="incubator">incubator</option>
                         <option value="vip">vip</option>
                     </Form.Select>
-                    { errors.course_type && <div className={ main_css.err_text }>{ errors.course_type.message }</div> }
+                    { errors.course_type && <div className={ form_css.err_text }>{ errors.course_type.message }</div> }
                     <label htmlFor="status">Choose status</label>
                     <Form.Select
                         size="sm"
@@ -218,17 +217,17 @@ const OrderForm: FC = () => {
                         <option value="disagree">disagree</option>
                         <option value="dubbing">dubbing</option>
                     </Form.Select>
-                    { errors.status && <div className={ main_css.err_text }>{ errors.status.message }</div> }
+                    { errors.status && <div className={ form_css.err_text }>{ errors.status.message }</div> }
                 </div>
-                    { errorsOrder?.name && <div className={ main_css.err_text }>{ errorsOrder.name }</div> }
-                    { errorsOrder?.surname && <div className={ main_css.err_text }>{ errorsOrder.name }</div> }
-                    { errorsOrder?.email && <div className={ main_css.err_text }>{ errorsOrder.email }</div> }
-                    { errorsOrder?.phone && <div className={ main_css.err_text }>{ errorsOrder.phone }</div> }
+                    { errorsOrder?.name && <div className={ form_css.err_text }>{ errorsOrder.name }</div> }
+                    { errorsOrder?.surname && <div className={ form_css.err_text }>{ errorsOrder.name }</div> }
+                    { errorsOrder?.email && <div className={ form_css.err_text }>{ errorsOrder.email }</div> }
+                    { errorsOrder?.phone && <div className={ form_css.err_text }>{ errorsOrder.phone }</div> }
                 <div className={ css.button_block }>
-                    <button className={ btn_css.btn_form } disabled={ !isValid }>
+                    <button className={ button_css.btn_form } disabled={ !isValid }>
                         { orderUpdate ? 'Update' : 'Save' }
                     </button>
-                    <button className={ btn_css.btn_form } onClick={ handleClose }>Close</button>
+                    <button className={ button_css.btn_form } onClick={ handleClose }>Close</button>
                 </div>
             </Form>
         </div>

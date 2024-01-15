@@ -19,13 +19,12 @@ const setupStore = () => configureStore({
         }),
 });
 
-type RootState = ReturnType<typeof rootReducer>;
 type AppStore = ReturnType<typeof setupStore>;
+type RootState = ReturnType<typeof rootReducer>;
 type AppDispatch = AppStore['dispatch'];
 
 export type {
     RootState,
-    AppStore,
     AppDispatch
 };
 

@@ -1,11 +1,11 @@
-import { FC, useEffect } from 'react';
+import {FC, useEffect, useState} from 'react';
 
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 
-import { adminActions, authActions } from "../../redux";
+import { adminActions } from "../../redux";
 import { DateFormat } from "../DateFormat/DateFormat";
 import { IFuncVoid } from "../../types";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -15,17 +15,14 @@ import css from "./Profile.module.css";
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
-    const { me, showAccount } = useAppSelector(state => state.authReducer);
+    const [account, setAccount] = useState<boolean>(false);
+    const { me } = useAppSelector(state => state.authReducer);
     const { userStatistic } = useAppSelector(state => state.adminReducer);
     const { email, profile, created_at } = me;
     const { id, name, surname } = profile;
     const { count_orders, in_work, agree, disagree, dubbing } = userStatistic;
-    const handleClose: IFuncVoid = () => {
-        dispatch(authActions.closeAccount());
-    };
-    const handleShow: IFuncVoid = () => {
-        dispatch(authActions.setShowAccount());
-    };
+    const handleClose: IFuncVoid = () => setAccount(false);
+    const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
         dispatch(adminActions.getStatisticUser({ id }))
     }, [dispatch, id]);
@@ -41,7 +38,7 @@ const Profile: FC = () => {
                 <div className={ css.login_name }>{ surname }</div>
             </Button>
             <Modal
-                show={ showAccount }
+                show={ account }
                 onHide={ handleClose }
             >
                 <Modal.Header closeButton>

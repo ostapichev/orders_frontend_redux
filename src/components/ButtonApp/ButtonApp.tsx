@@ -4,18 +4,18 @@ import { useAppDispatch } from "../../hooks";
 import { adminActions } from "../../redux";
 import { IFuncVoid } from "../../types";
 
-import btn_css from '../../styles/buton.module.css';
+import { button_css } from '../../styles/index';
 
 
 const ButtonApp: FC = () => {
     const dispatch = useAppDispatch();
     const handleOpen: IFuncVoid = () => {
         dispatch(adminActions.openUserForm());
-    }
+    };
 
     return (
         <>
-            <button className={ btn_css.btn_open } onClick={ handleOpen }>Create</button>
+            <button className={ button_css.btn_open } onClick={ handleOpen }>Create</button>
         </>
     );
 };

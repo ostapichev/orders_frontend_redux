@@ -4,8 +4,6 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { adminService } from "../../services";
 import { IUserStatistic } from "../../interfaces/statistic.interface";
 
-import css from './UserStatistics.module.css';
-
 
 interface IProps {
     id: number;
@@ -26,7 +24,7 @@ const UserStatistics: FC<IProps> = ({ id }) => {
             setUserStatistic(data);
         } catch (e) {
             const err = e as AxiosError;
-            alert({err});
+            alert(err);
         }
     }, [id]);
     useEffect(() => {
@@ -34,21 +32,21 @@ const UserStatistics: FC<IProps> = ({ id }) => {
     }, [queryUserStatistic]);
 
     return (
-        <div className={ css.user_statistics }>
-            <div className={ (count_orders > 1) ? "fw-bolder fs-6 text-serif" : 'd-none' }>
-                Orders: <span className="fs-6 text-serif">{ count_orders }</span>
+        <div className='d-flex flex-column align-items-center'>
+            <div className={ (count_orders > 0) ? "fs-6 text-serif" : 'd-none' }>
+                Orders:&nbsp;<span className="fw-bold fs-6 text-serif">{ count_orders }</span>
             </div>
-            <div className={ (in_work > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
-                In work: <span className="fs-6 text-serif">{ in_work }</span>
+            <div className={ (in_work > 0) ? "fs-6 text-serif" : 'd-none' }>
+                In work:&nbsp;<span className="fw-bold fs-6 text-serif">{ in_work }</span>
             </div>
-            <div className={ (agree > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
-                Agree: <span className="fs-6 text-serif">{ agree }</span>
+            <div className={ (agree > 0) ? "fs-6 text-serif" : 'd-none' }>
+                Agree:&nbsp;<span className="fw-bold fs-6 text-serif">{ agree }</span>
             </div>
-            <div className={ (disagree > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
-                Disagree: <span className="fs-6 text-serif">{ disagree }</span>
+            <div className={ (disagree > 0) ? "fs-6 text-serif" : 'd-none' }>
+                Disagree:&nbsp;<span className="fw-bold fs-6 text-serif">{ disagree }</span>
             </div>
-            <div className={ (dubbing > 1) ? "fw-bold fs-6 text-serif" : 'd-none' }>
-                Dubbing: <span className="fs-6 text-serif">{ dubbing }</span>
+            <div className={ (dubbing > 0) ? "fs-6 text-serif" : 'd-none' }>
+                Dubbing:&nbsp;<span className="fw-bold fs-6 text-serif">{ dubbing }</span>
             </div>
         </div>
     );

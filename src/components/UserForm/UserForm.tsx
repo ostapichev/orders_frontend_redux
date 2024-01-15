@@ -9,9 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { adminActions } from "../../redux";
 import { userValidator } from "../../validators";
 
+import { button_css, form_css } from "../../styles/index";
 import css from './UserForm.module.css';
-import btn_css from "../../styles/buton.module.css";
-import main_css from "../../styles/main.module.css";
 
 
 const UserForm: FC = () => {
@@ -31,7 +30,7 @@ const UserForm: FC = () => {
     };
 
     return (
-        <div className={ `${ main_css.modal_form } ${ openUserForm ? css.user_form : 'd-none' }` }>
+        <div className={ `${ form_css.modal_form } ${ openUserForm ? css.user_form : 'd-none' }` }>
             <h4 className={ css.user_form_header }>Create new user</h4>
             <Form onSubmit={ handleSubmit(save) }>
                 <label htmlFor='name'>name</label>
@@ -42,7 +41,7 @@ const UserForm: FC = () => {
                     placeholder='enter name'
                     { ...register('profile.name') }
                 />
-                { errorUser?.name && <p className={main_css.err_text}>{ errorUser.name }</p> }
+                { errorUser?.name && <p className={ form_css.err_text}>{ errorUser.name }</p> }
                 <label htmlFor='surname'>surname</label>
                 <Form.Control
                     size="sm"
@@ -51,7 +50,7 @@ const UserForm: FC = () => {
                     placeholder='enter surname'
                     { ...register('profile.surname') }
                 />
-                { errorUser?.surname && <p className={main_css.err_text}>{ errorUser.surname }</p> }
+                { errorUser?.surname && <p className={ form_css.err_text}>{ errorUser.surname }</p> }
                 <label htmlFor='email'>email</label>
                 <Form.Control
                     size="sm"
@@ -60,10 +59,10 @@ const UserForm: FC = () => {
                     placeholder='enter email'
                     { ...register('email') }
                 />
-                { errors.email && <p className={ main_css.err_text }>{ errors.email.message }</p> }
+                { errors.email && <p className={ form_css.err_text }>{ errors.email.message }</p> }
                 <div className={css.buttons_user_form}>
-                    <button className={ btn_css.btn_form } disabled={ !isValid }>save</button>
-                    <button className={ btn_css.btn_form } onClick={ handleClose }>cancel</button>
+                    <button className={ button_css.btn_form } disabled={ !isValid }>save</button>
+                    <button className={ button_css.btn_form } onClick={ handleClose }>cancel</button>
                 </div>
             </Form>
         </div>

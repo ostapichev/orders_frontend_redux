@@ -27,13 +27,13 @@ const CommentsPaginate: FC<IProps> = ({ comments }) => {
     };
 
     return (
-        <Box justifyContent={'center'}
-             alignItems={'center'}
-             display={'flex'}
+        <Box justifyContent='center'
+             alignItems='center'
+             display='flex'
              sx={{ margin: '20px 0' }}>{ (dataPage[0] > 1) && (
                 <Pagination
-                    count={ +dataPage[0] }
-                    page={ +dataPage[1] }
+                    count={ dataPage[0] }
+                    page={ dataPage[1] }
                     onChange={ handleChangePage }
                     color="primary"
                     siblingCount={ 2 }

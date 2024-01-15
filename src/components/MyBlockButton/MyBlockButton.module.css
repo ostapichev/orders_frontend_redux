@@ -6,14 +6,6 @@
     padding-right: 10px;
 }
 
-.block_filters button {
-    margin-bottom: 0;
-}
-
-.my {
-    font: bold 10pt Georgia, serif;
-}
-
 .icon {
     width: 30px;
     background-color: snow;
@@ -21,13 +13,17 @@
     cursor: pointer;
 }
 
+.icon_block {
+    display: flex;
+    justify-content: space-evenly;
+    width: 9vw;
+}
+
 .icon:hover {
     background-color: lightgrey;
     transform: scale(1.2);
 }
 
-.icon_block {
-    display: flex;
-    justify-content: space-evenly;
-    width: 9vw;
+.my {
+    font: bold 10pt Georgia, serif;
 }

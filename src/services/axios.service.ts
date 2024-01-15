@@ -45,8 +45,8 @@ axiosService.interceptors.response.use(response => {
             return new Promise(resolve => {
                 subscribeToWaitList(() => {
                     resolve(axiosService(request));
-                })
-            })
+                });
+            });
         }
         return Promise.reject(error);
     }
@@ -54,14 +54,14 @@ axiosService.interceptors.response.use(response => {
 
 const subscribeToWaitList = (cb: IFuncVoid): void => {
     waitList.push(cb);
-}
+};
 
 const afterRefresh = () => {
     while (waitList.length) {
         const cb = waitList.pop();
         cb();
     }
-}
+};
 
 export {
     axiosService,

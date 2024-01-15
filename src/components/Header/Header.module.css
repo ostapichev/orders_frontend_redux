@@ -13,12 +13,7 @@ a img:hover {
     z-index: 2;
 }
 
-.logo {
-    height: 70px;
-    margin-left: 10px;
-}
-
-.login_link {
+.header_link {
     align-items: center;
     display: flex;
     margin: 0 10px;
@@ -26,6 +21,11 @@ a img:hover {
 
 .image_link {
     width: 40px;
+}
+
+.logo {
+    height: 70px;
+    margin-left: 10px;
 }
 
 .nav_bar {

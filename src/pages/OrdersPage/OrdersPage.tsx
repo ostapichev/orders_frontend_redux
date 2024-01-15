@@ -4,7 +4,7 @@ import { InputBlock, Loading, MyBlockButton, OrderForm, Orders, PaginationApp } 
 import { useAppSelector } from "../../hooks";
 
 import css from './OrdersPage.module.css';
-import page_css from '../../styles/page.module.css';
+import { page_css } from '../../styles/index';
 
 
 const OrdersPage: FC = () => {

@@ -79,7 +79,7 @@ const slice = createSlice({
     }
 });
 
-const {actions, reducer: commentReducer} = slice;
+const { actions, reducer: commentReducer } = slice;
 const commentActions = {
     ...actions,
     create

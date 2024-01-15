@@ -20,7 +20,6 @@ interface IState {
     pageOrders: number;
     fileDataURL?: string;
     openOrderForm: boolean;
-    openModal: boolean;
     nameInputData: string;
     surNameInputData: string;
     emailInputData: string;
@@ -34,7 +33,6 @@ interface IState {
     startDateInputData: string;
     endDateInputData: string;
     showParams: boolean;
-    dataInfo: IPagination<void>;
 }
 
 const initialState: IState = {
@@ -52,7 +50,6 @@ const initialState: IState = {
     pageOrders: 1,
     fileDataURL: null,
     openOrderForm: false,
-    openModal: false,
     nameInputData: '',
     surNameInputData: '',
     emailInputData: '',
@@ -65,15 +62,14 @@ const initialState: IState = {
     groupInputData: '',
     startDateInputData: '',
     endDateInputData: '',
-    showParams: false,
-    dataInfo: {},
+    showParams: false
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
     'orderSlice/getAll',
     async ({ params }, { rejectWithValue }) => {
         try {
-            const {data} = await orderService.getAll(params);
+            const { data } = await orderService.getAll(params);
             return data;
         } catch (e) {
             const err = e as AxiosError;

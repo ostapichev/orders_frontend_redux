@@ -10,8 +10,7 @@ import { passwordValidator } from "../../validators";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useNavigate, useParams } from "react-router-dom";
 
-import main_css from '../../styles/main.module.css';
-import btn_css from '../../styles/buton.module.css';
+import { button_css, form_css } from '../../styles/index';
 
 import { okten_school } from "../../asserts";
 
@@ -52,17 +51,17 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                 navigate('/login');
             }
         } else {
-            alert('Name error function')
+            alert('RegisterFormApp: name error function');
         }
 
     };
 
     return (
         <div>
-            <div className={ main_css.form_block }>
-                <img className={ main_css.logo_form } src={ okten_school } alt='logo' />
+            <div className={ form_css.form_block }>
+                <img className={ form_css.logo_form } src={ okten_school } alt='logo' />
                 <Form
-                    className={ main_css.login_form }
+                    className={ form_css.login_form }
                     onSubmit={ handleSubmit(recoveryRequestUser) }
                 >
                     <label>Password</label>
@@ -81,10 +80,10 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                         autoComplete='on'
                         { ...register('confirmPassword',{ required: true }) }
                     />
-                    <button className= { btn_css.btn_submit } disabled={ loading }>Submit</button>
-                    { errors.password && <p className={ main_css.err_text }>{ errors.password.message }</p> }
-                    { confirmError && <p className={ main_css.err_text }>{ confirmError }</p> }
-                    { error?.detail && <p className={ main_css.err_text }>{ error.detail }</p> }
+                    <button className= { button_css.btn_submit } disabled={ loading }>Submit</button>
+                    { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
+                    { confirmError && <p className={ form_css.err_text }>{ confirmError }</p> }
+                    { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
                 </Form>
             </div>
         </div>

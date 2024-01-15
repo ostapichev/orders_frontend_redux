@@ -40,8 +40,8 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
         <Stack spacing={ 2 } sx={{ marginY: 3 }}>
             { (dataPage[0] > 1) &&
                 <Pagination
-                    count={ +dataPage[0] }
-                    page={ +dataPage[1] }
+                    count={ dataPage[0] }
+                    page={ dataPage[1] }
                     onChange={ handlerChangePage }
                     color="primary"
                     siblingCount={ 2 }
