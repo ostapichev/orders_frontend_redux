@@ -3,7 +3,7 @@
     border-top: 1px solid grey;
     cursor: pointer;
     display: flex;
-    font: 7pt Verdana, serif;
+    font: 10pt Verdana, serif;
 }
 
 .block_data div {
@@ -61,22 +61,23 @@
 }
 
 .left_block div:nth-child(1), .left_block div:nth-child(2) {
-    font: 8pt Verdana, serif;
+    font: 10pt Verdana, serif;
 }
 
 .right_block {
+    font: bold 14pt Georgia, serif;
     margin: 10px;
     width: 60%;
 }
 
 .comments_field {
-    height: 65px;
+    height: 100px;
     margin: 10px 0;
     overflow: hidden;
 }
 
 .comments_field_modal {
-    height: 100px;
+    height: 180px;
     margin: 10px 0 20px;
 }
 

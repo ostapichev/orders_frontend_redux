@@ -1,8 +1,8 @@
-import { FC, MouseEventHandler, useEffect, useState } from 'react';
+import { FC, MouseEventHandler} from 'react';
 import { NavLink } from "react-router-dom";
 
 import { adminActions, authActions, orderActions } from "../../redux";
-import { history } from "../../services";
+
 import { IFuncVoid } from "../../types";
 import { Profile } from "../Profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -15,7 +15,6 @@ import { admin_panel, home_page, login, log_out, okten_school } from '../../asse
 const Header: FC = () => {
     const dispatch = useAppDispatch();
     const { me } = useAppSelector(state => state.authReducer);
-    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = () => {
         dispatch(orderActions.resetParams());
@@ -28,21 +27,6 @@ const Header: FC = () => {
         defaultParamsUsers();
         dispatch(authActions.logout());
     };
-    useEffect(() => {
-        const resetTimer = () => {
-            clearTimeout(timer);
-            setTimer(setTimeout(() => {
-                history.replace('./login?expSession=true');
-                dispatch(authActions.logout());
-            }, 1200000));
-        };
-        window.addEventListener('mousemove', resetTimer);
-        window.addEventListener('keydown', resetTimer);
-        return () => {
-            window.removeEventListener('mousemove', resetTimer);
-            window.removeEventListener('keydown', resetTimer);
-        };
-    }, [timer, dispatch]);
 
     return (
         <div className={ css.header }>

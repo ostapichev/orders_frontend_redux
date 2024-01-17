@@ -141,7 +141,7 @@ const Orders: FC = () => {
 
     return (
         <div className={ css.table }>
-            <div>
+
                 <ListGroup className={ css.table_data } horizontal>
                     <ListGroup.Item className={ css.table_header } onClick={ orderById }>id</ListGroup.Item>
                     <ListGroup.Item className={ css.table_header } onClick={ orderByName }>name</ListGroup.Item>
@@ -165,8 +165,8 @@ const Orders: FC = () => {
                     </ListGroup.Item>
                     <ListGroup.Item className={css.table_header} onClick={ orderByManager }>manager</ListGroup.Item>
                 </ListGroup>
-            </div>
-            <div className='min-vw-100'>
+
+            <div>
                 { orders.map(order => <Order key={ order.id } order={ order } />) }
             </div>
         </div>

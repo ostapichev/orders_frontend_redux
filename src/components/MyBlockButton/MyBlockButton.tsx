@@ -27,7 +27,7 @@ const MyBlockButton: FC = () => {
 
     return (
         <div className={ css.block_filters }>
-            <div className={ css.filter_order_check }>
+            <div className='mb-1'>
                 <Form.Check
                     checked={ checkbox }
                     aria-label="My_orders"

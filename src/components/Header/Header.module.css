@@ -31,6 +31,6 @@ a img:hover {
 .nav_bar {
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
+    margin-right: 20px;
     width: 50vw;
 }

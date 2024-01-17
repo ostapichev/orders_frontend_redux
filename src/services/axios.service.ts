@@ -7,14 +7,14 @@ import { IFuncVoid } from "../types";
 
 
 const axiosService = axios.create({ baseURL });
-const history = createBrowserHistory({ window });
 const waitList: IFuncVoid[] = [];
+const history = createBrowserHistory({ window });
 let isRefreshing = false;
 
 axiosService.interceptors.request.use(response => {
     const access = authService.getAccessToken();
     if (access) {
-        response.headers.Authorization = `Bearer ${access}`;
+        response.headers.Authorization = `Bearer ${ access }`;
     }
     return response;
 });
@@ -45,8 +45,8 @@ axiosService.interceptors.response.use(response => {
             return new Promise(resolve => {
                 subscribeToWaitList(() => {
                     resolve(axiosService(request));
-                });
-            });
+                })
+            })
         }
         return Promise.reject(error);
     }
@@ -55,7 +55,6 @@ axiosService.interceptors.response.use(response => {
 const subscribeToWaitList = (cb: IFuncVoid): void => {
     waitList.push(cb);
 };
-
 const afterRefresh = () => {
     while (waitList.length) {
         const cb = waitList.pop();
