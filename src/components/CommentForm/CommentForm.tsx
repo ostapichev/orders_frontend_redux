@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import Form from 'react-bootstrap/Form';
+
 import { commentActions } from "../../redux";
 import { commentValidator } from "../../validators";
 import { IComment, IOrder } from "../../interfaces";
@@ -31,11 +33,11 @@ const CommentForm: FC<IProps> = ({ order_id }) => {
     const addValidForm: boolean = order.manager && order.manager.id !== me.id;
 
     return (
-        <form className={ css.comment_form } onSubmit={ handleSubmit(save) }>
+        <Form className={ css.comment_form } onSubmit={ handleSubmit(save) }>
             <input type="text" placeholder="Enter comment" { ...register('comment') }/>
             <button className={ css.button_comment } disabled={ !isValid || addValidForm }>Add</button>
             { errors.comment && <div className={ form_css.err_text }>{ errors.comment.message }</div> }
-        </form>
+        </Form>
     );
 };
 

@@ -8,6 +8,7 @@
 }
 
 .logo_loading {
+    border-radius: 50%;
     height: 100px;
     position: relative;
     pointer-events: none;

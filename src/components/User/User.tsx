@@ -57,13 +57,13 @@ const User: FC<IProps> = ({ user }) => {
                     className={ button_css.btn_open }
                     onClick={ (event) => is_active === true ? ban(event) : unban(event) }
                 >
-                    { is_active === true ? 'ban' : 'unban' }
+                    { is_active ? 'ban' : 'unban' }
                 </button>
                 <button
                     className={ button_css.btn_open }
                     onClick={ (event) => is_active === true ? recoveryPassword(event) : activateUser(event) }
                 >
-                    { is_active === true ? 'recovery' : 'activate user' }
+                    { is_active ? 'recovery' : 'activate user' }
                 </button>
             </div>
         </div>

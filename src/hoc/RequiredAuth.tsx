@@ -10,11 +10,10 @@ interface IProps {
 
 const RequiredAuth: FC<IProps> = ({ children }) => {
     const { me } = useAppSelector(state => state.authReducer);
-    if (!me) {
-        return <Navigate to='/login' />
+    if (me) {
+        return children;
     }
-
-    return children;
+    return <Navigate to='/login' />
 };
 
 export {

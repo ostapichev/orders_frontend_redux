@@ -57,35 +57,33 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
     };
 
     return (
-        <div>
-            <div className={ form_css.form_block }>
-                <img className={ form_css.logo_form } src={ okten_school } alt='logo' />
-                <Form
-                    className={ form_css.login_form }
-                    onSubmit={ handleSubmit(recoveryRequestUser) }
-                >
-                    <label>Password</label>
-                    <Form.Control
-                        size="sm"
-                        type="password"
-                        placeholder='enter password'
-                        autoComplete='on'
-                        { ...register('password',{ required: true }) }
-                    />
-                    <label>Confirm password</label>
-                    <Form.Control
-                        size="sm"
-                        type="password"
-                        placeholder='enter password'
-                        autoComplete='on'
-                        { ...register('confirmPassword',{ required: true }) }
-                    />
-                    <button className= { button_css.btn_submit } disabled={ loading }>Submit</button>
-                    { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
-                    { confirmError && <p className={ form_css.err_text }>{ confirmError }</p> }
-                    { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
-                </Form>
-            </div>
+        <div className={ form_css.form_block }>
+            <img className={ form_css.logo_form } src={ okten_school } alt='logo' />
+            <Form
+                className={ form_css.login_form }
+                onSubmit={ handleSubmit(recoveryRequestUser) }
+            >
+                <label>Password</label>
+                <Form.Control
+                    size="sm"
+                    type="password"
+                    placeholder='enter password'
+                    autoComplete='on'
+                    { ...register('password',{ required: true }) }
+                />
+                <label>Confirm password</label>
+                <Form.Control
+                    size="sm"
+                    type="password"
+                    placeholder='enter password'
+                    autoComplete='on'
+                    { ...register('confirmPassword',{ required: true }) }
+                />
+                <button className= { button_css.btn_submit } disabled={ loading }>Submit</button>
+                { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
+                { confirmError && <p className={ form_css.err_text }>{ confirmError }</p> }
+                { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
+            </Form>
         </div>
     );
 };

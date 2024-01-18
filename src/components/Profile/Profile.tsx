@@ -18,6 +18,8 @@ const Profile: FC = () => {
     const [account, setAccount] = useState<boolean>(false);
     const { me } = useAppSelector(state => state.authReducer);
     const { userStatistic } = useAppSelector(state => state.adminReducer);
+    const { orderUpdate } = useAppSelector(state => state.orderReducer);
+    const { triggerComment } = useAppSelector(state => state.commentReducer);
     const { email, profile, created_at } = me;
     const { id, name, surname } = profile;
     const { count_orders, in_work, agree, disagree, dubbing } = userStatistic;
@@ -25,7 +27,7 @@ const Profile: FC = () => {
     const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
         dispatch(adminActions.getStatisticUser({ id }))
-    }, [dispatch, id]);
+    }, [dispatch, id, orderUpdate, triggerComment]);
 
     return (
         <>

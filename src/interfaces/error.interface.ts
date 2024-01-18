@@ -9,6 +9,7 @@ export interface IErrorUser {
 }
 
 export interface IErrorOrder {
+    group?: number;
     email?: string[];
     name?: string[];
     surname?: string[];

@@ -124,7 +124,7 @@ const Order: FC<IProps> = ({ order }) => {
                                 </ListGroup.Item>
                             </ListGroup>
                         </div>
-                        <Modal size="lg"
+                        <Modal size="xl"
                                show={ showComment }
                                onHide={ handleClose }
                         >

@@ -16,13 +16,13 @@ const OrdersPage: FC = () => {
                 <InputBlock />
                 <MyBlockButton />
             </div>
-            {loading && <Loading />}
+            { loading && <Loading /> }
             <div className={ loading ? 'd-none' : css.orders_block }>
                 <OrderForm />
                 <Orders />
                 <PaginationApp namePage='homePage' />
             </div>
-            <div className={ openOrderForm && page_css.overlay }></div>
+            <div className={ openOrderForm ? page_css.overlay : '' }></div>
         </div>
     );
 };

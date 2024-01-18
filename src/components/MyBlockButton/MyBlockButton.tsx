@@ -1,6 +1,9 @@
 import { FC } from 'react';
 
 import Form from "react-bootstrap/Form";
+import Image from 'react-bootstrap/Image';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import { GetExelFile } from "../GetExelFile/GetExelFile";
 import { IFuncVoid } from "../../types";
@@ -37,8 +40,36 @@ const MyBlockButton: FC = () => {
                 <label className={css.my} htmlFor="myOrders">My orders</label>
             </div>
             <div className={css.icon_block}>
-                <img className={ css.icon } onClick={ setDefaultParams } src={ reload } alt='create_icon'/>
-                <img className={ css.icon } onClick={ createOrder } src={ create } alt='create_icon'/>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={ <Tooltip>Reset params</Tooltip> }
+                >
+                    {({ ref, ...triggerHandler }) => (
+                        <Image
+                            className={ css.icon }
+                            ref={ ref }
+                            src={ reload }
+                            alt='reload'
+                            onClick={ setDefaultParams }
+                            { ...triggerHandler }
+                        />
+                    )}
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={ <Tooltip>Create new order</Tooltip> }
+                >
+                    {({ ref, ...triggerHandler }) => (
+                        <Image
+                            className={ css.icon }
+                            ref={ ref }
+                            src={ create }
+                            alt='create_icon'
+                            onClick={ createOrder }
+                            { ...triggerHandler }
+                        />
+                    )}
+                </OverlayTrigger>
                 <GetExelFile/>
             </div>
         </div>

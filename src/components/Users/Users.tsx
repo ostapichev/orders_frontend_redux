@@ -8,6 +8,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { User } from "../User/User";
 
 import css from './Users.module.css';
+import {IFuncVoid} from "../../types";
 
 
 const Users: FC = () => {
@@ -15,13 +16,13 @@ const Users: FC = () => {
     const navigate = useNavigate();
     const { users, trigger, showParams, pageUsers, surnameUserInput } = useAppSelector(state => state.adminReducer);
     const [query] = useSearchParams();
-    const getAllUsers = useCallback(() => {
+    const getAllUsers: IFuncVoid = useCallback(() => {
         const params: IParams = {};
         params.page = query.get('page');
         params.surname_contains = query.get('surname_contains');
         dispatch(adminActions.getAll({ params }));
     }, [dispatch, query]);
-    const updateQueryString = useCallback(() => {
+    const updateQueryString: IFuncVoid = useCallback(() => {
         const queryParams: string[] = []
         if (showParams) {
             queryParams.push(`page=${ encodeURIComponent(pageUsers) }`);

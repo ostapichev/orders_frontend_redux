@@ -20,7 +20,7 @@ const AdminPage: FC = () => {
                 <Users />
                 <PaginationApp namePage='adminPage' />
             </div>
-            <div className={ openUserForm && page_css.overlay }></div>
+            <div className={ openUserForm ? page_css.overlay : '' }></div>
         </div>
     );
 };

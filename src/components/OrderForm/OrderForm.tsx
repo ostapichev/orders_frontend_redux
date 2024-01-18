@@ -21,7 +21,7 @@ const OrderForm: FC = () => {
     const { groups, trigger, vision } = useAppSelector(state => state.groupReducer);
     const { orderUpdate, errorsOrder, orderCreate, openOrderForm } = useAppSelector(state => state.orderReducer);
     const { reset, handleSubmit, register, setValue, formState: { errors, isValid } } = useForm<IOrder>({
-        mode: "onChange",
+        mode: "all",
         resolver: joiResolver(orderValidator)
     });
     const update: SubmitHandler<IOrder> = async (order) => {
@@ -93,6 +93,7 @@ const OrderForm: FC = () => {
                         </Form.Select>
                         <button className={ css.btn_group } onClick={ addGroup }>Add group</button>
                         { errors.group && <div className={ form_css.err_text }>{ errors.group.message }</div>}
+                        { errorsOrder?.group && <div className={ form_css.err_text }>{ errorsOrder.group }</div> }
                     </div>
                     <label htmlFor="name">First name</label>
                     <Form.Control
@@ -152,7 +153,7 @@ const OrderForm: FC = () => {
                         <option value="FE">FE</option>
                         <option value="PCX">PCX</option>
                     </Form.Select>
-                    { errors.course && <div className={form_css.err_text }>{ errors.course.message }</div>}
+                    { errors.course && <div className={ form_css.err_text }>{ errors.course.message }</div>}
                     <label className={css.input_paid} htmlFor="paid">Already paid</label>
                     <Form.Control
                         size="sm"
@@ -223,6 +224,7 @@ const OrderForm: FC = () => {
                     { errorsOrder?.surname && <div className={ form_css.err_text }>{ errorsOrder.name }</div> }
                     { errorsOrder?.email && <div className={ form_css.err_text }>{ errorsOrder.email }</div> }
                     { errorsOrder?.phone && <div className={ form_css.err_text }>{ errorsOrder.phone }</div> }
+
                 <div className={ css.button_block }>
                     <button className={ button_css.btn_form } disabled={ !isValid }>
                         { orderUpdate ? 'Update' : 'Save' }

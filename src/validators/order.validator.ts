@@ -2,6 +2,11 @@ import Joi from "joi";
 
 
 const orderValidator = Joi.object({
+    group: Joi.number()
+        .required()
+        .messages({
+            'number.base': 'Group selection is required'
+        }),
     name: Joi.string()
         .regex(/^[a-zа-яёіA-ZА-ЯЇЁ]+$/)
         .required()
@@ -92,11 +97,6 @@ const orderValidator = Joi.object({
         .messages({
             'string.only': 'Invalid status selection',
             'string.required': 'Status selection is required'
-        }),
-    group: Joi.string()
-        .required()
-        .messages({
-            'string.required': 'Group selection is required'
         })
 });
 

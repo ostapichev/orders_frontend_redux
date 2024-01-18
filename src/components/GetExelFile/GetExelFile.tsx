@@ -1,5 +1,9 @@
 import { FC, MouseEventHandler } from 'react';
 
+import Image from 'react-bootstrap/Image';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
 import { useAppSelector } from "../../hooks";
 
 import css from '../MyBlockButton/MyBlockButton.module.css';
@@ -22,9 +26,21 @@ const GetExelFile: FC = () => {
     };
 
     return (
-        <>
-            <img className={ css.icon } onClick={ getExel } src={ exel } alt='create_icon' />
-        </>
+        <OverlayTrigger
+            placement="top"
+            overlay={ <Tooltip>Get exel file by orders</Tooltip> }
+        >
+            {({ ref, ...triggerHandler }) => (
+                <Image
+                    className={ css.icon }
+                    ref={ ref }
+                    src={ exel }
+                    alt='exel_icon'
+                    onClick={ getExel }
+                    {...triggerHandler}
+                />
+            )}
+        </OverlayTrigger>
     );
 };
 

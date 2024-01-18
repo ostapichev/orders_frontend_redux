@@ -1,8 +1,7 @@
-import { FC, MouseEventHandler} from 'react';
+import { FC, MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 
-import { adminActions, authActions, orderActions } from "../../redux";
-
+import { adminActions, authActions, commentActions, orderActions } from "../../redux";
 import { IFuncVoid } from "../../types";
 import { Profile } from "../Profile/Profile";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -16,17 +15,42 @@ const Header: FC = () => {
     const dispatch = useAppDispatch();
     const { me } = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
-    const defaultParamsOrders: IFuncVoid = () => {
+    const defaultParamsOrders: IFuncVoid = useCallback(() => {
         dispatch(orderActions.resetParams());
-    };
-    const defaultParamsUsers: IFuncVoid = () => {
+    }, [dispatch]);
+    const defaultParamsUsers: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());
-    };
+    }, [dispatch]);
+    const resetPageComments: IFuncVoid = useCallback(() => {
+        dispatch(commentActions.setDefaultPaginate());
+    }, [dispatch])
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultParamsOrders();
         defaultParamsUsers();
+        resetPageComments();
         dispatch(authActions.logout());
     };
+    const [, setIsActive] = useState(true);
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout = null;
+        const handleMouseMove = () => {
+            setIsActive(true);
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setIsActive(false);
+                defaultParamsOrders();
+                defaultParamsUsers();
+                resetPageComments();
+                dispatch(authActions.logout());
+            }, 1200000);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            clearTimeout(timeoutId);
+        };
+    }, [dispatch, defaultParamsOrders, defaultParamsUsers, resetPageComments]);
 
     return (
         <div className={ css.header }>

@@ -1,9 +1,8 @@
 .comment_body {
     border-bottom: 1px solid grey;
     display: flex;
+    font: italic 12pt Georgia, Serif;
     justify-content: space-between;
-    font-size: 12pt;
-    font-style: italic;
 }
 
 .comment_body div:nth-child(1) {
