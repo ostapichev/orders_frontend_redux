@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import { FC } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
     const { error, loading } = useAppSelector(state => state.authReducer)
     const navigate = useNavigate();
-    const [query,] = useSearchParams();
+    const [query] = useSearchParams();
     const { handleSubmit, register, formState: { errors } } = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(authValidator)
@@ -33,12 +33,6 @@ const LoginForm: FC = () => {
             navigate('/orders');
         }
     };
-    const logout = query.get('expSession');
-    useEffect(() => {
-        if (logout) {
-            dispatch(authActions.logout());
-        }
-    }, [dispatch, logout]);
 
     return (
         <div className={ form_css.form_block } onSubmit={ handleSubmit(login) }>
@@ -62,7 +56,7 @@ const LoginForm: FC = () => {
                 />
                 { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
                 <button className={ button_css.btn_submit } disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
-                { logout && <p className={ form_css.err_text }>Please login!</p> }
+                { query.get('expSession') && <p className={form_css.err_text}>Please login!</p> }
                 { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
             </Form>
         </div>
