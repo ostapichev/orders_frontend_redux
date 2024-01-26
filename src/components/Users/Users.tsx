@@ -14,7 +14,9 @@ import {IFuncVoid} from "../../types";
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { users, trigger, showParams, pageUsers, surnameUserInput } = useAppSelector(state => state.adminReducer);
+    const {
+        users, trigger, showParams, pageUsers, surnameUserInput
+    } = useAppSelector(state => state.adminReducer);
     const [query] = useSearchParams();
     const getAllUsers: IFuncVoid = useCallback(() => {
         const params: IParams = {};

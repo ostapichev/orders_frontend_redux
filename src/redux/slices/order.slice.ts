@@ -1,5 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
+import FileSaver from "file-saver";
 
 import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
 import { orderService } from "../../services";
@@ -18,7 +19,6 @@ interface IState {
     orderBy: string;
     totalPagesOrders: number;
     pageOrders: number;
-    fileDataURL?: string;
     openOrderForm: boolean;
     nameInputData: string;
     surNameInputData: string;
@@ -48,7 +48,6 @@ const initialState: IState = {
     orderBy: '',
     totalPagesOrders: 0,
     pageOrders: 1,
-    fileDataURL: null,
     openOrderForm: false,
     nameInputData: '',
     surNameInputData: '',
@@ -102,13 +101,15 @@ const update = createAsyncThunk<void, { id: number, order: IOrder }> (
     }
 );
 
-const getExelFile = createAsyncThunk<string,{ params: IParams }> (
+const getExelFile = createAsyncThunk<any, { params: IParams }> (
     'orderSlice/getExelFile',
     async ({ params }, { rejectWithValue }) => {
+        const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.sheet;charset=UTF-8";
+        const fileName: string = new Date().toISOString().slice(0, 10);
         try {
             const response: AxiosResponse = await orderService.createExelFile(params);
-            const blob = new Blob([response.data], { type: response.headers['content-type'] });
-            return URL.createObjectURL(blob);
+            const blob = new Blob([response.data],{ type: fileType });
+            return FileSaver.saveAs(blob,`${ fileName }.xlsx`);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -123,6 +124,7 @@ const slice = createSlice({
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
             state.openOrderForm = true;
+            state.errorsOrder = null;
         },
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
@@ -231,9 +233,7 @@ const slice = createSlice({
                 state.errorsOrder = null;
             })
             .addCase(getExelFile.fulfilled, (state, action) => {
-                state.fileDataURL = action.payload;
                 state.loading = false;
-                state.errorsOrder = null;
             })
             .addMatcher(isFulfilled(create, update), state => {
                 state.trigger = !state.trigger;

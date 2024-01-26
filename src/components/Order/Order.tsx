@@ -5,7 +5,6 @@ import Collapse from 'react-bootstrap/Collapse';
 import ListGroup from "react-bootstrap/ListGroup";
 import Modal from 'react-bootstrap/Modal';
 
-
 import { Comment } from "../Comment/Comment";
 import { CommentForm } from "../CommentForm/CommentForm";
 import { CommentsPaginate } from "../CommentsPaginate/CommentsPaginate";
@@ -45,24 +44,8 @@ const Order: FC<IProps> = ({ order }) => {
         return "all groups";
     };
     const {
-        id,
-        name,
-        surname,
-        email,
-        phone,
-        age,
-        course,
-        course_format,
-        course_type,
-        status,
-        sum,
-        already_paid,
-        group,
-        created_at,
-        manager,
-        utm,
-        msg,
-        comments,
+        id, name, surname, email, phone, age, course, course_format, course_type,
+        status, sum, already_paid, group, created_at, manager, utm, msg, comments
     } = order;
     const addValidForm: boolean = order.manager && order.manager.id !== me.id;
     const nameGroup: string = getNameGroup(group);
@@ -99,11 +82,13 @@ const Order: FC<IProps> = ({ order }) => {
                         <div>
                             <button disabled={ addValidForm || (order.manager === null) }
                                     className={ button_css.btn_open }
-                                    onClick={ setUpdate }>Edit
+                                    onClick={ setUpdate }
+                            >
+                                Edit
                             </button>
                             { order.manager && order.manager.id !== me.id &&
                                 <div className={ form_css.err_text }>
-                                    You cannot comment or edit this order. It belongs to another manager.
+                                    You cannot comment and edit this order. It belongs to another manager.
                                 </div>
                             }
                         </div>
@@ -145,7 +130,7 @@ const Order: FC<IProps> = ({ order }) => {
                             </Modal.Body>
                             <CommentsPaginate comments={ comments }/>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={ handleClose }>Close</Button>
+                                <Button type="button" variant="secondary" onClick={ handleClose }>Close</Button>
                             </Modal.Footer>
                         </Modal>
                         <CommentForm order_id={ id } />

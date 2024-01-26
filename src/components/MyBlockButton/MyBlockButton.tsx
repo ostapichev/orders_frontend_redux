@@ -70,7 +70,7 @@ const MyBlockButton: FC = () => {
                         />
                     )}
                 </OverlayTrigger>
-                <GetExelFile/>
+                <GetExelFile />
             </div>
         </div>
     );

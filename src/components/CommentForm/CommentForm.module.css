@@ -13,7 +13,7 @@
     cursor: not-allowed;
 }
 
-.button_comment:hover {
+.button_comment:hover:enabled {
     background-color: #0056b3;
     color: snow;
 }

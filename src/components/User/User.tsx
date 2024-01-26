@@ -48,19 +48,21 @@ const User: FC<IProps> = ({ user }) => {
                     <span className={ css.user_data }>{ is_active === true ? 'yes' : 'no' }</span>
                 </div>
                 <div className={ css.user_content }>last login:&nbsp;<span className={ css.user_data }>
-                    { last_login !== null ? <DateFormat originalDate={ last_login } /> : ' no data' }</span>
+                    { last_login !== null ? <DateFormat originalDate={ last_login } /> : 'no data' }</span>
                 </div>
             </div>
             <UserStatistics id={ id }/>
             <div className={ css.block_button }>
                 <button
                     className={ button_css.btn_open }
+                    type="submit"
                     onClick={ (event) => is_active === true ? ban(event) : unban(event) }
                 >
                     { is_active ? 'ban' : 'unban' }
                 </button>
                 <button
                     className={ button_css.btn_open }
+                    type="submit"
                     onClick={ (event) => is_active === true ? recoveryPassword(event) : activateUser(event) }
                 >
                     { is_active ? 'recovery' : 'activate user' }

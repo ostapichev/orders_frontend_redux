@@ -63,23 +63,31 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                 className={ form_css.login_form }
                 onSubmit={ handleSubmit(recoveryRequestUser) }
             >
-                <label>Password</label>
+                <label htmlFor="password">Password</label>
                 <Form.Control
-                    size="sm"
                     type="password"
+                    name="password"
+                    size="sm"
                     placeholder='enter password'
                     autoComplete='on'
                     { ...register('password',{ required: true }) }
                 />
-                <label>Confirm password</label>
+                <label htmlFor="confirmPassword">Confirm password</label>
                 <Form.Control
-                    size="sm"
                     type="password"
+                    name="confirmPassword"
+                    size="sm"
                     placeholder='enter password'
                     autoComplete='on'
                     { ...register('confirmPassword',{ required: true }) }
                 />
-                <button className= { button_css.btn_submit } disabled={ loading }>Submit</button>
+                <button
+                    type="submit"
+                    className={ button_css.btn_submit }
+                    disabled={ loading }
+                >
+                    Submit
+                </button>
                 { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
                 { confirmError && <p className={ form_css.err_text }>{ confirmError }</p> }
                 { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }

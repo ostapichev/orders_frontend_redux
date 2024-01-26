@@ -11,6 +11,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch } from "../../hooks";
 
 import css from './GroupForm.module.css';
+import { form_css } from '../../styles';
 
 
 const GroupForm: FC = () => {
@@ -34,12 +35,24 @@ const GroupForm: FC = () => {
                 size="sm"
                 name='group'
                 placeholder='enter name group'
-                { ...register('name') }/>
+                { ...register('name') } />
             <div>
-                <button className={ css.btn_group } disabled={ !isValid }>save</button>
-                <button className={ css.btn_group } onClick={ select }>select</button>
+                <button
+                    type="submit"
+                    className={ css.btn_group }
+                    disabled={ !isValid }
+                >
+                    save
+                </button>
+                <button
+                    type="button"
+                    className={ css.btn_group }
+                    onClick={ select }
+                >
+                    select
+                </button>
             </div>
-            { errors.name && <div className={ css.err_group_form }>{ errors.name.message }</div> }
+            { errors.name && <div className={ form_css.err_text }>{ errors.name.message }</div> }
         </Form>
     );
 };

@@ -16,30 +16,14 @@ const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {
-        nameInputData,
-        surNameInputData,
-        emailInputData,
-        phoneInputData,
-        ageInputData,
-        courseInputData,
-        formatCourseInputData,
-        typeCourseInputData,
-        statusInputData,
-        groupInputData,
-        startDateInputData,
-        endDateInputData,
-        orders,
-        trigger,
-        sorted,
-        checkbox,
-        pageOrders,
-        showParams,
-        orderBy,
+        nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
+        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
+        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
     } = useAppSelector(state => state.orderReducer);
     const { triggerComment } = useAppSelector(state => state.commentReducer);
     const { me } = useAppSelector(state => state.authReducer);
     const [query] = useSearchParams();
-    const getAllOrders = useCallback(() => {
+    const getAllOrders: IFuncVoid = useCallback(() => {
         const params: IParams = {};
         params.page = query.get('page');
         params.order_by = query.get('order_by');
@@ -57,7 +41,6 @@ const Orders: FC = () => {
         params.created_at_before = query.get('end_date');
         params.manager = query.get('manager');
         dispatch(orderActions.getAll({ params }));
-        dispatch(orderActions.getExelFile({ params }));
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${ order_by }`;
@@ -78,7 +61,7 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-    const updateQueryString = useCallback(() => {
+    const updateQueryString: IFuncVoid = useCallback(() => {
         const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${ encodeURIComponent(pageOrders) }`);
@@ -142,30 +125,102 @@ const Orders: FC = () => {
     return (
         <div className={ css.table }>
             <ListGroup className={ css.table_data } horizontal>
-                <ListGroup.Item className={ css.table_header } onClick={ orderById }>id</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByName }>name</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderBySurName }>surname</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByEmail }>email</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByPhone }>phone</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByAge }>age</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByCourse }>course</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByCourseFormat }>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderById }
+                >
+                    id
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByName }
+                >
+                    name
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderBySurName }
+                >
+                    surname
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByEmail }
+                >
+                    email
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByPhone }
+                >
+                    phone
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByAge }
+                >
+                    age
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByCourse }
+                >
+                    course
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByCourseFormat }
+                >
                     course_format
                 </ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByCourseType }>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByCourseType }
+                >
                     course_type
                 </ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByStatus }>status</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderBySum }>sum</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByPaid }>paid</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByGroup }>group</ListGroup.Item>
-                <ListGroup.Item className={ css.table_header } onClick={ orderByCreated }>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByStatus }
+                >
+                    status
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderBySum }
+                >
+                    sum
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByPaid }
+                >
+                    paid
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByGroup }
+                >
+                    group
+                </ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header }
+                    onClick={ orderByCreated }
+                >
                     created at
                 </ListGroup.Item>
-                <ListGroup.Item className={ css.table_header} onClick={ orderByManager }>manager</ListGroup.Item>
+                <ListGroup.Item
+                    className={ css.table_header}
+                    onClick={ orderByManager }
+                >
+                    manager
+                </ListGroup.Item>
             </ListGroup>
             <div>
-                { orders.map(order => <Order key={ order.id } order={ order } />) }
+                { orders.map(order => <Order
+                    key={ order.id }
+                    order={ order }
+                />) }
             </div>
         </div>
     );

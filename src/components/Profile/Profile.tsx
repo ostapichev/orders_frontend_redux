@@ -32,6 +32,7 @@ const Profile: FC = () => {
     return (
         <>
             <Button
+                type="button"
                 className='d-flex flex-column align-items-center'
                 variant="light"
                 onClick={ handleShow }
@@ -130,6 +131,7 @@ const Profile: FC = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
+                        type="button"
                         variant="secondary"
                         onClick={ handleClose }
                     >

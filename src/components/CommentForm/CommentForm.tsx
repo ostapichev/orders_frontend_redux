@@ -35,7 +35,13 @@ const CommentForm: FC<IProps> = ({ order_id }) => {
     return (
         <Form className={ css.comment_form } onSubmit={ handleSubmit(save) }>
             <input type="text" placeholder="Enter comment" { ...register('comment') }/>
-            <button className={ css.button_comment } disabled={ !isValid || addValidForm }>Add</button>
+            <button
+                type="submit"
+                className={ css.button_comment }
+                disabled={ !isValid || addValidForm }
+            >
+                Add
+            </button>
             { errors.comment && <div className={ form_css.err_text }>{ errors.comment.message }</div> }
         </Form>
     );

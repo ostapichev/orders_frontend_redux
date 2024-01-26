@@ -25,7 +25,7 @@ const getAll = createAsyncThunk<IGroup[], void> (
     'groupSlice/getAll',
     async (_, { rejectWithValue }) => {
         try {
-            const {data} = await groupService.getAll();
+            const { data } = await groupService.getAll();
             return data;
         } catch (e) {
             const err = e as AxiosError;

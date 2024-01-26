@@ -35,27 +35,38 @@ const LoginForm: FC = () => {
     };
 
     return (
-        <div className={ form_css.form_block } onSubmit={ handleSubmit(login) }>
+        <div className={ form_css.form_block }>
             <img className={ form_css.logo_form } src={ okten_school } alt='logo'/>
-            <Form className={ form_css.login_form }>
-                <label>Email</label>
+            <Form
+                className={ form_css.login_form }
+                onSubmit={ handleSubmit(login) }
+            >
+                <label htmlFor="email">Email</label>
                 <Form.Control
-                    size="sm"
                     type="email"
+                    name="email"
+                    size="sm"
                     placeholder='enter email'
                     { ...register('email',{ required: true }) }
                 />
                 { errors.email && <p className={ form_css.err_text }>{ errors.email.message }</p> }
-                <label>Password</label>
+                <label htmlFor="password">Password</label>
                 <Form.Control
-                    size="sm"
                     type="password"
+                    name="password"
+                    size="sm"
                     placeholder='enter password'
                     autoComplete='on'
                     { ...register('password',{ required: true }) }
                 />
                 { errors.password && <p className={ form_css.err_text }>{ errors.password.message }</p> }
-                <button className={ button_css.btn_submit } disabled={ loading }>{ loading ? 'Loading' : 'Login' }</button>
+                <button
+                    type="submit"
+                    className={ button_css.btn_submit }
+                    disabled={ loading }
+                >
+                    { loading ? 'Loading' : 'Login' }
+                </button>
                 { query.get('expSession') && <p className={form_css.err_text}>Please login!</p> }
                 { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
             </Form>

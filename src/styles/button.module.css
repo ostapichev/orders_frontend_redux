@@ -39,7 +39,7 @@
     cursor: not-allowed;
 }
 
-.btn_open:hover {
+.btn_open:hover:enabled {
     background-color: #0056b3;
     color: snow;
 }

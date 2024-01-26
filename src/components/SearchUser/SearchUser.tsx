@@ -39,16 +39,16 @@ const SearchUser: FC = () => {
                     { ...register('surnameUserInput') }
                 />
                 <Button
-                    className='z-1'
-                    disabled={ !isValid }
                     type="submit"
+                    className='z-1'
                     variant="primary"
+                    disabled={ !isValid }
                 >
                     Search
                 </Button>
                 <Button
-                    className='z-1'
                     type='reset'
+                    className='z-1'
                     variant="outline-secondary"
                     onClick={ resetParams }
                 >

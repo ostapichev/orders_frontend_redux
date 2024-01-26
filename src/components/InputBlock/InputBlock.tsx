@@ -13,18 +13,9 @@ const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const { groups } = useAppSelector(state => state.groupReducer);
     const {
-        nameInputData,
-        surNameInputData,
-        emailInputData,
-        phoneInputData,
-        ageInputData,
-        courseInputData,
-        formatCourseInputData,
-        typeCourseInputData,
-        statusInputData,
-        groupInputData,
-        startDateInputData,
-        endDateInputData
+        nameInputData, surNameInputData, emailInputData, phoneInputData,
+        ageInputData, courseInputData, formatCourseInputData, typeCourseInputData,
+        statusInputData, groupInputData, startDateInputData, endDateInputData
     } = useAppSelector(state => state.orderReducer);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(orderActions.setNameInputData(event.target.value));
