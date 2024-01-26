@@ -80,7 +80,7 @@ const Order: FC<IProps> = ({ order }) => {
                         <div>Message: { msg !== null ? msg : 'no data' }</div>
                         <div>UTM: { utm !== null ? utm : 'no data' }</div>
                         <div>
-                            <button disabled={ addValidForm || (order.manager === null) }
+                            <button disabled={ addValidForm }
                                     className={ button_css.btn_open }
                                     onClick={ setUpdate }
                             >

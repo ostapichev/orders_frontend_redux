@@ -32,9 +32,9 @@ const UserStatistics: FC<IProps> = ({ id }) => {
     }, [queryUserStatistic]);
 
     return (
-        <div className='d-flex flex-column align-items-center'>
-            <div className={ (count_orders > 0) ? "fs-6 text-serif" : 'd-none' }>
-                Orders:&nbsp;<span className="fw-bold fs-6 text-serif">{ count_orders }</span>
+        <div className="d-flex flex-column align-items-center">
+            <div className="fs-6 text-serif">
+                Total orders:&nbsp;<span className="fw-bold fs-6 text-serif">{ count_orders }</span>
             </div>
             <div className={ (in_work > 0) ? "fs-6 text-serif" : 'd-none' }>
                 In work:&nbsp;<span className="fw-bold fs-6 text-serif">{ in_work }</span>

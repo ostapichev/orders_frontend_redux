@@ -1,5 +1,12 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createSlice,
+    isFulfilled,
+    isPending,
+    isRejectedWithValue,
+    PayloadAction
+} from "@reduxjs/toolkit";
 import FileSaver from "file-saver";
 
 import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
@@ -33,6 +40,7 @@ interface IState {
     startDateInputData: string;
     endDateInputData: string;
     showParams: boolean;
+    searchParams: IParams;
 }
 
 const initialState: IState = {
@@ -61,7 +69,8 @@ const initialState: IState = {
     groupInputData: '',
     startDateInputData: '',
     endDateInputData: '',
-    showParams: false
+    showParams: false,
+    searchParams: {}
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
@@ -217,6 +226,9 @@ const slice = createSlice({
             state.openOrderForm = false;
             state.orderUpdate = null;
             state.errorsOrder = null;
+        },
+        setSearchParams: (state, action: PayloadAction<IParams>) => {
+            state.searchParams = action.payload;
         },
     },
     extraReducers: builder =>

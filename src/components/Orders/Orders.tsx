@@ -18,30 +18,33 @@ const Orders: FC = () => {
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
+        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy, searchParams
     } = useAppSelector(state => state.orderReducer);
     const { triggerComment } = useAppSelector(state => state.commentReducer);
     const { me } = useAppSelector(state => state.authReducer);
     const [query] = useSearchParams();
     const getAllOrders: IFuncVoid = useCallback(() => {
-        const params: IParams = {};
-        params.page = query.get('page');
-        params.order_by = query.get('order_by');
-        params.name_contains = query.get('name');
-        params.surname_contains = query.get('surname');
-        params.email_contains = query.get('email');
-        params.phone_contains = query.get('phone');
-        params.age_in = query.get('age');
-        params.course = query.get('course');
-        params.course_format = query.get('course_format');
-        params.course_type = query.get('course_type');
-        params.status_in = query.get('status');
-        params.group = query.get('group');
-        params.created_at_after = query.get('start_date');
-        params.created_at_before = query.get('end_date');
-        params.manager = query.get('manager');
+        const page = query.get('page');
+        const order_by: string = query.get('order_by');
+        const name_contains: string = query.get('name');
+        const surname_contains: string = query.get('surname');
+        const email_contains: string = query.get('email');
+        const phone_contains: string = query.get('phone');
+        const age_in: string = query.get('age');
+        const course: string = query.get('course');
+        const course_format: string = query.get('course_format');
+        const course_type: string = query.get('course_type');
+        const status_in: string = query.get('status');
+        const group: string = query.get('group');
+        const created_at_after: string = query.get('start_date');
+        const created_at_before: string = query.get('end_date');
+        const manager: string = query.get('manager');
+        const params: IParams = {
+            ...searchParams, page, order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
+            course, course_format, course_type, status_in, group, created_at_after, created_at_before, manager
+        };
         dispatch(orderActions.getAll({ params }));
-    },[dispatch, query]);
+    },[dispatch, query, searchParams]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${ order_by }`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
