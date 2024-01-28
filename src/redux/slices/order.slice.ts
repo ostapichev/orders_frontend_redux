@@ -227,8 +227,8 @@ const slice = createSlice({
             state.orderUpdate = null;
             state.errorsOrder = null;
         },
-        setSearchParams: (state, action: PayloadAction<IParams>) => {
-            state.searchParams = action.payload;
+        setSearchParams: (state, action) => {
+            state.searchParams = { ...state.searchParams, ...action.payload };
         },
     },
     extraReducers: builder =>

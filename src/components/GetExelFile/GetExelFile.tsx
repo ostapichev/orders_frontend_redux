@@ -8,31 +8,30 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { IFuncVoid } from "../../types";
 import { IParams } from "../../interfaces";
 import { orderActions } from "../../redux";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch } from "../../hooks";
 
 import css from '../MyBlockButton/MyBlockButton.module.css';
 
 import { exel } from "../../asserts";
 
 
-
 const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();
     const [query] = useSearchParams();
-    const { searchParams } = useAppSelector(state => state.orderReducer);
     const queryParams = [
-        'order_by', 'name', 'surname', 'email', 'phone', 'age', 'course', 'course_format',
-        'course_type', 'status', 'group', 'start_date', 'end_date', 'manager'
+        'order_by', 'name_contains', 'surname_contains', 'email_contains', 'phone_contains', 'age_in', 'course',
+        'course_format', 'course_type', 'status_in', 'group', 'created_at_after', 'created_at_before', 'manager'
     ];
     const params: IParams = {};
     queryParams.forEach((param) => {
         const value = query.get(param);
-        params[param] = value !== null ? value : '';
+        if (value !== null) {
+            params[param] = value;
+        }
     });
-    const resultParams: IParams = { ...searchParams, ...params };
+    const resultParams: IParams = { ...params };
     const getFile: IFuncVoid = () => {
-        dispatch(orderActions.setSearchParams(resultParams));
-        dispatch(orderActions.getExelFile({ params: resultParams }));
+        dispatch(orderActions.getExelFile({ params: resultParams}));
     }
 
     return (

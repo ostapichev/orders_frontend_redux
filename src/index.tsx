@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const store = setupStore();
 
 root.render(
-    <Provider store={store}>
+    <Provider store={ store }>
             { /*// @ts-expect-error*/ }
             <BrowserRouter history={ history }>
                 <App />

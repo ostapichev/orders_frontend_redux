@@ -40,11 +40,11 @@ const Orders: FC = () => {
         const created_at_before: string = query.get('end_date');
         const manager: string = query.get('manager');
         const params: IParams = {
-            ...searchParams, page, order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
+            page, order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
             course, course_format, course_type, status_in, group, created_at_after, created_at_before, manager
         };
         dispatch(orderActions.getAll({ params }));
-    },[dispatch, query, searchParams]);
+    },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${ order_by }`;
         dispatch(orderActions.setOrderByParams(newOrderBy));

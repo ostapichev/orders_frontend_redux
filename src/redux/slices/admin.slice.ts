@@ -15,7 +15,6 @@ interface IState {
     userStatistic: IUserStatistic;
     openUserForm: boolean;
     surnameUserInput: string;
-    dataInfo: IPagination<void>;
     showParams: boolean;
     pageUsers: number,
     totalPagesUsers: number;
@@ -31,7 +30,6 @@ const initialState: IState = {
     userStatistic: {},
     openUserForm: false,
     surnameUserInput: '',
-    dataInfo: {},
     showParams: false,
     pageUsers: 1,
     totalPagesUsers: 0,
