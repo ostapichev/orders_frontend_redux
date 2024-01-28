@@ -18,7 +18,7 @@ const Orders: FC = () => {
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy, searchParams
+        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
     } = useAppSelector(state => state.orderReducer);
     const { triggerComment } = useAppSelector(state => state.commentReducer);
     const { me } = useAppSelector(state => state.authReducer);

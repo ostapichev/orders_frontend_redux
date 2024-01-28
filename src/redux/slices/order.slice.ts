@@ -1,12 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
-import {
-    createAsyncThunk,
-    createSlice,
-    isFulfilled,
-    isPending,
-    isRejectedWithValue,
-    PayloadAction
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 import FileSaver from "file-saver";
 
 import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
@@ -15,7 +8,6 @@ import { orderService } from "../../services";
 
 interface IState {
     orders: IOrder[];
-    me?: string;
     checkbox: boolean;
     errorsOrder: IErrorOrder;
     orderUpdate: IOrder;
@@ -40,12 +32,10 @@ interface IState {
     startDateInputData: string;
     endDateInputData: string;
     showParams: boolean;
-    searchParams: IParams;
 }
 
 const initialState: IState = {
     orders: [],
-    me: null,
     checkbox: false,
     errorsOrder: null,
     orderUpdate: null,
@@ -69,8 +59,7 @@ const initialState: IState = {
     groupInputData: '',
     startDateInputData: '',
     endDateInputData: '',
-    showParams: false,
-    searchParams: {}
+    showParams: false
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
@@ -220,16 +209,11 @@ const slice = createSlice({
         },
         openForm: state => {
             state.openOrderForm = true;
-            state.errorsOrder = null;
         },
         closeForm: state => {
             state.openOrderForm = false;
             state.orderUpdate = null;
-            state.errorsOrder = null;
-        },
-        setSearchParams: (state, action) => {
-            state.searchParams = { ...state.searchParams, ...action.payload };
-        },
+        }
     },
     extraReducers: builder =>
         builder
@@ -242,9 +226,8 @@ const slice = createSlice({
             .addCase(update.fulfilled, state => {
                 state.orderUpdate = null;
                 state.openOrderForm = false;
-                state.errorsOrder = null;
             })
-            .addCase(getExelFile.fulfilled, (state, action) => {
+            .addCase(getExelFile.fulfilled, state => {
                 state.loading = false;
             })
             .addMatcher(isFulfilled(create, update), state => {

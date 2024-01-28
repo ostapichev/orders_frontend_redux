@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -7,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { authActions } from "../../redux";
 import { authValidator } from "../../validators";
 import { IAuth } from "../../interfaces";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import { button_css, form_css} from '../../styles/index';
@@ -67,7 +67,7 @@ const LoginForm: FC = () => {
                 >
                     { loading ? 'Loading' : 'Login' }
                 </button>
-                { query.get('expSession') && <p className={form_css.err_text}>Please login!</p> }
+                { query.get('expSession') && <p className={ form_css.err_text }>Please login!</p> }
                 { error?.detail && <p className={ form_css.err_text }>{ error.detail }</p> }
             </Form>
         </div>

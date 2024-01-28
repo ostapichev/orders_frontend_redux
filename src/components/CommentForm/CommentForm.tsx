@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
@@ -6,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import { commentActions } from "../../redux";
 import { commentValidator } from "../../validators";
 import { IComment, IOrder } from "../../interfaces";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './CommentForm.module.css';

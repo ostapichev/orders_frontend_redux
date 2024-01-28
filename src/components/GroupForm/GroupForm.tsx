@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
@@ -7,7 +8,6 @@ import { groupActions } from "../../redux";
 import { groupValidator } from "../../validators";
 import { IFuncVoid } from "../../types";
 import { IGroup } from "../../interfaces";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useAppDispatch } from "../../hooks";
 
 import css from './GroupForm.module.css';

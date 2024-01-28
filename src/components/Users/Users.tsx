@@ -9,6 +9,7 @@ import { User } from "../User/User";
 
 import css from './Users.module.css';
 import {IFuncVoid} from "../../types";
+import {DataMessage} from "../DataMessage/DataMessage";
 
 
 const Users: FC = () => {
@@ -51,8 +52,12 @@ const Users: FC = () => {
                 </div>
             </div>
             {
-                users.map(user => <User key={ user.id } user={ user } />)
+                users.map(user => <User
+                    key={ user.id }
+                    user={ user }
+                />)
             }
+            <DataMessage />
         </div>
     );
 };

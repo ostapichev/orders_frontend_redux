@@ -21,7 +21,7 @@ const OrderForm: FC = () => {
     const { groups, trigger, vision } = useAppSelector(state => state.groupReducer);
     const { orderUpdate, errorsOrder, orderCreate, openOrderForm } = useAppSelector(state => state.orderReducer);
     const { reset, handleSubmit, register, setValue, formState: { errors, isValid } } = useForm<IOrder>({
-        mode: "onSubmit",
+        mode: 'all',
         resolver: joiResolver(orderValidator)
     });
     const update: SubmitHandler<IOrder> = async (order) => {

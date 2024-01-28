@@ -3,6 +3,7 @@ export * from './Comment/Comment';
 export * from './CommentForm/CommentForm';
 export * from './CommentsPaginate/CommentsPaginate';
 export * from './DateFormat/DateFormat';
+export * from './DataMessage/DataMessage';
 export * from './GetExelFile/GetExelFile';
 export * from './GroupForm/GroupForm';
 export * from './Group/Group';

@@ -9,6 +9,7 @@ interface IState {
     me: IUser;
     loading: boolean;
     error: IErrorAuth;
+    checkerMessage: string;
     confirmError?: string;
 }
 
@@ -16,7 +17,8 @@ const initialState: IState = {
     me: null,
     loading: false,
     error: null,
-    confirmError: null
+    checkerMessage: null,
+    confirmError: null,
 };
 
 const login = createAsyncThunk<IUser, IAuth> (
@@ -31,11 +33,12 @@ const login = createAsyncThunk<IUser, IAuth> (
     }
 );
 
-const activateUser = createAsyncThunk<void, { formData: FormData }>(
+const activateUser = createAsyncThunk<string, { formData: FormData }>(
     'userSlice/activateUser',
     async ({ formData }, { rejectWithValue }) => {
         try {
-            await authService.activateUser(formData);
+            const { request } = await authService.activateUser(formData);
+            return request.response;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -55,11 +58,12 @@ const activateRequestUser = createAsyncThunk<void, { formData: FormData, token: 
     }
 );
 
-const recoveryPassword = createAsyncThunk<void, { formData: FormData }>(
+const recoveryPassword = createAsyncThunk<string, { formData: FormData }>(
     'userSlice/recoveryPassword',
     async ({ formData }, { rejectWithValue }) => {
         try {
-            await authService.recoveryPassword(formData);
+            const { request } = await authService.recoveryPassword(formData);
+            return request.response;
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -99,6 +103,9 @@ const slice = createSlice({
         },
         setConfirmError: (state, action) => {
             state.confirmError = action.payload;
+        },
+        closeModal: state => {
+            state.checkerMessage = null;
         }
     },
     extraReducers: builder =>
@@ -107,6 +114,10 @@ const slice = createSlice({
                 state.loading = false;
                 state.me = action.payload;
                 state.error = null;
+            })
+            .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {
+                state.loading = false;
+                state.checkerMessage = action.payload;
             })
             .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
                 state.loading = false;
