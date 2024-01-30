@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
-import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import { authService } from "../../services";
-import { IAuth, IErrorAuth, IUser } from "../../interfaces";
+import {authService} from "../../services";
+import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 
 
 interface IState {
@@ -23,7 +23,7 @@ const initialState: IState = {
 
 const login = createAsyncThunk<IUser, IAuth> (
     'authSlice/login',
-    async (user, { rejectWithValue }) => {
+    async (user, {rejectWithValue}) => {
         try {
             return await authService.login(user);
         } catch (e) {
@@ -33,11 +33,11 @@ const login = createAsyncThunk<IUser, IAuth> (
     }
 );
 
-const activateUser = createAsyncThunk<string, { formData: FormData }>(
+const activateUser = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/activateUser',
-    async ({ formData }, { rejectWithValue }) => {
+    async ({formData}, {rejectWithValue}) => {
         try {
-            const { request } = await authService.activateUser(formData);
+            const {request} = await authService.activateUser(formData);
             return request.response;
         } catch (e) {
             const err = e as AxiosError;
@@ -46,9 +46,9 @@ const activateUser = createAsyncThunk<string, { formData: FormData }>(
     }
 );
 
-const activateRequestUser = createAsyncThunk<void, { formData: FormData, token: string }> (
+const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: string}> (
     'authSlice/activateRequestUser',
-    ({ formData ,token }, { rejectWithValue }) => {
+    ({formData ,token}, {rejectWithValue}) => {
         try {
             return authService.activateRequestUser(formData, token);
         } catch (e) {
@@ -58,11 +58,11 @@ const activateRequestUser = createAsyncThunk<void, { formData: FormData, token: 
     }
 );
 
-const recoveryPassword = createAsyncThunk<string, { formData: FormData }>(
+const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/recoveryPassword',
-    async ({ formData }, { rejectWithValue }) => {
+    async ({formData}, {rejectWithValue}) => {
         try {
-            const { request } = await authService.recoveryPassword(formData);
+            const {request} = await authService.recoveryPassword(formData);
             return request.response;
         } catch (e) {
             const err = e as AxiosError;
@@ -71,9 +71,9 @@ const recoveryPassword = createAsyncThunk<string, { formData: FormData }>(
     }
 );
 
-const recoveryRequestPassword = createAsyncThunk<void, { formData: FormData, token: string }> (
+const recoveryRequestPassword = createAsyncThunk<void, {formData: FormData, token: string}> (
     'authSlice/recoveryRequestPassword',
-    ({ formData ,token }, { rejectWithValue }) => {
+    ({formData ,token}, {rejectWithValue}) => {
         try {
             return authService.recoveryPasswordRequest(formData, token);
         } catch (e) {
@@ -86,7 +86,7 @@ const recoveryRequestPassword = createAsyncThunk<void, { formData: FormData, tok
 const me = createAsyncThunk<IUser, void> (
     'authSlice/me',
     async () => {
-        const { data } = await authService.me();
+        const {data} = await authService.me();
         return data;
     }
 );
@@ -133,7 +133,7 @@ const slice = createSlice({
             })
 });
 
-const { actions, reducer: authReducer } = slice;
+const {actions, reducer: authReducer} = slice;
 const authActions = {
     ...actions,
     login,

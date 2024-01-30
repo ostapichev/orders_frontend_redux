@@ -1,14 +1,14 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
 import Form from "react-bootstrap/Form";
 import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { GetExelFile } from "../GetExelFile/GetExelFile";
-import { IFuncVoid } from "../../types";
-import { orderActions } from "../../redux";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import {GetExelFile} from "../GetExelFile/GetExelFile";
+import {IFuncVoid} from "../../types";
+import {orderActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
 
@@ -17,7 +17,7 @@ import {create, reload} from '../../asserts';
 
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
-    const { checkbox } = useAppSelector(state => state.orderReducer);
+    const {checkbox} = useAppSelector(state => state.orderReducer);
     const handler: IFuncVoid = () => {
         dispatch(orderActions.setCheckBox());
     };
@@ -29,44 +29,44 @@ const MyBlockButton: FC = () => {
     };
 
     return (
-        <div className={ css.block_filters }>
+        <div className={css.block_filters}>
             <div className='mb-1'>
                 <Form.Check
-                    checked={ checkbox }
+                    id='myOrders'
+                    checked={checkbox}
                     aria-label="My_orders"
-                    name="myOrders"
-                    inline onChange={ handler }
+                    inline onChange={handler}
                 />
-                <label className={css.my} htmlFor="myOrders">My orders</label>
+                <label className={css.my} htmlFor='myOrders'>My orders</label>
             </div>
             <div className={css.icon_block}>
                 <OverlayTrigger
                     placement="top"
-                    overlay={ <Tooltip>Reset params</Tooltip> }
+                    overlay={<Tooltip>Reset params</Tooltip>}
                 >
-                    {({ ref, ...triggerHandler }) => (
+                    {({ref, ...triggerHandler}) => (
                         <Image
-                            className={ css.icon }
-                            ref={ ref }
-                            src={ reload }
+                            className={css.icon}
+                            ref={ref}
+                            src={reload}
                             alt='reload'
                             onClick={ setDefaultParams }
-                            { ...triggerHandler }
+                            {...triggerHandler}
                         />
                     )}
                 </OverlayTrigger>
                 <OverlayTrigger
                     placement="top"
-                    overlay={ <Tooltip>Create new order</Tooltip> }
+                    overlay={<Tooltip>Create new order</Tooltip>}
                 >
-                    {({ ref, ...triggerHandler }) => (
+                    {({ref, ...triggerHandler}) => (
                         <Image
-                            className={ css.icon }
-                            ref={ ref }
-                            src={ create }
+                            className={css.icon}
+                            ref={ref}
+                            src={create}
                             alt='create_icon'
-                            onClick={ createOrder }
-                            { ...triggerHandler }
+                            onClick={createOrder}
+                            {...triggerHandler}
                         />
                     )}
                 </OverlayTrigger>

@@ -1,9 +1,9 @@
-import { AxiosResponse } from "axios";
+import {AxiosResponse} from "axios";
 
-import { axiosService } from "./axios.service";
-import { IAuth, ITokens, IUser } from "../interfaces";
-import { IRes } from "../types";
-import { urls } from "../constants";
+import {axiosService} from "./axios.service";
+import {IAuth, ITokens, IUser} from "../interfaces";
+import {IRes} from "../types";
+import {urls} from "../constants";
 
 
 class AuthService {
@@ -11,9 +11,9 @@ class AuthService {
     private readonly refreshKey = 'refresh';
 
     async login(user: IAuth): Promise<IUser>{
-        const { data }: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.login, user);
+        const {data}: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.login, user);
         this.setTokens(data);
-        const { data: me }: AxiosResponse<IUser> = await this.me();
+        const {data: me}: AxiosResponse<IUser> = await this.me();
         return me;
     };
     async refresh(): Promise<void> {
@@ -22,27 +22,27 @@ class AuthService {
             throw new Error('Refresh token is not exist!');
         }
         const { data }: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.refresh,
-            { refresh: refreshToken });
+            {refresh: refreshToken});
         this.setTokens(data);
     };
     activateRequestUser(formData: FormData, token: string): Promise<void> {
         return axiosService.post(urls.authAPI.activateRequest(token), formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {'Content-Type': 'multipart/form-data'}
         });
     };
     activateUser(formData: FormData): IRes<IUser> {
         return axiosService.post(urls.authAPI.activate, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {'Content-Type': 'multipart/form-data'}
         });
     };
     recoveryPassword(formData: FormData): IRes<IUser> {
         return axiosService.post(urls.authAPI.recoveryPassword, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {'Content-Type': 'multipart/form-data'}
         });
     };
     recoveryPasswordRequest(formData: FormData, token: string): Promise<void> {
         return axiosService.post(urls.authAPI.recoveryPasswordRequest(token), formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {'Content-Type': 'multipart/form-data'}
         });
     };
     me(): IRes<IUser> {

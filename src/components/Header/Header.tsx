@@ -1,19 +1,20 @@
-import { FC, MouseEventHandler, useCallback, useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import {FC, MouseEventHandler, useCallback, useEffect, useState} from 'react';
+import {NavLink} from "react-router-dom";
 
-import { adminActions, authActions, commentActions, orderActions } from "../../redux";
-import { IFuncVoid } from "../../types";
-import { Profile } from "../Profile/Profile";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import {adminActions, authActions, commentActions, orderActions} from "../../redux";
+import {IFuncVoid} from "../../types";
+import {Profile} from "../Profile/Profile";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
 
-import { admin_panel, home_page, login, log_out, okten_school } from '../../asserts';
+import {admin_panel, home_page, login, log_out, okten_school} from '../../asserts';
 
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();
-    const { me } = useAppSelector(state => state.authReducer);
+    const {me} = useAppSelector(state => state.authReducer);
+    const [, setIsActive] = useState<boolean>(true);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
         dispatch(orderActions.resetParams());
@@ -30,8 +31,6 @@ const Header: FC = () => {
         resetPageComments();
         dispatch(authActions.logout());
     };
-    const [, setIsActive] = useState(true);
-
     useEffect(() => {
         let timeoutId: NodeJS.Timeout = null;
         const handleMouseMove = () => {
@@ -43,7 +42,7 @@ const Header: FC = () => {
                 defaultParamsUsers();
                 resetPageComments();
                 dispatch(authActions.logout());
-            }, 1200000);
+            }, 900000);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
@@ -53,55 +52,55 @@ const Header: FC = () => {
     }, [dispatch, defaultParamsOrders, defaultParamsUsers, resetPageComments]);
 
     return (
-        <div className={ css.header }>
+        <div className={css.header}>
             <div>
                 <NavLink
                     to='https://owu.com.ua/'
                     target='_blank'
                 >
-                    <img className={ css.logo } src={ okten_school } alt="okten_school" />
+                    <img className={css.logo} src={okten_school} alt="okten_school" />
                 </NavLink>
             </div>
             <div>
                 { me ?
-                    <div className={ css.nav_bar }>
+                    <div className={css.nav_bar}>
                         <Profile />
                         { isAdmin &&
-                            <div className={ css.header_link }>
+                            <div className={css.header_link}>
                                 <NavLink
-                                    to='/admin'
-                                    onClick={ defaultParamsUsers }
+                                    to='/orders'
+                                    onClick={defaultParamsOrders}
                                 >
-                                    <img className={ css.image_link } src={ admin_panel } alt="admin" />
+                                    <img className={css.image_link} src={home_page} alt="home" />
                                 </NavLink>
                             </div>
                         }
                         { isAdmin &&
-                            <div className={ css.header_link }>
+                            <div className={css.header_link}>
                                 <NavLink
-                                    to='/orders'
-                                    onClick={ defaultParamsOrders }
+                                    to='/admin'
+                                    onClick={defaultParamsUsers}
                                 >
-                                    <img className={ css.image_link } src={ home_page } alt="home" />
+                                    <img className={css.image_link} src={admin_panel} alt="admin" />
                                 </NavLink>
                             </div>
                         }
-                        <div className={ css.header_link }>
+                        <div className={css.header_link}>
                             <NavLink
                                 to='/login'
-                                onClick={ logout }
+                                onClick={logout}
                             >
-                                <img className={ css.image_link } src={ log_out } alt="logout" />
+                                <img className={css.image_link} src={log_out} alt="logout" />
                             </NavLink>
                         </div>
                     </div>
                     :
                     <div>
-                        <p className={css.header_link}>
+                        <div className={css.header_link}>
                             <NavLink to='/login'>
-                                <img className={ css.image_link } src={ login } alt="login" />
+                                <img className={css.image_link} src={login} alt="login" />
                             </NavLink>
-                        </p>
+                        </div>
                     </div>
                 }
             </div>

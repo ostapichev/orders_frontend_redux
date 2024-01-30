@@ -1,9 +1,9 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
+import {AxiosError, AxiosResponse} from "axios";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 import FileSaver from "file-saver";
 
-import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
-import { orderService } from "../../services";
+import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
+import {orderService} from "../../services";
 
 
 interface IState {
@@ -62,11 +62,11 @@ const initialState: IState = {
     showParams: false
 };
 
-const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
+const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
     'orderSlice/getAll',
-    async ({ params }, { rejectWithValue }) => {
+    async ({params}, {rejectWithValue}) => {
         try {
-            const { data } = await orderService.getAll(params);
+            const {data} = await orderService.getAll(params);
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -75,9 +75,9 @@ const getAll = createAsyncThunk<IPagination<IOrder[]>, { params: IParams }> (
     }
 );
 
-const create = createAsyncThunk<void, { groupId: string, order: IOrder }> (
+const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
     'orderSlice/create',
-    async ({ groupId, order }, { rejectWithValue }) => {
+    async ({groupId, order}, {rejectWithValue}) => {
         try {
             await orderService.create(groupId, order);
         } catch (e) {
@@ -87,9 +87,9 @@ const create = createAsyncThunk<void, { groupId: string, order: IOrder }> (
     }
 );
 
-const update = createAsyncThunk<void, { id: number, order: IOrder }> (
+const update = createAsyncThunk<void, {id: number, order: IOrder}> (
     'orderSlice/update',
-    async ({ id, order }, { rejectWithValue }) => {
+    async ({id, order}, {rejectWithValue}) => {
         try {
             await orderService.updateById(id.toString(), order)
         } catch (e) {
@@ -99,15 +99,15 @@ const update = createAsyncThunk<void, { id: number, order: IOrder }> (
     }
 );
 
-const getExelFile = createAsyncThunk<any, { params: IParams }> (
+const getExelFile = createAsyncThunk<void, {params: IParams}> (
     'orderSlice/getExelFile',
-    async ({ params }, { rejectWithValue }) => {
+    async ({params}, {rejectWithValue}) => {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.sheet;charset=UTF-8";
         const fileName: string = new Date().toISOString().slice(0, 10);
         try {
             const response: AxiosResponse = await orderService.createExelFile(params);
-            const blob = new Blob([response.data],{ type: fileType });
-            return FileSaver.saveAs(blob,`${ fileName }.xlsx`);
+            const blob = new Blob([response.data],{type: fileType});
+            return FileSaver.saveAs(blob,`${fileName}.xlsx`);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -213,12 +213,13 @@ const slice = createSlice({
         closeForm: state => {
             state.openOrderForm = false;
             state.orderUpdate = null;
+            state.errorsOrder = null;
         }
     },
     extraReducers: builder =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                const { result, total_pages } = action.payload;
+                const {result, total_pages} = action.payload;
                 state.orders = result;
                 state.totalPagesOrders = total_pages;
                 state.errorsOrder = null;
@@ -248,7 +249,7 @@ const slice = createSlice({
             })
 });
 
-const { actions, reducer: orderReducer } = slice;
+const {actions, reducer: orderReducer} = slice;
 const orderActions = {
     ...actions,
     getAll,

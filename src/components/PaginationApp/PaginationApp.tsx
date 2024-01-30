@@ -1,9 +1,9 @@
-import { ChangeEvent, FC } from 'react';
+import {ChangeEvent, FC} from 'react';
 
-import { Pagination, Stack } from '@mui/material';
+import {Pagination, Stack} from '@mui/material';
 
-import { adminActions, orderActions } from "../../redux";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import {adminActions, orderActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
 interface IProps {
@@ -12,8 +12,8 @@ interface IProps {
 
 const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dispatch = useAppDispatch();
-    const { totalPagesOrders, pageOrders } = useAppSelector(state => state.orderReducer);
-    const { totalPagesUsers, pageUsers } = useAppSelector(state => state.adminReducer);
+    const {totalPagesOrders, pageOrders} = useAppSelector(state => state.orderReducer);
+    const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
     const getDataPage = (): number[] => {
         if (namePage === 'homePage') {
             return [totalPagesOrders, pageOrders];
@@ -37,14 +37,14 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dataPage: number[] = getDataPage();
 
     return (
-        <Stack spacing={ 2 } sx={{ marginY: 3 }}>
+        <Stack spacing={2} sx={{ marginY: 3 }}>
             { (dataPage[0] > 1) &&
                 <Pagination
-                    count={ dataPage[0] }
-                    page={ dataPage[1] }
-                    onChange={ handlerChangePage }
+                    count={dataPage[0]}
+                    page={dataPage[1]}
+                    onChange={handlerChangePage}
                     color="primary"
-                    siblingCount={ 2 }
+                    siblingCount={2}
                     showFirstButton
                     showLastButton
                 />

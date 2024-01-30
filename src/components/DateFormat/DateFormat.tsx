@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { format } from 'date-fns';
+import {FC} from 'react';
+import {format} from 'date-fns';
 
 
 interface IProps {
@@ -11,7 +11,7 @@ const DateFormat: FC<IProps> = ({ originalDate }) => {
 
     return (
         <>
-            { formatData }
+            {formatData}
         </>
     );
 };

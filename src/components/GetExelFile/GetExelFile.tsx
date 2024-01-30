@@ -1,18 +1,18 @@
-import { FC } from 'react';
-import { useSearchParams } from "react-router-dom";
+import {FC} from 'react';
+import {useSearchParams} from "react-router-dom";
 
 import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { IFuncVoid } from "../../types";
-import { IParams } from "../../interfaces";
-import { orderActions } from "../../redux";
-import { useAppDispatch } from "../../hooks";
+import {IFuncVoid} from "../../types";
+import {IParams} from "../../interfaces";
+import {orderActions} from "../../redux";
+import {useAppDispatch} from "../../hooks";
 
 import css from '../MyBlockButton/MyBlockButton.module.css';
 
-import { exel } from "../../asserts";
+import {exel} from "../../asserts";
 
 
 const GetExelFile: FC = () => {
@@ -29,24 +29,24 @@ const GetExelFile: FC = () => {
             params[param] = value;
         }
     });
-    const resultParams: IParams = { ...params };
+    const resultParams: IParams = {...params};
     const getFile: IFuncVoid = () => {
-        dispatch(orderActions.getExelFile({ params: resultParams}));
+        dispatch(orderActions.getExelFile({params: resultParams}));
     }
 
     return (
         <OverlayTrigger
             placement="top"
-            overlay={ <Tooltip>Get exel file by orders</Tooltip> }
+            overlay={<Tooltip>Get exel file by orders</Tooltip>}
         >
-            {({ ref, ...triggerHandler }) => (
+            {({ref, ...triggerHandler}) => (
                 <Image
-                    className={ css.icon }
-                    ref={ ref }
-                    src={ exel }
+                    className={css.icon}
+                    ref={ref}
+                    src={exel}
                     alt='exel_icon'
-                    onClick={ getFile }
-                    { ...triggerHandler }
+                    onClick={getFile}
+                    {...triggerHandler}
                 />
             )}
         </OverlayTrigger>

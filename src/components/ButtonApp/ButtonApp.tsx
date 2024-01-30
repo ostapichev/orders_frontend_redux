@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { useAppDispatch } from "../../hooks";
-import { adminActions } from "../../redux";
-import { IFuncVoid } from "../../types";
+import {useAppDispatch} from "../../hooks";
+import {adminActions} from "../../redux";
+import {IFuncVoid} from "../../types";
 
-import { button_css } from '../../styles/index';
+import {button_css} from '../../styles/index';
 
 
 const ButtonApp: FC = () => {
@@ -17,8 +17,8 @@ const ButtonApp: FC = () => {
         <>
             <button
                 type="button"
-                className={ button_css.btn_open }
-                onClick={ handleOpen }
+                className={button_css.btn_open}
+                onClick={handleOpen}
             >
                 Create
             </button>

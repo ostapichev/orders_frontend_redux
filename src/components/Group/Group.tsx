@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { IGroup } from "../../interfaces";
+import {IGroup} from "../../interfaces";
 
 
 interface IProps {
@@ -8,10 +8,10 @@ interface IProps {
 }
 
 const Group: FC<IProps> = ({ group }) => {
-    const { id, name } = group;
+    const {id, name} = group;
 
     return (
-        <option value={ id }>{ name }</option>
+        <option value={id}>{name}</option>
     );
 };
 

@@ -1,21 +1,21 @@
-import { FC } from 'react';
-import { joiResolver } from "@hookform/resolvers/joi";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {FC} from 'react';
+import {joiResolver} from "@hookform/resolvers/joi";
+import {SubmitHandler, useForm} from "react-hook-form";
 
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
-import { InputGroup } from "react-bootstrap";
+import {InputGroup} from "react-bootstrap";
 
-import { adminActions } from "../../redux";
-import { IFuncVoid } from "../../types";
-import { ISearch } from "../../interfaces";
-import { searchValidator } from "../../validators";
-import { useAppDispatch } from "../../hooks";
+import {adminActions} from "../../redux";
+import {IFuncVoid} from "../../types";
+import {ISearch} from "../../interfaces";
+import {searchValidator} from "../../validators";
+import {useAppDispatch} from "../../hooks";
 
 
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();
-    const { register, reset, handleSubmit, formState: { isValid } } = useForm<ISearch>({
+    const {register, reset, handleSubmit, formState: {isValid}} = useForm<ISearch>({
         mode: 'all',
         resolver: joiResolver(searchValidator)
     });
@@ -30,19 +30,19 @@ const SearchUser: FC = () => {
     return (
         <Form
             className='w-50'
-            onSubmit={ handleSubmit(onSubmit) }
+            onSubmit={handleSubmit(onSubmit)}
         >
             <InputGroup>
                 <Form.Control
                     type="search"
                     placeholder="search user by surname"
-                    { ...register('surnameUserInput') }
+                    {...register('surnameUserInput')}
                 />
                 <Button
                     type="submit"
                     className='z-1'
                     variant="primary"
-                    disabled={ !isValid }
+                    disabled={!isValid}
                 >
                     Search
                 </Button>
@@ -50,7 +50,7 @@ const SearchUser: FC = () => {
                     type='reset'
                     className='z-1'
                     variant="outline-secondary"
-                    onClick={ resetParams }
+                    onClick={resetParams}
                 >
                     Reset
                 </Button>

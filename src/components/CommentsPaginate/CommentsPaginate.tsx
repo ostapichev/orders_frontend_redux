@@ -1,10 +1,10 @@
-import { ChangeEvent, FC } from 'react';
+import {ChangeEvent, FC} from 'react';
 
-import { Pagination, Box } from "@mui/material";
+import {Pagination, Box} from "@mui/material";
 
-import { commentActions } from "../../redux";
-import { IComment } from "../../interfaces";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import {commentActions} from "../../redux";
+import {IComment} from "../../interfaces";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 
 interface IProps {
@@ -13,7 +13,7 @@ interface IProps {
 
 const CommentsPaginate: FC<IProps> = ({ comments }) => {
     const dispatch = useAppDispatch();
-    const { totalPageComments, pageComments, pageSize } = useAppSelector(state => state.commentReducer);
+    const {totalPageComments, pageComments, pageSize} = useAppSelector(state => state.commentReducer);
     const countPages: number = Math.ceil( comments.length / pageSize);
     const getDataPage = (): number[] => {
         if (comments) {
@@ -30,15 +30,16 @@ const CommentsPaginate: FC<IProps> = ({ comments }) => {
         <Box justifyContent='center'
              alignItems='center'
              display='flex'
-             sx={{ margin: '20px 0' }}>{ (dataPage[0] > 1) && (
-                <Pagination
-                    count={ dataPage[0] }
-                    page={ dataPage[1] }
-                    onChange={ handleChangePage }
-                    color="primary"
-                    siblingCount={ 2 }
-                />
-            ) }
+             sx={{ margin: '20px 0' }}>
+                { (dataPage[0] > 1) && (
+                    <Pagination
+                        count={dataPage[0]}
+                        page={dataPage[1]}
+                        onChange={handleChangePage}
+                        color="primary"
+                        siblingCount={2}
+                    />
+                )}
         </Box>
     );
 };
