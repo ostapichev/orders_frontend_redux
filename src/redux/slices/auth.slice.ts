@@ -106,6 +106,7 @@ const slice = createSlice({
         },
         closeModal: state => {
             state.checkerMessage = null;
+            state.error = null;
         }
     },
     extraReducers: builder =>

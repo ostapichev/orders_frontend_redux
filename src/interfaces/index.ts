@@ -7,5 +7,6 @@ export * from './order.interface';
 export * from './pagination.interface';
 export * from './profile.interface';
 export * from './search.interface';
+export * from './statistic.interface';
 export * from './tokens.interface';
 export * from './user.interface';

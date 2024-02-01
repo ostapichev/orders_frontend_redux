@@ -10,22 +10,24 @@ import {IFuncVoid} from "../../types";
 
 const DataMessage: FC = () => {
     const dispatch = useAppDispatch();
-    const {checkerMessage} = useAppSelector(state => state.authReducer);
+    const {error, checkerMessage} = useAppSelector(state => state.authReducer);
     const handleClose: IFuncVoid = () => dispatch(authActions.closeModal());
 
     return (
         <>
             <Modal
-                show={!!checkerMessage}
+                show={!!checkerMessage || !!error}
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>INFO</Modal.Title>
+                    <Modal.Title>{checkerMessage ? 'INFO' : 'ERROR'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className='fw-bold fs-6 text-serif'>{JSON.parse(checkerMessage)}</div>
+                    <div className='fw-bold fs-6 text-serif'>
+                        {checkerMessage ? JSON.parse(checkerMessage) : error?.detail}
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button

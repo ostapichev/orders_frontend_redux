@@ -91,6 +91,7 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                 >
                     Submit
                 </button>
+                { errors.confirmPassword && <p className={form_css.err_text}>{errors.confirmPassword.message}</p> }
                 { confirmError && <p className={form_css.err_text}>{confirmError}</p> }
                 { error?.detail && <p className={form_css.err_text}>{error.detail}</p> }
             </Form>

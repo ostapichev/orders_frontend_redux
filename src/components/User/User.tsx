@@ -4,7 +4,7 @@ import {authActions, adminActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IUser} from "../../interfaces";
 import {useAppDispatch} from "../../hooks";
-import {UserStatistics} from "../UserStatistics/UserStatistics";
+import {StatisticUser} from "../StatisticUser/StatisticUser";
 
 import {button_css} from '../../styles/index';
 import css from './User.module.css';
@@ -51,7 +51,7 @@ const User: FC<IProps> = ({ user }) => {
                     { last_login !== null ? <DateFormat originalDate={last_login} /> : 'no data' }</span>
                 </div>
             </div>
-            <UserStatistics id={id}/>
+            <StatisticUser id={id}/>
             <div className={css.block_button}>
                 <button
                     className={button_css.btn_open}

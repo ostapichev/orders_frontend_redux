@@ -90,7 +90,7 @@ const OrderForm: FC = () => {
                                 />)
                             }
                         </Form.Select>
-                        <button className={css.btn_group} type="button" onClick={addGroup}>Add group</button>
+                        <button type="button" className={css.btn_group} onClick={addGroup}>Add group</button>
                     </label>
                     { errors.group && <div className={form_css.err_text}>{errors.group.message}</div> }
                     { errorGroup?.name && <div className={form_css.err_text}>{errorGroup.name}</div> }

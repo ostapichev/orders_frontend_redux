@@ -18,20 +18,26 @@ import {exel} from "../../asserts";
 const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();
     const [query] = useSearchParams();
-    const queryParams = [
-        'order_by', 'name_contains', 'surname_contains', 'email_contains', 'phone_contains', 'age_in', 'course',
-        'course_format', 'course_type', 'status_in', 'group', 'created_at_after', 'created_at_before', 'manager'
-    ];
-    const params: IParams = {};
-    queryParams.forEach((param) => {
-        const value = query.get(param);
-        if (value !== null) {
-            params[param] = value;
-        }
-    });
-    const resultParams: IParams = {...params};
+    const order_by: string = query.get('order_by');
+    const name_contains: string = query.get('name');
+    const surname_contains: string = query.get('surname');
+    const email_contains: string = query.get('email');
+    const phone_contains: string = query.get('phone');
+    const age_in: string = query.get('age');
+    const course: string = query.get('course');
+    const course_format: string = query.get('course_format');
+    const course_type: string = query.get('course_type');
+    const status_in: string = query.get('status');
+    const group: string = query.get('group');
+    const created_at_after: string = query.get('start_date');
+    const created_at_before: string = query.get('end_date');
+    const manager: string = query.get('manager');
+    const params: IParams = {
+        order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
+        course, course_format, course_type, status_in, group, created_at_after, created_at_before, manager
+    };
     const getFile: IFuncVoid = () => {
-        dispatch(orderActions.getExelFile({params: resultParams}));
+        dispatch(orderActions.getExelFile({params}));
     }
 
     return (

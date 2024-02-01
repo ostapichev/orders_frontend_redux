@@ -24,4 +24,4 @@ export * from './SearchUser/SearchUser';
 export * from './User/User';
 export * from './UserForm/UserForm';
 export * from './Users/Users';
-export * from './UserStatistics/UserStatistics';
+export * from './StatisticUser/StatisticUser';

@@ -31,7 +31,7 @@ const CommentsPaginate: FC<IProps> = ({ comments }) => {
              alignItems='center'
              display='flex'
              sx={{ margin: '20px 0' }}>
-                { (dataPage[0] > 1) && (
+                { (dataPage[0] > 1) &&
                     <Pagination
                         count={dataPage[0]}
                         page={dataPage[1]}
@@ -39,7 +39,7 @@ const CommentsPaginate: FC<IProps> = ({ comments }) => {
                         color="primary"
                         siblingCount={2}
                     />
-                )}
+                }
         </Box>
     );
 };

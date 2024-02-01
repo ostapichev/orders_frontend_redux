@@ -46,6 +46,7 @@ const LoginForm: FC = () => {
                     <Form.Control
                         type="email"
                         size="sm"
+                        id='email'
                         placeholder='enter email'
                         {...register('email',{required: true})}
                     />

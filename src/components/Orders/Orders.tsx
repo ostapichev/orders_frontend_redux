@@ -24,7 +24,7 @@ const Orders: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const [query] = useSearchParams();
     const getAllOrders: IFuncVoid = useCallback(() => {
-        const page = query.get('page');
+        const page: string = query.get('page');
         const order_by: string = query.get('order_by');
         const name_contains: string = query.get('name');
         const surname_contains: string = query.get('surname');
@@ -46,7 +46,7 @@ const Orders: FC = () => {
         dispatch(orderActions.getAll({ params }));
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
-        const newOrderBy = sorted ? order_by : `-${ order_by }`;
+        const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');

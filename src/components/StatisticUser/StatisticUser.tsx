@@ -3,14 +3,14 @@ import {FC, useEffect, useMemo, useState} from 'react';
 
 import {adminService} from "../../services";
 import {IFuncVoid} from "../../types";
-import {IUserStatistic} from "../../interfaces/statistic.interface";
+import {IUserStatistic} from "../../interfaces";
 
 
 interface IProps {
     id: number;
 }
 
-const UserStatistics: FC<IProps> = ({ id }) => {
+const StatisticUser: FC<IProps> = ({ id }) => {
     const [userStatistic, setUserStatistic] = useState<IUserStatistic>({
         count_orders: 0,
         in_work: 0,
@@ -54,5 +54,5 @@ const UserStatistics: FC<IProps> = ({ id }) => {
 };
 
 export {
-    UserStatistics
+    StatisticUser
 };

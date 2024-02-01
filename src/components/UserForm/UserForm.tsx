@@ -54,7 +54,7 @@ const UserForm: FC = () => {
                     />
                 </label>
                 { errors?.profile?.surname && <div className={form_css.err_text}>{errors.profile.surname.message}</div> }
-                <label htmlFor='email'>
+                <label className='w-100'>
                     email
                     <Form.Control
                         type="email"

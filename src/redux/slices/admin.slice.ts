@@ -1,9 +1,8 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorUser, IPagination, IParams, IUser} from "../../interfaces";
+import {IErrorUser, IOrderStatistic, IPagination, IParams, IUser, IUserStatistic} from "../../interfaces";
 import {adminService} from "../../services";
-import {IOrderStatistic, IUserStatistic} from "../../interfaces/statistic.interface";
 
 
 interface IState {
