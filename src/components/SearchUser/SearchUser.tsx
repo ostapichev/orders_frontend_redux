@@ -12,7 +12,6 @@ import {ISearch} from "../../interfaces";
 import {searchValidator} from "../../validators";
 import {useAppDispatch} from "../../hooks";
 
-
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();
     const {register, reset, handleSubmit, formState: {isValid}} = useForm<ISearch>({

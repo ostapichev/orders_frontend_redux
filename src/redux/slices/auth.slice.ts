@@ -4,7 +4,6 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithVal
 import {authService} from "../../services";
 import {IAuth, IErrorAuth, IUser} from "../../interfaces";
 
-
 interface IState {
     me: IUser;
     loading: boolean;
@@ -23,7 +22,7 @@ const initialState: IState = {
 
 const login = createAsyncThunk<IUser, IAuth> (
     'authSlice/login',
-    async (user, {rejectWithValue}) => {
+    async (user, { rejectWithValue }) => {
         try {
             return await authService.login(user);
         } catch (e) {
@@ -35,7 +34,7 @@ const login = createAsyncThunk<IUser, IAuth> (
 
 const activateUser = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/activateUser',
-    async ({formData}, {rejectWithValue}) => {
+    async ({ formData }, { rejectWithValue }) => {
         try {
             const {request} = await authService.activateUser(formData);
             return request.response;
@@ -48,7 +47,7 @@ const activateUser = createAsyncThunk<string, {formData: FormData}>(
 
 const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: string}> (
     'authSlice/activateRequestUser',
-    ({formData ,token}, {rejectWithValue}) => {
+    ({ formData, token }, { rejectWithValue }) => {
         try {
             return authService.activateRequestUser(formData, token);
         } catch (e) {
@@ -60,7 +59,7 @@ const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: s
 
 const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/recoveryPassword',
-    async ({formData}, {rejectWithValue}) => {
+    async ({ formData }, { rejectWithValue }) => {
         try {
             const {request} = await authService.recoveryPassword(formData);
             return request.response;
@@ -73,7 +72,7 @@ const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
 
 const recoveryRequestPassword = createAsyncThunk<void, {formData: FormData, token: string}> (
     'authSlice/recoveryRequestPassword',
-    ({formData ,token}, {rejectWithValue}) => {
+    ({ formData ,token }, { rejectWithValue }) => {
         try {
             return authService.recoveryPasswordRequest(formData, token);
         } catch (e) {

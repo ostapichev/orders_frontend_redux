@@ -4,7 +4,6 @@ import css from './Loading.module.css';
 
 import {okten_logo} from '../../asserts';
 
-
 const Loading: FC = () => {
     return (
         <div className={css.container}>

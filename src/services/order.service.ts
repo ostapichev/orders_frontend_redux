@@ -3,7 +3,6 @@ import {IOrder, IParams} from "../interfaces";
 import {IRes, IResPaginate} from "../types";
 import {urls} from "../constants";
 
-
 class OrderService {
     getAll(params: IParams): IResPaginate<IOrder[]> {
         return axiosService.get(urls.ordersAPI.orders, {params});

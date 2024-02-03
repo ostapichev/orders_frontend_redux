@@ -5,7 +5,6 @@ import {adminService} from "../../services";
 import {IFuncVoid} from "../../types";
 import {IUserStatistic} from "../../interfaces";
 
-
 interface IProps {
     id: number;
 }

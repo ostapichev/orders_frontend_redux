@@ -5,7 +5,6 @@ import {IAuth, ITokens, IUser} from "../interfaces";
 import {IRes} from "../types";
 import {urls} from "../constants";
 
-
 class AuthService {
     private readonly accessKey = 'access';
     private readonly refreshKey = 'refresh';

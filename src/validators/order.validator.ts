@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-
 const orderValidator = Joi.object({
     group: Joi.number()
         .required()

@@ -7,7 +7,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {authActions} from "../../redux";
 import {IFuncVoid} from "../../types";
 
-
 const DataMessage: FC = () => {
     const dispatch = useAppDispatch();
     const {error, checkerMessage} = useAppSelector(state => state.authReducer);

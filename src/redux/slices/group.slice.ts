@@ -4,7 +4,6 @@ import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolk
 import {IErrorGroup, IGroup} from "../../interfaces";
 import {groupService} from "../../services";
 
-
 interface IState {
     groups: IGroup[];
     trigger: boolean;
@@ -23,7 +22,7 @@ const initialState: IState = {
 
 const getAll = createAsyncThunk<IGroup[], void> (
     'groupSlice/getAll',
-    async (_, {rejectWithValue}) => {
+    async (_, { rejectWithValue }) => {
         try {
             const {data} = await groupService.getAll();
             return data;
@@ -36,7 +35,7 @@ const getAll = createAsyncThunk<IGroup[], void> (
 
 const create = createAsyncThunk<void, {group: IGroup}> (
     'groupSlice/create',
-    async ({group}, {rejectWithValue}) => {
+    async ({ group }, { rejectWithValue }) => {
         try {
             await groupService.create(group);
         } catch (e) {

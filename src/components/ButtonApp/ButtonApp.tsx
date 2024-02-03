@@ -6,7 +6,6 @@ import {IFuncVoid} from "../../types";
 
 import {button_css} from '../../styles/index';
 
-
 const ButtonApp: FC = () => {
     const dispatch = useAppDispatch();
     const handleOpen: IFuncVoid = () => {

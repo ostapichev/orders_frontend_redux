@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-
 const commentValidator = Joi.object({
     comment: Joi.string()
         .required()

@@ -4,7 +4,6 @@ import {IGroup} from "../interfaces";
 import {IRes} from "../types";
 import {urls} from "../constants";
 
-
 class GroupService {
     getAll(): IRes<IGroup[]> {
         return axiosService.get(urls.groupsAPI.groups);

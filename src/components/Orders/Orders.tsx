@@ -6,11 +6,10 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
-import {orderActions} from "../../redux";
+import {orderActions, paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
@@ -22,6 +21,7 @@ const Orders: FC = () => {
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
+
     const [query] = useSearchParams();
     const getAllOrders: IFuncVoid = useCallback(() => {
         const page: string = query.get('page');
@@ -43,6 +43,20 @@ const Orders: FC = () => {
             page, order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
             course, course_format, course_type, status_in, group, created_at_after, created_at_before, manager
         };
+        dispatch(paramsActions.setOrderBy(order_by));
+        dispatch(paramsActions.setNameContains(name_contains));
+        dispatch(paramsActions.setSurnameContains(surname_contains));
+        dispatch(paramsActions.setEmailContains(email_contains));
+        dispatch(paramsActions.setPhoneContains(phone_contains));
+        dispatch(paramsActions.setAgeIn(age_in));
+        dispatch(paramsActions.setCourse(course));
+        dispatch(paramsActions.setCourseFormat(course_format));
+        dispatch(paramsActions.setCourseType(course_type));
+        dispatch(paramsActions.setStatusIn(status_in));
+        dispatch(paramsActions.setGroup(group));
+        dispatch(paramsActions.setCreatedAtAfter(created_at_after));
+        dispatch(paramsActions.setCreatedAtBefore(created_at_before));
+        dispatch(paramsActions.setManager(manager));
         dispatch(orderActions.getAll({ params }));
     },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {

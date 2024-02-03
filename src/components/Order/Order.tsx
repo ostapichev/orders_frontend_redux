@@ -17,7 +17,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {button_css, form_css} from '../../styles/index';
 import css from './Order.module.css';
 
-
 interface IProps {
     order: IOrder;
 }

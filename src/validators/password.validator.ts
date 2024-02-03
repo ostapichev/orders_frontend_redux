@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-
 const passwordValidator = Joi.object({
     password: Joi.string()
         .regex(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s])\S{8,20}$/)

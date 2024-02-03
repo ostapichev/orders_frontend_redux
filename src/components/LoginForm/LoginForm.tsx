@@ -14,7 +14,6 @@ import {button_css, form_css} from '../../styles/index';
 
 import {okten_school} from '../../asserts';
 
-
 const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
     const {error, loading} = useAppSelector(state => state.authReducer)

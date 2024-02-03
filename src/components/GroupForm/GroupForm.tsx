@@ -13,7 +13,6 @@ import {useAppDispatch} from "../../hooks";
 import css from './GroupForm.module.css';
 import {form_css} from '../../styles';
 
-
 const GroupForm: FC = () => {
     const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IGroup>({
         mode: 'all',

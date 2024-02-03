@@ -4,7 +4,6 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithVal
 import {commentService} from "../../services";
 import {IComment, IErrorComment} from "../../interfaces";
 
-
 interface IState {
     comments?: IComment[];
     triggerComment: boolean;
@@ -31,7 +30,7 @@ const initialState: IState = {
 
 const create = createAsyncThunk<void, {order_id: number, comment: IComment}> (
     'commentSlice/create',
-    async ({order_id, comment}, {rejectWithValue}) => {
+    async ({ order_id, comment }, { rejectWithValue }) => {
         try {
             await commentService.create(order_id.toString(), comment);
         } catch (e) {

@@ -5,7 +5,6 @@ import {IComment} from "../../interfaces";
 
 import css from './Comment.module.css';
 
-
 interface IProps {
     commentBody: IComment;
 }

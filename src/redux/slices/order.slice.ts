@@ -5,7 +5,6 @@ import FileSaver from "file-saver";
 import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
 import {orderService} from "../../services";
 
-
 interface IState {
     orders: IOrder[];
     checkbox: boolean;
@@ -64,7 +63,7 @@ const initialState: IState = {
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
     'orderSlice/getAll',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         try {
             const {data} = await orderService.getAll(params);
             return data;
@@ -77,7 +76,7 @@ const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
 
 const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
     'orderSlice/create',
-    async ({groupId, order}, {rejectWithValue}) => {
+    async ({ groupId, order }, { rejectWithValue }) => {
         try {
             await orderService.create(groupId, order);
         } catch (e) {
@@ -89,7 +88,7 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
 
 const update = createAsyncThunk<void, {id: number, order: IOrder}> (
     'orderSlice/update',
-    async ({id, order}, {rejectWithValue}) => {
+    async ({ id, order }, { rejectWithValue }) => {
         try {
             await orderService.updateById(id.toString(), order)
         } catch (e) {
@@ -101,7 +100,7 @@ const update = createAsyncThunk<void, {id: number, order: IOrder}> (
 
 const getExelFile = createAsyncThunk<void, {params: IParams}> (
     'orderSlice/getExelFile',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.sheet;charset=UTF-8";
         const fileName: string = new Date().toISOString().slice(0, 10);
         try {

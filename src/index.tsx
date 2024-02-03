@@ -6,7 +6,6 @@ import App from './App';
 import {history} from './services';
 import {setupStore} from "./redux";
 
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const store = setupStore();
 

@@ -12,7 +12,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import css from './CommentForm.module.css';
 import {form_css} from '../../styles/index';
 
-
 interface IProps {
     order_id: number;
 }

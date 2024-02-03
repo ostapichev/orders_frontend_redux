@@ -5,7 +5,6 @@ import {Pagination, Stack} from '@mui/material';
 import {adminActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
-
 interface IProps {
     namePage: string;
 }

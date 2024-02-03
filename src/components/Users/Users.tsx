@@ -11,7 +11,6 @@ import {User} from "../User/User";
 
 import css from './Users.module.css';
 
-
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -34,7 +33,7 @@ const Users: FC = () => {
             queryParams.push(`surname_contains=${encodeURIComponent(surnameUserInput)}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${ queryString }`);
+        navigate(queryString && `?${queryString}`);
     }, [pageUsers, showParams, navigate, surnameUserInput]);
     useEffect(() => {
         updateQueryString();

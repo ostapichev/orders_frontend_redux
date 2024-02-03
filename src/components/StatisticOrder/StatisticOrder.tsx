@@ -5,7 +5,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './StatisticOrder.module.css';
 
-
 const StatisticOrder: FC = () => {
     const dispatch = useAppDispatch();
     const {orderStatistic, trigger} = useAppSelector(state => state.adminReducer);

@@ -6,7 +6,6 @@ import {useAppSelector} from "../../hooks";
 import css from './OrdersPage.module.css';
 import {page_css} from '../../styles/index';
 
-
 const OrdersPage: FC = () => {
     const {loading, openOrderForm} = useAppSelector(state => state.orderReducer);
 

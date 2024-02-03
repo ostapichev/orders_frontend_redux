@@ -15,7 +15,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {button_css, form_css} from '../../styles/index';
 import css from './OrderForm.module.css';
 
-
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
     const {groups, trigger, vision, errorGroup} = useAppSelector(state => state.groupReducer);
@@ -43,7 +42,6 @@ const OrderForm: FC = () => {
     const handleGroup = (event: ChangeEvent<HTMLSelectElement>) => {
         dispatch(orderActions.setOrderCreate(event.target.value));
     };
-
     useEffect(() => {
         dispatch(groupActions.getAll());
     }, [dispatch, trigger]);

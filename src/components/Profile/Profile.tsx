@@ -12,7 +12,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./Profile.module.css";
 
-
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
     const [account, setAccount] = useState<boolean>(false);

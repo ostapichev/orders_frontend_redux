@@ -1,7 +1,6 @@
 import {IComment} from "./comment.interface";
 import {IProfile} from "./profile.interface";
 
-
 export interface IOrder {
     id?: number;
     name?: string;

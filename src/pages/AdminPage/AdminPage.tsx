@@ -5,7 +5,6 @@ import {Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users} fro
 
 import {page_css} from '../../styles/index';
 
-
 const AdminPage: FC = () => {
     const {loading, openUserForm} = useAppSelector(state => state.adminReducer);
 

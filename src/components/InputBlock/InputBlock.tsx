@@ -8,7 +8,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './InputBlock.module.css';
 
-
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);

@@ -5,7 +5,6 @@ import {authService} from "./auth.service";
 import {baseURL, urls} from "../constants";
 import {IFuncVoid} from "../types";
 
-
 const axiosService = axios.create({baseURL});
 const waitList: IFuncVoid[] = [];
 const history = createBrowserHistory({window});

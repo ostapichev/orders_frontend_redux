@@ -1,6 +1,5 @@
 import Joi from "joi";
 
-
 const userValidator = Joi.object({
     profile: Joi.object({
         name: Joi.string()

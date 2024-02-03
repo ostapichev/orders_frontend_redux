@@ -6,7 +6,6 @@ import {commentActions} from "../../redux";
 import {IComment} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
-
 interface IProps {
     comments?: IComment[];
 }

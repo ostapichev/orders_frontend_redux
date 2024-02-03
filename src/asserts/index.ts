@@ -9,7 +9,6 @@ import create from './icons/create.png';
 import exel from './icons/exel.png';
 import reload from './icons/reload.png';
 
-
 export {
     admin_panel,
     create,

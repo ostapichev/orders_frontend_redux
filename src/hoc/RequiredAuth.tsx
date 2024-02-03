@@ -3,7 +3,6 @@ import {Navigate} from "react-router-dom";
 
 import {useAppSelector} from "../hooks";
 
-
 interface IProps {
     children: ReactElement;
 }

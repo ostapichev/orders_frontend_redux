@@ -1,7 +1,6 @@
 import {FC} from 'react';
 import {format} from 'date-fns';
 
-
 interface IProps {
     originalDate: string;
 }

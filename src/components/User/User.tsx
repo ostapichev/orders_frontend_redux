@@ -9,7 +9,6 @@ import {StatisticUser} from "../StatisticUser/StatisticUser";
 import {button_css} from '../../styles/index';
 import css from './User.module.css';
 
-
 interface IProps {
     user: IUser;
 }

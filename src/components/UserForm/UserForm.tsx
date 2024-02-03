@@ -12,7 +12,6 @@ import {userValidator} from "../../validators";
 import {button_css, form_css} from "../../styles/index";
 import css from './UserForm.module.css';
 
-
 const UserForm: FC = () => {
     const dispatch = useAppDispatch();
     const {openUserForm, errorUser} = useAppSelector(state => state.adminReducer);

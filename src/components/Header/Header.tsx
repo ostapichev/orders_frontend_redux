@@ -10,7 +10,6 @@ import css from './Header.module.css';
 
 import {admin_panel, home_page, login, log_out, okten_school} from '../../asserts';
 
-
 const Header: FC = () => {
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);

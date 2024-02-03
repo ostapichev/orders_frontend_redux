@@ -4,7 +4,6 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithVal
 import {IErrorUser, IOrderStatistic, IPagination, IParams, IUser, IUserStatistic} from "../../interfaces";
 import {adminService} from "../../services";
 
-
 interface IState {
     users: IUser[];
     userUpdate: boolean;
@@ -37,7 +36,7 @@ const initialState: IState = {
 
 const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
     'adminSlice/getAll',
-    async ({params}, {rejectWithValue}) => {
+    async ({ params }, { rejectWithValue }) => {
         try {
             const {data} = await adminService.getAll(params);
             return data;
@@ -50,7 +49,7 @@ const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
 
 const create = createAsyncThunk<void, {user: IUser}> (
     'adminSlice/create',
-    async ({user}, {rejectWithValue}) => {
+    async ({ user }, { rejectWithValue }) => {
         try {
             await adminService.create(user);
         } catch (e) {
@@ -62,7 +61,7 @@ const create = createAsyncThunk<void, {user: IUser}> (
 
 const ban = createAsyncThunk<void, {id: string}> (
     'adminSlice/ban',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue }) => {
         try {
             await adminService.ban(id);
         } catch (e) {
@@ -74,7 +73,7 @@ const ban = createAsyncThunk<void, {id: string}> (
 
 const unban = createAsyncThunk<void, {id: string}> (
     'adminSlice/ban',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue }) => {
         try {
             await adminService.unban(id);
         } catch (e) {
@@ -86,7 +85,7 @@ const unban = createAsyncThunk<void, {id: string}> (
 
 const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     'adminSlice/getStatisticOrder',
-    async (_, {rejectWithValue}) => {
+    async (_, { rejectWithValue }) => {
         try {
             const {data} = await adminService.getStatisticOrder();
             return data;
@@ -99,7 +98,7 @@ const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
 
 const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
     'adminSlice/getStatisticUser',
-    async ({id}, {rejectWithValue}) => {
+    async ({ id }, { rejectWithValue }) => {
         try {
             const {data} = await adminService.getStatisticUser(id.toString());
             return data;
@@ -107,7 +106,6 @@ const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
         }
-
     }
 );
 
