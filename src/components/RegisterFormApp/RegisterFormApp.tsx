@@ -78,7 +78,7 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                     <Form.Control
                         type="password"
                         size="sm"
-                        placeholder='enter password'
+                        placeholder='enter confirm password'
                         autoComplete='on'
                         {...register('confirmPassword',{ required: true })}
                     />

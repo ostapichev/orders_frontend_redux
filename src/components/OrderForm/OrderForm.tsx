@@ -236,7 +236,7 @@ const OrderForm: FC = () => {
                     <button
                         type="submit"
                         className={button_css.btn_form}
-                        disabled={!isValid}
+                        disabled={!isValid || vision}
                     >
                         {orderUpdate ? 'Update' : 'Save'}
                     </button>
