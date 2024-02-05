@@ -21,7 +21,7 @@ const CommentsPaginate: FC<IProps> = ({ comments }) => {
         return [totalPageComments, pageComments];
     };
     const dataPage: number[] = getDataPage();
-    const handleChangePage = (event: ChangeEvent<unknown>, num: number) => {
+    const handleChangePage = (event: ChangeEvent<unknown>, num: number): void => {
         dispatch(commentActions.setPage(num));
     };
 

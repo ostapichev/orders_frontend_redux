@@ -132,7 +132,7 @@ const Order: FC<IProps> = ({ order }) => {
                                 <Button type="button" variant="secondary" onClick={handleClose}>Close</Button>
                             </Modal.Footer>
                         </Modal>
-                        <CommentForm order_id={ id } />
+                        <CommentForm order_id={id} />
                         { errorsComment && <div className={form_css.err_text}>{errorsComment.comment}</div> }
                     </div>
                 </div>

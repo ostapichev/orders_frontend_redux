@@ -20,7 +20,8 @@ class AuthService {
         if (!refreshToken) {
             throw new Error('Refresh token is not exist!');
         }
-        const { data }: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.refresh,
+        const { data }: AxiosResponse<ITokens> = await axiosService.post(
+             urls.authAPI.refresh,
             {refresh: refreshToken});
         this.setTokens(data);
     };
@@ -53,7 +54,7 @@ class AuthService {
     private getRefreshToken(): string {
         return localStorage.getItem(this.refreshKey);
     };
-    private setTokens({ access, refresh }: ITokens): void {
+    private setTokens({access, refresh}: ITokens): void {
         localStorage.setItem(this.accessKey, access);
         localStorage.setItem(this.refreshKey, refresh);
     };

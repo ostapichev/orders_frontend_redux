@@ -17,7 +17,7 @@ const Comment: FC<IProps> = ({ commentBody }) => {
         <div className={css.comment_body}>
             <div>{comment}</div>
             <div>
-                {name} {surname}&#44;&nbsp;{<DateFormat originalDate={created_at} />}
+                {name}&nbsp;{surname}&#44;&nbsp;{<DateFormat originalDate={created_at} />}
             </div>
         </div>
     );

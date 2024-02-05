@@ -49,7 +49,7 @@ const MyBlockButton: FC = () => {
                             ref={ref}
                             src={reload}
                             alt='reload'
-                            onClick={ setDefaultParams }
+                            onClick={setDefaultParams}
                             {...triggerHandler}
                         />
                     )}

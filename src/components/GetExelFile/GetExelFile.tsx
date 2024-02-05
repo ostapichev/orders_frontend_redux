@@ -23,8 +23,8 @@ const GetExelFile: FC = () => {
         order_by, name_contains, surname_contains, email_contains, phone_contains, age_in, course,
         course_format, course_type, status_in, group, created_at_after, created_at_before, manager
     };
-    const getFile: IFuncVoid = () => {
-        dispatch(orderActions.getExelFile({ params }));
+    const getFile: IFuncVoid = async () => {
+        await dispatch(orderActions.getExelFile({ params }));
     }
 
     return (

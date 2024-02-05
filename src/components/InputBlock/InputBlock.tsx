@@ -16,40 +16,40 @@ const InputBlock: FC = () => {
         ageInputData, courseInputData, formatCourseInputData, typeCourseInputData,
         statusInputData, groupInputData, startDateInputData, endDateInputData
     } = useAppSelector(state => state.orderReducer);
-    const nameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const nameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };
-    const surNameInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const surNameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setSurNameInputData(event.target.value));
     };
-    const emailInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const emailInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setEmailInputData(event.target.value));
     };
-    const phoneInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const phoneInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setPhoneInputData(event.target.value));
     };
-    const ageInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const ageInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setAgeInputData(event.target.value));
     };
-    const courseInputChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const courseInputChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         dispatch(orderActions.setCourseInputData(event.target.value));
     };
-    const formatCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const formatCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         dispatch(orderActions.setFormatInputData(event.target.value));
     };
-    const typeCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const typeCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         dispatch(orderActions.setTypeInputData(event.target.value));
     };
-    const statusInputDataChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const statusInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         dispatch(orderActions.setStatusInputData(event.target.value));
     };
-    const groupInputDataChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const groupInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
         dispatch(orderActions.setGroupInputData(event.target.value));
     };
-    const startDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const startDateInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setStartDateInputData(event.target.value.slice(0, 10)));
     };
-    const endDateInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const endDateInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
 
@@ -148,8 +148,8 @@ const InputBlock: FC = () => {
                         <option value=''>all groups</option>
                         {
                             groups.map(group => <Group
-                                key={ group.id }
-                                group={ group }
+                                key={group.id}
+                                group={group}
                             />)
                         }
                 </Form.Select>

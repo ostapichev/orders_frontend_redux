@@ -36,14 +36,14 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
             return;
         }
         if (funcName === 'recoveryPasswordPage') {
-            const {meta: {requestStatus} } = await dispatch(authActions.recoveryRequestPassword(
+            const {meta: {requestStatus}} = await dispatch(authActions.recoveryRequestPassword(
                 {formData, token}
             ));
             if (requestStatus === 'fulfilled') {
                 navigate('/login');
             }
         } else if (funcName === 'activateRequestUser') {
-            const {meta: {requestStatus} } = await dispatch(authActions.activateRequestUser(
+            const {meta: {requestStatus}} = await dispatch(authActions.activateRequestUser(
                 {formData, token}
             ));
             if (requestStatus === 'fulfilled') {
@@ -52,7 +52,6 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
         } else {
             alert('RegisterFormApp: name error function');
         }
-
     };
 
     return (
@@ -69,7 +68,7 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                         size="sm"
                         placeholder='enter password'
                         autoComplete='on'
-                        {...register('password',{ required: true })}
+                        {...register('password',{required: true})}
                     />
                 </label>
                 { errors.password && <p className={form_css.err_text}>{errors.password.message}</p> }
@@ -80,7 +79,7 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                         size="sm"
                         placeholder='enter confirm password'
                         autoComplete='on'
-                        {...register('confirmPassword',{ required: true })}
+                        {...register('confirmPassword',{required: true})}
                     />
                 </label>
                 <button

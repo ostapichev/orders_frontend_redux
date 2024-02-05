@@ -23,7 +23,7 @@ const Orders: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
 
     const [query] = useSearchParams();
-    const getAllOrders: IFuncVoid = useCallback(() => {
+    const getAllOrders: IFuncVoid = useCallback( () => {
         const page: string = query.get('page');
         const order_by: string = query.get('order_by');
         const name_contains: string = query.get('name');

@@ -9,9 +9,7 @@ const DateFormat: FC<IProps> = ({ originalDate }) => {
     const formatData = format(new Date(originalDate), 'MMMM dd, yyyy');
 
     return (
-        <>
-            {formatData}
-        </>
+        <>{formatData}</>
     );
 };
 

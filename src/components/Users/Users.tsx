@@ -18,7 +18,7 @@ const Users: FC = () => {
         users, trigger, showParams, pageUsers, surnameUserInput
     } = useAppSelector(state => state.adminReducer);
     const [query] = useSearchParams();
-    const getAllUsers: IFuncVoid = useCallback(() => {
+    const getAllUsers: IFuncVoid = useCallback( () => {
         const params: IParams = {};
         params.page = query.get('page');
         params.surname_contains = query.get('surname_contains');

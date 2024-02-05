@@ -5,7 +5,7 @@ import {urls} from "../constants";
 
 class AdminService {
     getAll(params: IParams): IResPaginate<IUser[]> {
-        return axiosService.get(urls.usersAPI.users, {params});
+        return axiosService.get(urls.usersAPI.users, { params });
     };
 
     create(user: IUser): IRes<IUser> {
