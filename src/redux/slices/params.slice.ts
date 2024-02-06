@@ -81,7 +81,7 @@ const slice = createSlice({
             state.manager = action.payload;
         }
     }
-})
+});
 
 const {actions, reducer: paramsReducer} = slice;
 const paramsActions = {

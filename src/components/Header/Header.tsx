@@ -32,7 +32,7 @@ const Header: FC = () => {
     };
     useEffect(() => {
         let timeoutId: NodeJS.Timeout = null;
-        const handleMouseMove = () => {
+        const handleMouseMove: IFuncVoid = () => {
             setIsActive(true);
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {

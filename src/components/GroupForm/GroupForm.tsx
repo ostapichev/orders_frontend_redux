@@ -20,7 +20,7 @@ const GroupForm: FC = () => {
     });
     const dispatch = useAppDispatch();
     const save: SubmitHandler<IGroup> = async (group) => {
-        await dispatch(groupActions.create({group}));
+        await dispatch(groupActions.create({ group }));
         reset();
     };
     const select: IFuncVoid = () => {

@@ -25,11 +25,11 @@ const User: FC<IProps> = ({ user }) => {
     };
     const activateUser: MouseEventHandler<HTMLButtonElement> = async () => {
         formData.append('email', user.email);
-        await dispatch(authActions.activateUser({formData}));
+        await dispatch(authActions.activateUser({ formData }));
     };
     const recoveryPassword: MouseEventHandler<HTMLButtonElement> = async () => {
         formData.append('email', user.email);
-        await dispatch(authActions.recoveryPassword({formData}));
+        await dispatch(authActions.recoveryPassword({ formData }));
     };
 
     return (
@@ -47,7 +47,7 @@ const User: FC<IProps> = ({ user }) => {
                     <span className={css.user_data}>{is_active === true ? 'yes' : 'no'}</span>
                 </div>
                 <div className={css.user_content}>last login:&nbsp;<span className={css.user_data}>
-                    { last_login !== null ? <DateFormat originalDate={last_login} /> : 'no data' }</span>
+                    { last_login ? <DateFormat originalDate={last_login} /> : 'no data' }</span>
                 </div>
             </div>
             <StatisticUser id={id}/>

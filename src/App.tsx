@@ -10,11 +10,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App: FC = () => {
     return (
       <Routes>
-          <Route path='login' element={<LoginPage />}/>
-          <Route path='activate/:token' element={<RegisterPage />}/>
-          <Route path='recovery/:token' element={<RecoveryPasswordPage />}/>
+          <Route path='login' element={<LoginPage />} />
+          <Route path='activate/:token' element={<RegisterPage />} />
+          <Route path='recovery/:token' element={<RecoveryPasswordPage />} />
           <Route path='/' element={<MainLayout />}>
-              <Route index element={<Navigate to='/login' />}/>
+              <Route index element={<Navigate to='/login' />} />
               <Route path='orders' element={
                   <RequiredAuth>
                       <OrdersPage />
