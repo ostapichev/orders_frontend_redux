@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
 
-import {create, reload} from '../../asserts';
+import {create, reload} from '../../assets';
 
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();

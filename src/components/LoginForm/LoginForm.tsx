@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import {button_css, form_css} from '../../styles/index';
 
-import {okten_school} from '../../asserts';
+import {okten_school} from '../../assets';
 
 const LoginForm: FC = () => {
     const dispatch = useAppDispatch();

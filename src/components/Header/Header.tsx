@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Header.module.css';
 
-import {admin_panel, home_page, login, log_out, okten_school} from '../../asserts';
+import {admin_panel, home_page, login, log_out, okten_school} from '../../assets';
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();

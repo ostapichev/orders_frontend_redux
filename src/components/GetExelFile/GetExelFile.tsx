@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from '../MyBlockButton/MyBlockButton.module.css';
 
-import {exel} from "../../asserts";
+import {exel} from "../../assets";
 
 const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();

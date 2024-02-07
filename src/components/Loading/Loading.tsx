@@ -2,7 +2,7 @@ import {FC} from 'react';
 
 import css from './Loading.module.css';
 
-import {okten_logo} from '../../asserts';
+import {okten_logo} from '../../assets';
 
 const Loading: FC = () => {
     return (
