@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect} from 'react';
+import {FC, useCallback, useDeferredValue, useEffect} from 'react';
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -10,6 +10,7 @@ import {orderActions, paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
+import {useDebounce} from "use-debounce";
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
@@ -19,9 +20,10 @@ const Orders: FC = () => {
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
         endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
     } = useAppSelector(state => state.orderReducer);
+    const [debouncedValue] = useDebounce(nameInputData, 1000);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-
+    const deferredText = useDeferredValue(orders);
     const [query] = useSearchParams();
     const getAllOrders: IFuncVoid = useCallback( () => {
         const page: string = query.get('page');
@@ -83,7 +85,7 @@ const Orders: FC = () => {
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
         }
-        if (nameInputData) {
+        if (debouncedValue) {
             queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
         }
         if (surNameInputData) {
@@ -129,7 +131,7 @@ const Orders: FC = () => {
         navigate(queryString && `?${queryString}`);
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, me.profile.name, checkbox, navigate, orderBy, pageOrders, showParams]);
+        endDateInputData, me.profile.name, checkbox, navigate, orderBy, pageOrders, showParams, debouncedValue]);
     useEffect(() => {
         updateQueryString();
     }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
@@ -235,7 +237,7 @@ const Orders: FC = () => {
             </ListGroup>
             <div>
                 {
-                    orders.map(order => <Order
+                    deferredText.map(order => <Order
                         key={order.id}
                         order={order}
                     />)

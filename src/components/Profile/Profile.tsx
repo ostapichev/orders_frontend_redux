@@ -25,7 +25,7 @@ const Profile: FC = () => {
     const handleClose: IFuncVoid = () => setAccount(false);
     const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
-        dispatch(adminActions.getStatisticUser({id}))
+        dispatch(adminActions.getStatisticUser({ id }))
     }, [dispatch, id, orderUpdate, triggerComment]);
 
     return (
@@ -44,7 +44,7 @@ const Profile: FC = () => {
                 onHide={handleClose}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>My profile</Modal.Title>
+                    <Modal.Title>My Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <ListGroup>

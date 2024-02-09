@@ -29,7 +29,7 @@ const CommentForm: FC<IProps> = ({ order_id }) => {
         setValue('comment', '');
     };
     const order: IOrder = orders.find(item => item.id === order_id);
-    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
+    const addValidForm: boolean = order && order.manager && order.manager.id !== me.id;
 
     return (
         <Form

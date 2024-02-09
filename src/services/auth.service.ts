@@ -20,7 +20,7 @@ class AuthService {
         if (!refreshToken) {
             throw new Error('Refresh token is not exist!');
         }
-        const { data }: AxiosResponse<ITokens> = await axiosService.post(
+        const {data}: AxiosResponse<ITokens> = await axiosService.post(
              urls.authAPI.refresh,
             {refresh: refreshToken});
         this.setTokens(data);

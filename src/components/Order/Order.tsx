@@ -76,8 +76,8 @@ const Order: FC<IProps> = ({ order }) => {
             >
                 <div>
                     <div className={css.left_block}>
-                        <div>Message:&nbsp;{msg !== null ? msg : 'no data'}</div>
-                        <div>UTM:&nbsp;{utm !== null ? utm : 'no data'}</div>
+                        <div>Message:&nbsp;{msg ? msg : 'no data'}</div>
+                        <div>UTM:&nbsp;{utm ? utm : 'no data'}</div>
                         <div>
                             <button disabled={addValidForm}
                                     className={button_css.btn_open}
