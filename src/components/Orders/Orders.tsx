@@ -1,4 +1,5 @@
-import {FC, useCallback, useDeferredValue, useEffect} from 'react';
+import {FC, useCallback, useEffect} from 'react';
+import {useDebounce} from "use-debounce";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -10,7 +11,6 @@ import {orderActions, paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
-import {useDebounce} from "use-debounce";
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
@@ -20,10 +20,13 @@ const Orders: FC = () => {
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
         endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
     } = useAppSelector(state => state.orderReducer);
-    const [debouncedValue] = useDebounce(nameInputData, 1000);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const deferredText = useDeferredValue(orders);
+    const [debouncedValueName] = useDebounce(nameInputData, 1000);
+    const [debouncedValueSurname] = useDebounce(surNameInputData, 1000);
+    const [debouncedValueEmail] = useDebounce(emailInputData, 1000);
+    const [debouncedValuePhone] = useDebounce(phoneInputData, 1000);
+    const [debouncedValueAge] = useDebounce(ageInputData, 1000);
     const [query] = useSearchParams();
     const getAllOrders: IFuncVoid = useCallback( () => {
         const page: string = query.get('page');
@@ -80,25 +83,25 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-    const updateQueryString: IFuncVoid = useCallback(() => {
+    useEffect(() => {
         const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
         }
-        if (debouncedValue) {
-            queryParams.push(`name=${encodeURIComponent(nameInputData)}`);
+        if (debouncedValueName) {
+            queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
         }
-        if (surNameInputData) {
-            queryParams.push(`surname=${encodeURIComponent(surNameInputData)}`);
+        if (debouncedValueSurname) {
+            queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
         }
-        if (emailInputData) {
-            queryParams.push(`email=${encodeURIComponent(emailInputData)}`);
+        if (debouncedValueEmail) {
+            queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
         }
-        if (phoneInputData) {
-            queryParams.push(`phone=${encodeURIComponent(phoneInputData)}`);
+        if (debouncedValuePhone) {
+            queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
         }
-        if (ageInputData) {
-            queryParams.push(`age=${encodeURIComponent(ageInputData)}`);
+        if (debouncedValueAge) {
+            queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
         }
         if (courseInputData) {
             queryParams.push(`course=${encodeURIComponent(courseInputData)}`);
@@ -129,14 +132,9 @@ const Orders: FC = () => {
         }
         const queryString: string = queryParams.join('&');
         navigate(queryString && `?${queryString}`);
-    }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
-        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, me.profile.name, checkbox, navigate, orderBy, pageOrders, showParams, debouncedValue]);
-    useEffect(() => {
-        updateQueryString();
-    }, [nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
-        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, navigate, checkbox, updateQueryString]);
+    }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
+        courseInputData, formatCourseInputData, typeCourseInputData, statusInputData, groupInputData,
+        startDateInputData, endDateInputData, navigate, checkbox, me.profile.name, orderBy, pageOrders, showParams]);
     useEffect( () => {
         getAllOrders();
     }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
@@ -237,7 +235,7 @@ const Orders: FC = () => {
             </ListGroup>
             <div>
                 {
-                    deferredText.map(order => <Order
+                    orders.map(order => <Order
                         key={order.id}
                         order={order}
                     />)

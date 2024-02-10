@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {joiResolver} from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate, useSearchParams} from "react-router-dom";
