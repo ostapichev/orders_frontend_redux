@@ -1,6 +1,6 @@
-import {FC, useCallback, useEffect} from 'react';
+import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -15,6 +15,7 @@ import css from './Orders.module.css';
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
@@ -27,43 +28,14 @@ const Orders: FC = () => {
     const [debouncedValueEmail] = useDebounce(emailInputData, 1000);
     const [debouncedValuePhone] = useDebounce(phoneInputData, 1000);
     const [debouncedValueAge] = useDebounce(ageInputData, 1000);
+    const [debouncedValueCourse] = useDebounce(courseInputData, 1000);
+    const [debouncedValueFormatCourse] = useDebounce(formatCourseInputData, 1000);
+    const [debouncedValueTypeCourse] = useDebounce(typeCourseInputData, 1000);
+    const [debouncedValueStatus] = useDebounce(statusInputData, 1000);
+    const [debouncedValueGroup] = useDebounce(groupInputData, 1000);
+    const [debouncedValueStartDate] = useDebounce(startDateInputData, 1000);
+    const [debouncedValueEndDate] = useDebounce(endDateInputData, 1000);
     const [query] = useSearchParams();
-    const getAllOrders: IFuncVoid = useCallback( () => {
-        const page: string = query.get('page');
-        const order_by: string = query.get('order_by');
-        const name_contains: string = query.get('name');
-        const surname_contains: string = query.get('surname');
-        const email_contains: string = query.get('email');
-        const phone_contains: string = query.get('phone');
-        const age_in: string = query.get('age');
-        const course: string = query.get('course');
-        const course_format: string = query.get('course_format');
-        const course_type: string = query.get('course_type');
-        const status_in: string = query.get('status');
-        const group: string = query.get('group');
-        const created_at_after: string = query.get('start_date');
-        const created_at_before: string = query.get('end_date');
-        const manager: string = query.get('manager');
-        const params: IParams = {
-            page, order_by, name_contains, surname_contains, email_contains, phone_contains, age_in,
-            course, course_format, course_type, status_in, group, created_at_after, created_at_before, manager
-        };
-        dispatch(paramsActions.setOrderBy(order_by));
-        dispatch(paramsActions.setNameContains(name_contains));
-        dispatch(paramsActions.setSurnameContains(surname_contains));
-        dispatch(paramsActions.setEmailContains(email_contains));
-        dispatch(paramsActions.setPhoneContains(phone_contains));
-        dispatch(paramsActions.setAgeIn(age_in));
-        dispatch(paramsActions.setCourse(course));
-        dispatch(paramsActions.setCourseFormat(course_format));
-        dispatch(paramsActions.setCourseType(course_type));
-        dispatch(paramsActions.setStatusIn(status_in));
-        dispatch(paramsActions.setGroup(group));
-        dispatch(paramsActions.setCreatedAtAfter(created_at_after));
-        dispatch(paramsActions.setCreatedAtBefore(created_at_before));
-        dispatch(paramsActions.setManager(manager));
-        dispatch(orderActions.getAll({ params }));
-    },[dispatch, query]);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
@@ -103,26 +75,26 @@ const Orders: FC = () => {
         if (debouncedValueAge) {
             queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
         }
-        if (courseInputData) {
-            queryParams.push(`course=${encodeURIComponent(courseInputData)}`);
+        if (debouncedValueCourse) {
+            queryParams.push(`course=${encodeURIComponent(debouncedValueCourse)}`);
         }
-        if (formatCourseInputData) {
-            queryParams.push(`course_format=${encodeURIComponent(formatCourseInputData)}`);
+        if (debouncedValueFormatCourse) {
+            queryParams.push(`course_format=${encodeURIComponent(debouncedValueFormatCourse)}`);
         }
-        if (typeCourseInputData) {
-            queryParams.push(`course_type=${encodeURIComponent(typeCourseInputData)}`);
+        if (debouncedValueTypeCourse) {
+            queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse)}`);
         }
-        if (statusInputData) {
-            queryParams.push(`status=${encodeURIComponent(statusInputData)}`);
+        if (debouncedValueStatus) {
+            queryParams.push(`status=${encodeURIComponent(debouncedValueStatus)}`);
         }
-        if (groupInputData) {
-            queryParams.push(`group=${encodeURIComponent(groupInputData)}`);
+        if (debouncedValueGroup) {
+            queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
         }
-        if (startDateInputData) {
-            queryParams.push(`start_date=${encodeURIComponent(startDateInputData)}`);
+        if (debouncedValueStartDate) {
+            queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
         }
-        if (endDateInputData) {
-            queryParams.push(`end_date=${encodeURIComponent(endDateInputData)}`);
+        if (debouncedValueEndDate) {
+            queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
         }
         if (orderBy && orderBy !== '') {
             queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
@@ -133,11 +105,30 @@ const Orders: FC = () => {
         const queryString: string = queryParams.join('&');
         navigate(queryString && `?${queryString}`);
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
-        courseInputData, formatCourseInputData, typeCourseInputData, statusInputData, groupInputData,
-        startDateInputData, endDateInputData, navigate, checkbox, me.profile.name, orderBy, pageOrders, showParams]);
+        debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
+        debouncedValueStartDate, debouncedValueEndDate, navigate, checkbox, orderBy, pageOrders, showParams, me?.profile.name]);
     useEffect( () => {
-        getAllOrders();
-    }, [dispatch, trigger, getAllOrders, triggerComment, me.profile.name]);
+        const searchParams: URLSearchParams = new URLSearchParams(location.search);
+        const params: IParams = {};
+        for (const [key, value] of searchParams.entries()) {
+            params[key] = value;
+        }
+        dispatch(paramsActions.setOrderBy(query.get('order_by')));
+        dispatch(paramsActions.setNameContains(query.get('name')));
+        dispatch(paramsActions.setSurnameContains(query.get('surname')));
+        dispatch(paramsActions.setEmailContains(query.get('email')));
+        dispatch(paramsActions.setPhoneContains(query.get('phone')));
+        dispatch(paramsActions.setAgeIn(query.get('age')));
+        dispatch(paramsActions.setCourse(query.get('course')));
+        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
+        dispatch(paramsActions.setCourseType(query.get('course_type')));
+        dispatch(paramsActions.setStatusIn(query.get('status')));
+        dispatch(paramsActions.setGroup(query.get('group')));
+        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
+        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
+        dispatch(paramsActions.setManager(query.get('manager')));
+        dispatch(orderActions.getAll({ params }));
+    }, [dispatch, trigger, triggerComment, location.search, query]);
 
     return (
         <div className={css.table}>

@@ -8,6 +8,7 @@ import {RequiredAuth} from "./hoc";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: FC = () => {
+
     return (
       <Routes>
           <Route path='login' element={<LoginPage />} />

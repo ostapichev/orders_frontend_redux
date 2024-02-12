@@ -11,22 +11,25 @@ import {IFuncVoid} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./Profile.module.css";
+import {IUser} from "../../interfaces";
 
-const Profile: FC = () => {
+interface IProps {
+    me: IUser;
+}
+
+const Profile: FC<IProps> = ({ me }) => {
     const dispatch = useAppDispatch();
     const [account, setAccount] = useState<boolean>(false);
-    const {me} = useAppSelector(state => state.authReducer);
     const {userStatistic} = useAppSelector(state => state.adminReducer);
     const {orderUpdate} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {email, profile, created_at} = me;
-    const {id, name, surname} = profile;
     const {count_orders, in_work, agree, disagree, dubbing} = userStatistic;
     const handleClose: IFuncVoid = () => setAccount(false);
     const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
-        dispatch(adminActions.getStatisticUser({ id }))
-    }, [dispatch, id, orderUpdate, triggerComment]);
+        dispatch(adminActions.getStatisticUser({ id: profile.id }))
+    }, [dispatch, profile.id, orderUpdate, triggerComment]);
 
     return (
         <>
@@ -37,7 +40,7 @@ const Profile: FC = () => {
                 onClick={handleShow}
             >
                 <div className={css.title_username}>Current user</div>
-                <div className={css.login_name}>{surname}</div>
+                <div className={css.login_name}>{profile.surname}</div>
             </Button>
             <Modal
                 show={account}
@@ -52,19 +55,19 @@ const Profile: FC = () => {
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>ID:</span><span className="fw-bold">{id}</span>
+                            <span>ID:</span><span className="fw-bold">{profile.id}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Name:</span><span className="fw-bold">{name}</span>
+                            <span>Name:</span><span className="fw-bold">{profile.name}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Surname:</span><span className="fw-bold">{surname}</span>
+                            <span>Surname:</span><span className="fw-bold">{profile.surname}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"

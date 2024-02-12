@@ -2,11 +2,11 @@ import {createSlice} from "@reduxjs/toolkit";
 
 interface IState {
     order_by: string;
-    name_contains: string;
-    surname_contains: string;
-    email_contains: string;
-    phone_contains: string;
-    age_in: string;
+    name: string;
+    surname: string;
+    email: string;
+    phone: string;
+    age: string;
     course: string;
     course_format: string;
     course_type: string;
@@ -19,11 +19,11 @@ interface IState {
 
 const initialState: IState = {
     order_by: null,
-    name_contains: null,
-    surname_contains: null,
-    email_contains: null,
-    phone_contains: null,
-    age_in: null,
+    name: null,
+    surname: null,
+    email: null,
+    phone: null,
+    age: null,
     course: null,
     course_format: null,
     course_type: null,
@@ -42,19 +42,19 @@ const slice = createSlice({
             state.order_by = action.payload;
         },
         setNameContains: (state, action) => {
-            state.name_contains = action.payload;
+            state.name = action.payload;
         },
         setSurnameContains: (state, action) => {
-            state.surname_contains = action.payload;
+            state.surname = action.payload;
         },
         setEmailContains: (state, action) => {
-            state.email_contains = action.payload;
+            state.email = action.payload;
         },
         setPhoneContains: (state, action) => {
-            state.phone_contains = action.payload;
+            state.phone = action.payload;
         },
         setAgeIn: (state, action) => {
-            state.age_in = action.payload;
+            state.age = action.payload;
         },
         setCourse: (state, action) => {
             state.course = action.payload;

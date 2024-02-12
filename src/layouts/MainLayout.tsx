@@ -1,9 +1,10 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {Outlet} from "react-router-dom";
 
 import {Header} from "../components";
 
 const MainLayout: FC = () => {
+
     return (
         <div>
             <Header />

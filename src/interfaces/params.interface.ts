@@ -1,11 +1,11 @@
 export interface IParams {
     page?: string;
     order_by?: string;
-    name_contains?: string;
-    surname_contains?: string;
-    email_contains?: string;
-    phone_contains?: string;
-    age_in?: string;
+    name?: string;
+    surname?: string;
+    email?: string;
+    phone?: string;
+    age?: string;
     course?: string;
     course_format?: string;
     course_type?: string;

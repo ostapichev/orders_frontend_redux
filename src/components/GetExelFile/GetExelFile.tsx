@@ -16,11 +16,11 @@ import {exel} from "../../assets";
 const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();
     const {
-        order_by, name_contains, surname_contains, email_contains, phone_contains, age_in, course,
+        order_by, name, surname, email, phone, age, course,
         course_format, course_type, status_in, group, created_at_after, created_at_before, manager
     } = useAppSelector(state => state.paramsReducer);
     const params: IParams = {
-        order_by, name_contains, surname_contains, email_contains, phone_contains, age_in, course,
+        order_by, name, surname, email, phone, age, course,
         course_format, course_type, status_in, group, created_at_after, created_at_before, manager
     };
     const getFile: IFuncVoid = async () => {

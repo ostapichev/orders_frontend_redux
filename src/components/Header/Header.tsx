@@ -1,7 +1,8 @@
-import {FC, MouseEventHandler, useCallback, useEffect, useState} from 'react';
+import {FC, MouseEventHandler, useCallback, useEffect} from 'react';
 import {NavLink} from "react-router-dom";
 
 import {adminActions, authActions, commentActions, orderActions} from "../../redux";
+import {authService} from "../../services";
 import {IFuncVoid} from "../../types";
 import {Profile} from "../Profile/Profile";
 import {useAppDispatch, useAppSelector} from "../../hooks";
@@ -13,7 +14,6 @@ import {admin_panel, home_page, login, log_out, okten_school} from '../../assets
 const Header: FC = () => {
     const dispatch = useAppDispatch();
     const {me} = useAppSelector(state => state.authReducer);
-    const [, setIsActive] = useState<boolean>(true);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
         dispatch(orderActions.resetParams());
@@ -31,24 +31,10 @@ const Header: FC = () => {
         dispatch(authActions.logout());
     };
     useEffect(() => {
-        let timeoutId: NodeJS.Timeout = null;
-        const handleMouseMove: IFuncVoid = () => {
-            setIsActive(true);
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                setIsActive(false);
-                defaultParamsOrders();
-                defaultParamsUsers();
-                resetPageComments();
-                dispatch(authActions.logout());
-            }, 900000);
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            clearTimeout(timeoutId);
-        };
-    }, [dispatch, defaultParamsOrders, defaultParamsUsers, resetPageComments]);
+        if (!me && authService.getAccessToken()) {
+            dispatch(authActions.me());
+        }
+    }, [me, dispatch]);
 
     return (
         <div className={css.header}>
@@ -63,7 +49,7 @@ const Header: FC = () => {
             <div>
                 { me ?
                     <div className={css.nav_bar}>
-                        <Profile />
+                        <Profile me={me}/>
                         { isAdmin &&
                             <div className={css.header_link}>
                                 <NavLink
