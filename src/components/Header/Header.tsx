@@ -1,5 +1,5 @@
-import {FC, MouseEventHandler, useCallback, useEffect} from 'react';
-import {NavLink} from "react-router-dom";
+import {FC, MouseEventHandler, useCallback, useEffect, useState} from 'react';
+import {NavLink, useNavigate} from "react-router-dom";
 
 import {adminActions, authActions, commentActions, orderActions} from "../../redux";
 import {authService} from "../../services";
@@ -13,7 +13,9 @@ import {admin_panel, home_page, login, log_out, okten_school} from '../../assets
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {me} = useAppSelector(state => state.authReducer);
+    const [, setIsActive] = useState<boolean>(true);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
         dispatch(orderActions.resetParams());
@@ -23,7 +25,7 @@ const Header: FC = () => {
     }, [dispatch]);
     const resetPageComments: IFuncVoid = useCallback(() => {
         dispatch(commentActions.setDefaultPaginate());
-    }, [dispatch])
+    }, [dispatch]);
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         defaultParamsOrders();
         defaultParamsUsers();
@@ -35,6 +37,23 @@ const Header: FC = () => {
             dispatch(authActions.me());
         }
     }, [me, dispatch]);
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout = null;
+        const handleMouseMove = () => {
+            setIsActive(true);
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setIsActive(false);
+                authService.deleteTokens();
+                dispatch(orderActions.getAll({params: {}}));
+            }, 900000);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            clearTimeout(timeoutId);
+        };
+    }, [navigate, dispatch]);
 
     return (
         <div className={css.header}>

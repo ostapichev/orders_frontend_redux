@@ -17,11 +17,11 @@ const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();
     const {
         order_by, name, surname, email, phone, age, course,
-        course_format, course_type, status_in, group, created_at_after, created_at_before, manager
+        course_format, course_type, status, group, created_at_after, created_at_before, manager
     } = useAppSelector(state => state.paramsReducer);
     const params: IParams = {
         order_by, name, surname, email, phone, age, course,
-        course_format, course_type, status_in, group, created_at_after, created_at_before, manager
+        course_format, course_type, status, group, created_at_after, created_at_before, manager
     };
     const getFile: IFuncVoid = async () => {
         await dispatch(orderActions.getExelFile({ params }));

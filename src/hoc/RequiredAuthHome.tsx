@@ -7,7 +7,7 @@ interface IProps {
     children: ReactElement;
 }
 
-const RequiredAuth: FC<IProps> = ({ children }) => {
+const RequiredAuthHome: FC<IProps> = ({ children }) => {
     const accessToken = authService.getAccessToken();
     if (!accessToken) {
         return <Navigate to='/login' />
@@ -16,5 +16,5 @@ const RequiredAuth: FC<IProps> = ({ children }) => {
 };
 
 export {
-    RequiredAuth
+    RequiredAuthHome
 };

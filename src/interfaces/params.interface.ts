@@ -9,7 +9,7 @@ export interface IParams {
     course?: string;
     course_format?: string;
     course_type?: string;
-    status_in?: string;
+    status?: string;
     group?: string;
     created_at_after?: string;
     created_at_before?: string;

@@ -10,7 +10,7 @@ interface IState {
     course: string;
     course_format: string;
     course_type: string;
-    status_in: string;
+    status: string;
     group: string;
     created_at_after: string;
     created_at_before: string;
@@ -27,7 +27,7 @@ const initialState: IState = {
     course: null,
     course_format: null,
     course_type: null,
-    status_in: null,
+    status: null,
     group: null,
     created_at_after: null,
     created_at_before: null,
@@ -66,7 +66,7 @@ const slice = createSlice({
             state.course_type = action.payload;
         },
         setStatusIn: (state, action) => {
-            state.status_in = action.payload;
+            state.status = action.payload;
         },
         setGroup: (state, action) => {
             state.group = action.payload;

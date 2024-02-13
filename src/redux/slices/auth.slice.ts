@@ -95,10 +95,9 @@ const slice = createSlice({
     initialState,
     reducers: {
         logout: state => {
-            state.me = null;
-            state.error = null;
-            state.loading = false;
             authService.deleteTokens();
+            state.me = null;
+            state.loading = false;
         },
         setConfirmError: (state, action) => {
             state.confirmError = action.payload;
@@ -111,8 +110,8 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addMatcher(isFulfilled(login, me), (state, action) => {
-                state.loading = false;
                 state.me = action.payload;
+                state.loading = false;
                 state.error = null;
             })
             .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {

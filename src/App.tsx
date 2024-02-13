@@ -3,7 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 
 import {AdminPage, LoginPage, OrdersPage, RegisterPage, RecoveryPasswordPage, NotFoundPage} from "./pages";
 import {MainLayout} from "./layouts";
-import {RequiredAuth} from "./hoc";
+import {RequiredAuthAdmin, RequiredAuthHome} from "./hoc";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,15 +16,15 @@ const App: FC = () => {
           <Route path='recovery/:token' element={<RecoveryPasswordPage />} />
           <Route path='/' element={<MainLayout />}>
               <Route index element={<Navigate to='/login' />} />
-              <Route path='orders' element={
-                  <RequiredAuth>
+              <Route path='/orders' element={
+                  <RequiredAuthHome>
                       <OrdersPage />
-                  </RequiredAuth>
+                  </RequiredAuthHome>
               } />
-              <Route path='admin' element={
-                  <RequiredAuth>
+              <Route path='/admin' element={
+                  <RequiredAuthAdmin>
                       <AdminPage />
-                  </RequiredAuth>
+                  </RequiredAuthAdmin>
               } />
               <Route path='*' element={<NotFoundPage />} />
           </Route>

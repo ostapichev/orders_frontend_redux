@@ -1,1 +1,2 @@
-export * from './RequiredAuth';
+export * from './RequiredAuthAdmin';
+export * from './RequiredAuthHome';
