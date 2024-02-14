@@ -44,7 +44,7 @@ const Header: FC = () => {
                 defaultParamsOrders();
                 defaultParamsUsers();
                 dispatch(orderActions.getAll({params: {}}))
-            }, 5000);
+            }, 900000);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
