@@ -109,6 +109,10 @@ const slice = createSlice({
     },
     extraReducers: builder =>
         builder
+            .addCase(me.rejected, state => {
+                state.loading = false;
+                state.error = null;
+            })
             .addMatcher(isFulfilled(login, me), (state, action) => {
                 state.me = action.payload;
                 state.loading = false;
