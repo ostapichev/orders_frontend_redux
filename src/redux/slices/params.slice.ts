@@ -1,6 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 interface IState {
+    checkbox: boolean;
+    pageOrders: number;
+    pageUsers: number;
     order_by: string;
     name: string;
     surname: string;
@@ -15,9 +18,14 @@ interface IState {
     created_at_after: string;
     created_at_before: string;
     manager: string;
+    sorted: boolean;
+    showParams: boolean;
 }
 
 const initialState: IState = {
+    checkbox: false,
+    pageOrders: 1,
+    pageUsers: 1,
     order_by: null,
     name: null,
     surname: null,
@@ -31,7 +39,9 @@ const initialState: IState = {
     group: null,
     created_at_after: null,
     created_at_before: null,
-    manager: null
+    manager: null,
+    sorted: true,
+    showParams: false
 }
 
 const slice = createSlice({
@@ -40,6 +50,10 @@ const slice = createSlice({
     reducers: {
         setOrderBy: (state, action) => {
             state.order_by = action.payload;
+        },
+        setCheckBox: state => {
+            state.checkbox = !state.checkbox;
+            state.pageOrders = 1;
         },
         setNameContains: (state, action) => {
             state.name = action.payload;
@@ -79,7 +93,16 @@ const slice = createSlice({
         },
         setManager: (state, action) => {
             state.manager = action.payload;
-        }
+        },
+        setPage: (state, action) => {
+            state.pageOrders = action.payload;
+            state.showParams = true;
+        },
+        setOrderByParams: (state, action) => {
+            state.order_by = action.payload;
+            state.sorted = !state.sorted;
+        },
+
     }
 });
 

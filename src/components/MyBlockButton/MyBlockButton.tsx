@@ -7,7 +7,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IFuncVoid} from "../../types";
-import {orderActions} from "../../redux";
+import {orderActions, paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
@@ -16,9 +16,9 @@ import {create, reload} from '../../assets';
 
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
-    const {checkbox} = useAppSelector(state => state.orderReducer);
+    const {checkbox} = useAppSelector(state => state.paramsReducer);
     const handler: IFuncVoid = () => {
-        dispatch(orderActions.setCheckBox());
+        dispatch(paramsActions.setCheckBox());
     };
     const createOrder: IFuncVoid = () => {
         dispatch(orderActions.openForm());

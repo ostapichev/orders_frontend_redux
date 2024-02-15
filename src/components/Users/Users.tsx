@@ -6,25 +6,24 @@ import {DataMessage} from "../DataMessage/DataMessage";
 import {IFuncVoid} from "../../types";
 import {IParams} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import {User} from "../User/User";
 
 import css from './Users.module.css';
 
 const Users: FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const {
         users, trigger, showParams, pageUsers, surnameUserInput
     } = useAppSelector(state => state.adminReducer);
-    const [query] = useSearchParams();
+    const [query, setQuery] = useSearchParams();
     const getAllUsers: IFuncVoid = useCallback( () => {
         const params: IParams = {};
         params.page = query.get('page');
         params.surname_contains = query.get('surname_contains');
         dispatch(adminActions.getAll({ params }));
     }, [dispatch, query]);
-    const updateQueryString: IFuncVoid = useCallback(() => {
+    const updateQueryString: IFuncVoid = useCallback( () => {
         const queryParams: string[] = []
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(pageUsers)}`);
@@ -33,11 +32,11 @@ const Users: FC = () => {
             queryParams.push(`surname_contains=${encodeURIComponent(surnameUserInput)}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
-    }, [pageUsers, showParams, navigate, surnameUserInput]);
+        setQuery(queryString && `?${queryString}`);
+    }, [pageUsers, showParams, surnameUserInput, setQuery]);
     useEffect(() => {
         updateQueryString();
-    }, [updateQueryString, surnameUserInput]);
+    }, [updateQueryString]);
     useEffect(() => {
         getAllUsers();
     }, [dispatch, query, trigger, getAllUsers]);

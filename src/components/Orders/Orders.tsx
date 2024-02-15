@@ -1,6 +1,6 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -14,16 +14,16 @@ import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
+        endDateInputData, orders, trigger
     } = useAppSelector(state => state.orderReducer);
+    const {pageOrders, order_by, sorted, showParams, checkbox} = useAppSelector(state => state.paramsReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const [query] = useSearchParams();
+    const [query, setQuery] = useSearchParams();
     const [debouncedValueName] = useDebounce<string>(nameInputData, 1000);
     const [debouncedValueSurname] = useDebounce<string>(surNameInputData, 1000);
     const [debouncedValueEmail] = useDebounce<string>(emailInputData, 1000);
@@ -38,7 +38,7 @@ const Orders: FC = () => {
     const [debouncedValueEndDate] = useDebounce<string>(endDateInputData, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
-        dispatch(orderActions.setOrderByParams(newOrderBy));
+        dispatch(paramsActions.setOrderByParams(newOrderBy));
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');
     const orderByName: IFuncVoid = () => sortingOrderBy('name');
@@ -96,17 +96,17 @@ const Orders: FC = () => {
         if (debouncedValueEndDate) {
             queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
         }
-        if (orderBy && orderBy !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
+        if (order_by && order_by !== '') {
+            queryParams.push(`order_by=${encodeURIComponent(order_by)}`);
         }
         if (checkbox) {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
+        setQuery(queryString && `?${queryString}`);
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
         debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, navigate, checkbox, orderBy, pageOrders, showParams, me?.profile.name]);
+        debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name, setQuery]);
     useEffect( () => {
         const searchParams: URLSearchParams = new URLSearchParams(location.search);
         const params: IParams = {};
@@ -128,7 +128,7 @@ const Orders: FC = () => {
         dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
         dispatch(paramsActions.setManager(query.get('manager')));
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, trigger, triggerComment, location.search, query]);
+    }, [dispatch, trigger, triggerComment, query, location.search]);
 
     return (
         <div className={css.table}>
