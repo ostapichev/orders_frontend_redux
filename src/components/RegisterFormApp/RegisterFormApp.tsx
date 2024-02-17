@@ -1,11 +1,11 @@
 import {FC} from 'react';
+import {joiResolver} from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 import Form from "react-bootstrap/Form";
 
 import {authActions} from "../../redux";
 import {IAuth} from "../../interfaces";
-import {joiResolver} from "@hookform/resolvers/joi";
 import {passwordValidator} from "../../validators";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate, useParams} from "react-router-dom";

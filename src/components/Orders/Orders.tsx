@@ -16,11 +16,11 @@ const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const {
-        nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
+        pageOrders, nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
         formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger
+        endDateInputData, orders, trigger, showParams
     } = useAppSelector(state => state.orderReducer);
-    const {pageOrders, order_by, sorted, showParams, checkbox} = useAppSelector(state => state.paramsReducer);
+    const {sorted, checkbox, order_by} = useAppSelector(state => state.paramsReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
@@ -109,6 +109,7 @@ const Orders: FC = () => {
         debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name, setQuery]);
     useEffect( () => {
         const searchParams: URLSearchParams = new URLSearchParams(location.search);
+        console.log(searchParams);
         const params: IParams = {};
         for (const [key, value] of searchParams.entries()) {
             params[key] = value;
@@ -128,7 +129,7 @@ const Orders: FC = () => {
         dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
         dispatch(paramsActions.setManager(query.get('manager')));
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, trigger, triggerComment, query, location.search]);
+    }, [dispatch, trigger, triggerComment, query, location.search, setQuery]);
 
     return (
         <div className={css.table}>

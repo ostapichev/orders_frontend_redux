@@ -2,7 +2,7 @@ import {ChangeEvent, FC} from 'react';
 
 import {Pagination, Stack} from '@mui/material';
 
-import {adminActions, orderActions, paramsActions} from "../../redux";
+import {adminActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 interface IProps {
@@ -11,9 +11,8 @@ interface IProps {
 
 const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dispatch = useAppDispatch();
-    const {totalPagesOrders} = useAppSelector(state => state.orderReducer);
-    const {pageOrders, pageUsers} = useAppSelector(state => state.paramsReducer);
-    const {totalPagesUsers} = useAppSelector(state => state.adminReducer);
+    const {totalPagesOrders, pageOrders} = useAppSelector(state => state.orderReducer);
+    const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
     const getDataPage = (): number[] => {
         if (namePage === 'homePage') {
             return [totalPagesOrders, pageOrders];
@@ -25,10 +24,10 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const handlerChangePage = (event: ChangeEvent<unknown>, num: number): void => {
         switch (namePage) {
             case 'homePage':
-                dispatch(paramsActions.setPage(num));
+                dispatch(orderActions.setPage(num));
                 break;
             case 'adminPage':
-                dispatch(paramsActions.setPage(num));
+                dispatch(adminActions.setPage(num));
                 break;
             default:
                 alert('Pagination: name page error');
