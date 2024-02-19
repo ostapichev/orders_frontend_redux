@@ -1,7 +1,7 @@
 import {FC, MouseEventHandler, useCallback, useEffect} from 'react';
 import {NavLink} from "react-router-dom";
 
-import {adminActions, authActions, commentActions, orderActions} from "../../redux";
+import {adminActions, authActions, commentActions, orderActions, paramsActions} from "../../redux";
 import {authService} from "../../services";
 import {IFuncVoid} from "../../types";
 import {Profile} from "../Profile/Profile";
@@ -16,7 +16,7 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
-        dispatch(orderActions.resetParams());
+        dispatch(paramsActions.resetParams());
     }, [dispatch]);
     const defaultParamsUsers: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());

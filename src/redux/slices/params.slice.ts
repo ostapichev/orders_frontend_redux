@@ -27,19 +27,19 @@ const initialState: IState = {
     pageOrders: 1,
     pageUsers: 1,
     order_by: null,
-    name: null,
-    surname: null,
-    email: null,
-    phone: null,
-    age: null,
-    course: null,
-    course_format: null,
-    course_type: null,
-    status: null,
-    group: null,
-    created_at_after: null,
-    created_at_before: null,
-    manager: null,
+    name: '',
+    surname: '',
+    email: '',
+    phone: '',
+    age: '',
+    course: '',
+    course_format: '',
+    course_type: '',
+    status: '',
+    group: '',
+    created_at_after: '',
+    created_at_before: '',
+    manager: '',
     sorted: true,
     showParams: false
 }
@@ -102,7 +102,73 @@ const slice = createSlice({
             state.order_by = action.payload;
             state.sorted = !state.sorted;
         },
-
+        resetParams: state => {
+            state.sorted = true;
+            state.order_by = '';
+            state.pageOrders = 1;
+            state.name = '';
+            state.surname = '';
+            state.email = '';
+            state.phone = '';
+            state.age = '';
+            state.course = '';
+            state.course_format = '';
+            state.course_type = '';
+            state.status = '';
+            state.group = '';
+            state.created_at_after = '';
+            state.created_at_before = '';
+            state.checkbox = false;
+            state.showParams = false;
+        },
+        setNameInputData: (state, action) => {
+            state.name = action.payload;
+            state.pageOrders = 1;
+        },
+        setSurNameInputData: (state, action) => {
+            state.surname = action.payload;
+            state.pageOrders = 1;
+        },
+        setEmailInputData: (state, action) => {
+            state.email = action.payload;
+            state.pageOrders = 1;
+        },
+        setPhoneInputData: (state, action) => {
+            state.phone = action.payload;
+            state.pageOrders = 1;
+        },
+        setAgeInputData: (state, action) => {
+            state.age = action.payload;
+            state.pageOrders = 1;
+        },
+        setCourseInputData: (state, action) => {
+            state.course = action.payload;
+            state.pageOrders = 1;
+        },
+        setFormatInputData: (state, action) => {
+            state.course_format = action.payload;
+            state.pageOrders = 1;
+        },
+        setTypeInputData: (state, action) => {
+            state.course_type = action.payload;
+            state.pageOrders = 1;
+        },
+        setStatusInputData: (state, action) => {
+            state.status = action.payload;
+            state.pageOrders = 1;
+        },
+        setGroupInputData: (state, action) => {
+            state.group = action.payload;
+            state.pageOrders = 1;
+        },
+        setStartDateInputData: (state, action) => {
+            state.created_at_after = action.payload;
+            state.pageOrders = 1;
+        },
+        setEndDateInputData: (state, action) => {
+            state.created_at_before = action.payload;
+            state.pageOrders = 1;
+        },
     }
 });
 

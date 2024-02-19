@@ -1,6 +1,6 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -15,27 +15,27 @@ import css from './Orders.module.css';
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
+    const {orders, trigger} = useAppSelector(state => state.orderReducer);
     const {
-        pageOrders, nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
-        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger, showParams
-    } = useAppSelector(state => state.orderReducer);
-    const {sorted, checkbox, order_by} = useAppSelector(state => state.paramsReducer);
+        sorted, checkbox, order_by, pageOrders, name, surname, email, phone, age, course, course_format, course_type,
+        status, showParams, group, created_at_after, created_at_before
+    } = useAppSelector(state => state.paramsReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<string>(nameInputData, 1000);
-    const [debouncedValueSurname] = useDebounce<string>(surNameInputData, 1000);
-    const [debouncedValueEmail] = useDebounce<string>(emailInputData, 1000);
-    const [debouncedValuePhone] = useDebounce<string>(phoneInputData, 1000);
-    const [debouncedValueAge] = useDebounce<string>(ageInputData, 1000);
-    const [debouncedValueCourse] = useDebounce<string>(courseInputData, 1000);
-    const [debouncedValueFormatCourse] = useDebounce<string>(formatCourseInputData, 1000);
-    const [debouncedValueTypeCourse] = useDebounce<string>(typeCourseInputData, 1000);
-    const [debouncedValueStatus] = useDebounce<string>(statusInputData, 1000);
-    const [debouncedValueGroup] = useDebounce<string>(groupInputData, 1000);
-    const [debouncedValueStartDate] = useDebounce<string>(startDateInputData, 1000);
-    const [debouncedValueEndDate] = useDebounce<string>(endDateInputData, 1000);
+    const [debouncedValueName] = useDebounce<string>(name, 1000);
+    const [debouncedValueSurname] = useDebounce<string>(surname, 1000);
+    const [debouncedValueEmail] = useDebounce<string>(email, 1000);
+    const [debouncedValuePhone] = useDebounce<string>(phone, 1000);
+    const [debouncedValueAge] = useDebounce<string>(age, 1000);
+    const [debouncedValueCourse] = useDebounce<string>(course, 1000);
+    const [debouncedValueFormatCourse] = useDebounce<string>(course_format, 1000);
+    const [debouncedValueTypeCourse] = useDebounce<string>(course_type, 1000);
+    const [debouncedValueStatus] = useDebounce<string>(status, 1000);
+    const [debouncedValueGroup] = useDebounce<string>(group, 1000);
+    const [debouncedValueStartDate] = useDebounce<string>(created_at_after, 1000);
+    const [debouncedValueEndDate] = useDebounce<string>(created_at_before, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(paramsActions.setOrderByParams(newOrderBy));
@@ -55,6 +55,29 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
+    useEffect( () => {
+        const searchParams: URLSearchParams = new URLSearchParams(location.search);
+        console.log(searchParams);
+        const params: IParams = {};
+        for (const [key, value] of searchParams.entries()) {
+            params[key] = value;
+        }
+        dispatch(paramsActions.setOrderBy(query.get('order_by')));
+        dispatch(paramsActions.setNameContains(query.get('name')));
+        dispatch(paramsActions.setSurnameContains(query.get('surname')));
+        dispatch(paramsActions.setEmailContains(query.get('email')));
+        dispatch(paramsActions.setPhoneContains(query.get('phone')));
+        dispatch(paramsActions.setAgeIn(query.get('age')));
+        dispatch(paramsActions.setCourse(query.get('course')));
+        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
+        dispatch(paramsActions.setCourseType(query.get('course_type')));
+        dispatch(paramsActions.setStatusIn(query.get('status')));
+        dispatch(paramsActions.setGroup(query.get('group')));
+        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
+        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
+        dispatch(paramsActions.setManager(query.get('manager')));
+        dispatch(orderActions.getAll({ params }));
+    }, [dispatch, query, trigger, triggerComment, location.search]);
     useEffect(() => {
         const queryParams: string[] = [];
         if (showParams) {
@@ -103,33 +126,11 @@ const Orders: FC = () => {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
         const queryString: string = queryParams.join('&');
-        setQuery(queryString && `?${queryString}`);
+        navigate(queryString && `?${queryString}`);
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
         debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name, setQuery]);
-    useEffect( () => {
-        const searchParams: URLSearchParams = new URLSearchParams(location.search);
-        console.log(searchParams);
-        const params: IParams = {};
-        for (const [key, value] of searchParams.entries()) {
-            params[key] = value;
-        }
-        dispatch(paramsActions.setOrderBy(query.get('order_by')));
-        dispatch(paramsActions.setNameContains(query.get('name')));
-        dispatch(paramsActions.setSurnameContains(query.get('surname')));
-        dispatch(paramsActions.setEmailContains(query.get('email')));
-        dispatch(paramsActions.setPhoneContains(query.get('phone')));
-        dispatch(paramsActions.setAgeIn(query.get('age')));
-        dispatch(paramsActions.setCourse(query.get('course')));
-        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
-        dispatch(paramsActions.setCourseType(query.get('course_type')));
-        dispatch(paramsActions.setStatusIn(query.get('status')));
-        dispatch(paramsActions.setGroup(query.get('group')));
-        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
-        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
-        dispatch(paramsActions.setManager(query.get('manager')));
-        dispatch(orderActions.getAll({ params }));
-    }, [dispatch, trigger, triggerComment, query, location.search, setQuery]);
+        debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name,
+        setQuery, navigate, dispatch]);
 
     return (
         <div className={css.table}>

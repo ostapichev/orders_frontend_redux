@@ -24,7 +24,7 @@ const MyBlockButton: FC = () => {
         dispatch(orderActions.openForm());
     };
     const setDefaultParams: IFuncVoid = () => {
-        dispatch(orderActions.resetParams());
+        dispatch(paramsActions.resetParams());
     };
 
     return (

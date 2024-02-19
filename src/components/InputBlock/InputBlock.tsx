@@ -3,7 +3,7 @@ import {ChangeEvent, FC} from 'react';
 import Form from "react-bootstrap/Form";
 
 import {Group} from "../Group/Group";
-import {orderActions} from "../../redux";
+import {paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './InputBlock.module.css';
@@ -12,45 +12,44 @@ const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {
-        nameInputData, surNameInputData, emailInputData, phoneInputData,
-        ageInputData, courseInputData, formatCourseInputData, typeCourseInputData,
-        statusInputData, groupInputData, startDateInputData, endDateInputData
-    } = useAppSelector(state => state.orderReducer);
+        name, surname, email, phone, age, course, course_format, course_type,
+        status, group, created_at_after, created_at_before
+    } = useAppSelector(state => state.paramsReducer);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setNameInputData(event.target.value));
+        dispatch(paramsActions.setNameInputData(event.target.value));
     };
     const surNameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setSurNameInputData(event.target.value));
+        dispatch(paramsActions.setSurNameInputData(event.target.value));
     };
     const emailInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setEmailInputData(event.target.value));
+        dispatch(paramsActions.setEmailInputData(event.target.value));
     };
     const phoneInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setPhoneInputData(event.target.value));
+        dispatch(paramsActions.setPhoneInputData(event.target.value));
     };
     const ageInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setAgeInputData(event.target.value));
+        dispatch(paramsActions.setAgeInputData(event.target.value));
     };
     const courseInputChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-        dispatch(orderActions.setCourseInputData(event.target.value));
+        dispatch(paramsActions.setCourseInputData(event.target.value));
     };
     const formatCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-        dispatch(orderActions.setFormatInputData(event.target.value));
+        dispatch(paramsActions.setFormatInputData(event.target.value));
     };
     const typeCourseInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-        dispatch(orderActions.setTypeInputData(event.target.value));
+        dispatch(paramsActions.setTypeInputData(event.target.value));
     };
     const statusInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-        dispatch(orderActions.setStatusInputData(event.target.value));
+        dispatch(paramsActions.setStatusInputData(event.target.value));
     };
     const groupInputDataChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-        dispatch(orderActions.setGroupInputData(event.target.value));
+        dispatch(paramsActions.setGroupInputData(event.target.value));
     };
     const startDateInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setStartDateInputData(event.target.value.slice(0, 10)));
+        dispatch(paramsActions.setStartDateInputData(event.target.value.slice(0, 10)));
     };
     const endDateInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        dispatch(orderActions.setEndDateInputData(event.target.value.slice(0, 10)));
+        dispatch(paramsActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
 
     return (
@@ -58,41 +57,41 @@ const InputBlock: FC = () => {
             <div className={css.filter_order}>
                 <Form.Control
                     type="search"
-                    value={nameInputData}
+                    value={name}
                     size="sm"
                     placeholder="Name"
                     onChange={nameInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={surNameInputData}
+                    value={surname}
                     size="sm"
                     placeholder="Surname"
                     onChange={surNameInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={emailInputData}
+                    value={email}
                     size="sm"
                     placeholder="email"
                     onChange={emailInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={phoneInputData}
+                    value={phone}
                     size="sm"
                     placeholder="phone"
                     onChange={phoneInputChange}
                 />
                 <Form.Control
                     type="number"
-                    value={ageInputData}
+                    value={age}
                     size="sm"
                     placeholder="age"
                     onChange={ageInputChange}
                 />
                 <Form.Select
-                    value={courseInputData}
+                    value={course}
                     size="sm"
                     aria-label="Choose course"
                     onChange={courseInputChange}
@@ -108,7 +107,7 @@ const InputBlock: FC = () => {
             </div>
             <div className={css.filter_order}>
                 <Form.Select
-                    value={formatCourseInputData}
+                    value={course_format}
                     size="sm"
                     aria-label="Course_format"
                     onChange={formatCourseInputDataChange}>
@@ -117,7 +116,7 @@ const InputBlock: FC = () => {
                         <option value="online">online</option>
                 </Form.Select>
                 <Form.Select
-                    value={typeCourseInputData}
+                    value={course_type}
                     size="sm"
                     aria-label="Course_type"
                     onChange={typeCourseInputDataChange}>
@@ -129,7 +128,7 @@ const InputBlock: FC = () => {
                         <option value="vip">vip</option>
                 </Form.Select>
                 <Form.Select
-                    value={statusInputData}
+                    value={status}
                     size="sm"
                     aria-label="Status"
                     onChange={statusInputDataChange}>
@@ -141,7 +140,7 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
-                    value={groupInputData}
+                    value={group}
                     size="sm"
                     aria-label="Choose group"
                     onChange={groupInputDataChange}>
@@ -155,14 +154,14 @@ const InputBlock: FC = () => {
                 </Form.Select>
                 <Form.Control
                     type="date"
-                    value={startDateInputData}
+                    value={created_at_after}
                     size="sm"
                     placeholder="start date"
                     onChange={startDateInputChange}
                 />
                 <Form.Control
                     type="date"
-                    value={endDateInputData}
+                    value={created_at_before}
                     size="sm"
                     placeholder="end date"
                     onChange={endDateInputChange}
