@@ -11,7 +11,7 @@ interface IProps {
 
 const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dispatch = useAppDispatch();
-    const {totalPagesOrders, pageOrders} = useAppSelector(state => state.orderReducer);
+    const {totalPagesOrders, pageOrders, orderBy} = useAppSelector(state => state.orderReducer);
     const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
     const getDataPage = (): number[] => {
         if (namePage === 'homePage') {
@@ -24,6 +24,10 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const handlerChangePage = (event: ChangeEvent<unknown>, num: number): void => {
         switch (namePage) {
             case 'homePage':
+                const queryParams: string[] = [];
+                if (orderBy && orderBy !== '') {
+                    queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
+                }
                 dispatch(orderActions.setPage(num));
                 break;
             case 'adminPage':

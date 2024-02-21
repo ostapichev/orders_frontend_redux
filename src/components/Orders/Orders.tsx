@@ -1,20 +1,19 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
-import {orderActions, paramsActions} from "../../redux";
+import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
@@ -23,7 +22,7 @@ const Orders: FC = () => {
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const [query] = useSearchParams();
+    const [query, setQuery] = useSearchParams();
     const [debouncedValueName] = useDebounce<string>(nameInputData, 1000);
     const [debouncedValueSurname] = useDebounce<string>(surNameInputData, 1000);
     const [debouncedValueEmail] = useDebounce<string>(emailInputData, 1000);
@@ -38,7 +37,7 @@ const Orders: FC = () => {
     const [debouncedValueEndDate] = useDebounce<string>(endDateInputData, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
-        dispatch(orderActions.setOrderByParams(newOrderBy));
+        setParams(newOrderBy);
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');
     const orderByName: IFuncVoid = () => sortingOrderBy('name');
@@ -55,7 +54,7 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-    useEffect(() => {
+    const setParams = (param: string) => {
         const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
@@ -96,39 +95,24 @@ const Orders: FC = () => {
         if (debouncedValueEndDate) {
             queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
         }
-        if (orderBy && orderBy !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
+        if (param && param !== '') {
+            queryParams.push(`order_by=${encodeURIComponent(param)}`);
+            dispatch(orderActions.setOrderByParams(param));
         }
         if (checkbox) {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
-    }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
-        debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, navigate, checkbox, orderBy, pageOrders, showParams, me?.profile.name]);
+        setQuery(queryString && `?${queryString}`);
+    };
     useEffect( () => {
         const searchParams: URLSearchParams = new URLSearchParams(location.search);
         const params: IParams = {};
         for (const [key, value] of searchParams.entries()) {
             params[key] = value;
         }
-        dispatch(paramsActions.setOrderBy(query.get('order_by')));
-        dispatch(paramsActions.setNameContains(query.get('name')));
-        dispatch(paramsActions.setSurnameContains(query.get('surname')));
-        dispatch(paramsActions.setEmailContains(query.get('email')));
-        dispatch(paramsActions.setPhoneContains(query.get('phone')));
-        dispatch(paramsActions.setAgeIn(query.get('age')));
-        dispatch(paramsActions.setCourse(query.get('course')));
-        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
-        dispatch(paramsActions.setCourseType(query.get('course_type')));
-        dispatch(paramsActions.setStatusIn(query.get('status')));
-        dispatch(paramsActions.setGroup(query.get('group')));
-        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
-        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
-        dispatch(paramsActions.setManager(query.get('manager')));
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, trigger, triggerComment, location.search, query]);
+    }, [dispatch, trigger, triggerComment, query, location.search]);
 
     return (
         <div className={css.table}>
