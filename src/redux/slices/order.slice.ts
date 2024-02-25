@@ -14,23 +14,11 @@ interface IState {
     trigger: boolean;
     loading: boolean;
     sorted: boolean;
-    orderBy: string;
     totalPagesOrders: number;
-    pageOrders: number;
     openOrderForm: boolean;
-    nameInputData: string;
-    surNameInputData: string;
-    emailInputData: string;
-    phoneInputData: string;
-    ageInputData: string;
-    courseInputData: string;
-    formatCourseInputData: string;
-    typeCourseInputData: string;
-    statusInputData: string;
-    groupInputData: string;
-    startDateInputData: string;
-    endDateInputData: string;
-    showParams: boolean;
+    params: IParams;
+    showQuery: boolean;
+    showPage: boolean;
 }
 
 const initialState: IState = {
@@ -41,24 +29,12 @@ const initialState: IState = {
     orderCreate: null,
     trigger: false,
     loading: false,
-    sorted: true,
-    orderBy: '',
+    sorted: false,
     totalPagesOrders: 0,
-    pageOrders: 1,
     openOrderForm: false,
-    nameInputData: '',
-    surNameInputData: '',
-    emailInputData: '',
-    phoneInputData: '',
-    ageInputData: '',
-    courseInputData: '',
-    formatCourseInputData: '',
-    typeCourseInputData: '',
-    statusInputData: '',
-    groupInputData: '',
-    startDateInputData: '',
-    endDateInputData: '',
-    showParams: false
+    params: {page: '1'},
+    showQuery: false,
+    showPage: false,
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -127,83 +103,69 @@ const slice = createSlice({
             state.orderCreate = action.payload;
         },
         setOrderByParams: (state, action) => {
-            state.orderBy = action.payload;
+            state.params.order_by = action.payload;
             state.sorted = !state.sorted;
+            state.params.page = '1';
+            state.showQuery = true;
         },
         setCheckBox: state => {
             state.checkbox = !state.checkbox;
-            state.pageOrders = 1;
+            state.params.page = '1';
+            state.showQuery = true;
         },
         setNameInputData: (state, action) => {
-            state.nameInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.name = action.payload;
+            state.showQuery = true;
         },
         setSurNameInputData: (state, action) => {
-            state.surNameInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.surname = action.payload;
+            state.showQuery = true;
         },
         setEmailInputData: (state, action) => {
-            state.emailInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.email = action.payload;
+            state.showQuery = true;
         },
         setPhoneInputData: (state, action) => {
-            state.phoneInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.phone = action.payload;
+            state.showQuery = true;
         },
         setAgeInputData: (state, action) => {
-            state.ageInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.age = action.payload;
+            state.showQuery = true;
         },
         setCourseInputData: (state, action) => {
-            state.courseInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.course = action.payload;
+            state.showQuery = true;
         },
         setFormatInputData: (state, action) => {
-            state.formatCourseInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.course_format = action.payload;
+            state.showQuery = true;
         },
         setTypeInputData: (state, action) => {
-            state.typeCourseInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.course_type = action.payload;
+            state.showQuery = true;
         },
         setStatusInputData: (state, action) => {
-            state.statusInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.status = action.payload;
+            state.showQuery = true;
         },
         setGroupInputData: (state, action) => {
-            state.groupInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.group = action.payload;
+            state.showQuery = true;
         },
         setStartDateInputData: (state, action) => {
-            state.startDateInputData = action.payload;
-            state.pageOrders = 1;
+            state.params.created_at_after = action.payload;
+            state.showQuery = true;
         },
         setEndDateInputData: (state, action) => {
-            state.endDateInputData = action.payload;
-            state.pageOrders = 1;
-        },
-        resetParams: state => {
-            state.sorted = true;
-            state.orderBy = '';
-            state.pageOrders = 1;
-            state.nameInputData = '';
-            state.surNameInputData = '';
-            state.emailInputData = '';
-            state.phoneInputData = '';
-            state.ageInputData = '';
-            state.courseInputData = '';
-            state.formatCourseInputData = '';
-            state.typeCourseInputData = '';
-            state.statusInputData = '';
-            state.groupInputData = '';
-            state.startDateInputData = '';
-            state.endDateInputData = '';
-            state.checkbox = false;
-            state.showParams = false;
+            state.params.created_at_before = action.payload;
+            state.showQuery = true;
         },
         setPage: (state, action) => {
-            state.pageOrders = action.payload;
-            state.showParams = true;
+            state.params.page = action.payload;
+        },
+        setShowPage: state => {
+            state.showQuery = true;
         },
         openForm: state => {
             state.openOrderForm = true;
@@ -212,6 +174,18 @@ const slice = createSlice({
             state.openOrderForm = false;
             state.orderUpdate = null;
             state.errorsOrder = null;
+        },
+        setSorted: (state, action) => {
+            state.sorted = true;
+            state.params.order_by = action.payload;
+        },
+        setReset: state => {
+            state.sorted = false;
+            state.checkbox = false;
+            state.showQuery = false;
+        },
+        setResetPage: state => {
+            state.params = {page: '1'};
         }
     },
     extraReducers: builder =>

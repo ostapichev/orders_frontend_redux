@@ -16,7 +16,7 @@ const Header: FC = () => {
     const {me} = useAppSelector(state => state.authReducer);
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
-        dispatch(orderActions.resetParams());
+        dispatch(orderActions.setReset());
     }, [dispatch]);
     const defaultParamsUsers: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());

@@ -11,11 +11,7 @@ import css from './InputBlock.module.css';
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
-    const {
-        nameInputData, surNameInputData, emailInputData, phoneInputData,
-        ageInputData, courseInputData, formatCourseInputData, typeCourseInputData,
-        statusInputData, groupInputData, startDateInputData, endDateInputData
-    } = useAppSelector(state => state.orderReducer);
+    const {params} = useAppSelector(state => state.orderReducer);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };
@@ -58,41 +54,41 @@ const InputBlock: FC = () => {
             <div className={css.filter_order}>
                 <Form.Control
                     type="search"
-                    value={nameInputData}
+                    value={params.name || ''}
                     size="sm"
                     placeholder="Name"
                     onChange={nameInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={surNameInputData}
+                    value={params.surname || ''}
                     size="sm"
                     placeholder="Surname"
                     onChange={surNameInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={emailInputData}
+                    value={params.email}
                     size="sm"
                     placeholder="email"
                     onChange={emailInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={phoneInputData}
+                    value={params.phone}
                     size="sm"
                     placeholder="phone"
                     onChange={phoneInputChange}
                 />
                 <Form.Control
                     type="number"
-                    value={ageInputData}
+                    value={params.age}
                     size="sm"
                     placeholder="age"
                     onChange={ageInputChange}
                 />
                 <Form.Select
-                    value={courseInputData}
+                    value={params.course}
                     size="sm"
                     aria-label="Choose course"
                     onChange={courseInputChange}
@@ -108,7 +104,7 @@ const InputBlock: FC = () => {
             </div>
             <div className={css.filter_order}>
                 <Form.Select
-                    value={formatCourseInputData}
+                    value={params.course_format}
                     size="sm"
                     aria-label="Course_format"
                     onChange={formatCourseInputDataChange}>
@@ -117,7 +113,7 @@ const InputBlock: FC = () => {
                         <option value="online">online</option>
                 </Form.Select>
                 <Form.Select
-                    value={typeCourseInputData}
+                    value={params.course_type}
                     size="sm"
                     aria-label="Course_type"
                     onChange={typeCourseInputDataChange}>
@@ -129,7 +125,7 @@ const InputBlock: FC = () => {
                         <option value="vip">vip</option>
                 </Form.Select>
                 <Form.Select
-                    value={statusInputData}
+                    value={params.status}
                     size="sm"
                     aria-label="Status"
                     onChange={statusInputDataChange}>
@@ -141,7 +137,7 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
-                    value={groupInputData}
+                    value={params.group}
                     size="sm"
                     aria-label="Choose group"
                     onChange={groupInputDataChange}>
@@ -155,14 +151,14 @@ const InputBlock: FC = () => {
                 </Form.Select>
                 <Form.Control
                     type="date"
-                    value={startDateInputData}
+                    value={params.created_at_after}
                     size="sm"
                     placeholder="start date"
                     onChange={startDateInputChange}
                 />
                 <Form.Control
                     type="date"
-                    value={endDateInputData}
+                    value={params.created_at_before}
                     size="sm"
                     placeholder="end date"
                     onChange={endDateInputChange}

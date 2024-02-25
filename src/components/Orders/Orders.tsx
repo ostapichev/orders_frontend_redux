@@ -1,9 +1,10 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
+import {headerTable} from "../../constants";
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
@@ -14,30 +15,27 @@ import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const location = useLocation();
     const {
-        nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
-        formatCourseInputData, typeCourseInputData, statusInputData, groupInputData, startDateInputData,
-        endDateInputData, orders, trigger, sorted, checkbox, pageOrders, showParams, orderBy
+        orders, trigger, sorted, checkbox, params, showQuery
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<string>(nameInputData, 1000);
-    const [debouncedValueSurname] = useDebounce<string>(surNameInputData, 1000);
-    const [debouncedValueEmail] = useDebounce<string>(emailInputData, 1000);
-    const [debouncedValuePhone] = useDebounce<string>(phoneInputData, 1000);
-    const [debouncedValueAge] = useDebounce<string>(ageInputData, 1000);
-    const [debouncedValueCourse] = useDebounce<string>(courseInputData, 1000);
-    const [debouncedValueFormatCourse] = useDebounce<string>(formatCourseInputData, 1000);
-    const [debouncedValueTypeCourse] = useDebounce<string>(typeCourseInputData, 1000);
-    const [debouncedValueStatus] = useDebounce<string>(statusInputData, 1000);
-    const [debouncedValueGroup] = useDebounce<string>(groupInputData, 1000);
-    const [debouncedValueStartDate] = useDebounce<string>(startDateInputData, 1000);
-    const [debouncedValueEndDate] = useDebounce<string>(endDateInputData, 1000);
+    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
+    const [debouncedValueSurname] = useDebounce<string>(params.surname, 1000);
+    const [debouncedValueEmail] = useDebounce<string>(params.email, 1000);
+    const [debouncedValuePhone] = useDebounce<string>(params.phone, 1000);
+    const [debouncedValueAge] = useDebounce<string>(params.age, 1000);
+    const [debouncedValueCourse] = useDebounce<string>(params.course, 1000);
+    const [debouncedValueFormatCourse] = useDebounce<string>(params.course_format, 1000);
+    const [debouncedValueTypeCourse] = useDebounce<string>(params.course_type, 1000);
+    const [debouncedValueStatus] = useDebounce<string>(params.status, 1000);
+    const [debouncedValueGroup] = useDebounce<string>(params.group, 1000);
+    const [debouncedValueStartDate] = useDebounce<string>(params.created_at_after, 1000);
+    const [debouncedValueEndDate] = useDebounce<string>(params.created_at_before, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
-        const newOrderBy = sorted ? order_by : `-${order_by}`;
-        setParams(newOrderBy);
+        const newOrderBy = sorted ? `-${order_by}` : order_by;
+        dispatch(orderActions.setOrderByParams(newOrderBy));
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');
     const orderByName: IFuncVoid = () => sortingOrderBy('name');
@@ -54,65 +52,80 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-    const setParams = (param: string) => {
-        const queryParams: string[] = [];
-        if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
+
+    useEffect(() => {
+        if (headerTable.includes(query.get('order_by'))) {
+            dispatch(orderActions.setSorted(query.get('order_by')));
         }
-        if (debouncedValueName) {
-            queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
+        if (+query.get('page') > 1) {
+            dispatch(orderActions.setPage(query.get('page')));
         }
-        if (debouncedValueSurname) {
-            queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
+    }, [dispatch, query, params.name]);
+    useEffect(() => {
+        if (!query || showQuery) {
+            const queryParams: string[] = [];
+            if (+params.page > 1) {
+                queryParams.push(`page=${encodeURIComponent(params.page)}`);
+            }
+            if (params.order_by) {
+                queryParams.push(`order_by=${encodeURIComponent(params.order_by)}`);
+            }
+            if (debouncedValueName) {
+                queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
+            }
+            if (debouncedValueSurname) {
+                queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
+            }
+            if (debouncedValueEmail) {
+                queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
+            }
+            if (debouncedValuePhone) {
+                queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
+            }
+            if (debouncedValueAge) {
+                queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
+            }
+            if (debouncedValueCourse) {
+                queryParams.push(`course=${encodeURIComponent(debouncedValueCourse)}`);
+            }
+            if (debouncedValueFormatCourse) {
+                queryParams.push(`course_format=${encodeURIComponent(debouncedValueFormatCourse)}`);
+            }
+            if (debouncedValueTypeCourse) {
+                queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse)}`);
+            }
+            if (debouncedValueStatus) {
+                queryParams.push(`status=${encodeURIComponent(debouncedValueStatus)}`);
+            }
+            if (debouncedValueGroup) {
+                queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
+            }
+            if (debouncedValueStartDate) {
+                queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
+            }
+            if (debouncedValueEndDate) {
+                queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
+            }
+            if (checkbox) {
+                queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
+            }
+            console.log(queryParams);
+            const queryString: string = queryParams.join('&');
+            setQuery(queryString && `?${queryString}`);
         }
-        if (debouncedValueEmail) {
-            queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
-        }
-        if (debouncedValuePhone) {
-            queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
-        }
-        if (debouncedValueAge) {
-            queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
-        }
-        if (debouncedValueCourse) {
-            queryParams.push(`course=${encodeURIComponent(debouncedValueCourse)}`);
-        }
-        if (debouncedValueFormatCourse) {
-            queryParams.push(`course_format=${encodeURIComponent(debouncedValueFormatCourse)}`);
-        }
-        if (debouncedValueTypeCourse) {
-            queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse)}`);
-        }
-        if (debouncedValueStatus) {
-            queryParams.push(`status=${encodeURIComponent(debouncedValueStatus)}`);
-        }
-        if (debouncedValueGroup) {
-            queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
-        }
-        if (debouncedValueStartDate) {
-            queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
-        }
-        if (debouncedValueEndDate) {
-            queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
-        }
-        if (param && param !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(param)}`);
-            dispatch(orderActions.setOrderByParams(param));
-        }
-        if (checkbox) {
-            queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
-        }
-        const queryString: string = queryParams.join('&');
-        setQuery(queryString && `?${queryString}`);
-    };
+    }, [
+        debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone,
+        debouncedValueAge, debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse,
+        debouncedValueStatus, debouncedValueGroup, debouncedValueStartDate, debouncedValueEndDate,
+        me?.profile.name, checkbox, query, setQuery, params, showQuery
+    ]);
     useEffect( () => {
-        const searchParams: URLSearchParams = new URLSearchParams(location.search);
         const params: IParams = {};
-        for (const [key, value] of searchParams.entries()) {
+        query.forEach((value, key) => {
             params[key] = value;
-        }
+        });
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, trigger, triggerComment, query, location.search]);
+    }, [dispatch, trigger, triggerComment, query]);
 
     return (
         <div className={css.table}>

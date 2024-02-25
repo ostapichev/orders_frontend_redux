@@ -11,11 +11,11 @@ interface IProps {
 
 const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dispatch = useAppDispatch();
-    const {totalPagesOrders, pageOrders, orderBy} = useAppSelector(state => state.orderReducer);
+    const {totalPagesOrders, params} = useAppSelector(state => state.orderReducer);
     const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
     const getDataPage = (): number[] => {
         if (namePage === 'homePage') {
-            return [totalPagesOrders, pageOrders];
+            return [totalPagesOrders, +params.page];
         } else if (namePage === 'adminPage') {
             return [totalPagesUsers, pageUsers];
         }
@@ -24,11 +24,8 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const handlerChangePage = (event: ChangeEvent<unknown>, num: number): void => {
         switch (namePage) {
             case 'homePage':
-                const queryParams: string[] = [];
-                if (orderBy && orderBy !== '') {
-                    queryParams.push(`order_by=${encodeURIComponent(orderBy)}`);
-                }
-                dispatch(orderActions.setPage(num));
+                dispatch(orderActions.setPage(num.toString()));
+                dispatch(orderActions.setShowPage());
                 break;
             case 'adminPage':
                 dispatch(adminActions.setPage(num));

@@ -12,7 +12,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
 
-
 import {create, reload} from '../../assets';
 
 const MyBlockButton: FC = () => {
@@ -25,7 +24,7 @@ const MyBlockButton: FC = () => {
         dispatch(orderActions.openForm());
     };
     const setDefaultParams: IFuncVoid = () => {
-        dispatch(orderActions.resetParams());
+        dispatch(orderActions.getAll({params: {page: '1'}}));
     };
 
     return (
