@@ -32,7 +32,7 @@ const initialState: IState = {
     sorted: false,
     totalPagesOrders: 0,
     openOrderForm: false,
-    params: {page: '1'},
+    params: {},
     showQuery: false,
     showPage: false,
 };
@@ -163,6 +163,7 @@ const slice = createSlice({
         },
         setPage: (state, action) => {
             state.params.page = action.payload;
+            state.showQuery = true;
         },
         setShowPage: state => {
             state.showQuery = true;
