@@ -1,4 +1,5 @@
 import {ChangeEvent, FC} from 'react';
+import {useDebounce} from "use-debounce";
 
 import Form from "react-bootstrap/Form";
 
@@ -12,6 +13,7 @@ const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {params} = useAppSelector(state => state.orderReducer);
+    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };

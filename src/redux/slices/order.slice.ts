@@ -32,7 +32,7 @@ const initialState: IState = {
     sorted: false,
     totalPagesOrders: 0,
     openOrderForm: false,
-    params: {},
+    params: {page: '1'},
     showQuery: false,
     showPage: false,
 };

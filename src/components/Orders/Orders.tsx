@@ -21,7 +21,7 @@ const Orders: FC = () => {
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
+    const [debouncedValueName] = useDebounce<IParams>(params, 2000);
     const [debouncedValueSurname] = useDebounce<string>(params.surname, 1000);
     const [debouncedValueEmail] = useDebounce<string>(params.email, 1000);
     const [debouncedValuePhone] = useDebounce<string>(params.phone, 1000);
@@ -55,32 +55,20 @@ const Orders: FC = () => {
 
     useEffect(() => {
         if (showQuery) {
-            const newParams: IParams = {...params};
-            query.forEach((value, key) => {
-                    console.log(key, value);
-            });
-            if (showQuery && params.page) {
-                newParams.page = params.page;
-            }
-            if (params.order_by) {
-                newParams.order_by = params.order_by;
-            }
-            if (debouncedValueName && params.name) {
-                newParams.name = debouncedValueName;
-            }
-            if (debouncedValueSurname) {
-                newParams.surname = debouncedValueSurname;
-            }
+            const newParams: IParams = {...debouncedValueName};
             setQuery(newParams);
         } else {
             if (headerTable.includes(query.get('order_by'))) {
                 dispatch(orderActions.setSorted(query.get('order_by')));
             }
+            if (query.get('page')) {
+                dispatch(orderActions.setPage(query.get('page')));
+            }
             if (query.get('name')) {
                 dispatch(orderActions.setNameInputData(query.get('name')));
             }
-            if (query.get('page')) {
-                dispatch(orderActions.setPage(query.get('page')));
+            if (query.get('surname')) {
+                dispatch(orderActions.setSurNameInputData(query.get('surname')));
             }
         }
     }, [
