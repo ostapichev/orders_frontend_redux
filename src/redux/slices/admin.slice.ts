@@ -13,7 +13,8 @@ interface IState {
     userStatistic: IUserStatistic;
     openUserForm: boolean;
     surnameUserInput: string;
-    showParams: boolean;
+    params: IParams;
+    showQuery: boolean;
     pageUsers: number,
     totalPagesUsers: number;
     errorUser: IErrorUser;
@@ -28,7 +29,8 @@ const initialState: IState = {
     userStatistic: {},
     openUserForm: false,
     surnameUserInput: '',
-    showParams: false,
+    params: {},
+    showQuery: false,
     pageUsers: 1,
     totalPagesUsers: 0,
     errorUser: null,
@@ -122,17 +124,17 @@ const slice = createSlice({
             state.errorUser = null;
         },
         setPage: (state, action) => {
-            state.pageUsers = action.payload;
-            state.showParams = true;
+            state.params.page = action.payload;
+            state.showQuery = true;
         },
         setSearchUser: (state, action) => {
-            state.surnameUserInput = action.payload;
-            state.pageUsers = 1;
+            state.params.surname = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
         },
         resetParams: state => {
-            state.surnameUserInput = '';
-            state.pageUsers = 1;
-            state.showParams = false;
+            state.params = {};
+            state.showQuery = false;
         }
     },
     extraReducers: builder =>

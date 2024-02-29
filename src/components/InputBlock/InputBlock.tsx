@@ -1,5 +1,4 @@
 import {ChangeEvent, FC} from 'react';
-import {useDebounce} from "use-debounce";
 
 import Form from "react-bootstrap/Form";
 
@@ -13,7 +12,6 @@ const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {params} = useAppSelector(state => state.orderReducer);
-    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
     const nameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(orderActions.setNameInputData(event.target.value));
     };
@@ -70,27 +68,27 @@ const InputBlock: FC = () => {
                 />
                 <Form.Control
                     type="search"
-                    value={params.email}
+                    value={params.email || ''}
                     size="sm"
                     placeholder="email"
                     onChange={emailInputChange}
                 />
                 <Form.Control
                     type="search"
-                    value={params.phone}
+                    value={params.phone || ''}
                     size="sm"
                     placeholder="phone"
                     onChange={phoneInputChange}
                 />
                 <Form.Control
                     type="number"
-                    value={params.age}
+                    value={params.age || ''}
                     size="sm"
                     placeholder="age"
                     onChange={ageInputChange}
                 />
                 <Form.Select
-                    value={params.course}
+                    value={params.course || ''}
                     size="sm"
                     aria-label="Choose course"
                     onChange={courseInputChange}
@@ -106,7 +104,7 @@ const InputBlock: FC = () => {
             </div>
             <div className={css.filter_order}>
                 <Form.Select
-                    value={params.course_format}
+                    value={params.course_format || ''}
                     size="sm"
                     aria-label="Course_format"
                     onChange={formatCourseInputDataChange}>
@@ -115,7 +113,7 @@ const InputBlock: FC = () => {
                         <option value="online">online</option>
                 </Form.Select>
                 <Form.Select
-                    value={params.course_type}
+                    value={params.course_type || ''}
                     size="sm"
                     aria-label="Course_type"
                     onChange={typeCourseInputDataChange}>
@@ -127,7 +125,7 @@ const InputBlock: FC = () => {
                         <option value="vip">vip</option>
                 </Form.Select>
                 <Form.Select
-                    value={params.status}
+                    value={params.status || ''}
                     size="sm"
                     aria-label="Status"
                     onChange={statusInputDataChange}>
@@ -139,7 +137,7 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
-                    value={params.group}
+                    value={params.group || ''}
                     size="sm"
                     aria-label="Choose group"
                     onChange={groupInputDataChange}>
@@ -153,14 +151,14 @@ const InputBlock: FC = () => {
                 </Form.Select>
                 <Form.Control
                     type="date"
-                    value={params.created_at_after}
+                    value={params.created_at_after || ''}
                     size="sm"
                     placeholder="start date"
                     onChange={startDateInputChange}
                 />
                 <Form.Control
                     type="date"
-                    value={params.created_at_before}
+                    value={params.created_at_before || ''}
                     size="sm"
                     placeholder="end date"
                     onChange={endDateInputChange}

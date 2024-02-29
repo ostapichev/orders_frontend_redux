@@ -18,7 +18,6 @@ interface IState {
     openOrderForm: boolean;
     params: IParams;
     showQuery: boolean;
-    showPage: boolean;
 }
 
 const initialState: IState = {
@@ -32,9 +31,8 @@ const initialState: IState = {
     sorted: false,
     totalPagesOrders: 0,
     openOrderForm: false,
-    params: {page: '1'},
+    params: {},
     showQuery: false,
-    showPage: false,
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -108,10 +106,19 @@ const slice = createSlice({
             state.params.page = '1';
             state.showQuery = true;
         },
-        setCheckBox: state => {
+        setCheckBox: (state, action) => {
             state.checkbox = !state.checkbox;
             state.params.page = '1';
+            if (state.checkbox) {
+                state.params.manager = action.payload;
+            } else {
+                state.params.manager = '';
+            }
             state.showQuery = true;
+        },
+        setReloadBox: (state, action) => {
+            state.params.manager = action.payload;
+            state.checkbox = true;
         },
         setNameInputData: (state, action) => {
             state.params.name = action.payload;
@@ -184,6 +191,7 @@ const slice = createSlice({
             state.sorted = false;
             state.checkbox = false;
             state.showQuery = false;
+            state.params = {};
         },
         setResetPage: state => {
             state.params = {page: '1'};

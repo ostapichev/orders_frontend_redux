@@ -4,7 +4,7 @@ import {useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
-import {headerTable, inputFields} from "../../constants";
+import {headerTable} from "../../constants";
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
@@ -21,7 +21,7 @@ const Orders: FC = () => {
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<IParams>(params, 2000);
+    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
     const [debouncedValueSurname] = useDebounce<string>(params.surname, 1000);
     const [debouncedValueEmail] = useDebounce<string>(params.email, 1000);
     const [debouncedValuePhone] = useDebounce<string>(params.phone, 1000);
@@ -52,10 +52,14 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-
     useEffect(() => {
         if (showQuery) {
-            const newParams: IParams = {...debouncedValueName};
+            const newParams: IParams = {...params};
+            Object.keys(newParams).forEach((key) => {
+                if (!newParams[key]) {
+                    delete newParams[key];
+                }
+            });
             setQuery(newParams);
         } else {
             if (headerTable.includes(query.get('order_by'))) {
@@ -69,6 +73,39 @@ const Orders: FC = () => {
             }
             if (query.get('surname')) {
                 dispatch(orderActions.setSurNameInputData(query.get('surname')));
+            }
+            if (query.get('email')) {
+                dispatch(orderActions.setEmailInputData(query.get('email')));
+            }
+            if (query.get('phone')) {
+                dispatch(orderActions.setPhoneInputData(query.get('phone')));
+            }
+            if (query.get('age')) {
+                dispatch(orderActions.setAgeInputData(query.get('age')));
+            }
+            if (query.get('course')) {
+                dispatch(orderActions.setCourseInputData(query.get('course')));
+            }
+            if (query.get('course_type')) {
+                dispatch(orderActions.setTypeInputData(query.get('course_type')));
+            }
+            if (query.get('course_format')) {
+                dispatch(orderActions.setFormatInputData(query.get('course_format')));
+            }
+            if (query.get('status')) {
+                dispatch(orderActions.setStatusInputData(query.get('status')));
+            }
+            if (query.get('groups')) {
+                dispatch(orderActions.setGroupInputData(query.get('groups')));
+            }
+            if (query.get('created_at_after')) {
+                dispatch(orderActions.setStartDateInputData(query.get('created_at_after')));
+            }
+            if (query.get('created_at_before')) {
+                dispatch(orderActions.setEndDateInputData(query.get('created_at_before')));
+            }
+            if (query.get('manager')) {
+                dispatch(orderActions.setReloadBox(query.get('manager')));
             }
         }
     }, [

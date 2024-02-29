@@ -1,4 +1,5 @@
 import {FC} from 'react';
+import {useSearchParams} from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Image from 'react-bootstrap/Image';
@@ -17,14 +18,17 @@ import {create, reload} from '../../assets';
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
     const {checkbox} = useAppSelector(state => state.orderReducer);
+    const {me} = useAppSelector(state => state.authReducer);
+    const [, setQuery] = useSearchParams();
     const handler: IFuncVoid = () => {
-        dispatch(orderActions.setCheckBox());
+        dispatch(orderActions.setCheckBox(me.profile.name));
     };
     const createOrder: IFuncVoid = () => {
         dispatch(orderActions.openForm());
     };
     const setDefaultParams: IFuncVoid = () => {
-        dispatch(orderActions.getAll({params: {page: '1'}}));
+        setQuery('');
+        dispatch(orderActions.setReset());
     };
 
     return (
