@@ -7,24 +7,32 @@ import {orderService} from "../../services";
 
 interface IState {
     orders: IOrder[];
+    checkbox: boolean;
     errorsOrder: IErrorOrder;
     orderUpdate: IOrder;
     orderCreate: string;
     trigger: boolean;
     loading: boolean;
+    sorted: boolean;
     totalPagesOrders: number;
     openOrderForm: boolean;
+    params: IParams;
+    showQuery: boolean;
 }
 
 const initialState: IState = {
     orders: [],
+    checkbox: false,
     errorsOrder: null,
     orderUpdate: null,
     orderCreate: null,
     trigger: false,
     loading: false,
+    sorted: false,
     totalPagesOrders: 0,
     openOrderForm: false,
+    params: {},
+    showQuery: false,
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -92,6 +100,93 @@ const slice = createSlice({
         setOrderCreate: (state, action) => {
             state.orderCreate = action.payload;
         },
+        setOrderByParams: (state, action) => {
+            state.params.order_by = action.payload;
+            state.sorted = !state.sorted;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setCheckBox: (state, action) => {
+            state.checkbox = !state.checkbox;
+            state.params.page = '1';
+            if (state.checkbox) {
+                state.params.manager = action.payload;
+            } else {
+                state.params.manager = '';
+            }
+            state.showQuery = true;
+        },
+        setReloadBox: (state, action) => {
+            state.params.manager = action.payload;
+            state.checkbox = true;
+        },
+        setNameInputData: (state, action) => {
+            state.params.name = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setSurNameInputData: (state, action) => {
+            state.params.surname = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setEmailInputData: (state, action) => {
+            state.params.email = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setPhoneInputData: (state, action) => {
+            state.params.phone = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setAgeInputData: (state, action) => {
+            state.params.age = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setCourseInputData: (state, action) => {
+            state.params.course = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setFormatInputData: (state, action) => {
+            state.params.course_format = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setTypeInputData: (state, action) => {
+            state.params.course_type = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setStatusInputData: (state, action) => {
+            state.params.status = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setGroupInputData: (state, action) => {
+            state.params.group = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setStartDateInputData: (state, action) => {
+            state.params.created_at_after = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setEndDateInputData: (state, action) => {
+            state.params.created_at_before = action.payload;
+            state.params.page = '1';
+            state.showQuery = true;
+        },
+        setPage: (state, action) => {
+            state.params.page = action.payload;
+            state.showQuery = true;
+        },
+        setShowPage: state => {
+            state.showQuery = true;
+        },
         openForm: state => {
             state.openOrderForm = true;
         },
@@ -99,6 +194,19 @@ const slice = createSlice({
             state.openOrderForm = false;
             state.orderUpdate = null;
             state.errorsOrder = null;
+        },
+        setSorted: (state, action) => {
+            state.sorted = true;
+            state.params.order_by = action.payload;
+        },
+        setReset: state => {
+            state.sorted = false;
+            state.checkbox = false;
+            state.showQuery = false;
+            state.params = {};
+        },
+        setResetPage: state => {
+            state.params.page = '1';
         }
     },
     extraReducers: builder =>

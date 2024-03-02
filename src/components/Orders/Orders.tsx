@@ -1,44 +1,38 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
-import {orderActions, paramsActions} from "../../redux";
+import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const location = useLocation();
-    const navigate = useNavigate();
-    const {orders, trigger} = useAppSelector(state => state.orderReducer);
-    const {
-        sorted, checkbox, order_by, pageOrders, name, surname, email, phone, age, course, course_format, course_type,
-        status, showParams, group, created_at_after, created_at_before
-    } = useAppSelector(state => state.paramsReducer);
+    const {orders, trigger, sorted, checkbox, params, showQuery} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<string>(name, 1000);
-    const [debouncedValueSurname] = useDebounce<string>(surname, 1000);
-    const [debouncedValueEmail] = useDebounce<string>(email, 1000);
-    const [debouncedValuePhone] = useDebounce<string>(phone, 1000);
-    const [debouncedValueAge] = useDebounce<string>(age, 1000);
-    const [debouncedValueCourse] = useDebounce<string>(course, 1000);
-    const [debouncedValueFormatCourse] = useDebounce<string>(course_format, 1000);
-    const [debouncedValueTypeCourse] = useDebounce<string>(course_type, 1000);
-    const [debouncedValueStatus] = useDebounce<string>(status, 1000);
-    const [debouncedValueGroup] = useDebounce<string>(group, 1000);
-    const [debouncedValueStartDate] = useDebounce<string>(created_at_after, 1000);
-    const [debouncedValueEndDate] = useDebounce<string>(created_at_before, 1000);
+    const [debouncedValueName] = useDebounce<string>(params.name, 1000);
+    const [debouncedValueSurname] = useDebounce<string>(params.surname, 1000);
+    const [debouncedValueEmail] = useDebounce<string>(params.email, 1000);
+    const [debouncedValuePhone] = useDebounce<string>(params.phone, 1000);
+    const [debouncedValueAge] = useDebounce<string>(params.age, 1000);
+    const [debouncedValueCourse] = useDebounce<string>(params.course, 1000);
+    const [debouncedValueFormatCourse] = useDebounce<string>(params.course_format, 1000);
+    const [debouncedValueTypeCourse] = useDebounce<string>(params.course_type, 1000);
+    const [debouncedValueStatus] = useDebounce<string>(params.status, 1000);
+    const [debouncedValueGroup] = useDebounce<string>(params.group, 1000);
+    const [debouncedValueStartDate] = useDebounce<string>(params.created_at_after, 1000);
+    const [debouncedValueEndDate] = useDebounce<string>(params.created_at_before, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
-        const newOrderBy = sorted ? order_by : `-${order_by}`;
-        dispatch(paramsActions.setOrderByParams(newOrderBy));
+        const newOrderBy = sorted ? `-${order_by}` : order_by;
+        dispatch(orderActions.setOrderByParams(newOrderBy));
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');
     const orderByName: IFuncVoid = () => sortingOrderBy('name');
@@ -56,81 +50,71 @@ const Orders: FC = () => {
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
     useEffect( () => {
-        const searchParams: URLSearchParams = new URLSearchParams(location.search);
-        console.log(searchParams);
         const params: IParams = {};
-        for (const [key, value] of searchParams.entries()) {
+        query.forEach((value, key) => {
             params[key] = value;
-        }
-        dispatch(paramsActions.setOrderBy(query.get('order_by')));
-        dispatch(paramsActions.setNameContains(query.get('name')));
-        dispatch(paramsActions.setSurnameContains(query.get('surname')));
-        dispatch(paramsActions.setEmailContains(query.get('email')));
-        dispatch(paramsActions.setPhoneContains(query.get('phone')));
-        dispatch(paramsActions.setAgeIn(query.get('age')));
-        dispatch(paramsActions.setCourse(query.get('course')));
-        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
-        dispatch(paramsActions.setCourseType(query.get('course_type')));
-        dispatch(paramsActions.setStatusIn(query.get('status')));
-        dispatch(paramsActions.setGroup(query.get('group')));
-        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
-        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
-        dispatch(paramsActions.setManager(query.get('manager')));
+        });
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, query, trigger, triggerComment, location.search]);
+    }, [dispatch, trigger, triggerComment, query]);
     useEffect(() => {
         const queryParams: string[] = [];
-        if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
+        if (showQuery || query.get('page')) {
+            queryParams.push(`page=${encodeURIComponent(params.page || query.get('page'))}`);
         }
-        if (debouncedValueName) {
-            queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
+        if (debouncedValueName || query.get('name')) {
+            queryParams.push(`name=${encodeURIComponent(debouncedValueName || query.get('name'))}`);
         }
-        if (debouncedValueSurname) {
-            queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
+        if (debouncedValueSurname || query.get('surname')) {
+            queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname || query.get('surname'))}`);
         }
-        if (debouncedValueEmail) {
-            queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
+        if (debouncedValueEmail || query.get('email')) {
+            queryParams.push(`email=${encodeURIComponent(debouncedValueEmail || query.get('email'))}`);
         }
-        if (debouncedValuePhone) {
-            queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
+        if (debouncedValuePhone || query.get('phone')) {
+            queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone || query.get('phone'))}`);
         }
-        if (debouncedValueAge) {
-            queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
+        if (debouncedValueAge || query.get('age')) {
+            queryParams.push(`age=${encodeURIComponent(debouncedValueAge) || query.get('age')}`);
         }
-        if (debouncedValueCourse) {
-            queryParams.push(`course=${encodeURIComponent(debouncedValueCourse)}`);
+        if (debouncedValueCourse || query.get('course')) {
+            queryParams.push(`course=${encodeURIComponent(debouncedValueCourse) || query.get('course')}`);
         }
-        if (debouncedValueFormatCourse) {
-            queryParams.push(`course_format=${encodeURIComponent(debouncedValueFormatCourse)}`);
+        if (debouncedValueFormatCourse || query.get('course_format')) {
+            queryParams.push(`course_format=${encodeURIComponent(
+                debouncedValueFormatCourse || query.get('course_format'))}`
+            );
         }
-        if (debouncedValueTypeCourse) {
-            queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse)}`);
+        if (debouncedValueTypeCourse || query.get('course_type')) {
+            queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse) || query.get('course_type')}`);
         }
-        if (debouncedValueStatus) {
-            queryParams.push(`status=${encodeURIComponent(debouncedValueStatus)}`);
+        if (debouncedValueStatus || query.get('status')) {
+            queryParams.push(`status=${encodeURIComponent(debouncedValueStatus) || query.get('status')}`);
         }
-        if (debouncedValueGroup) {
-            queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
+        if (debouncedValueGroup || query.get('group')) {
+            queryParams.push(`group=${encodeURIComponent(debouncedValueGroup) || query.get('group')}`);
         }
-        if (debouncedValueStartDate) {
-            queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
+        if (debouncedValueStartDate || query.get('created_at_after')) {
+            queryParams.push(`created_at_after=${encodeURIComponent(
+                debouncedValueStartDate) || query.get('created_at_after')}`
+            );
         }
-        if (debouncedValueEndDate) {
-            queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
+        if (debouncedValueEndDate || query.get('created_at_before')) {
+            queryParams.push(`created_at_before=${encodeURIComponent(
+                debouncedValueEndDate) || query.get('created_at_before')}`
+            );
         }
-        if (order_by && order_by !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(order_by)}`);
+        if (params.order_by || query.get('order_by')) {
+            queryParams.push(`order_by=${encodeURIComponent(params.order_by || query.get('order_by'))}`);
         }
-        if (checkbox) {
-            queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
+        if (checkbox || query.get('manager')) {
+            queryParams.push(`manager=${encodeURIComponent(me.profile.name) || query.get('manager')}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
+        setQuery(queryString && `?${queryString}`);
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
         debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name,
-        setQuery, navigate, dispatch]);
+        debouncedValueStartDate, debouncedValueEndDate, checkbox, me?.profile.name, query, params, showQuery,
+        setQuery, dispatch]);
 
     return (
         <div className={css.table}>
