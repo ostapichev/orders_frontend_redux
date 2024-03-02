@@ -54,7 +54,11 @@ const Orders: FC = () => {
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
     useEffect(() => {
         if (showQuery) {
-            const newParams: IParams = {...params};
+            const queryParams: IParams = {};
+            if (debouncedValueName) {
+                queryParams.name = debouncedValueName;
+            }
+            const newParams: IParams = {...queryParams};
             Object.keys(newParams).forEach((key) => {
                 if (!newParams[key]) {
                     delete newParams[key];
@@ -108,12 +112,7 @@ const Orders: FC = () => {
                 dispatch(orderActions.setReloadBox(query.get('manager')));
             }
         }
-    }, [
-        debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone,
-        debouncedValueAge, debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse,
-        debouncedValueStatus, debouncedValueGroup, debouncedValueStartDate, debouncedValueEndDate,
-        me?.profile.name, checkbox, query, setQuery, params, showQuery, dispatch
-    ]);
+    }, [me?.profile.name, checkbox, query, setQuery, params, showQuery, dispatch, debouncedValueName]);
     useEffect( () => {
         const params: IParams = {};
         query.forEach((value, key) => {

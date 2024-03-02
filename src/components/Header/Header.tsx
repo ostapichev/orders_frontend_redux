@@ -22,13 +22,11 @@ const Header: FC = () => {
     const defaultParamsUsers: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());
     }, [dispatch]);
-    const resetPageComments: IFuncVoid = useCallback(() => {
-        dispatch(commentActions.setDefaultPaginate());
-    }, [dispatch]);
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
-        defaultParamsOrders();
-        defaultParamsUsers();
-        resetPageComments();
+        dispatch(orderActions.setReset());
+        dispatch(orderActions.setResetPage());
+        dispatch(adminActions.resetParams());
+        dispatch(commentActions.setDefaultPaginate());
         dispatch(authActions.logout());
     };
     useEffect(() => {
@@ -42,17 +40,15 @@ const Header: FC = () => {
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
                 authService.deleteTokens();
-                defaultParamsOrders();
-                defaultParamsUsers();
                 dispatch(orderActions.getAll({params: {}}))
-            }, 10000);
+            }, 900000);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             clearTimeout(timeoutId);
         };
-    }, [dispatch, defaultParamsOrders, defaultParamsUsers]);
+    }, [dispatch]);
 
     return (
         <div className={css.header}>

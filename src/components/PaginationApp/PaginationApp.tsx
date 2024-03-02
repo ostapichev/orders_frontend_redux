@@ -14,7 +14,7 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const dispatch = useAppDispatch();
     const [query] = useSearchParams();
     const {totalPagesOrders} = useAppSelector(state => state.orderReducer);
-    const {totalPagesUsers, pageUsers} = useAppSelector(state => state.adminReducer);
+    const {totalPagesUsers} = useAppSelector(state => state.adminReducer);
     const getDataPage = (): number[] => {
         if (namePage === 'homePage') {
             return [totalPagesOrders, +query.get('page') || 1];
