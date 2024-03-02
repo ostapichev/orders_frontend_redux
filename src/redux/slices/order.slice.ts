@@ -122,50 +122,62 @@ const slice = createSlice({
         },
         setNameInputData: (state, action) => {
             state.params.name = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setSurNameInputData: (state, action) => {
             state.params.surname = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setEmailInputData: (state, action) => {
             state.params.email = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setPhoneInputData: (state, action) => {
             state.params.phone = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setAgeInputData: (state, action) => {
             state.params.age = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setCourseInputData: (state, action) => {
             state.params.course = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setFormatInputData: (state, action) => {
             state.params.course_format = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setTypeInputData: (state, action) => {
             state.params.course_type = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setStatusInputData: (state, action) => {
             state.params.status = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setGroupInputData: (state, action) => {
             state.params.group = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setStartDateInputData: (state, action) => {
             state.params.created_at_after = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setEndDateInputData: (state, action) => {
             state.params.created_at_before = action.payload;
+            state.params.page = '1';
             state.showQuery = true;
         },
         setPage: (state, action) => {
@@ -194,7 +206,7 @@ const slice = createSlice({
             state.params = {};
         },
         setResetPage: state => {
-            state.params = {page: '1'};
+            state.params.page = '1';
         }
     },
     extraReducers: builder =>

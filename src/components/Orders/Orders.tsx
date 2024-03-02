@@ -95,8 +95,8 @@ const Orders: FC = () => {
             if (query.get('status')) {
                 dispatch(orderActions.setStatusInputData(query.get('status')));
             }
-            if (query.get('groups')) {
-                dispatch(orderActions.setGroupInputData(query.get('groups')));
+            if (query.get('group')) {
+                dispatch(orderActions.setGroupInputData(query.get('group')));
             }
             if (query.get('created_at_after')) {
                 dispatch(orderActions.setStartDateInputData(query.get('created_at_after')));

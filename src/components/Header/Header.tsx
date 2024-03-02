@@ -17,6 +17,7 @@ const Header: FC = () => {
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: IFuncVoid = useCallback(() => {
         dispatch(orderActions.setReset());
+        dispatch(orderActions.setResetPage());
     }, [dispatch]);
     const defaultParamsUsers: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());
@@ -44,7 +45,7 @@ const Header: FC = () => {
                 defaultParamsOrders();
                 defaultParamsUsers();
                 dispatch(orderActions.getAll({params: {}}))
-            }, 900000);
+            }, 10000);
         };
         window.addEventListener('mousemove', handleMouseMove);
         return () => {

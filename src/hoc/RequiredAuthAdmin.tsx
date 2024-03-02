@@ -10,7 +10,7 @@ interface IProps {
 const RequiredAuthAdmin: FC<IProps> = ({ children }) => {
     const {me} = useAppSelector(state => state.authReducer);
     if (!me?.is_superuser) {
-        return <Navigate to='/admin' />
+        return <Navigate to='/orders' />
     }
     return children;
 };
