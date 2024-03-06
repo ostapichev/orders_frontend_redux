@@ -5,6 +5,7 @@ import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
+import {history} from "../../services";
 import {GetExelFile} from "../GetExelFile/GetExelFile";
 import {IFuncVoid} from "../../types";
 import {orderActions} from "../../redux";
@@ -25,6 +26,7 @@ const MyBlockButton: FC = () => {
     };
     const setDefaultParams: IFuncVoid = () => {
         dispatch(orderActions.resetParams());
+        history.replace(window.location.pathname);
     };
 
     return (

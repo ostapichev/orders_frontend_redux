@@ -1,6 +1,6 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -14,7 +14,6 @@ import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
     const {
         nameInputData, surNameInputData, emailInputData, phoneInputData, ageInputData, courseInputData,
@@ -23,7 +22,7 @@ const Orders: FC = () => {
     } = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
-    const [query] = useSearchParams();
+    const [query, setQuery] = useSearchParams();
     const [debouncedValueName] = useDebounce<string>(nameInputData, 1000);
     const [debouncedValueSurname] = useDebounce<string>(surNameInputData, 1000);
     const [debouncedValueEmail] = useDebounce<string>(emailInputData, 1000);
@@ -103,10 +102,10 @@ const Orders: FC = () => {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
         const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
+        setQuery(queryString && `?${queryString}`);
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
         debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, navigate, checkbox, orderBy, pageOrders, showParams, me?.profile.name]);
+        debouncedValueStartDate, debouncedValueEndDate, setQuery, checkbox, orderBy, pageOrders, showParams, me?.profile.name]);
     useEffect( () => {
         const searchParams: URLSearchParams = new URLSearchParams(location.search);
         const params: IParams = {};
