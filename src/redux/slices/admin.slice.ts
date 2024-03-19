@@ -14,6 +14,7 @@ interface IState {
     openUserForm: boolean;
     surnameUserInput: string;
     showParams: boolean;
+    paramsUsers: IParams;
     pageUsers: number,
     totalPagesUsers: number;
     errorUser: IErrorUser;
@@ -29,6 +30,7 @@ const initialState: IState = {
     openUserForm: false,
     surnameUserInput: '',
     showParams: false,
+    paramsUsers: {},
     pageUsers: 1,
     totalPagesUsers: 0,
     errorUser: null,
@@ -118,20 +120,23 @@ const slice = createSlice({
         },
         closeUserForm: state => {
             state.openUserForm = false;
-            state.pageUsers = 1;
+            state.paramsUsers.page = '1';
             state.errorUser = null;
         },
         setPage: (state, action) => {
-            state.pageUsers = action.payload;
+            state.paramsUsers.page = action.payload;
             state.showParams = true;
         },
         setSearchUser: (state, action) => {
-            state.surnameUserInput = action.payload;
-            state.pageUsers = 1;
+            state.paramsUsers.surname = action.payload;
+            state.paramsUsers.page = '1';
+            state.showParams = true;
+        },
+        resetPage: state => {
+            state.paramsUsers.page = '1';
         },
         resetParams: state => {
-            state.surnameUserInput = '';
-            state.pageUsers = 1;
+            state.paramsUsers = {};
             state.showParams = false;
         }
     },

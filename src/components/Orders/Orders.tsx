@@ -14,8 +14,6 @@ import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const location = useLocation();
-    const navigate = useNavigate();
     const {orders, trigger} = useAppSelector(state => state.orderReducer);
     const {
         sorted, checkbox, order_by, pageOrders, name, surname, email, phone, age, course, course_format, course_type,
@@ -56,41 +54,46 @@ const Orders: FC = () => {
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
     useEffect( () => {
-        const searchParams: URLSearchParams = new URLSearchParams(location.search);
-        console.log(searchParams);
+        console.log('orders1');
+        const searchParams: URLSearchParams = new URLSearchParams(query.toString());
         const params: IParams = {};
         for (const [key, value] of searchParams.entries()) {
             params[key] = value;
         }
-        dispatch(paramsActions.setOrderBy(query.get('order_by')));
-        dispatch(paramsActions.setNameContains(query.get('name')));
-        dispatch(paramsActions.setSurnameContains(query.get('surname')));
-        dispatch(paramsActions.setEmailContains(query.get('email')));
-        dispatch(paramsActions.setPhoneContains(query.get('phone')));
+        /*dispatch(paramsActions.setOrderBy(params['order_by']));
+        dispatch(paramsActions.setNameContains(params['name']));
+        dispatch(paramsActions.setSurnameContains(params['surname']));
+        dispatch(paramsActions.setEmailContains(params['email']));
+        /*dispatch(paramsActions.setPhoneContains(query.get('phone')));
         dispatch(paramsActions.setAgeIn(query.get('age')));
         dispatch(paramsActions.setCourse(query.get('course')));
         dispatch(paramsActions.setCourseFormat(query.get('course_format')));
         dispatch(paramsActions.setCourseType(query.get('course_type')));
-        dispatch(paramsActions.setStatusIn(query.get('status')));
-        dispatch(paramsActions.setGroup(query.get('group')));
-        dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
+        dispatch(paramsActions.setStatusIn(query.get('status')));*/
+
+        /*dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
         dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
-        dispatch(paramsActions.setManager(query.get('manager')));
+        dispatch(paramsActions.setManager(query.get('manager')));*/
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, query, trigger, triggerComment, location.search]);
+        setQuery(`?${new URLSearchParams(params).toString()}`);
+    }, [dispatch, query, trigger, triggerComment, setQuery]);
     useEffect(() => {
+        console.log('orders2');
         const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
         }
         if (debouncedValueName) {
             queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
+            dispatch(paramsActions.setNameContains(debouncedValueName));
         }
         if (debouncedValueSurname) {
             queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
+            dispatch(paramsActions.setSurnameContains(debouncedValueName));
         }
         if (debouncedValueEmail) {
             queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
+            dispatch(paramsActions.setEmailContains(debouncedValueEmail));
         }
         if (debouncedValuePhone) {
             queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
@@ -112,6 +115,7 @@ const Orders: FC = () => {
         }
         if (debouncedValueGroup) {
             queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
+            dispatch(paramsActions.setGroup(debouncedValueGroup));
         }
         if (debouncedValueStartDate) {
             queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
@@ -121,16 +125,20 @@ const Orders: FC = () => {
         }
         if (order_by && order_by !== '') {
             queryParams.push(`order_by=${encodeURIComponent(order_by)}`);
+            dispatch(paramsActions.setOrderBy(order_by));
         }
         if (checkbox) {
             queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
-        const queryString: string = queryParams.join('&');
-        navigate(queryString && `?${queryString}`);
+        //const queryString: string = queryParams.join('&');
+        //console.log(queryString && `?${queryString}`);
+        if (queryParams.length) {
+            setQuery(`?${queryParams.join('&')}`);
+        }
     }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
         debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
         debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name,
-        setQuery, navigate, dispatch]);
+        setQuery, dispatch]);
 
     return (
         <div className={css.table}>

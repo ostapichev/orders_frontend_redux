@@ -3,7 +3,8 @@ import {Navigate, Route, Routes} from "react-router-dom";
 
 import {AdminPage, LoginPage, OrdersPage, RegisterPage, RecoveryPasswordPage, NotFoundPage} from "./pages";
 import {MainLayout} from "./layouts";
-import {RequiredAuthAdmin, RequiredAuthHome} from "./hoc";
+import {RequiredAuthHome} from "./hoc/RequiredAuthHome";
+import {RequiredAuthAdmin} from "./hoc/RequiredAuthAdmin";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,9 +23,9 @@ const App: FC = () => {
                   </RequiredAuthHome>
               } />
               <Route path='/admin' element={
-                  <RequiredAuthAdmin>
+                  <RequiredAuthHome>
                       <AdminPage />
-                  </RequiredAuthAdmin>
+                  </RequiredAuthHome>
               } />
               <Route path='*' element={<NotFoundPage />} />
           </Route>

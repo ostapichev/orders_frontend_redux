@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import {InputGroup} from "react-bootstrap";
 
 import {adminActions} from "../../redux";
+import {history} from '../../services';
 import {IFuncVoid} from "../../types";
 import {ISearch} from "../../interfaces";
 import {searchValidator} from "../../validators";
@@ -24,6 +25,7 @@ const SearchUser: FC = () => {
     };
     const resetParams: IFuncVoid = () => {
         dispatch(adminActions.resetParams());
+        history.replace(window.location.pathname);
     };
 
     return (

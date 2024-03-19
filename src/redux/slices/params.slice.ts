@@ -159,7 +159,6 @@ const slice = createSlice({
         },
         setGroupInputData: (state, action) => {
             state.group = action.payload;
-            state.pageOrders = 1;
         },
         setStartDateInputData: (state, action) => {
             state.created_at_after = action.payload;

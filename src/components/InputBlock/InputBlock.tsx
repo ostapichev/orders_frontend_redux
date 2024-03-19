@@ -1,15 +1,17 @@
-import {ChangeEvent, FC} from 'react';
+import {ChangeEvent, FC, useEffect} from 'react';
 
 import Form from "react-bootstrap/Form";
 
 import {Group} from "../Group/Group";
-import {paramsActions} from "../../redux";
+import {orderActions, paramsActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './InputBlock.module.css';
+import {useSearchParams} from "react-router-dom";
 
 const InputBlock: FC = () => {
     const dispatch = useAppDispatch();
+    const [query, setQuery] = useSearchParams();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {
         name, surname, email, phone, age, course, course_format, course_type,
@@ -51,6 +53,18 @@ const InputBlock: FC = () => {
     const endDateInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
         dispatch(paramsActions.setEndDateInputData(event.target.value.slice(0, 10)));
     };
+    useEffect(() => {
+        console.log('inputblock');
+        if (query.get('group')) {
+            dispatch(paramsActions.setGroupInputData(query.get('group')));
+        }
+        if (query.get('order_by')) {
+            dispatch(paramsActions.setOrderByParams(query.get('order_by')));
+        }
+        if (query.get('page')) {
+            dispatch(paramsActions.setPage(query.get('page')));
+        }
+    }, [dispatch, query]);
 
     return (
         <div className={css.input_container}>
@@ -140,7 +154,7 @@ const InputBlock: FC = () => {
                         <option value="dubbing">dubbing</option>
                 </Form.Select>
                 <Form.Select
-                    value={group}
+                    value={query.get('group') || group}
                     size="sm"
                     aria-label="Choose group"
                     onChange={groupInputDataChange}>
