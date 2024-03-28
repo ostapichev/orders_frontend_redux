@@ -1,19 +1,22 @@
 import {FC, useEffect} from 'react';
+import {useDebounce} from "use-debounce";
+import {useSearchParams} from "react-router-dom";
 
 import {adminActions} from "../../redux";
 import {ButtonApp} from "../ButtonApp/ButtonApp";
 import {DataMessage} from "../DataMessage/DataMessage";
 import {IParams} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {useSearchParams} from "react-router-dom";
 import {User} from "../User/User";
 
 import css from './Users.module.css';
 
 const Users: FC = () => {
     const dispatch = useAppDispatch();
-    const {users, trigger, showParams, paramsUsers} = useAppSelector(state => state.adminReducer);
+    const {users, trigger, paramsUsers, showParams} = useAppSelector(state => state.adminReducer);
     const [query, setQuery] = useSearchParams();
+    const [debouncedPage] = useDebounce<string>(query.get('page'), 1000);
+    const [debouncedSearchUserSurname] = useDebounce<string>(query.get('surname'), 1000);
     useEffect(() => {
         const queryParams: string[] = []
         if (showParams) {
@@ -25,13 +28,13 @@ const Users: FC = () => {
         if (queryParams.length) {
             setQuery(`?${queryParams.join('&')}`);
         }
-    }, [paramsUsers, setQuery, showParams]);
+    }, [paramsUsers, showParams, setQuery]);
     useEffect(() => {
         const params: IParams = {};
-        params.page = query.get('page');
-        params.surname = query.get('surname');
+        params.page = debouncedPage;
+        params.surname = debouncedSearchUserSurname;
         dispatch(adminActions.getAll({ params }));
-    }, [dispatch, query, trigger]);
+    }, [dispatch, trigger, debouncedPage, debouncedSearchUserSurname]);
 
     return (
         <div className={css.table_users}>

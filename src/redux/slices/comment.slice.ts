@@ -19,10 +19,10 @@ interface IState {
 const initialState: IState = {
     comments: null,
     triggerComment: false,
+    loading: false,
     pageSize: 5,
     startShowComment: 0,
     endShowComments: 5,
-    loading: false,
     pageComments: 1,
     totalPageComments: 1,
     errorsComment: null
@@ -58,24 +58,22 @@ const slice = createSlice({
             state.totalPageComments = action.payload;
         },
     },
-    extraReducers: builder => {
-        builder
-            .addCase(create.fulfilled, state => {
-                state.triggerComment = !state.triggerComment;
-            })
-            .addMatcher(isFulfilled(), state => {
-                state.loading = false;
-                state.errorsComment = null;
-            })
-            .addMatcher(isPending(), state => {
-                state.loading = true;
-                state.errorsComment = null;
-            })
-            .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errorsComment = action.payload;
-                state.loading = false;
-            })
-    }
+    extraReducers: builder => builder
+        .addCase(create.fulfilled, state => {
+            state.triggerComment = !state.triggerComment;
+        })
+        .addMatcher(isFulfilled(), state => {
+            state.loading = false;
+            state.errorsComment = null;
+        })
+        .addMatcher(isPending(), state => {
+            state.loading = true;
+            state.errorsComment = null;
+        })
+        .addMatcher(isRejectedWithValue(), (state, action) => {
+            state.errorsComment = action.payload;
+            state.loading = false;
+        })
 });
 
 const {actions, reducer: commentReducer} = slice;

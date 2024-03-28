@@ -13,15 +13,13 @@ const ButtonApp: FC = () => {
     };
 
     return (
-        <>
-            <button
-                type="button"
-                className={button_css.btn_open}
-                onClick={handleOpen}
-            >
-                Create
-            </button>
-        </>
+        <button
+            type="button"
+            className={button_css.btn_open}
+            onClick={handleOpen}
+        >
+            Create
+        </button>
     );
 };
 

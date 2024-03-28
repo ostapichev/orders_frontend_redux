@@ -32,7 +32,7 @@ const login = createAsyncThunk<IUser, IAuth> (
     }
 );
 
-const activateUser = createAsyncThunk<string, {formData: FormData}>(
+const activateUser = createAsyncThunk<string, {formData: FormData}> (
     'userSlice/activateUser',
     async ({ formData }, { rejectWithValue }) => {
         try {
@@ -57,7 +57,7 @@ const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: s
     }
 );
 
-const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
+const recoveryPassword = createAsyncThunk<string, {formData: FormData}> (
     'userSlice/recoveryPassword',
     async ({ formData }, { rejectWithValue }) => {
         try {
@@ -95,45 +95,46 @@ const slice = createSlice({
     initialState,
     reducers: {
         logout: state => {
-            authService.deleteTokens();
             state.me = null;
-            state.loading = false;
         },
         setConfirmError: (state, action) => {
             state.confirmError = action.payload;
+        },
+        resetLoading: (state) => {
+            state.loading = false;
         },
         closeModal: state => {
             state.checkerMessage = null;
             state.error = null;
         }
     },
-    extraReducers: builder =>
-        builder
-            .addCase(me.rejected, state => {
-                state.loading = false;
-                state.error = null;
-            })
-            .addMatcher(isFulfilled(login, me), (state, action) => {
-                state.me = action.payload;
-                state.loading = false;
-                state.error = null;
-            })
-            .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {
-                state.loading = false;
-                state.checkerMessage = action.payload;
-            })
-            .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
-                state.loading = false;
-                state.error = null;
-            })
-            .addMatcher(isPending(), state => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addMatcher(isRejectedWithValue(), (state, actions) => {
-                state.error = actions.payload as IErrorAuth;
-                state.loading = false;
-            })
+    extraReducers: builder => builder
+        .addCase(me.rejected, state => {
+            state.loading = false;
+            state.error = null;
+        })
+        .addMatcher(isFulfilled(login, me), (state, action) => {
+            state.me = action.payload;
+            state.loading = false;
+            state.error = null;
+        })
+        .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {
+            state.loading = false;
+            state.checkerMessage = action.payload;
+            state.error = null;
+        })
+        .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
+            state.loading = false;
+            state.error = null;
+        })
+        .addMatcher(isPending(), state => {
+            state.loading = true;
+            state.error = null;
+        })
+        .addMatcher(isRejectedWithValue(), (state, actions) => {
+            state.error = actions.payload as IErrorAuth;
+            state.loading = false;
+        })
 });
 
 const {actions, reducer: authReducer} = slice;

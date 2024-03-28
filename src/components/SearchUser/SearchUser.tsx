@@ -1,6 +1,7 @@
 import {FC} from 'react';
 import {joiResolver} from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useLocation} from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
@@ -15,17 +16,20 @@ import {useAppDispatch} from "../../hooks";
 
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
     const {register, reset, handleSubmit, formState: {isValid}} = useForm<ISearch>({
         mode: 'all',
         resolver: joiResolver(searchValidator)
     });
     const onSubmit: SubmitHandler<ISearch> = (data: ISearch) => {
         dispatch(adminActions.setSearchUser(data.surnameUserInput));
+        dispatch(adminActions.setPage('1'));
         reset();
     };
     const resetParams: IFuncVoid = () => {
+        const {pathname} = location;
+        history.push(pathname);
         dispatch(adminActions.resetParams());
-        history.replace(window.location.pathname);
     };
 
     return (

@@ -28,7 +28,7 @@ const StatisticUser: FC<IProps> = ({ id }) => {
         }
     }, [id]);
     useEffect(() => {
-        queryUserStatistic()
+        queryUserStatistic();
     }, [queryUserStatistic]);
 
     return (

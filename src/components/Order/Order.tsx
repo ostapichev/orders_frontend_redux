@@ -46,7 +46,7 @@ const Order: FC<IProps> = ({ order }) => {
         id, name, surname, email, phone, age, course, course_format, course_type,
         status, sum, already_paid, group, created_at, manager, utm, msg, comments
     } = order;
-    const addValidForm: boolean = order.manager && order.manager.id !== me.id;
+    const addValidForm: boolean = order.manager && order.manager?.id !== me?.id;
     const nameGroup: string = getNameGroup(group);
     const lastComments: IComment[] = comments.slice(0, 3);
     const PaginateComments: IComment[] = comments.slice(startShowComment, endShowComments);
@@ -85,7 +85,7 @@ const Order: FC<IProps> = ({ order }) => {
                             >
                                 Edit
                             </button>
-                            { order.manager && order.manager.id !== me.id &&
+                            { order.manager && order.manager?.id !== me?.id &&
                                 <div className={form_css.err_text}>
                                     You cannot comment and edit this order. It belongs to another manager.
                                 </div>

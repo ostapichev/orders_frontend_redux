@@ -8,10 +8,10 @@ import Modal from 'react-bootstrap/Modal';
 import {adminActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
 import {IFuncVoid} from "../../types";
+import {IUser} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./Profile.module.css";
-import {IUser} from "../../interfaces";
 
 interface IProps {
     me: IUser;
@@ -28,8 +28,8 @@ const Profile: FC<IProps> = ({ me }) => {
     const handleClose: IFuncVoid = () => setAccount(false);
     const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
-        dispatch(adminActions.getStatisticUser({ id: profile.id }))
-    }, [dispatch, profile.id, orderUpdate, triggerComment]);
+        dispatch(adminActions.getStatisticUser({id: profile.id}));
+    }, [dispatch, orderUpdate, triggerComment, profile.id]);
 
     return (
         <>
@@ -40,7 +40,7 @@ const Profile: FC<IProps> = ({ me }) => {
                 onClick={handleShow}
             >
                 <div className={css.title_username}>Current user</div>
-                <div className={css.login_name}>{profile.surname}</div>
+                <div className={css.login_name}>{profile.name}</div>
             </Button>
             <Modal
                 show={account}

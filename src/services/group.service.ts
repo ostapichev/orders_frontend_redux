@@ -1,5 +1,4 @@
 import {axiosService} from "./axios.service";
-
 import {IGroup} from "../interfaces";
 import {IRes} from "../types";
 import {urls} from "../constants";

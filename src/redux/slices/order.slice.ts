@@ -7,24 +7,30 @@ import {orderService} from "../../services";
 
 interface IState {
     orders: IOrder[];
-    errorsOrder: IErrorOrder;
     orderUpdate: IOrder;
     orderCreate: string;
-    trigger: boolean;
+    triggerOrder: boolean;
     loading: boolean;
     totalPagesOrders: number;
     openOrderForm: boolean;
+    checkbox: boolean;
+    sorted: boolean;
+    paramsOrders: IParams;
+    errorsOrder: IErrorOrder;
 }
 
 const initialState: IState = {
     orders: [],
-    errorsOrder: null,
     orderUpdate: null,
     orderCreate: null,
-    trigger: false,
+    triggerOrder: false,
     loading: false,
     totalPagesOrders: 0,
     openOrderForm: false,
+    checkbox: false,
+    sorted: true,
+    paramsOrders: {},
+    errorsOrder: null
 };
 
 const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
@@ -84,6 +90,60 @@ const slice = createSlice({
     name: 'orderSlice',
     initialState,
     reducers: {
+        setPage: (state, action) => {
+            state.paramsOrders.page = action.payload;
+        },
+        setCheckBox: (state, action) => {
+            state.checkbox = !state.checkbox;
+            if (state.checkbox) {
+                state.paramsOrders.manager = action.payload;
+            } else {
+                state.paramsOrders.manager = '';
+            }
+        },
+        setOrderByParams: (state, action) => {
+            state.paramsOrders.order_by = action.payload;
+            state.sorted = !state.sorted;
+        },
+        setNameInputData: (state, action) => {
+            state.paramsOrders.name = action.payload;
+        },
+        setSurnameInputData: (state, action) => {
+            state.paramsOrders.surname = action.payload;
+        },
+        setEmailInputData: (state, action) => {
+            state.paramsOrders.email = action.payload;
+        },
+        setPhoneInputData: (state, action) => {
+            state.paramsOrders.phone = action.payload;
+        },
+        setAgeInputData: (state, action) => {
+            state.paramsOrders.age = action.payload;
+        },
+        setCourseInputData: (state, action) => {
+            state.paramsOrders.course = action.payload;
+        },
+        setCourseFormatInputData: (state, action) => {
+            state.paramsOrders.course_format = action.payload;
+        },
+        setCourseTypeInputData: (state, action) => {
+            state.paramsOrders.course_type = action.payload;
+        },
+        setStatus: (state, action) => {
+            state.paramsOrders.status = action.payload;
+        },
+        setGroup: (state, action) => {
+            state.paramsOrders.group = action.payload;
+        },
+        setStartDateInputData: (state, action) => {
+            state.paramsOrders.created_at_after = action.payload;
+        },
+        setEndDateInputData: (state, action) => {
+            state.paramsOrders.created_at_before = action.payload;
+        },
+        setManager: (state, action) => {
+            state.paramsOrders.manager = action.payload;
+        },
         setOrderUpdate: (state, action) => {
             state.orderUpdate = action.payload;
             state.openOrderForm = true;
@@ -99,39 +159,43 @@ const slice = createSlice({
             state.openOrderForm = false;
             state.orderUpdate = null;
             state.errorsOrder = null;
+        },
+        resetParams: state => {
+            state.paramsOrders = {};
+            state.checkbox = false;
+            state.sorted = true;
         }
     },
-    extraReducers: builder =>
-        builder
-            .addCase(getAll.fulfilled, (state, action) => {
-                const {result, total_pages} = action.payload;
-                state.orders = result;
-                state.totalPagesOrders = total_pages;
-                state.errorsOrder = null;
-            })
-            .addCase(update.fulfilled, state => {
-                state.orderUpdate = null;
-                state.openOrderForm = false;
-            })
-            .addCase(getExelFile.fulfilled, state => {
-                state.loading = false;
-            })
-            .addMatcher(isFulfilled(create, update), state => {
-                state.trigger = !state.trigger;
-                state.errorsOrder = null;
-            })
-            .addMatcher(isFulfilled(), state => {
-                state.loading = false;
-                state.errorsOrder = null;
-            })
-            .addMatcher(isPending(), state => {
-                state.loading = true;
-                state.errorsOrder = null;
-            })
-            .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errorsOrder = action.payload;
-                state.loading = false;
-            })
+    extraReducers: builder => builder
+        .addCase(getAll.fulfilled, (state, action) => {
+            const {result, total_pages} = action.payload;
+            state.orders = result;
+            state.totalPagesOrders = total_pages;
+            state.errorsOrder = null;
+        })
+        .addCase(update.fulfilled, state => {
+            state.orderUpdate = null;
+            state.openOrderForm = false;
+        })
+        .addCase(getExelFile.fulfilled, state => {
+            state.loading = false;
+        })
+        .addMatcher(isFulfilled(create, update), state => {
+            state.triggerOrder = !state.triggerOrder;
+            state.errorsOrder = null;
+        })
+        .addMatcher(isFulfilled(), state => {
+            state.loading = false;
+            state.errorsOrder = null;
+        })
+        .addMatcher(isPending(), state => {
+            state.loading = true;
+            state.errorsOrder = null;
+        })
+        .addMatcher(isRejectedWithValue(), (state, action) => {
+            state.errorsOrder = action.payload;
+            state.loading = false;
+        })
 });
 
 const {actions, reducer: orderReducer} = slice;

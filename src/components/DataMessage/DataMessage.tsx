@@ -3,8 +3,8 @@ import {FC} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import {useAppDispatch, useAppSelector} from "../../hooks";
 import {authActions} from "../../redux";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {IFuncVoid} from "../../types";
 
 const DataMessage: FC = () => {

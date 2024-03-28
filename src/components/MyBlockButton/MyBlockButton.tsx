@@ -1,4 +1,5 @@
 import {FC} from 'react';
+import {useLocation} from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Image from 'react-bootstrap/Image';
@@ -6,8 +7,9 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import {GetExelFile} from "../GetExelFile/GetExelFile";
+import {history} from "../../services";
 import {IFuncVoid} from "../../types";
-import {orderActions, paramsActions} from "../../redux";
+import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
@@ -16,15 +18,20 @@ import {create, reload} from '../../assets';
 
 const MyBlockButton: FC = () => {
     const dispatch = useAppDispatch();
-    const {checkbox} = useAppSelector(state => state.paramsReducer);
+    const location = useLocation();
+    const {checkbox} = useAppSelector(state => state.orderReducer);
+    const {me} = useAppSelector(state => state.authReducer);
     const handler: IFuncVoid = () => {
-        dispatch(paramsActions.setCheckBox());
+        dispatch(orderActions.setCheckBox(me.profile.name));
+        dispatch(orderActions.setPage('1'));
     };
     const createOrder: IFuncVoid = () => {
         dispatch(orderActions.openForm());
     };
     const setDefaultParams: IFuncVoid = () => {
-        dispatch(paramsActions.resetParams());
+        dispatch(orderActions.resetParams());
+        const {pathname} = location;
+        history.push(pathname);
     };
 
     return (

@@ -5,7 +5,7 @@ import {urls} from "../constants";
 
 class OrderService {
     getAll(params: IParams): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.orders, {params});
+        return axiosService.get(urls.ordersAPI.orders, { params });
     };
 
     create(groupId: string, order: IOrder): IRes<IOrder> {

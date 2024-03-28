@@ -1,8 +1,8 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorGroup, IGroup} from "../../interfaces";
 import {groupService} from "../../services";
+import {IErrorGroup, IGroup} from "../../interfaces";
 
 interface IState {
     groups: IGroup[];
@@ -58,20 +58,19 @@ const slice = createSlice({
             state.errorGroup = null;
         }
     },
-    extraReducers: builder =>
-        builder
-            .addCase(getAll.fulfilled, (state, action) => {
-                state.groups = action.payload;
-                state.errorGroup = null;
-                state.loading = false;
-            })
-            .addCase(create.fulfilled, state => {
-                state.trigger = !state.trigger;
-                state.errorGroup = null;
-            })
-            .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errorGroup = action.payload;
-            })
+    extraReducers: builder => builder
+        .addCase(getAll.fulfilled, (state, action) => {
+            state.groups = action.payload;
+            state.errorGroup = null;
+            state.loading = false;
+        })
+        .addCase(create.fulfilled, state => {
+            state.trigger = !state.trigger;
+            state.errorGroup = null;
+        })
+        .addMatcher(isRejectedWithValue(), (state, action) => {
+            state.errorGroup = action.payload;
+        })
 });
 
 const {actions, reducer: groupReducer} = slice;

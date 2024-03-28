@@ -1,10 +1,10 @@
 import {ChangeEvent, FC} from 'react';
+import {useSearchParams} from "react-router-dom";
 
 import {Pagination, Stack} from '@mui/material';
 
-import {adminActions, paramsActions} from "../../redux";
+import {adminActions, orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {useSearchParams} from "react-router-dom";
 
 interface IProps {
     namePage: string;
@@ -26,7 +26,7 @@ const PaginationApp: FC<IProps> = ({ namePage }) => {
     const handlerChangePage = (event: ChangeEvent<unknown>, num: number): void => {
         switch (namePage) {
             case 'homePage':
-                dispatch(paramsActions.setPage(num));
+                dispatch(orderActions.setPage(num));
                 break;
             case 'adminPage':
                 dispatch(adminActions.setPage(num));

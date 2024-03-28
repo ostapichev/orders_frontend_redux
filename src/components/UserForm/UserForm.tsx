@@ -25,7 +25,7 @@ const UserForm: FC = () => {
         reset();
     };
     const save: SubmitHandler<IUser> = async (user) => {
-        await dispatch(adminActions.create({user}));
+        await dispatch(adminActions.create({ user }));
         reset();
     };
 

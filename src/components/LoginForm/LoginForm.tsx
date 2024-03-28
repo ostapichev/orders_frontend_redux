@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {joiResolver} from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate, useSearchParams} from "react-router-dom";
@@ -16,22 +16,25 @@ import {okten_school} from '../../assets';
 
 const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {error, loading} = useAppSelector(state => state.authReducer)
     const navigate = useNavigate();
+    const {error, loading} = useAppSelector(state => state.authReducer);
     const [query] = useSearchParams();
-    const {handleSubmit, register, formState: {errors}} = useForm<IAuth>({
+    const {handleSubmit, register, reset, formState: {errors, dirtyFields}} = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(authValidator)
     });
     const login: SubmitHandler<IAuth> = async (user) => {
-        if (localStorage.getItem('access') || localStorage.getItem('refresh')) {
-            localStorage.clear();
-        }
         const {meta: {requestStatus}} = await dispatch(authActions.login(user));
         if (requestStatus === 'fulfilled') {
             navigate('/orders');
         }
+        reset();
     };
+    useEffect(() => {
+        if ((!dirtyFields.email || !dirtyFields.password) && loading) {
+            dispatch(authActions.resetLoading());
+        }
+    }, [dispatch, dirtyFields, loading]);
 
     return (
         <div className={form_css.form_block}>

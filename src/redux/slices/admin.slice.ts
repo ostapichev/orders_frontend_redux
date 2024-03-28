@@ -1,38 +1,32 @@
 import {AxiosError} from "axios";
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
 
-import {IErrorUser, IOrderStatistic, IPagination, IParams, IUser, IUserStatistic} from "../../interfaces";
 import {adminService} from "../../services";
+import {IErrorUser, IOrderStatistic, IPagination, IParams, IUser, IUserStatistic} from "../../interfaces";
 
 interface IState {
     users: IUser[];
-    userUpdate: boolean;
     trigger: boolean;
     loading: boolean;
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
     openUserForm: boolean;
-    surnameUserInput: string;
     showParams: boolean;
-    paramsUsers: IParams;
-    pageUsers: number,
     totalPagesUsers: number;
+    paramsUsers: IParams;
     errorUser: IErrorUser;
 }
 
 const initialState: IState = {
     users: [],
-    userUpdate: null,
     trigger: false,
     loading: false,
     orderStatistic: {},
     userStatistic: {},
     openUserForm: false,
-    surnameUserInput: '',
     showParams: false,
-    paramsUsers: {},
-    pageUsers: 1,
     totalPagesUsers: 0,
+    paramsUsers: {},
     errorUser: null,
 };
 
@@ -129,54 +123,48 @@ const slice = createSlice({
         },
         setSearchUser: (state, action) => {
             state.paramsUsers.surname = action.payload;
-            state.paramsUsers.page = '1';
             state.showParams = true;
-        },
-        resetPage: state => {
-            state.paramsUsers.page = '1';
         },
         resetParams: state => {
             state.paramsUsers = {};
             state.showParams = false;
         }
     },
-    extraReducers: builder =>
-        builder
-            .addCase(getAll.fulfilled, (state, action) => {
-                const { result, total_pages } = action.payload;
-                state.users = result;
-                state.totalPagesUsers = total_pages;
-                state.errorUser = null;
-            })
-            .addCase(getStatisticOrder.fulfilled, (state, action) => {
-                state.orderStatistic = action.payload;
-                state.loading = false;
-            })
-            .addCase(getStatisticUser.fulfilled, (state, action) => {
-                state.userStatistic = action.payload;
-                state.loading = false;
-            })
-            .addMatcher(isFulfilled(), state => {
-                state.loading = false;
-                state.errorUser = null;
-            })
-            .addMatcher(isFulfilled(ban, unban), state => {
-                state.loading = false;
-                state.userUpdate = null;
-            })
-            .addMatcher(isFulfilled(create, ban, unban), state => {
-                state.trigger = !state.trigger;
-                state.openUserForm = false;
-                state.errorUser = null;
-            })
-            .addMatcher(isPending(), state => {
-                state.loading = true;
-                state.errorUser = null;
-            })
-            .addMatcher(isRejectedWithValue(), (state, action) => {
-                state.errorUser = action.payload;
-                state.loading = false;
-            })
+    extraReducers: builder => builder
+        .addCase(getAll.fulfilled, (state, action) => {
+            const {result, total_pages} = action.payload;
+            state.users = result;
+            state.totalPagesUsers = total_pages;
+            state.errorUser = null;
+        })
+        .addCase(getStatisticOrder.fulfilled, (state, action) => {
+            state.orderStatistic = action.payload;
+            state.loading = false;
+            state.errorUser = null;
+        })
+        .addCase(getStatisticUser.fulfilled, (state, action) => {
+            state.userStatistic = action.payload;
+            state.loading = false;
+            state.errorUser = null;
+        })
+        .addMatcher(isFulfilled(), state => {
+            state.loading = false;
+            state.errorUser = null;
+        })
+        .addMatcher(isFulfilled(create, ban, unban), state => {
+            state.trigger = !state.trigger;
+            state.loading = false;
+            state.openUserForm = false;
+            state.errorUser = null;
+        })
+        .addMatcher(isPending(), state => {
+            state.loading = true;
+            state.errorUser = null;
+        })
+        .addMatcher(isRejectedWithValue(), (state, action) => {
+            state.errorUser = action.payload;
+            state.loading = false;
+        })
 });
 
 const {actions, reducer: adminReducer} = slice;

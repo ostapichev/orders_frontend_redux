@@ -1,7 +1,7 @@
 import {FC} from 'react';
 
-import {useAppSelector} from "../../hooks";
 import {Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users} from "../../components";
+import {useAppSelector} from "../../hooks";
 
 import {page_css} from '../../styles/index';
 

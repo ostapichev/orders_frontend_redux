@@ -1,42 +1,45 @@
 import {FC, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import {IFuncVoid, ISortingReverse} from "../../types";
 import {IParams} from "../../interfaces";
 import {Order} from "../Order/Order";
-import {orderActions, paramsActions} from "../../redux";
+import {orderActions} from "../../redux";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 
 import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {orders, trigger} = useAppSelector(state => state.orderReducer);
-    const {
-        sorted, checkbox, order_by, pageOrders, name, surname, email, phone, age, course, course_format, course_type,
-        status, showParams, group, created_at_after, created_at_before
-    } = useAppSelector(state => state.paramsReducer);
+    const {orders, triggerOrder, paramsOrders, sorted, checkbox} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedValueName] = useDebounce<string>(name, 1000);
-    const [debouncedValueSurname] = useDebounce<string>(surname, 1000);
-    const [debouncedValueEmail] = useDebounce<string>(email, 1000);
-    const [debouncedValuePhone] = useDebounce<string>(phone, 1000);
-    const [debouncedValueAge] = useDebounce<string>(age, 1000);
-    const [debouncedValueCourse] = useDebounce<string>(course, 1000);
-    const [debouncedValueFormatCourse] = useDebounce<string>(course_format, 1000);
-    const [debouncedValueTypeCourse] = useDebounce<string>(course_type, 1000);
-    const [debouncedValueStatus] = useDebounce<string>(status, 1000);
-    const [debouncedValueGroup] = useDebounce<string>(group, 1000);
-    const [debouncedValueStartDate] = useDebounce<string>(created_at_after, 1000);
-    const [debouncedValueEndDate] = useDebounce<string>(created_at_before, 1000);
+    const [debouncedParams] = useDebounce<IParams>(
+        {
+            page: query.get('page') || '1',
+            order_by: query.get('order_by'),
+            name: query.get('name'),
+            surname: query.get('surname'),
+            email: query.get('email'),
+            phone: query.get('phone'),
+            age: query.get('age'),
+            course: query.get('course'),
+            course_format: query.get('course_format'),
+            course_type: query.get('course_type'),
+            status: query.get('status'),
+            group: query.get('group'),
+            created_at_after: query.get('created_at_after'),
+            created_at_before: query.get('created_at_before'),
+            manager: query.get('manager')
+        }, 1000);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
-        dispatch(paramsActions.setOrderByParams(newOrderBy));
+        dispatch(orderActions.setOrderByParams(newOrderBy));
+        dispatch(orderActions.setPage('1'));
     };
     const orderById: IFuncVoid = () => sortingOrderBy('id');
     const orderByName: IFuncVoid = () => sortingOrderBy('name');
@@ -53,92 +56,79 @@ const Orders: FC = () => {
     const orderByGroup: IFuncVoid = () => sortingOrderBy('group');
     const orderByCreated: IFuncVoid = () => sortingOrderBy('created_at');
     const orderByManager: IFuncVoid = () => sortingOrderBy('manager');
-    useEffect( () => {
-        console.log('orders1');
-        const searchParams: URLSearchParams = new URLSearchParams(query.toString());
-        const params: IParams = {};
-        for (const [key, value] of searchParams.entries()) {
-            params[key] = value;
-        }
-        /*dispatch(paramsActions.setOrderBy(params['order_by']));
-        dispatch(paramsActions.setNameContains(params['name']));
-        dispatch(paramsActions.setSurnameContains(params['surname']));
-        dispatch(paramsActions.setEmailContains(params['email']));
-        /*dispatch(paramsActions.setPhoneContains(query.get('phone')));
-        dispatch(paramsActions.setAgeIn(query.get('age')));
-        dispatch(paramsActions.setCourse(query.get('course')));
-        dispatch(paramsActions.setCourseFormat(query.get('course_format')));
-        dispatch(paramsActions.setCourseType(query.get('course_type')));
-        dispatch(paramsActions.setStatusIn(query.get('status')));*/
-
-        /*dispatch(paramsActions.setCreatedAtAfter(query.get('created_at_after')));
-        dispatch(paramsActions.setCreatedAtBefore(query.get('created_at_before')));
-        dispatch(paramsActions.setManager(query.get('manager')));*/
-        dispatch(orderActions.getAll({ params }));
-        setQuery(`?${new URLSearchParams(params).toString()}`);
-    }, [dispatch, query, trigger, triggerComment, setQuery]);
     useEffect(() => {
-        console.log('orders2');
-        const queryParams: string[] = [];
-        if (showParams) {
-            queryParams.push(`page=${encodeURIComponent(pageOrders)}`);
+        const queryString: string[] = [];
+        if (+paramsOrders.page > 1) {
+            queryString.push(`page=${encodeURIComponent(paramsOrders.page)}`);
         }
-        if (debouncedValueName) {
-            queryParams.push(`name=${encodeURIComponent(debouncedValueName)}`);
-            dispatch(paramsActions.setNameContains(debouncedValueName));
+        if (paramsOrders.order_by) {
+            queryString.push(`order_by=${encodeURIComponent(paramsOrders.order_by)}`);
         }
-        if (debouncedValueSurname) {
-            queryParams.push(`surname=${encodeURIComponent(debouncedValueSurname)}`);
-            dispatch(paramsActions.setSurnameContains(debouncedValueName));
+        if (paramsOrders.name) {
+            queryString.push(`name=${encodeURIComponent(paramsOrders.name)}`);
         }
-        if (debouncedValueEmail) {
-            queryParams.push(`email=${encodeURIComponent(debouncedValueEmail)}`);
-            dispatch(paramsActions.setEmailContains(debouncedValueEmail));
+        if (paramsOrders.surname) {
+            queryString.push(`surname=${encodeURIComponent(paramsOrders.surname)}`);
         }
-        if (debouncedValuePhone) {
-            queryParams.push(`phone=${encodeURIComponent(debouncedValuePhone)}`);
+        if (paramsOrders.email) {
+            queryString.push(`email=${encodeURIComponent(paramsOrders.email)}`);
         }
-        if (debouncedValueAge) {
-            queryParams.push(`age=${encodeURIComponent(debouncedValueAge)}`);
+        if (paramsOrders.phone) {
+            queryString.push(`phone=${encodeURIComponent(paramsOrders.phone)}`);
         }
-        if (debouncedValueCourse) {
-            queryParams.push(`course=${encodeURIComponent(debouncedValueCourse)}`);
+        if (paramsOrders.age) {
+            queryString.push(`age=${encodeURIComponent(paramsOrders.age)}`);
         }
-        if (debouncedValueFormatCourse) {
-            queryParams.push(`course_format=${encodeURIComponent(debouncedValueFormatCourse)}`);
+        if (paramsOrders.course) {
+            queryString.push(`course=${encodeURIComponent(paramsOrders.course)}`);
         }
-        if (debouncedValueTypeCourse) {
-            queryParams.push(`course_type=${encodeURIComponent(debouncedValueTypeCourse)}`);
+        if (paramsOrders.course_format) {
+            queryString.push(`course_format=${encodeURIComponent(paramsOrders.course_format)}`);
         }
-        if (debouncedValueStatus) {
-            queryParams.push(`status=${encodeURIComponent(debouncedValueStatus)}`);
+        if (paramsOrders.course_type) {
+            queryString.push(`course_type=${encodeURIComponent(paramsOrders.course_type)}`);
         }
-        if (debouncedValueGroup) {
-            queryParams.push(`group=${encodeURIComponent(debouncedValueGroup)}`);
-            dispatch(paramsActions.setGroup(debouncedValueGroup));
+        if (paramsOrders.status) {
+            queryString.push(`status=${encodeURIComponent(paramsOrders.status)}`);
         }
-        if (debouncedValueStartDate) {
-            queryParams.push(`created_at_after=${encodeURIComponent(debouncedValueStartDate)}`);
+        if (paramsOrders.group) {
+            queryString.push(`group=${encodeURIComponent(paramsOrders.group)}`);
         }
-        if (debouncedValueEndDate) {
-            queryParams.push(`created_at_before=${encodeURIComponent(debouncedValueEndDate)}`);
+        if (paramsOrders.created_at_after) {
+            queryString.push(`created_at_after=${encodeURIComponent(paramsOrders.created_at_after)}`);
         }
-        if (order_by && order_by !== '') {
-            queryParams.push(`order_by=${encodeURIComponent(order_by)}`);
-            dispatch(paramsActions.setOrderBy(order_by));
+        if (paramsOrders.created_at_before) {
+            queryString.push(`created_at_before=${encodeURIComponent(paramsOrders.created_at_before)}`);
         }
         if (checkbox) {
-            queryParams.push(`manager=${encodeURIComponent(me.profile.name)}`);
+            queryString.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
-        //const queryString: string = queryParams.join('&');
-        //console.log(queryString && `?${queryString}`);
-        if (queryParams.length) {
-            setQuery(`?${queryParams.join('&')}`);
-        }
-    }, [debouncedValueName, debouncedValueSurname, debouncedValueEmail, debouncedValuePhone, debouncedValueAge,
-        debouncedValueCourse, debouncedValueFormatCourse, debouncedValueTypeCourse, debouncedValueStatus, debouncedValueGroup,
-        debouncedValueStartDate, debouncedValueEndDate, checkbox, order_by, pageOrders, showParams, me?.profile.name,
-        setQuery, dispatch]);
+        setQuery(`?${queryString.join('&')}`);
+    }, [setQuery, checkbox, me?.profile?.name, paramsOrders]);
+    useEffect(() => {
+        const params: IParams = {
+            page: debouncedParams.page,
+            order_by: debouncedParams.order_by,
+            name: debouncedParams.name,
+            surname: debouncedParams.surname,
+            email: debouncedParams.email,
+            phone: debouncedParams.phone,
+            age: debouncedParams.age,
+            course: debouncedParams.course,
+            course_format: debouncedParams.course_format,
+            course_type: debouncedParams.course_type,
+            status: debouncedParams.status,
+            group: debouncedParams.group,
+            created_at_after: debouncedParams.created_at_after,
+            created_at_before: debouncedParams.created_at_before,
+            manager: debouncedParams.manager
+        };
+        dispatch(orderActions.getAll({ params }));
+    }, [dispatch, triggerOrder, triggerComment, debouncedParams.page, debouncedParams.order_by,
+        debouncedParams.name, debouncedParams.surname, debouncedParams.email, debouncedParams.phone,
+        debouncedParams.age, debouncedParams.course, debouncedParams.course_format, debouncedParams.course_type,
+        debouncedParams.status, debouncedParams.group, debouncedParams.created_at_after,
+        debouncedParams.created_at_before, debouncedParams.manager]);
 
     return (
         <div className={css.table}>
@@ -234,14 +224,12 @@ const Orders: FC = () => {
                     manager
                 </ListGroup.Item>
             </ListGroup>
-            <div>
-                {
-                    orders.map(order => <Order
-                        key={order.id}
-                        order={order}
-                    />)
-                }
-            </div>
+            {
+                orders.map(order => <Order
+                    key={order.id}
+                    order={order}
+                />)
+            }
         </div>
     );
 };

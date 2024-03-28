@@ -1,7 +1,7 @@
 import {IProfile} from "./profile.interface";
 
 export interface IUser {
-    id: number;
+    id?: number;
     email: string;
     is_active: boolean;
     is_staff: boolean;
