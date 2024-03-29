@@ -43,7 +43,7 @@ const Header: FC = () => {
                 dispatch(authActions.logout());
                 history.push(pathname);
                 window.location.reload();
-            }, 10000);
+            }, 900000);
         };
         window.addEventListener('mousemove', handleMove);
         window.addEventListener('keydown', handleMove)
