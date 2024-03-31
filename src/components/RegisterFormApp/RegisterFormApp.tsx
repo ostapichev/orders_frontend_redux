@@ -15,15 +15,15 @@ import {button_css, form_css} from '../../styles/index';
 import {okten_school} from "../../assets";
 
 interface IProps {
-    funcName: string;
+    page: string;
 }
 
-const RegisterFormApp: FC<IProps> = ({ funcName }) => {
+const RegisterFormApp: FC<IProps> = ({ page }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const formData: FormData = new FormData();
     const {token} = useParams<{ token: string }>();
-    const {confirmError, error, loading} = useAppSelector(state => state.authReducer);
+    const {confirmError, loading} = useAppSelector(state => state.authReducer);
     const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(passwordValidator)
@@ -35,14 +35,14 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
             dispatch(authActions.setConfirmError('Password mismatch!'));
             return;
         }
-        if (funcName === 'recoveryPasswordPage') {
+        if (page === 'recovery') {
             const {meta: {requestStatus}} = await dispatch(authActions.recoveryRequestPassword(
                 {formData, token}
             ));
             if (requestStatus === 'fulfilled') {
                 navigate('/login');
             }
-        } else if (funcName === 'activateRequestUser') {
+        } else if (page === 'activate') {
             const {meta: {requestStatus}} = await dispatch(authActions.activateRequestUser(
                 {formData, token}
             ));
@@ -91,7 +91,6 @@ const RegisterFormApp: FC<IProps> = ({ funcName }) => {
                 </button>
                 { errors.confirmPassword && <p className={form_css.err_text}>{errors.confirmPassword.message}</p> }
                 { confirmError && <p className={form_css.err_text}>{confirmError}</p> }
-                { error?.detail && <p className={form_css.err_text}>{error.detail}</p> }
             </Form>
         </div>
     );

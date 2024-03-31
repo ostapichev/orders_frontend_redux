@@ -4,10 +4,14 @@ import {RegisterFormApp} from "../../components";
 
 import {page_css} from '../../styles/index';
 
-const RegisterPage: FC = () => {
+interface IProps {
+    page: string;
+}
+
+const RegisterPage: FC<IProps> = ({ page }) => {
     return (
         <div className={page_css.start_page}>
-            <RegisterFormApp funcName='activateRequestUser' />
+            <RegisterFormApp page={page} />
         </div>
     );
 };

@@ -122,14 +122,17 @@ const slice = createSlice({
             state.loading = false;
             state.checkerMessage = action.payload;
             state.error = null;
+            state.confirmError = null;
         })
         .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
             state.loading = false;
             state.error = null;
+            state.confirmError = null;
         })
         .addMatcher(isPending(), state => {
             state.loading = true;
             state.error = null;
+            state.confirmError = null;
         })
         .addMatcher(isRejectedWithValue(), (state, actions) => {
             state.error = actions.payload as IErrorAuth;
