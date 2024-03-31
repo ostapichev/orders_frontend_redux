@@ -162,7 +162,6 @@ const slice = createSlice({
         },
         resetOrders: state => {
             state.orders = [];
-            state.paramsOrders.page = '1';
         },
         resetParams: state => {
             state.paramsOrders = {};
