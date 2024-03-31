@@ -15,8 +15,12 @@ const Users: FC = () => {
     const dispatch = useAppDispatch();
     const {users, trigger, paramsUsers, showParams} = useAppSelector(state => state.adminReducer);
     const [query, setQuery] = useSearchParams();
-    const [debouncedPage] = useDebounce<string>(query.get('page'), 1000);
-    const [debouncedSearchUserSurname] = useDebounce<string>(query.get('surname'), 1000);
+    const [debouncedParams] = useDebounce<IParams>(
+        {
+            page: query.get('page'),
+            surname: query.get('surname')
+        }, 1000);
+    const debouncedParamsString = JSON.stringify(debouncedParams);
     useEffect(() => {
         const queryParams: string[] = []
         if (showParams) {
@@ -30,14 +34,12 @@ const Users: FC = () => {
         }
     }, [paramsUsers, showParams, setQuery]);
     useEffect(() => {
-        const params: IParams = {};
-        params.page = debouncedPage;
-        params.surname = debouncedSearchUserSurname;
+        const params: IParams = JSON.parse(debouncedParamsString);
         dispatch(adminActions.getAll({ params }));
-    }, [dispatch, trigger, debouncedPage, debouncedSearchUserSurname]);
+    }, [dispatch, trigger, debouncedParamsString]);
 
     return (
-        <div className={css.table_users}>
+        <div className={!users.length ? 'd-none' : css.table_users}>
             <div className={css.table_head}>
                 <div className={css.head_user}>Users</div>
                 <div className={css.btn_user_create}>

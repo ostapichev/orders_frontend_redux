@@ -12,15 +12,17 @@ import {history} from '../../services';
 import {IFuncVoid} from "../../types";
 import {ISearch} from "../../interfaces";
 import {searchValidator} from "../../validators";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
+    const {users, paramsUsers} = useAppSelector(state => state.adminReducer);
     const {register, reset, handleSubmit, formState: {isValid}} = useForm<ISearch>({
         mode: 'all',
         resolver: joiResolver(searchValidator)
     });
+    const paramsChecked: boolean = JSON.stringify(paramsUsers) === '{}';
     const onSubmit: SubmitHandler<ISearch> = (data: ISearch) => {
         dispatch(adminActions.setSearchUser(data.surnameUserInput));
         dispatch(adminActions.setPage('1'));
@@ -34,7 +36,7 @@ const SearchUser: FC = () => {
 
     return (
         <Form
-            className='w-50'
+            className={!users.length ? 'd-none' : 'w-50'}
             onSubmit={handleSubmit(onSubmit)}
         >
             <InputGroup>
@@ -56,6 +58,7 @@ const SearchUser: FC = () => {
                     className='z-1'
                     variant="outline-secondary"
                     onClick={resetParams}
+                    disabled={paramsChecked}
                 >
                     Reset
                 </Button>

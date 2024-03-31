@@ -36,7 +36,7 @@ const Orders: FC = () => {
             created_at_before: query.get('created_at_before'),
             manager: query.get('manager')
         }, 1000);
-    const debouncedParamsString = JSON.stringify(debouncedParams);
+    const debouncedParamsString: string = JSON.stringify(debouncedParams);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
@@ -107,7 +107,7 @@ const Orders: FC = () => {
         setQuery(`?${queryString.join('&')}`);
     }, [setQuery, checkbox, me?.profile?.name, paramsOrders]);
     useEffect(() => {
-        const params = JSON.parse(debouncedParamsString);
+        const params: IParams = JSON.parse(debouncedParamsString);
         dispatch(orderActions.getAll({ params }));
     }, [dispatch, triggerOrder, triggerComment, debouncedParamsString]);
 
