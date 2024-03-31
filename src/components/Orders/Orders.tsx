@@ -36,6 +36,7 @@ const Orders: FC = () => {
             created_at_before: query.get('created_at_before'),
             manager: query.get('manager')
         }, 1000);
+    const debouncedParamsString = JSON.stringify(debouncedParams);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {
         const newOrderBy = sorted ? order_by : `-${order_by}`;
         dispatch(orderActions.setOrderByParams(newOrderBy));
@@ -106,29 +107,9 @@ const Orders: FC = () => {
         setQuery(`?${queryString.join('&')}`);
     }, [setQuery, checkbox, me?.profile?.name, paramsOrders]);
     useEffect(() => {
-        const params: IParams = {
-            page: debouncedParams.page,
-            order_by: debouncedParams.order_by,
-            name: debouncedParams.name,
-            surname: debouncedParams.surname,
-            email: debouncedParams.email,
-            phone: debouncedParams.phone,
-            age: debouncedParams.age,
-            course: debouncedParams.course,
-            course_format: debouncedParams.course_format,
-            course_type: debouncedParams.course_type,
-            status: debouncedParams.status,
-            group: debouncedParams.group,
-            created_at_after: debouncedParams.created_at_after,
-            created_at_before: debouncedParams.created_at_before,
-            manager: debouncedParams.manager
-        };
+        const params = JSON.parse(debouncedParamsString);
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, triggerOrder, triggerComment, debouncedParams.page, debouncedParams.order_by,
-        debouncedParams.name, debouncedParams.surname, debouncedParams.email, debouncedParams.phone,
-        debouncedParams.age, debouncedParams.course, debouncedParams.course_format, debouncedParams.course_type,
-        debouncedParams.status, debouncedParams.group, debouncedParams.created_at_after,
-        debouncedParams.created_at_before, debouncedParams.manager]);
+    }, [dispatch, triggerOrder, triggerComment, debouncedParamsString]);
 
     return (
         <div className={css.table}>

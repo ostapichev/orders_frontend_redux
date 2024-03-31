@@ -126,6 +126,7 @@ const slice = createSlice({
             state.showParams = true;
         },
         resetParams: state => {
+            state.users = [];
             state.paramsUsers = {};
             state.showParams = false;
         }

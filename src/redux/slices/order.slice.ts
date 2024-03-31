@@ -160,6 +160,10 @@ const slice = createSlice({
             state.orderUpdate = null;
             state.errorsOrder = null;
         },
+        resetOrders: state => {
+            state.orders = [];
+            state.paramsOrders.page = '1';
+        },
         resetParams: state => {
             state.paramsOrders = {};
             state.checkbox = false;

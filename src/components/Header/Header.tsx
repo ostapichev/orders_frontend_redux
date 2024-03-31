@@ -27,6 +27,7 @@ const Header: FC = () => {
     const resetState: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());
         dispatch(orderActions.resetParams());
+        dispatch(orderActions.resetOrders());
         localStorage.clear();
     }, [dispatch]);
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
@@ -39,10 +40,10 @@ const Header: FC = () => {
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
                 const {pathname} = location;
+                history.push(pathname);
                 resetState();
                 dispatch(authActions.logout());
-                history.push(pathname);
-                window.location.reload();
+                dispatch(orderActions.getAll({params: {}}));
             }, 900000);
         };
         window.addEventListener('mousemove', handleMove);
