@@ -180,9 +180,6 @@ const slice = createSlice({
             state.orderUpdate = null;
             state.openOrderForm = false;
         })
-        .addCase(getExelFile.fulfilled, state => {
-            state.loading = false;
-        })
         .addMatcher(isFulfilled(create, update), state => {
             state.triggerOrder = !state.triggerOrder;
             state.errorsOrder = null;
