@@ -20,7 +20,7 @@ const Users: FC = () => {
             page: query.get('page'),
             surname: query.get('surname')
         }, 1000);
-    const debouncedParamsString = JSON.stringify(debouncedParams);
+    const debouncedParamsString: string = JSON.stringify(debouncedParams);
     useEffect(() => {
         const queryParams: string[] = []
         if (showParams) {
