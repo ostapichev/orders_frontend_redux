@@ -30,7 +30,7 @@ const initialState: IState = {
     errorUser: null,
 };
 
-const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
+const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}>(
     'adminSlice/getAll',
     async ({ params }, { rejectWithValue }) => {
         try {
@@ -43,7 +43,7 @@ const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}> (
     }
 );
 
-const create = createAsyncThunk<void, {user: IUser}> (
+const create = createAsyncThunk<void, {user: IUser}>(
     'adminSlice/create',
     async ({ user }, { rejectWithValue }) => {
         try {
@@ -55,7 +55,7 @@ const create = createAsyncThunk<void, {user: IUser}> (
     }
 );
 
-const ban = createAsyncThunk<void, {id: string}> (
+const ban = createAsyncThunk<void, {id: string}>(
     'adminSlice/ban',
     async ({ id }, { rejectWithValue }) => {
         try {
@@ -67,7 +67,7 @@ const ban = createAsyncThunk<void, {id: string}> (
     }
 );
 
-const unban = createAsyncThunk<void, {id: string}> (
+const unban = createAsyncThunk<void, {id: string}>(
     'adminSlice/ban',
     async ({ id }, { rejectWithValue }) => {
         try {
@@ -79,7 +79,7 @@ const unban = createAsyncThunk<void, {id: string}> (
     }
 );
 
-const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
+const getStatisticOrder = createAsyncThunk<IOrderStatistic, void>(
     'adminSlice/getStatisticOrder',
     async (_, { rejectWithValue }) => {
         try {
@@ -92,7 +92,7 @@ const getStatisticOrder = createAsyncThunk<IOrderStatistic, void> (
     }
 );
 
-const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}> (
+const getStatisticUser = createAsyncThunk<IUserStatistic, {id: number}>(
     'adminSlice/getStatisticUser',
     async ({ id }, { rejectWithValue }) => {
         try {

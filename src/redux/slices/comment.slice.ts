@@ -28,7 +28,7 @@ const initialState: IState = {
     errorsComment: null
 };
 
-const create = createAsyncThunk<void, {order_id: number, comment: IComment}> (
+const create = createAsyncThunk<void, {order_id: number, comment: IComment}>(
     'commentSlice/create',
     async ({ order_id, comment }, { rejectWithValue }) => {
         try {

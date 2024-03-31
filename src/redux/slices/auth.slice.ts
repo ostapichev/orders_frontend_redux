@@ -20,7 +20,7 @@ const initialState: IState = {
     confirmError: null,
 };
 
-const login = createAsyncThunk<IUser, IAuth> (
+const login = createAsyncThunk<IUser, IAuth>(
     'authSlice/login',
     async (user, { rejectWithValue }) => {
         try {
@@ -32,7 +32,7 @@ const login = createAsyncThunk<IUser, IAuth> (
     }
 );
 
-const activateUser = createAsyncThunk<string, {formData: FormData}> (
+const activateUser = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/activateUser',
     async ({ formData }, { rejectWithValue }) => {
         try {
@@ -45,7 +45,7 @@ const activateUser = createAsyncThunk<string, {formData: FormData}> (
     }
 );
 
-const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: string}> (
+const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: string}>(
     'authSlice/activateRequestUser',
     ({ formData, token }, { rejectWithValue }) => {
         try {
@@ -57,7 +57,7 @@ const activateRequestUser = createAsyncThunk<void, {formData: FormData, token: s
     }
 );
 
-const recoveryPassword = createAsyncThunk<string, {formData: FormData}> (
+const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
     'userSlice/recoveryPassword',
     async ({ formData }, { rejectWithValue }) => {
         try {
@@ -70,7 +70,7 @@ const recoveryPassword = createAsyncThunk<string, {formData: FormData}> (
     }
 );
 
-const recoveryRequestPassword = createAsyncThunk<void, {formData: FormData, token: string}> (
+const recoveryRequestPassword = createAsyncThunk<void, {formData: FormData, token: string}>(
     'authSlice/recoveryRequestPassword',
     ({ formData ,token }, { rejectWithValue }) => {
         try {

@@ -33,7 +33,7 @@ const initialState: IState = {
     errorsOrder: null
 };
 
-const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
+const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}>(
     'orderSlice/getAll',
     async ({ params }, { rejectWithValue }) => {
         try {
@@ -46,7 +46,7 @@ const getAll = createAsyncThunk<IPagination<IOrder[]>, {params: IParams}> (
     }
 );
 
-const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
+const create = createAsyncThunk<void, {groupId: string, order: IOrder}>(
     'orderSlice/create',
     async ({ groupId, order }, { rejectWithValue }) => {
         try {
@@ -58,7 +58,7 @@ const create = createAsyncThunk<void, {groupId: string, order: IOrder}> (
     }
 );
 
-const update = createAsyncThunk<void, {id: number, order: IOrder}> (
+const update = createAsyncThunk<void, {id: number, order: IOrder}>(
     'orderSlice/update',
     async ({ id, order }, { rejectWithValue }) => {
         try {
@@ -70,7 +70,7 @@ const update = createAsyncThunk<void, {id: number, order: IOrder}> (
     }
 );
 
-const getExelFile = createAsyncThunk<void, {params: IParams}> (
+const getExelFile = createAsyncThunk<void, {params: IParams}>(
     'orderSlice/getExelFile',
     async ({ params }, { rejectWithValue }) => {
         const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.sheet;charset=UTF-8";
