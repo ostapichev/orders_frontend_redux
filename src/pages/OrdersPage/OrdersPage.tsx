@@ -7,7 +7,7 @@ import css from './OrdersPage.module.css';
 import {page_css} from '../../styles/index';
 
 const OrdersPage: FC = () => {
-    const {loading, openOrderForm} = useAppSelector(state => state.orderReducer);
+    const {orders, loading, openOrderForm} = useAppSelector(state => state.orderReducer);
 
     return (
         <div className={css.order_page}>
@@ -19,7 +19,7 @@ const OrdersPage: FC = () => {
             <div className={loading ? 'd-none' : css.orders_block}>
                 <OrderForm />
                 <Orders />
-                <PaginationApp namePage='homePage' />
+                { !!orders.length && <PaginationApp namePage='homePage' /> }
             </div>
             <div className={openOrderForm ? page_css.overlay : ''}></div>
         </div>
