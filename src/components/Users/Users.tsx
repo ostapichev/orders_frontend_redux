@@ -22,7 +22,7 @@ const Users: FC = () => {
         }, 1000);
     const debouncedParamsString: string = JSON.stringify(debouncedParams);
     useEffect(() => {
-        const queryParams: string[] = []
+        const queryParams: string[] = [];
         if (showParams) {
             queryParams.push(`page=${encodeURIComponent(paramsUsers.page)}`);
         }
