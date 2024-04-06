@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useState, useEffect} from 'react';
 import {useDebounce} from "use-debounce";
 import {useSearchParams} from "react-router-dom";
 
@@ -17,6 +17,7 @@ const Orders: FC = () => {
     const {orders, triggerOrder, paramsOrders, sorted, checkbox} = useAppSelector(state => state.orderReducer);
     const {triggerComment} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
+    const [orderId, setOrderId] = useState<number>(null);
     const [query, setQuery] = useSearchParams();
     const [debouncedParams] = useDebounce<IParams>(
         {
@@ -209,6 +210,8 @@ const Orders: FC = () => {
                 orders.map(order => <Order
                     key={order.id}
                     order={order}
+                    onClick={() => (order.id === orderId ? setOrderId(null) : setOrderId(order.id))}
+                    isOpen={order.id === orderId}
                 />)
             }
         </div>

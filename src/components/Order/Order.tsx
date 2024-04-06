@@ -18,10 +18,12 @@ import {button_css, form_css} from '../../styles/index';
 import css from './Order.module.css';
 
 interface IProps {
+    onClick: any,
     order: IOrder;
+    isOpen: boolean;
 }
 
-const Order: FC<IProps> = ({ order }) => {
+const Order: FC<IProps> = ({ order, onClick, isOpen }) => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {me} = useAppSelector(state => state.authReducer);
@@ -53,7 +55,7 @@ const Order: FC<IProps> = ({ order }) => {
 
     return (
         <>
-            <div className={css.block_data} onClick={handleDetail}>
+            <div className={css.block_data} onClick={() => onClick()}>
                 <div>{id}</div>
                 <div>{name}</div>
                 <div>{surname}</div>
@@ -71,7 +73,7 @@ const Order: FC<IProps> = ({ order }) => {
                 <div>{manager !== null ? manager.name : 'no manager'}</div>
             </div>
             <Collapse
-                in={showDetail}
+                in={isOpen}
                 className={css.block_detail}
             >
                 <div>
