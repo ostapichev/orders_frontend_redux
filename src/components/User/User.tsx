@@ -1,35 +1,50 @@
-import {FC, MouseEventHandler} from 'react';
+import {FC, MouseEventHandler, useState} from 'react';
 
 import {authActions, adminActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
+import {IFuncVoid} from "../../types";
 import {IUser} from "../../interfaces";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {StatisticUser} from "../StatisticUser/StatisticUser";
+import {url} from "../../constants";
 
 import {button_css} from '../../styles/index';
 import css from './User.module.css';
 
 interface IProps {
     user: IUser;
+    isShowText: boolean;
+    onClick: IFuncVoid;
 }
 
-const User: FC<IProps> = ({ user }) => {
+const User: FC<IProps> = ({ user, isShowText, onClick }) => {
     const dispatch = useAppDispatch();
+    const [linkToken, setLinkToken] = useState<string>(null);
     const formData: FormData = new FormData();
     const {id, email, profile, is_active, last_login} = user;
+    const {activateToken} = useAppSelector(state => state.authReducer);
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(adminActions.ban({id: user.id.toString()}));
+        await dispatch(adminActions.ban({id: id.toString()}));
     };
     const unban: MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(adminActions.unban({id: user.id.toString()}));
+        await dispatch(adminActions.unban({id: id.toString()}));
     };
     const activateUser: MouseEventHandler<HTMLButtonElement> = async () => {
-        formData.append('email', user.email);
+        formData.append('email', email);
         await dispatch(authActions.activateUser({ formData }));
     };
     const recoveryPassword: MouseEventHandler<HTMLButtonElement> = async () => {
-        formData.append('email', user.email);
+        formData.append('email', email);
         await dispatch(authActions.recoveryPassword({ formData }));
+    };
+    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = async () => {
+        await dispatch(authActions.activateLink({id: id.toString()}));
+        setLinkToken(`${url}/activate/${activateToken?.token}`);
+    }
+    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = async () => {
+        await dispatch(authActions.linkActivateCopy({link: linkToken}));
+        setLinkToken(null);
+        onClick();
     };
 
     return (
@@ -66,6 +81,24 @@ const User: FC<IProps> = ({ user }) => {
                 >
                     {is_active ? 'recovery' : 'activate user'}
                 </button>
+                {!linkToken ?
+                    <button
+                        className={button_css.btn_open}
+                        type="submit"
+                        onClick={getLinkActivate}
+                    >
+                        get activate
+                    </button>
+                    :
+                    <button
+                        className={button_css.btn_open}
+                        type="submit"
+                        onClick={copyToClipboard}
+                    >
+                        copy to clipboard
+                    </button>
+                }
+                { isShowText && <div className={css.info_text}>Text copied to clipboard!</div> }
             </div>
         </div>
     );

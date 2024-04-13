@@ -210,8 +210,8 @@ const Orders: FC = () => {
                 orders.map(order => <Order
                     key={order.id}
                     order={order}
-                    onClick={() => (order.id === orderId ? setOrderId(null) : setOrderId(order.id))}
                     isOpen={order.id === orderId}
+                    onClick={() => (order.id === orderId ? setOrderId(null) : setOrderId(order.id))}
                 />)
             }
         </div>

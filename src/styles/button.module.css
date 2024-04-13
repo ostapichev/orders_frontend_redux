@@ -1,13 +1,13 @@
 .btn_form {
-    font: 10pt Verdana, serif;
-    width: 40%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #4CAf50;
     border: none;
     border-radius: 5px;
+    color: white;
     cursor: pointer;
+    font: 10pt Verdana, serif;
+    padding: 10px;
     transition: background-color 0.3s ease;
+    width: 40%;
 }
 
 .btn_form:disabled {
@@ -20,7 +20,7 @@
 }
 
 .btn_open {
-    background-color: #267cb5;
+    background-color: #267CB5;
     border: none;
     border-radius: 15px;
     color: white;
@@ -40,15 +40,15 @@
 }
 
 .btn_open:hover:enabled {
-    background-color: #0056b3;
+    background-color: #0056B3;
     color: snow;
 }
 
 .btn_submit {
-    background-color: #4caf50;
+    background-color: #4CAf50;
     border: none;
     border-radius: 5px;
-    color: #fff;
+    color: white;
     cursor: pointer;
     font: 12pt Verdana, serif;
     margin-top: 30px;
@@ -58,10 +58,10 @@
 }
 
 .btn_submit:disabled {
-    background-color: #ccc;
+    background-color: grey;
     cursor: not-allowed;
 }
 
 .btn_submit:hover:enabled {
-    background-color: #45a049;
+    background-color: #45A049;
 }

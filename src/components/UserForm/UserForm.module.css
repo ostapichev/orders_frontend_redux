@@ -1,12 +1,12 @@
-label {
-    margin: 10px 0 5px;
-}
-
 .buttons_user_form {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
     width: 100%;
+}
+
+label {
+    margin: 10px 0 5px;
 }
 
 .user_form {

@@ -50,10 +50,10 @@
 }
 
 .block_detail {
+    background-color: snow;
     display: flex;
     justify-content: space-between;
     font: 10pt Verdana, serif;
-    background-color: snow;
 }
 
 .left_block div {

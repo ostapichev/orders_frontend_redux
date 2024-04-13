@@ -15,7 +15,7 @@ const persistConfig = {
     key: 'root',
     storage,
     blacklist: ['adminReducer', 'commentReducer', 'groupReducer']
-}
+};
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const setupStore = configureStore({
     reducer: persistedReducer,

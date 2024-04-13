@@ -1,8 +1,8 @@
 import {FC} from 'react';
 
-import {useAppDispatch} from "../../hooks";
 import {adminActions} from "../../redux";
 import {IFuncVoid} from "../../types";
+import {useAppDispatch} from "../../hooks";
 
 import {button_css} from '../../styles/index';
 

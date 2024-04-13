@@ -18,19 +18,17 @@ import {button_css, form_css} from '../../styles/index';
 import css from './Order.module.css';
 
 interface IProps {
-    onClick: any,
     order: IOrder;
     isOpen: boolean;
+    onClick: IFuncVoid;
 }
 
-const Order: FC<IProps> = ({ order, onClick, isOpen }) => {
+const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
     const dispatch = useAppDispatch();
     const {groups} = useAppSelector(state => state.groupReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const {startShowComment, endShowComments, errorsComment} = useAppSelector(state => state.commentReducer);
-    const [showDetail, setShowDetail] = useState<boolean>(false);
     const [showComment, setShowComment] = useState<boolean>(false);
-    const handleDetail: MouseEventHandler<HTMLDivElement> = () => setShowDetail(prev => !prev);
     const handleShow: MouseEventHandler<HTMLDivElement> = () => setShowComment(true);
     const handleClose: IFuncVoid = () => {
         setShowComment(false);
@@ -131,7 +129,13 @@ const Order: FC<IProps> = ({ order, onClick, isOpen }) => {
                             </Modal.Body>
                             <CommentsPaginate comments={comments} />
                             <Modal.Footer>
-                                <Button type="button" variant="secondary" onClick={handleClose}>Close</Button>
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={handleClose}
+                                >
+                                    Close
+                                </Button>
                             </Modal.Footer>
                         </Modal>
                         <CommentForm order_id={id} />

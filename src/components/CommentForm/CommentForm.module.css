@@ -1,5 +1,5 @@
 .button_comment {
-    background-color: #267cb5;
+    background-color: #267CB5;
     border: 1px solid grey;
     border-bottom-right-radius: 7px;
     border-top-right-radius: 7px;
@@ -14,7 +14,7 @@
 }
 
 .button_comment:hover:enabled {
-    background-color: #0056b3;
+    background-color: #0056B3;
     color: snow;
 }
 

@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useDebounce} from "use-debounce";
 import {useSearchParams} from "react-router-dom";
 
@@ -14,6 +14,7 @@ import css from './Users.module.css';
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const {users, trigger, paramsUsers, showParams} = useAppSelector(state => state.adminReducer);
+    const [userId, setUserId] = useState<number>(null);
     const [query, setQuery] = useSearchParams();
     const [debouncedParams] = useDebounce<IParams>(
         {
@@ -48,8 +49,10 @@ const Users: FC = () => {
             </div>
             {
                 users.map(user => <User
-                    key={ user.id }
-                    user={ user }
+                    key={user.id}
+                    user={user}
+                    isShowText={user.id === userId}
+                    onClick={() => user.id === userId ? setUserId(null) : setUserId(user.id)}
                 />)
             }
             <DataMessage />

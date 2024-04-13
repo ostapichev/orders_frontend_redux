@@ -18,6 +18,12 @@
     border-bottom: none;
 }
 
+.info_text {
+    color: red;
+    margin-right: 15px;
+    text-align: end;
+}
+
 .user_content {
     font: bold 10pt Helvetica, serif;
 }
