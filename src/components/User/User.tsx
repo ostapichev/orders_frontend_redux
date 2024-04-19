@@ -14,15 +14,16 @@ import css from './User.module.css';
 interface IProps {
     user: IUser;
     isShowText: boolean;
-    onClick: IFuncVoid;
+    click: IFuncVoid;
 }
 
-const User: FC<IProps> = ({ user, isShowText, onClick }) => {
+const User: FC<IProps> = ({ user, isShowText, click }) => {
     const dispatch = useAppDispatch();
-    const [linkToken, setLinkToken] = useState<string>(null);
     const formData: FormData = new FormData();
-    const {id, email, profile, is_active, last_login} = user;
     const {activateToken} = useAppSelector(state => state.authReducer);
+    const {id, email, profile, is_active, last_login} = user;
+    const [linkToken, setLinkToken] = useState<string>(null);
+    const [infoText, setInfoText] = useState<string>(null);
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(adminActions.ban({id: id.toString()}));
     };
@@ -40,11 +41,11 @@ const User: FC<IProps> = ({ user, isShowText, onClick }) => {
     const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(authActions.activateLink({id: id.toString()}));
         setLinkToken(`${url}/activate/${activateToken?.token}`);
-    }
-    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(authActions.linkActivateCopy({link: linkToken}));
+    };
+    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = () => {
+        navigator.clipboard.writeText(linkToken).then(() => setInfoText('Link copied to clipboard!'));
         setLinkToken(null);
-        onClick();
+        click();
     };
 
     return (
@@ -98,7 +99,7 @@ const User: FC<IProps> = ({ user, isShowText, onClick }) => {
                         copy to clipboard
                     </button>
                 }
-                { isShowText && <div className={css.info_text}>Text copied to clipboard!</div> }
+                { isShowText && <div className={css.info_text}>{infoText}</div> }
             </div>
         </div>
     );

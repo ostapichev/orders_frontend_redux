@@ -27,7 +27,7 @@ const initialState: IState = {
     showParams: false,
     totalPagesUsers: 0,
     paramsUsers: {},
-    errorUser: null,
+    errorUser: null
 };
 
 const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}>(

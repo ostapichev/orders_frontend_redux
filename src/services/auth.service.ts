@@ -28,27 +28,19 @@ class AuthService {
     };
 
     activateRequestUser(formData: FormData, token: string): Promise<void> {
-        return axiosService.post(urls.authAPI.activateRequest(token), formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.activateRequest(token), formData);
     };
 
     activateUser(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.activate, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.activate, formData);
     };
 
     recoveryPassword(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.recoveryPassword, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.recoveryPassword, formData);
     };
 
     recoveryPasswordRequest(formData: FormData, token: string): Promise<void> {
-        return axiosService.post(urls.authAPI.recoveryPasswordRequest(token), formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.recoveryPasswordRequest(token), formData);
     };
 
     getActivateLink(id: string): IRes<IActivateLink> {
@@ -78,3 +70,4 @@ class AuthService {
 }
 
 export const authService = new AuthService();
+

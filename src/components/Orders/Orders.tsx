@@ -35,7 +35,7 @@ const Orders: FC = () => {
             group: query.get('group'),
             created_at_after: query.get('created_at_after'),
             created_at_before: query.get('created_at_before'),
-            manager: query.get('manager')
+            manager: paramsOrders.manager
         }, 1000);
     const debouncedParamsString: string = JSON.stringify(debouncedParams);
     const sortingOrderBy: ISortingReverse = (order_by: string) => {

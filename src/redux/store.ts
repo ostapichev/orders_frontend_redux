@@ -11,21 +11,25 @@ const rootReducer = combineReducers({
     groupReducer,
     orderReducer
 });
+
 const persistConfig = {
     key: 'root',
     storage,
     blacklist: ['adminReducer', 'commentReducer', 'groupReducer']
 };
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const setupStore = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
             },
         }),
 });
+
 const persist = persistStore(setupStore);
 
 type AppStore = typeof setupStore;

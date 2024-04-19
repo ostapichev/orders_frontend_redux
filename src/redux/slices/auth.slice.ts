@@ -7,19 +7,19 @@ import {IActivateLink, IAuth, IErrorAuth, IUser} from "../../interfaces";
 interface IState {
     me: IUser;
     loading: boolean;
-    error: IErrorAuth;
     checkerMessage: string;
     activateToken: IActivateLink;
+    error: IErrorAuth;
     confirmError?: string;
 }
 
 const initialState: IState = {
     me: null,
     loading: false,
-    error: null,
     checkerMessage: null,
     activateToken: null,
-    confirmError: null,
+    error: null,
+    confirmError: null
 };
 
 const login = createAsyncThunk<IUser, IAuth>(
@@ -97,18 +97,6 @@ const activateLink = createAsyncThunk<IActivateLink, {id: string}>(
     }
 );
 
-const linkActivateCopy = createAsyncThunk<void, {link: string}>(
-    'authSLice/activateLink',
-    ({ link }, { rejectWithValue }) => {
-        try {
-            navigator.clipboard.writeText(link).then();
-        } catch (e) {
-            const err = e as DOMException;
-            return rejectWithValue(err.message);
-        }
-    }
-)
-
 const me = createAsyncThunk<IUser, void> (
     'authSlice/me',
     async () => {
@@ -156,7 +144,7 @@ const slice = createSlice({
             state.error = null;
             state.confirmError = null;
         })
-        .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword, linkActivateCopy), state => {
+        .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
             state.loading = false;
             state.error = null;
             state.confirmError = null;
@@ -177,7 +165,6 @@ const authActions = {
     ...actions,
     login,
     activateLink,
-    linkActivateCopy,
     activateUser,
     activateRequestUser,
     recoveryPassword,

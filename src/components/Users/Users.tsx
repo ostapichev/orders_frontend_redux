@@ -52,7 +52,7 @@ const Users: FC = () => {
                     key={user.id}
                     user={user}
                     isShowText={user.id === userId}
-                    onClick={() => user.id === userId ? setUserId(null) : setUserId(user.id)}
+                    click={() => user.id === userId ? setUserId(null) : setUserId(user.id)}
                 />)
             }
             <DataMessage />
