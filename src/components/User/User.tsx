@@ -38,8 +38,8 @@ const User: FC<IProps> = ({ user, isShowText, click }) => {
         formData.append('email', email);
         await dispatch(authActions.recoveryPassword({ formData }));
     };
-    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = async () => {
-        await dispatch(authActions.activateLink({id: id.toString()}));
+    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = () => {
+        dispatch(authActions.activateLink({id: id.toString()}));
         setLinkToken(`${url}/activate/${activateToken?.token}`);
     };
     const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = () => {
