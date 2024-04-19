@@ -22,7 +22,7 @@ const MyBlockButton: FC = () => {
     const {checkbox} = useAppSelector(state => state.orderReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const handler: IFuncVoid = () => {
-        dispatch(orderActions.setCheckBox(me.profile.name));
+        dispatch(orderActions.setCheckBox(me.id));
         dispatch(orderActions.setPage('1'));
     };
     const createOrder: IFuncVoid = () => {

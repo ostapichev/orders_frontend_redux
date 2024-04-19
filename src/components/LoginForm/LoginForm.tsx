@@ -24,10 +24,9 @@ const LoginForm: FC = () => {
         resolver: joiResolver(authValidator)
     });
     const login: SubmitHandler<IAuth> = async (user) => {
+        if (localStorage.getItem('access' || 'refresh')) localStorage.clear();
         const {meta: {requestStatus}} = await dispatch(authActions.login(user));
-        if (requestStatus === 'fulfilled') {
-            navigate('/orders');
-        }
+        if (requestStatus === 'fulfilled') navigate('/orders');
         reset();
     };
     useEffect(() => {
@@ -50,6 +49,7 @@ const LoginForm: FC = () => {
                         size="sm"
                         id='email'
                         placeholder='enter email'
+                        disabled={loading}
                         {...register('email',{required: true})}
                     />
                 </label>
@@ -61,6 +61,7 @@ const LoginForm: FC = () => {
                         size="sm"
                         placeholder='enter password'
                         autoComplete='on'
+                        disabled={loading}
                         {...register('password',{required: true})}
                     />
                 </label>

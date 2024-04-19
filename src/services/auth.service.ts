@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
 
 import {axiosService} from "./axios.service";
-import {IAuth, ITokens, IUser} from "../interfaces";
+import {IActivateLink, IAuth, ITokens, IUser} from "../interfaces";
 import {IRes} from "../types";
 import {urls} from "../constants";
 
@@ -15,6 +15,7 @@ class AuthService {
         const {data: me}: AxiosResponse<IUser> = await this.me();
         return me;
     };
+
     async refresh(): Promise<void> {
         const refreshToken = this.getRefreshToken();
         if (!refreshToken) {
@@ -25,42 +26,48 @@ class AuthService {
             {refresh: refreshToken});
         this.setTokens(data);
     };
+
     activateRequestUser(formData: FormData, token: string): Promise<void> {
-        return axiosService.post(urls.authAPI.activateRequest(token), formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.activateRequest(token), formData);
     };
+
     activateUser(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.activate, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.activate, formData);
     };
+
     recoveryPassword(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.recoveryPassword, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.recoveryPassword, formData);
     };
+
     recoveryPasswordRequest(formData: FormData, token: string): Promise<void> {
-        return axiosService.post(urls.authAPI.recoveryPasswordRequest(token), formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
+        return axiosService.post(urls.authAPI.recoveryPasswordRequest(token), formData);
     };
+
+    getActivateLink(id: string): IRes<IActivateLink> {
+        return axiosService.get(urls.authAPI.linkActivate(id));
+    };
+
     me(): IRes<IUser> {
         return axiosService.get(urls.authAPI.me);
     };
+
     getAccessToken(): string {
         return localStorage.getItem(this.accessKey);
     };
+
     private getRefreshToken(): string {
         return localStorage.getItem(this.refreshKey);
     };
+
     private setTokens({access, refresh}: ITokens): void {
         localStorage.setItem(this.accessKey, access);
         localStorage.setItem(this.refreshKey, refresh);
     };
+
     deleteTokens(): void {
         localStorage.clear();
     };
 }
 
 export const authService = new AuthService();
+

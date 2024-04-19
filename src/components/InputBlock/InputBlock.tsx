@@ -119,7 +119,8 @@ const InputBlock: FC = () => {
                     value={paramsOrders.course_format || ''}
                     size="sm"
                     aria-label="Course_format"
-                    onChange={formatCourseInputDataChange}>
+                    onChange={formatCourseInputDataChange}
+                >
                     <option value="">all formats</option>
                     <option value="static">static</option>
                     <option value="online">online</option>
@@ -128,7 +129,8 @@ const InputBlock: FC = () => {
                     value={paramsOrders.course_type || ''}
                     size="sm"
                     aria-label="Course_type"
-                    onChange={typeCourseInputDataChange}>
+                    onChange={typeCourseInputDataChange}
+                >
                     <option value="">all types</option>
                     <option value="pro">pro</option>
                     <option value="minimal">minimal</option>
@@ -140,7 +142,8 @@ const InputBlock: FC = () => {
                     value={paramsOrders.status || ''}
                     size="sm"
                     aria-label="Status"
-                    onChange={statusInputDataChange}>
+                    onChange={statusInputDataChange}
+                >
                     <option value="">all statuses</option>
                     <option value="new_order">new_order</option>
                     <option value="in_work">in_work</option>
@@ -152,7 +155,8 @@ const InputBlock: FC = () => {
                     value={paramsOrders.group || ''}
                     size="sm"
                     aria-label="Choose group"
-                    onChange={groupInputDataChange}>
+                    onChange={groupInputDataChange}
+                >
                     <option value=''>all groups</option>
                     {
                         groups.map(group => <Group

@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from "axios";
+
 import {axiosService} from "./axios.service";
 import {IOrder, IParams} from "../interfaces";
 import {IRes, IResPaginate} from "../types";
@@ -5,7 +7,8 @@ import {urls} from "../constants";
 
 class OrderService {
     getAll(params: IParams): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.orders, { params });
+        const config: AxiosRequestConfig = { params };
+        return axiosService.get(urls.ordersAPI.orders, config);
     };
 
     create(groupId: string, order: IOrder): IRes<IOrder> {
@@ -13,7 +16,8 @@ class OrderService {
     };
 
     createExelFile(params: IParams): IResPaginate<IOrder[]> {
-        return axiosService.get(urls.ordersAPI.createExel, {responseType: 'blob', params});
+        const config: AxiosRequestConfig = {responseType: 'blob', params};
+        return axiosService.get(urls.ordersAPI.createExel, config);
     };
 
     updateById(id: string, order: IOrder): IRes<IOrder> {

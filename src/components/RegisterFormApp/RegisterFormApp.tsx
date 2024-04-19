@@ -22,8 +22,8 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const formData: FormData = new FormData();
-    const {token} = useParams<{ token: string }>();
-    const {confirmError, loading} = useAppSelector(state => state.authReducer);
+    const {token} = useParams<{token: string}>();
+    const {loading, confirmError, error} = useAppSelector(state => state.authReducer);
     const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(passwordValidator)
@@ -68,6 +68,7 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
                         size="sm"
                         placeholder='enter password'
                         autoComplete='on'
+                        disabled={loading}
                         {...register('password',{required: true})}
                     />
                 </label>
@@ -79,6 +80,7 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
                         size="sm"
                         placeholder='enter confirm password'
                         autoComplete='on'
+                        disabled={loading}
                         {...register('confirmPassword',{required: true})}
                     />
                 </label>
@@ -90,6 +92,7 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
                     Submit
                 </button>
                 { errors.confirmPassword && <p className={form_css.err_text}>{errors.confirmPassword.message}</p> }
+                { error && <p className={form_css.err_text}>{error.detail}</p> }
                 { confirmError && <p className={form_css.err_text}>{confirmError}</p> }
             </Form>
         </div>

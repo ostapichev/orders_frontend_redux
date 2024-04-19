@@ -27,7 +27,7 @@ const initialState: IState = {
     showParams: false,
     totalPagesUsers: 0,
     paramsUsers: {},
-    errorUser: null,
+    errorUser: null
 };
 
 const getAll = createAsyncThunk<IPagination<IUser[]>, {params: IParams}>(
@@ -137,15 +137,14 @@ const slice = createSlice({
             state.users = result;
             state.totalPagesUsers = total_pages;
             state.errorUser = null;
+            state.loading = false;
         })
         .addCase(getStatisticOrder.fulfilled, (state, action) => {
             state.orderStatistic = action.payload;
-            state.loading = false;
             state.errorUser = null;
         })
         .addCase(getStatisticUser.fulfilled, (state, action) => {
             state.userStatistic = action.payload;
-            state.loading = false;
             state.errorUser = null;
         })
         .addMatcher(isFulfilled(), state => {
@@ -163,8 +162,8 @@ const slice = createSlice({
             state.errorUser = null;
         })
         .addMatcher(isRejectedWithValue(), (state, action) => {
-            state.errorUser = action.payload;
             state.loading = false;
+            state.errorUser = action.payload;
         })
 });
 

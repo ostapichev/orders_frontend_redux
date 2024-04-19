@@ -1,3 +1,5 @@
+import {AxiosRequestConfig} from "axios";
+
 import {axiosService} from "./axios.service";
 import {IOrderStatistic, IParams, IUser, IUserStatistic} from "../interfaces";
 import {IRes, IResPaginate} from "../types";
@@ -5,7 +7,8 @@ import {urls} from "../constants";
 
 class AdminService {
     getAll(params: IParams): IResPaginate<IUser[]> {
-        return axiosService.get(urls.usersAPI.users, { params });
+        const config: AxiosRequestConfig = { params };
+        return axiosService.get(urls.usersAPI.users, config);
     };
 
     create(user: IUser): IRes<IUser> {

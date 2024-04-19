@@ -13,11 +13,11 @@ const AdminPage: FC = () => {
             <StatisticOrder />
             { loading && <Loading /> }
             <div className={loading ? 'd-none' : 'd-flex flex-column align-items-center'}>
-                <UserForm />
-                <SearchUser />
-                { !!users.length && <PaginationApp namePage='adminPage' />}
-                <Users />
-                { !!users.length && <PaginationApp namePage='adminPage' />}
+                <UserForm/>
+                <SearchUser/>
+                {!!users.length && <PaginationApp namePage='adminPage'/>}
+                <Users/>
+                {!!users.length && <PaginationApp namePage='adminPage'/>}
             </div>
             <div className={openUserForm ? page_css.overlay : ''}></div>
         </div>

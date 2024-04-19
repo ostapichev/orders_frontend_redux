@@ -7,7 +7,7 @@
 .form_block {
     align-items: center;
     background-color: #EDEDED;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     display: flex;
@@ -38,7 +38,7 @@ label {
 .modal_form {
     font: 12pt Arial, sans-serif;
     background-color: #EDEDED;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);

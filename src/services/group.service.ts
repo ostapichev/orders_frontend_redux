@@ -7,6 +7,7 @@ class GroupService {
     getAll(): IRes<IGroup[]> {
         return axiosService.get(urls.groupsAPI.groups);
     };
+
     create(group: IGroup): IRes<IGroup> {
         return axiosService.post(urls.groupsAPI.groups, group);
     };

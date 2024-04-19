@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import {authActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
 import {IFuncVoid} from "../../types";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 
 const DataMessage: FC = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +25,11 @@ const DataMessage: FC = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='fw-bold fs-6 text-serif'>
-                        {checkerMessage ? JSON.parse(checkerMessage) : error?.detail}
+                        {
+                            checkerMessage
+                                ? JSON.parse(checkerMessage)
+                                : error?.detail
+                        }
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
