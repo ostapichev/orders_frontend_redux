@@ -7,6 +7,7 @@ import {IActivateLink, IAuth, IErrorAuth, IUser} from "../../interfaces";
 interface IState {
     me: IUser;
     loading: boolean;
+    authTrigger: boolean;
     checkerMessage: string;
     activateToken: IActivateLink;
     error: IErrorAuth;
@@ -16,6 +17,7 @@ interface IState {
 const initialState: IState = {
     me: null,
     loading: false,
+    authTrigger: true,
     checkerMessage: null,
     activateToken: null,
     error: null,
@@ -74,9 +76,9 @@ const recoveryPassword = createAsyncThunk<string, {formData: FormData}>(
 
 const recoveryRequestPassword = createAsyncThunk<void, {formData: FormData, token: string}>(
     'authSlice/recoveryRequestPassword',
-    ({ formData, token }, { rejectWithValue }) => {
+    async ({ formData, token }, { rejectWithValue }) => {
         try {
-            return authService.recoveryPasswordRequest(formData, token);
+            return await authService.recoveryPasswordRequest(formData, token);
         } catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
@@ -130,6 +132,7 @@ const slice = createSlice({
         })
         .addCase(activateLink.fulfilled, (state, action) => {
             state.loading = false;
+            state.authTrigger = !state.authTrigger;
             state.activateToken = action.payload;
             state.checkerMessage = JSON.stringify(state.activateToken.msg);
         })
@@ -140,12 +143,14 @@ const slice = createSlice({
         })
         .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {
             state.loading = false;
+            state.authTrigger = !state.authTrigger;
             state.checkerMessage = action.payload;
             state.error = null;
             state.confirmError = null;
         })
         .addMatcher(isFulfilled(activateRequestUser, recoveryRequestPassword), state => {
             state.loading = false;
+            state.authTrigger = !state.authTrigger;
             state.error = null;
             state.confirmError = null;
         })

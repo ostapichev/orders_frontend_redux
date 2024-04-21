@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {joiResolver} from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useNavigate, useParams} from "react-router-dom";
@@ -24,7 +24,7 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
     const formData: FormData = new FormData();
     const {token} = useParams<{token: string}>();
     const {loading, confirmError, error} = useAppSelector(state => state.authReducer);
-    const {handleSubmit, register, getValues, formState: {errors}} = useForm<IAuth>({
+    const {handleSubmit, register, getValues, formState: {errors, dirtyFields}} = useForm<IAuth>({
         mode: 'all',
         resolver: joiResolver(passwordValidator)
     });
@@ -53,6 +53,11 @@ const RegisterFormApp: FC<IProps> = ({ page }) => {
             alert('RegisterFormApp: name error function');
         }
     };
+    useEffect(() => {
+        if ((!dirtyFields.password || !dirtyFields.confirmPassword) && loading) {
+            dispatch(authActions.resetLoading());
+        }
+    }, [dispatch, dirtyFields, loading]);
 
     return (
         <div className={form_css.form_block}>

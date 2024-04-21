@@ -38,13 +38,12 @@ const User: FC<IProps> = ({ user, isShowText, click }) => {
         formData.append('email', email);
         await dispatch(authActions.recoveryPassword({ formData }));
     };
-    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = () => {
-        dispatch(authActions.activateLink({id: id.toString()}));
+    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = async () => {
+        await dispatch(authActions.activateLink({id: id.toString()}));
         setLinkToken(`${url}/activate/${activateToken?.token}`);
     };
-    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = () => {
-        navigator.clipboard.writeText(linkToken).then(() => setInfoText('Link copied to clipboard!'));
-        setLinkToken(null);
+    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = async () => {
+        await navigator.clipboard.writeText(`${url}/activate/${activateToken?.token}`).then(() => setInfoText('Link copied to clipboard!'));
         click();
     };
 

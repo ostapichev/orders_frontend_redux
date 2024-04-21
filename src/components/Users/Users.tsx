@@ -14,6 +14,7 @@ import css from './Users.module.css';
 const Users: FC = () => {
     const dispatch = useAppDispatch();
     const {users, trigger, paramsUsers, showParams} = useAppSelector(state => state.adminReducer);
+    const {authTrigger} = useAppSelector(state => state.authReducer);
     const [userId, setUserId] = useState<number>(null);
     const [query, setQuery] = useSearchParams();
     const [debouncedParams] = useDebounce<IParams>(
@@ -37,7 +38,7 @@ const Users: FC = () => {
     useEffect(() => {
         const params: IParams = JSON.parse(debouncedParamsString);
         dispatch(adminActions.getAll({ params }));
-    }, [dispatch, trigger, debouncedParamsString]);
+    }, [dispatch, trigger, authTrigger, debouncedParamsString]);
 
     return (
         <div className={!users.length ? 'd-none' : css.table_users}>
