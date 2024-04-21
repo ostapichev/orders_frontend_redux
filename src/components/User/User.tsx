@@ -2,27 +2,24 @@ import {FC, MouseEventHandler, useState} from 'react';
 
 import {authActions, adminActions} from "../../redux";
 import {DateFormat} from "../DateFormat/DateFormat";
-import {IFuncVoid} from "../../types";
 import {IUser} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {StatisticUser} from "../StatisticUser/StatisticUser";
-import {url} from "../../constants";
+import {url, urls} from "../../constants";
 
 import {button_css} from '../../styles/index';
 import css from './User.module.css';
 
 interface IProps {
     user: IUser;
-    isShowText: boolean;
-    click: IFuncVoid;
 }
 
-const User: FC<IProps> = ({ user, isShowText, click }) => {
+const User: FC<IProps> = ({ user }) => {
     const dispatch = useAppDispatch();
     const formData: FormData = new FormData();
     const {activateToken} = useAppSelector(state => state.authReducer);
     const {id, email, profile, is_active, last_login} = user;
-    const [linkToken, setLinkToken] = useState<string>(null);
+    const [activate, setActivate] = useState<boolean>(false);
     const [infoText, setInfoText] = useState<string>(null);
     const ban: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(adminActions.ban({id: id.toString()}));
@@ -38,13 +35,17 @@ const User: FC<IProps> = ({ user, isShowText, click }) => {
         formData.append('email', email);
         await dispatch(authActions.recoveryPassword({ formData }));
     };
-    const getLinkActivate:  MouseEventHandler<HTMLButtonElement> = async () => {
+    const getLinkActivate: MouseEventHandler<HTMLButtonElement> = async () => {
         await dispatch(authActions.activateLink({id: id.toString()}));
-        setLinkToken(`${url}/activate/${activateToken?.token}`);
+        setActivate(true);
     };
-    const copyToClipboard:  MouseEventHandler<HTMLButtonElement> = async () => {
-        await navigator.clipboard.writeText(`${url}/activate/${activateToken?.token}`).then(() => setInfoText('Link copied to clipboard!'));
-        click();
+    const copyToClipboard: MouseEventHandler<HTMLButtonElement> = async () => {
+        await navigator.clipboard.writeText(`${url}${urls.authAPI.activate}/${activateToken.token}`)
+            .then(() => setInfoText('Link copied to clipboard!'));
+        setInterval(() => {
+            setInfoText(null);
+        }, 3000);
+        setActivate(false);
     };
 
     return (
@@ -84,11 +85,11 @@ const User: FC<IProps> = ({ user, isShowText, click }) => {
                 <button
                     className={button_css.btn_open}
                     type="submit"
-                    onClick={!linkToken ? getLinkActivate : copyToClipboard}
+                    onClick={!activate ? getLinkActivate : copyToClipboard}
                 >
-                    { !linkToken ? 'get activate' : 'copy to clipboard' }
+                    { !activate ? 'get activate' : 'copy to clipboard' }
                 </button>
-                { isShowText && <div className={css.info_text}>{infoText}</div> }
+                { !activate && <div className={css.info_text}>{infoText}</div> }
             </div>
         </div>
     );

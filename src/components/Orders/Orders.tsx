@@ -14,8 +14,8 @@ import css from './Orders.module.css';
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
-    const {orders, triggerOrder, paramsOrders, sorted, checkbox} = useAppSelector(state => state.orderReducer);
-    const {triggerComment} = useAppSelector(state => state.commentReducer);
+    const {orders, orderTrigger, paramsOrders, sorted, checkbox} = useAppSelector(state => state.orderReducer);
+    const {commentTrigger} = useAppSelector(state => state.commentReducer);
     const {me} = useAppSelector(state => state.authReducer);
     const [orderId, setOrderId] = useState<number>(null);
     const [query, setQuery] = useSearchParams();
@@ -110,7 +110,7 @@ const Orders: FC = () => {
     useEffect(() => {
         const params: IParams = JSON.parse(debouncedParamsString);
         dispatch(orderActions.getAll({ params }));
-    }, [dispatch, triggerOrder, triggerComment, debouncedParamsString]);
+    }, [dispatch, orderTrigger, commentTrigger, debouncedParamsString]);
 
     return (
         <div className={css.table}>

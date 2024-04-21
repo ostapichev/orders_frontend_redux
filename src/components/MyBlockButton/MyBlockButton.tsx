@@ -48,7 +48,7 @@ const MyBlockButton: FC = () => {
             <div className={css.icon_block}>
                 <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip>Reset params</Tooltip>}
+                    overlay={ <Tooltip>Reset params</Tooltip> }
                 >
                     {({ref, ...triggerHandler}) => (
                         <Image
@@ -63,7 +63,7 @@ const MyBlockButton: FC = () => {
                 </OverlayTrigger>
                 <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip>Create new order</Tooltip>}
+                    overlay={ <Tooltip>Create new order</Tooltip> }
                 >
                     {({ref, ...triggerHandler}) => (
                         <Image

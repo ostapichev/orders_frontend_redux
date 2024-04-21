@@ -11,12 +11,12 @@
 }
 
 .btn_form:disabled {
-    background-color: #ccc;
+    background-color: darkgray;
     cursor: not-allowed;
 }
 
 .btn_form:hover:enabled {
-    background-color: #45a049;
+    background-color: #45A049;
 }
 
 .btn_open {

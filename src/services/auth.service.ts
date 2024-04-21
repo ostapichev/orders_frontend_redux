@@ -10,7 +10,7 @@ class AuthService {
     private readonly refreshKey = 'refresh';
 
     async login(user: IAuth): Promise<IUser> {
-        const {data}: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.login, user);
+        const {data}: AxiosResponse<ITokens> = await axiosService.post(urls.authAPI.auth, user);
         this.setTokens(data);
         const {data: me}: AxiosResponse<IUser> = await this.me();
         return me;
@@ -32,7 +32,7 @@ class AuthService {
     };
 
     activateUser(formData: FormData): IRes<IUser> {
-        return axiosService.post(urls.authAPI.activate, formData);
+        return axiosService.post(urls.authAPI.activateUser, formData);
     };
 
     recoveryPassword(formData: FormData): IRes<IUser> {

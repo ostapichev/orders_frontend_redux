@@ -6,6 +6,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 
 import {authActions} from "../../redux";
+import {authService} from "../../services";
 import {authValidator} from "../../validators";
 import {IAuth} from "../../interfaces";
 import {useAppDispatch, useAppSelector} from "../../hooks";
@@ -24,7 +25,7 @@ const LoginForm: FC = () => {
         resolver: joiResolver(authValidator)
     });
     const login: SubmitHandler<IAuth> = async (user) => {
-        if (localStorage.getItem('access' || 'refresh')) localStorage.clear();
+        if (localStorage.getItem('access' || 'refresh')) authService.deleteTokens();
         const {meta: {requestStatus}} = await dispatch(authActions.login(user));
         if (requestStatus === 'fulfilled') navigate('/orders');
         reset();

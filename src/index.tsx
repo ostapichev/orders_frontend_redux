@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
     <Provider store={store}>
-        <PersistGate loading={<Loading />} persistor={persist}>
+        <PersistGate loading={ <Loading /> } persistor={persist}>
             { /*// @ts-expect-error */ }
             <BrowserRouter history={history}>
                 <App />

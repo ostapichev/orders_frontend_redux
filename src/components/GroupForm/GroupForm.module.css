@@ -1,5 +1,5 @@
 .btn_group {
-    background-color: #4caf50;
+    background-color: #4CAf50;
     border: none;
     border-radius: 5px;
     color: snow;
@@ -8,6 +8,6 @@
 }
 
 .btn_group:disabled {
-    background-color: #ccc;
+    background-color: gray;
     cursor: not-allowed;
 }

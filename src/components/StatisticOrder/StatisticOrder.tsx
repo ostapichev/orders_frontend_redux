@@ -7,11 +7,11 @@ import css from './StatisticOrder.module.css';
 
 const StatisticOrder: FC = () => {
     const dispatch = useAppDispatch();
-    const {orderStatistic, trigger} = useAppSelector(state => state.adminReducer);
+    const {orderStatistic, userTrigger} = useAppSelector(state => state.adminReducer);
     const {item_count, in_work, new_order, agree, disagree, dubbing, user_count} = orderStatistic;
     useEffect(() => {
         dispatch(adminActions.getStatisticOrder());
-    }, [dispatch, trigger]);
+    }, [dispatch, userTrigger]);
 
     return (
         <div className={css.statistic_order_container}>

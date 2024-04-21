@@ -22,7 +22,7 @@ const GetExelFile: FC = () => {
     return (
         <OverlayTrigger
             placement="top"
-            overlay={<Tooltip>Get exel file by orders</Tooltip>}
+            overlay={ <Tooltip>Get exel file by orders</Tooltip> }
         >
             {({ref, ...triggerHandler}) => (
                 <Image

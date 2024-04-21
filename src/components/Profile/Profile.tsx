@@ -22,7 +22,7 @@ const Profile: FC<IProps> = ({ me }) => {
     const [account, setAccount] = useState<boolean>(false);
     const {userStatistic} = useAppSelector(state => state.adminReducer);
     const {orderUpdate} = useAppSelector(state => state.orderReducer);
-    const {triggerComment} = useAppSelector(state => state.commentReducer);
+    const {commentTrigger} = useAppSelector(state => state.commentReducer);
     const {email, profile, created_at} = me;
     const {id, name, surname} = profile;
     const {count_orders, in_work, agree, disagree, dubbing} = userStatistic;
@@ -30,7 +30,7 @@ const Profile: FC<IProps> = ({ me }) => {
     const handleShow: IFuncVoid = () => setAccount(true);
     useEffect(() => {
         dispatch(adminActions.getStatisticUser({ id }));
-    }, [dispatch, orderUpdate, triggerComment, id]);
+    }, [dispatch, orderUpdate, commentTrigger, id]);
 
     return (
         <>

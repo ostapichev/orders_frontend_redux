@@ -17,7 +17,7 @@ import css from './OrderForm.module.css';
 
 const OrderForm: FC = () => {
     const dispatch = useAppDispatch();
-    const {groups, trigger, vision, errorGroup} = useAppSelector(state => state.groupReducer);
+    const {groups, groupTrigger, vision, errorGroup} = useAppSelector(state => state.groupReducer);
     const {orderUpdate, errorsOrder, orderCreate, openOrderForm} = useAppSelector(state => state.orderReducer);
     const {reset, handleSubmit, register, setValue, formState: {errors, isValid}} = useForm<IOrder>({
         mode: 'all',
@@ -44,7 +44,7 @@ const OrderForm: FC = () => {
     };
     useEffect(() => {
         dispatch(groupActions.getAll());
-    }, [dispatch, trigger]);
+    }, [dispatch, groupTrigger]);
     useEffect(() => {
         if (orderUpdate) {
             setValue('name', orderUpdate.name);

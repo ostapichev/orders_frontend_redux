@@ -34,10 +34,10 @@ const urls = {
         linkActivate: (id: string): string => `${auth}${linkActivate}/${id}`,
         activateRequest: (token: string): string => `${auth}${activate}/${token}`,
         recoveryPasswordRequest: (token: string): string => `${auth}${recoveryPassword}/${token}`,
-        activate:`${auth}${activate}`,
+        activateUser:`${auth}${activate}`,
         recoveryPassword: `${auth}${recoveryPassword}`,
-        auth: auth,
-        login: auth,
+        activate,
+        auth,
         refresh: `${auth}/refresh`,
         me: `${auth}/me`
     },

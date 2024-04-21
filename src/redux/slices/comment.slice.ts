@@ -6,7 +6,7 @@ import {IComment, IErrorComment} from "../../interfaces";
 
 interface IState {
     comments?: IComment[];
-    triggerComment: boolean;
+    commentTrigger: boolean;
     loading: boolean;
     pageSize: number;
     startShowComment: number;
@@ -18,7 +18,7 @@ interface IState {
 
 const initialState: IState = {
     comments: null,
-    triggerComment: false,
+    commentTrigger: false,
     loading: false,
     pageSize: 5,
     startShowComment: 0,
@@ -60,7 +60,7 @@ const slice = createSlice({
     },
     extraReducers: builder => builder
         .addCase(create.fulfilled, state => {
-            state.triggerComment = !state.triggerComment;
+            state.commentTrigger = !state.commentTrigger;
         })
         .addMatcher(isFulfilled(), state => {
             state.loading = false;

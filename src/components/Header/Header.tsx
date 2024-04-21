@@ -2,7 +2,7 @@ import {FC, MouseEventHandler, useCallback, useEffect} from 'react';
 import {NavLink, useLocation} from "react-router-dom";
 
 import {adminActions, authActions, orderActions} from "../../redux";
-import {history} from "../../services";
+import {authService, history} from "../../services";
 import {IFuncVoid} from "../../types";
 import {Profile} from "../Profile/Profile";
 import {useAppDispatch, useAppSelector} from "../../hooks";
@@ -28,7 +28,7 @@ const Header: FC = () => {
         dispatch(adminActions.resetParams());
         dispatch(orderActions.resetParams());
         dispatch(orderActions.resetOrders());
-        localStorage.clear();
+        authService.deleteTokens();
     }, [dispatch]);
     const logout: MouseEventHandler<HTMLAnchorElement> = () => {
         resetState();

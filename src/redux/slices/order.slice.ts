@@ -9,7 +9,7 @@ interface IState {
     orders: IOrder[];
     orderUpdate: IOrder;
     orderCreate: string;
-    triggerOrder: boolean;
+    orderTrigger: boolean;
     loading: boolean;
     totalPagesOrders: number;
     openOrderForm: boolean;
@@ -23,7 +23,7 @@ const initialState: IState = {
     orders: [],
     orderUpdate: null,
     orderCreate: null,
-    triggerOrder: false,
+    orderTrigger: false,
     loading: false,
     totalPagesOrders: 0,
     openOrderForm: false,
@@ -181,7 +181,7 @@ const slice = createSlice({
             state.openOrderForm = false;
         })
         .addMatcher(isFulfilled(create, update), state => {
-            state.triggerOrder = !state.triggerOrder;
+            state.orderTrigger = !state.orderTrigger;
             state.errorsOrder = null;
         })
         .addMatcher(isFulfilled(), state => {

@@ -6,7 +6,7 @@ import {IErrorGroup, IGroup} from "../../interfaces";
 
 interface IState {
     groups: IGroup[];
-    trigger: boolean;
+    groupTrigger: boolean;
     loading: boolean;
     vision: boolean;
     errorGroup: IErrorGroup;
@@ -14,7 +14,7 @@ interface IState {
 
 const initialState: IState = {
     groups: [],
-    trigger: false,
+    groupTrigger: false,
     loading: false,
     vision: false,
     errorGroup: null
@@ -65,7 +65,7 @@ const slice = createSlice({
             state.loading = false;
         })
         .addCase(create.fulfilled, state => {
-            state.trigger = !state.trigger;
+            state.groupTrigger = !state.groupTrigger;
             state.errorGroup = null;
         })
         .addMatcher(isRejectedWithValue(), (state, action) => {

@@ -9,25 +9,25 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 
 const DataMessage: FC = () => {
     const dispatch = useAppDispatch();
-    const {error, checkerMessage} = useAppSelector(state => state.authReducer);
+    const {error, checkMessage} = useAppSelector(state => state.authReducer);
     const handleClose: IFuncVoid = () => dispatch(authActions.closeModal());
 
     return (
         <>
             <Modal
-                show={!!checkerMessage || !!error}
+                show={!!checkMessage || !!error}
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{checkerMessage ? 'INFO' : 'ERROR'}</Modal.Title>
+                    <Modal.Title>{checkMessage ? 'INFO' : 'ERROR'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='fw-bold fs-6 text-serif'>
                         {
-                            checkerMessage
-                                ? JSON.parse(checkerMessage)
+                            checkMessage
+                                ? JSON.parse(checkMessage)
                                 : error?.detail
                         }
                     </div>

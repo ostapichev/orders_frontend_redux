@@ -6,7 +6,7 @@ import {IErrorUser, IOrderStatistic, IPagination, IParams, IUser, IUserStatistic
 
 interface IState {
     users: IUser[];
-    trigger: boolean;
+    userTrigger: boolean;
     loading: boolean;
     orderStatistic: IOrderStatistic;
     userStatistic: IUserStatistic;
@@ -19,7 +19,7 @@ interface IState {
 
 const initialState: IState = {
     users: [],
-    trigger: false,
+    userTrigger: false,
     loading: false,
     orderStatistic: {},
     userStatistic: {},
@@ -126,7 +126,6 @@ const slice = createSlice({
             state.showParams = true;
         },
         resetParams: state => {
-            state.users = [];
             state.paramsUsers = {};
             state.showParams = false;
         }
@@ -152,7 +151,7 @@ const slice = createSlice({
             state.errorUser = null;
         })
         .addMatcher(isFulfilled(create, ban, unban), state => {
-            state.trigger = !state.trigger;
+            state.userTrigger = !state.userTrigger;
             state.loading = false;
             state.openUserForm = false;
             state.errorUser = null;
