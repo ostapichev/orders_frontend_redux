@@ -45,12 +45,12 @@
 }
 
 .block_data:hover {
-    background-color: green;
+
     color: snow;
 }
 
 .block_detail {
-    background-color: snow;
+
     display: flex;
     justify-content: space-between;
     font: 10pt Verdana, serif;

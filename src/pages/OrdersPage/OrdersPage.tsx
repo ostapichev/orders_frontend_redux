@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import {InputBlock, Loading, MyBlockButton, OrderForm, Orders, PaginationApp} from "../../components";
+import {InputBlock, Loading, MyBlockButton, OrderForm, Orders, PaginationApp, TableOrdersApp} from "../../components";
 import {useAppSelector} from "../../hooks";
 
 import css from './OrdersPage.module.css';
@@ -18,7 +18,7 @@ const OrdersPage: FC = () => {
             { loading && <Loading /> }
             <div className={loading ? 'd-none' : css.orders_block}>
                 <OrderForm />
-                <Orders />
+                <TableOrdersApp />
                 { !!orders.length && <PaginationApp namePage='homePage' /> }
             </div>
             <div className={openOrderForm ? page_css.overlay : ''}></div>

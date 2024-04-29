@@ -40,7 +40,7 @@ const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
         if (group && group.name) {
             return group.name;
         }
-        return "all groups";
+        return "no group";
     };
     const {
         id, name, surname, email, phone, age, course, course_format, course_type,
@@ -55,20 +55,20 @@ const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
         <>
             <div className={css.block_data} onClick={() => onClick()}>
                 <div>{id}</div>
-                <div>{name}</div>
-                <div>{surname}</div>
-                <div>{email}</div>
-                <div>{phone}</div>
-                <div>{age}</div>
-                <div>{course}</div>
-                <div>{course_format}</div>
-                <div>{course_type}</div>
-                <div>{status}</div>
-                <div>{sum}</div>
-                <div>{already_paid}</div>
-                <div>{nameGroup}</div>
-                <div>{<DateFormat originalDate={created_at} />}</div>
-                <div>{manager !== null ? manager.name : 'no manager'}</div>
+                <div className={css.running}>{name ? name : 'no data'}</div>
+                <div>{surname ? surname : 'no data'}</div>
+                <div>{email ? email : 'no data'}</div>
+                <div>{phone ? phone : 'no data'}</div>
+                <div>{age ? age : 'no data'}</div>
+                <div>{course ? course : 'no data'}</div>
+                <div>{course_format ? course_format : 'no data'}</div>
+                <div>{course_type ? course_type : 'no data'}</div>
+                <div>{status ? status : 'no data'}</div>
+                <div>{sum ? sum : 'no data'}</div>
+                <div>{already_paid ? already_paid : 'no data'}</div>
+                <div>{nameGroup ? nameGroup : 'no data'}</div>
+                <div>{ <DateFormat originalDate={created_at} /> }</div>
+                <div>{manager ? manager.name : 'no manager'}</div>
             </div>
             <Collapse
                 in={isOpen}
