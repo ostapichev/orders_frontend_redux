@@ -48,7 +48,7 @@ const Profile: FC<IProps> = ({ me }) => {
                 onHide={handleClose}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>My Profile</Modal.Title>
+                    <Modal.Title>My&#160;Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <ListGroup>
@@ -56,32 +56,32 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>ID:</span><span className="fw-bold">{id}</span>
+                            <span>ID&#58;</span><span className="fw-bold">{id}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Name:</span><span className="fw-bold">{name}</span>
+                            <span>Name&#58;</span><span className="fw-bold">{name}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Surname:</span><span className="fw-bold">{surname}</span>
+                            <span>Surname&#58;</span><span className="fw-bold">{surname}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Email:</span><span className="fw-bold">{email}</span>
+                            <span>Email&#58;</span><span className="fw-bold">{email}</span>
                         </ListGroup.Item>
                         <ListGroup.Item
                             className="d-flex justify-content-between align-items-start"
                             variant="light"
                         >
-                            <span>Created:</span>
-                            <span className="fw-bold">{<DateFormat originalDate={created_at} />}</span>
+                            <span>Created&#58;</span>
+                            <span className="fw-bold">{ <DateFormat originalDate={created_at} /> }</span>
                         </ListGroup.Item>
                     </ListGroup>
                     <ListGroup as="ol" className='mt-2'>
@@ -90,7 +90,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">Total&#160;orders:</div>
+                                <div className="fw">Total&#160;orders&#58;</div>
                             </div>
                             <Badge bg="primary" pill>{count_orders}</Badge>
                         </ListGroup.Item>
@@ -99,7 +99,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">In&#160;work:</div>
+                                <div className="fw">In&#160;work&#58;</div>
                             </div>
                             <Badge bg="primary" pill>{in_work}</Badge>
                         </ListGroup.Item>
@@ -108,7 +108,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">Agree:</div>
+                                <div className="fw">Agree&#58;</div>
                             </div>
                             <Badge bg="primary" pill>{agree}</Badge>
                         </ListGroup.Item>
@@ -117,7 +117,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">Disagree:</div>
+                                <div className="fw">Disagree&#58;</div>
                             </div>
                             <Badge bg="primary" pill>{disagree}</Badge>
                         </ListGroup.Item>
@@ -126,7 +126,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">Dubbing:</div>
+                                <div className="fw">Dubbing&#58;</div>
                             </div>
                             <Badge bg="primary" pill>{dubbing}</Badge>
                         </ListGroup.Item>

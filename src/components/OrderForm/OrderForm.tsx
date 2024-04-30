@@ -168,7 +168,7 @@ const OrderForm: FC = () => {
                         <Form.Control
                             type="number"
                             size="sm"
-                            placeholder='alreadyPaid'
+                            placeholder='already_paid'
                             {...register('already_paid')}
                         />
                     </label>

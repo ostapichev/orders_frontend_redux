@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { format } from 'date-fns';
 
 interface IProps {
@@ -9,7 +9,7 @@ const DateFormat: FC<IProps> = ({ originalDate }) => {
     const formatData = format(new Date(originalDate), 'MMMM dd, yyyy');
 
     return (
-        <>{formatData}</>
+        <Fragment>{formatData}</Fragment>
     );
 };
 

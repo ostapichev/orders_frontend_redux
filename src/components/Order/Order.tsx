@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useState } from 'react';
+import {FC, Fragment, MouseEventHandler, useState} from 'react';
 
 import Button from 'react-bootstrap/Button';
 import ListGroup from "react-bootstrap/ListGroup";
@@ -57,7 +57,7 @@ const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
     const PaginateComments: IComment[] = comments.slice(startShowComment, endShowComments);
 
     return (
-        <>
+        <Fragment>
             <StyledTableRow onClick={() => onClick()}>
                 <StyledTableCell component="th" scope="row" align="center">{id}</StyledTableCell>
                 <StyledTableCell align="center">{name ? name : noData}</StyledTableCell>
@@ -98,7 +98,8 @@ const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
                                 >
                                     Edit
                                 </button>
-                                {order.manager && order.manager?.id !== me?.id &&
+                                {
+                                    order.manager && order.manager?.id !== me?.id &&
                                     <div className={form_css.err_text}>
                                         You&#160;cannot&#160;comment&#160;and&#160;
                                         edit&#160;this&#160;order&#46;&#160;It&#160;
@@ -160,7 +161,7 @@ const Order: FC<IProps> = ({ order, isOpen, onClick }) => {
                     </Stack>
                 </Collapse>
             </StyledTableCell>
-        </>
+        </Fragment>
     );
 };
 

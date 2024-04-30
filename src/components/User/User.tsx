@@ -67,7 +67,7 @@ const User: FC<IProps> = ({ user }) => {
                     { last_login ? <DateFormat originalDate={last_login} /> : dataTable.noData }</span>
                 </div>
             </div>
-            <StatisticUser id={id}/>
+            <StatisticUser id={id} />
             <div className={css.block_button}>
                 <button
                     className={button_css.btn_open}
