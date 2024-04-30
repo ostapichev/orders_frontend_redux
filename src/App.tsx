@@ -1,11 +1,11 @@
-import {FC} from "react";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import { FC } from "react";
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {AdminPage, LoginPage, NotFoundPage, OrdersPage, RegisterPage} from "./pages";
-import {MainLayout} from "./layouts";
-import {RequiredAuthAdmin, RequiredAuthHome} from "./hoc";
+import { AdminPage, LoginPage, NotFoundPage, OrdersPage, RegisterPage } from "./pages";
+import { MainLayout } from "./layouts";
+import { RequiredAuthAdmin, RequiredAuthHome } from "./hoc";
 
 const App: FC = () => {
     return (

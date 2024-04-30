@@ -1,8 +1,8 @@
-import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {groupService} from "../../services";
-import {IErrorGroup, IGroup} from "../../interfaces";
+import { groupService } from "../../services";
+import { IErrorGroup, IGroup } from "../../interfaces";
 
 interface IState {
     groups: IGroup[];

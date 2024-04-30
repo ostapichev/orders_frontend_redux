@@ -1,5 +1,6 @@
 export * from './auth.interface';
 export * from './comment.interface';
+export * from './data.table.interface';
 export * from './error.interface';
 export * from './params.interface';
 export * from './group.interface';

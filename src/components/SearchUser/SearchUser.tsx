@@ -1,18 +1,18 @@
-import {FC} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {useLocation} from "react-router-dom";
+import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
-import {InputGroup} from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 
-import {adminActions} from "../../redux";
-import {history} from '../../services';
-import {IFuncVoid} from "../../types";
-import {ISearch} from "../../interfaces";
-import {searchValidator} from "../../validators";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { adminActions } from "../../redux";
+import { history } from '../../services';
+import { IFuncVoid } from "../../types";
+import { ISearch } from "../../interfaces";
+import { searchValidator } from "../../validators";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 const SearchUser: FC = () => {
     const dispatch = useAppDispatch();

@@ -1,19 +1,19 @@
-import {FC, useEffect} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import { FC, useEffect } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Form from 'react-bootstrap/Form';
 
-import {authActions} from "../../redux";
-import {authService} from "../../services";
-import {authValidator} from "../../validators";
-import {IAuth} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { authActions } from "../../redux";
+import { authService } from "../../services";
+import { authValidator } from "../../validators";
+import { IAuth } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
-import {button_css, form_css} from '../../styles/index';
+import { button_css, form_css } from '../../styles/index';
 
-import {okten_school} from '../../assets';
+import { okten_school } from '../../assets';
 
 const LoginForm: FC = () => {
     const dispatch = useAppDispatch();
@@ -31,10 +31,10 @@ const LoginForm: FC = () => {
         reset();
     };
     useEffect(() => {
-        if ((!dirtyFields.email || !dirtyFields.password) && loading) {
+        if (!dirtyFields.email || !dirtyFields.password) {
             dispatch(authActions.resetLoading());
         }
-    }, [dispatch, dirtyFields, loading]);
+    }, [dispatch, dirtyFields]);
 
     return (
         <div className={form_css.form_block}>
@@ -72,9 +72,9 @@ const LoginForm: FC = () => {
                     className={button_css.btn_submit}
                     disabled={loading}
                 >
-                    {loading ? 'Loading' : 'Login'}
+                    {loading ? 'Loading...' : 'Login'}
                 </button>
-                { query.get('expSession') && <p className={form_css.err_text}>Please login!</p> }
+                { query.get('expSession') && <p className={form_css.err_text}>Please&#160;login!</p> }
                 { error?.detail && <p className={form_css.err_text}>{error.detail}</p> }
             </Form>
         </div>

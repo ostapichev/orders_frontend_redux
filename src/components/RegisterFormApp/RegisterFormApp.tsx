@@ -1,18 +1,18 @@
-import {FC, useEffect} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {useNavigate, useParams} from "react-router-dom";
+import { FC, useEffect } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 
-import {authActions} from "../../redux";
-import {IAuth} from "../../interfaces";
-import {passwordValidator} from "../../validators";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { authActions } from "../../redux";
+import { IAuth } from "../../interfaces";
+import { passwordValidator } from "../../validators";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
-import {button_css, form_css} from '../../styles/index';
+import { button_css, form_css } from '../../styles/index';
 
-import {okten_school} from "../../assets";
+import { okten_school } from "../../assets";
 
 interface IProps {
     page: string;

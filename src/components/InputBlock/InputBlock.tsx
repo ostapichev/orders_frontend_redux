@@ -1,10 +1,10 @@
-import {ChangeEvent, FC} from 'react';
+import { ChangeEvent, FC } from 'react';
 
 import Form from "react-bootstrap/Form";
 
-import {Group} from "../Group/Group";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { Group } from "../Group/Group";
+import { orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './InputBlock.module.css';
 
@@ -121,7 +121,7 @@ const InputBlock: FC = () => {
                     aria-label="Course_format"
                     onChange={formatCourseInputDataChange}
                 >
-                    <option value="">all formats</option>
+                    <option value="">all&#160;formats</option>
                     <option value="static">static</option>
                     <option value="online">online</option>
                 </Form.Select>
@@ -131,7 +131,7 @@ const InputBlock: FC = () => {
                     aria-label="Course_type"
                     onChange={typeCourseInputDataChange}
                 >
-                    <option value="">all types</option>
+                    <option value="">all&#160;types</option>
                     <option value="pro">pro</option>
                     <option value="minimal">minimal</option>
                     <option value="premium">premium</option>
@@ -144,7 +144,7 @@ const InputBlock: FC = () => {
                     aria-label="Status"
                     onChange={statusInputDataChange}
                 >
-                    <option value="">all statuses</option>
+                    <option value="">all&#160;statuses</option>
                     <option value="new_order">new_order</option>
                     <option value="in_work">in_work</option>
                     <option value="agree">agree</option>
@@ -157,7 +157,7 @@ const InputBlock: FC = () => {
                     aria-label="Choose group"
                     onChange={groupInputDataChange}
                 >
-                    <option value=''>all groups</option>
+                    <option value=''>all&#160;groups</option>
                     {
                         groups.map(group => <Group
                             key={group.id}

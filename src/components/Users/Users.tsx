@@ -1,13 +1,13 @@
-import {FC, useEffect} from 'react';
-import {useDebounce} from "use-debounce";
-import {useSearchParams} from "react-router-dom";
+import { FC, useEffect } from 'react';
+import { useDebounce } from "use-debounce";
+import { useSearchParams } from "react-router-dom";
 
-import {adminActions} from "../../redux";
-import {ButtonApp} from "../ButtonApp/ButtonApp";
-import {DataMessage} from "../DataMessage/DataMessage";
-import {IParams} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {User} from "../User/User";
+import { adminActions } from "../../redux";
+import { ButtonApp } from "../ButtonApp/ButtonApp";
+import { DataMessage } from "../DataMessage/DataMessage";
+import { IParams } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { User } from "../User/User";
 
 import css from './Users.module.css';
 

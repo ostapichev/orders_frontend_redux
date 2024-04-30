@@ -1,15 +1,15 @@
-import {FC} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
 
-import {IUser} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {adminActions} from "../../redux";
-import {userValidator} from "../../validators";
+import { IUser } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { adminActions } from "../../redux";
+import { userValidator } from "../../validators";
 
-import {button_css, form_css} from "../../styles/index";
+import { button_css, form_css } from "../../styles/index";
 import css from './UserForm.module.css';
 
 const UserForm: FC = () => {

@@ -1,10 +1,10 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {InputBlock, Loading, MyBlockButton, OrderForm, Orders, PaginationApp, TableOrdersApp} from "../../components";
-import {useAppSelector} from "../../hooks";
+import { InputBlock, Loading, MyBlockButton, OrderForm, Orders, PaginationApp } from "../../components";
+import { useAppSelector } from "../../hooks";
 
 import css from './OrdersPage.module.css';
-import {page_css} from '../../styles/index';
+import { page_css } from '../../styles/index';
 
 const OrdersPage: FC = () => {
     const {orders, loading, openOrderForm} = useAppSelector(state => state.orderReducer);
@@ -18,10 +18,10 @@ const OrdersPage: FC = () => {
             { loading && <Loading /> }
             <div className={loading ? 'd-none' : css.orders_block}>
                 <OrderForm />
-                <TableOrdersApp />
+                <Orders />
                 { !!orders.length && <PaginationApp namePage='homePage' /> }
             </div>
-            <div className={openOrderForm ? page_css.overlay : ''}></div>
+            <div className={openOrderForm ? page_css.overlay : 'd-none'}></div>
         </div>
     );
 };

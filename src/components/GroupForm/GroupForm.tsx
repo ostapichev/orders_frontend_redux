@@ -1,17 +1,17 @@
-import {FC} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
 
-import {groupActions} from "../../redux";
-import {groupValidator} from "../../validators";
-import {IFuncVoid} from "../../types";
-import {IGroup} from "../../interfaces";
-import {useAppDispatch} from "../../hooks";
+import { groupActions } from "../../redux";
+import { groupValidator } from "../../validators";
+import { IFuncVoid } from "../../types";
+import { IGroup } from "../../interfaces";
+import { useAppDispatch } from "../../hooks";
 
 import css from './GroupForm.module.css';
-import {form_css} from '../../styles';
+import { form_css } from '../../styles';
 
 const GroupForm: FC = () => {
     const {handleSubmit, register, reset, formState: {errors, isValid}} = useForm<IGroup>({

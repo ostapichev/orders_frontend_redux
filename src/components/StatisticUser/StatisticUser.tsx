@@ -1,9 +1,9 @@
-import {AxiosError} from "axios";
-import {FC, useEffect, useMemo, useState} from 'react';
+import { AxiosError } from "axios";
+import { FC, useEffect, useMemo, useState } from 'react';
 
-import {adminService} from "../../services";
-import {IFuncVoid} from "../../types";
-import {IUserStatistic} from "../../interfaces";
+import { adminService } from "../../services";
+import { IFuncVoid } from "../../types";
+import { IUserStatistic } from "../../interfaces";
 
 interface IProps {
     id: number;

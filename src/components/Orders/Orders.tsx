@@ -1,16 +1,20 @@
-import {FC, useState, useEffect} from 'react';
-import {useDebounce} from "use-debounce";
-import {useSearchParams} from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
+import { useSearchParams } from "react-router-dom";
 
-import ListGroup from 'react-bootstrap/ListGroup';
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
-import {IFuncVoid, ISortingReverse} from "../../types";
-import {IParams} from "../../interfaces";
-import {Order} from "../Order/Order";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-
-import css from './Orders.module.css';
+import { StyledTableCell } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { IParams } from "../../interfaces";
+import { IFuncVoid, ISortingReverse } from "../../types";
+import { orderActions } from "../../redux";
+import { Order } from "../Order/Order";
 
 const Orders: FC = () => {
     const dispatch = useAppDispatch();
@@ -105,6 +109,7 @@ const Orders: FC = () => {
         if (checkbox) {
             queryString.push(`manager=${encodeURIComponent(me.profile.name)}`);
         }
+        setOrderId(null);
         setQuery(`?${queryString.join('&')}`);
     }, [setQuery, checkbox, me?.profile?.name, paramsOrders]);
     useEffect(() => {
@@ -113,110 +118,181 @@ const Orders: FC = () => {
     }, [dispatch, orderTrigger, commentTrigger, debouncedParamsString]);
 
     return (
-        <div className={css.table}>
-            <ListGroup className={css.table_data} horizontal>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderById}
-                >
-                    id
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByName}
-                >
-                    name
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderBySurName}
-                >
-                    surname
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByEmail}
-                >
-                    email
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByPhone}
-                >
-                    phone
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByAge}
-                >
-                    age
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByCourse}
-                >
-                    course
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByCourseFormat}
-                >
-                    course_format
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByCourseType}
-                >
-                    course_type
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByStatus}
-                >
-                    status
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderBySum}
-                >
-                    sum
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByPaid}
-                >
-                    paid
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByGroup}
-                >
-                    group
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByCreated}
-                >
-                    created at
-                </ListGroup.Item>
-                <ListGroup.Item
-                    className={css.table_header}
-                    onClick={orderByManager}
-                >
-                    manager
-                </ListGroup.Item>
-            </ListGroup>
-            {
-                orders.map(order => <Order
-                    key={order.id}
-                    order={order}
-                    isOpen={order.id === orderId}
-                    onClick={() => (order.id === orderId ? setOrderId(null) : setOrderId(order.id))}
-                />)
-            }
-        </div>
+        <TableContainer component={Paper}>
+            <Table
+                sx={{
+                    minWidth: 700,
+                    cursor: "pointer"
+                }}
+                size="small"
+                aria-label="customized table"
+            >
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderById}
+                        >
+                            id
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByName}
+                        >
+                            name
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderBySurName}
+                        >
+                            surname
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByEmail}
+                        >
+                            email
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByPhone}
+                        >
+                            phone
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByAge}
+                        >
+                            age
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByCourse}
+                        >
+                            course
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByCourseFormat}
+                        >
+                            course&#160;format
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByCourseType}
+                        >
+                            course&#160;type
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByStatus}
+                        >
+                            status
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderBySum}
+                        >
+                            sum
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByPaid}
+                        >
+                            paid
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByGroup}
+                        >
+                            group
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByCreated}
+                        >
+                            created&#160;at
+                        </StyledTableCell>
+                        <StyledTableCell
+                            sx={{
+                                "--Grid-borderWidth": "1px",
+                                borderRight: "var(--Grid-borderWidth) solid",
+                            }}
+                            align="center"
+                            onClick={orderByManager}
+                        >
+                            manager
+                        </StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    { orders.map(order => <Order
+                            key={order.id}
+                            order={order}
+                            isOpen={order.id === orderId}
+                            onClick={() => (order.id === orderId ? setOrderId(null) : setOrderId(order.id))}
+                        />) }
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
-};
+}
 
 export {
     Orders

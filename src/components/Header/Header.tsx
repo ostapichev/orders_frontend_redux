@@ -1,15 +1,15 @@
-import {FC, MouseEventHandler, useCallback, useEffect} from 'react';
-import {NavLink, useLocation} from "react-router-dom";
+import { FC, MouseEventHandler, useCallback, useEffect } from 'react';
+import { NavLink, useLocation } from "react-router-dom";
 
-import {adminActions, authActions, orderActions} from "../../redux";
-import {authService, history} from "../../services";
-import {IFuncVoid} from "../../types";
-import {Profile} from "../Profile/Profile";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { adminActions, authActions, orderActions } from "../../redux";
+import { authService, history } from "../../services";
+import { IFuncVoid } from "../../types";
+import { Profile } from "../Profile/Profile";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './Header.module.css';
 
-import {admin_panel, home_page, login, log_out, okten_school} from '../../assets';
+import { admin_panel, home_page, login, log_out, okten_school } from '../../assets';
 
 const Header: FC = () => {
     const dispatch = useAppDispatch();
@@ -18,11 +18,9 @@ const Header: FC = () => {
     const isAdmin = me?.is_superuser || false;
     const defaultParamsOrders: MouseEventHandler<HTMLAnchorElement> = () => {
         dispatch(orderActions.resetParams());
-        localStorage.removeItem('persist:root');
     };
     const defaultParamsUsers: MouseEventHandler<HTMLAnchorElement> = () => {
         dispatch(adminActions.resetParams());
-        localStorage.removeItem('persist:root');
     };
     const resetState: IFuncVoid = useCallback(() => {
         dispatch(adminActions.resetParams());

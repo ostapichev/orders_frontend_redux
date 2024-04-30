@@ -1,6 +1,6 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {NotFound} from '../../components';
+import { NotFound } from '../../components';
 
 const NotFoundPage: FC = () => {
     return (

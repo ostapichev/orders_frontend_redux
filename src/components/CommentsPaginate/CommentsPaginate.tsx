@@ -1,10 +1,10 @@
-import {ChangeEvent, FC} from 'react';
+import { ChangeEvent, FC } from 'react';
 
-import {Pagination, Box} from "@mui/material";
+import { Pagination, Box } from "@mui/material";
 
-import {commentActions} from "../../redux";
-import {IComment} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { commentActions } from "../../redux";
+import { IComment } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 interface IProps {
     comments?: IComment[];

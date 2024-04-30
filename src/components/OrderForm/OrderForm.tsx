@@ -1,18 +1,18 @@
-import {ChangeEvent, FC, useEffect} from 'react';
-import {SubmitHandler, useForm} from "react-hook-form";
+import { ChangeEvent, FC, useEffect } from 'react';
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
 
-import {groupActions, orderActions} from "../../redux";
-import {Group} from "../Group/Group";
-import {GroupForm} from "../GroupForm/GroupForm";
-import {IOrder} from "../../interfaces";
-import {IFuncVoid} from "../../types";
-import {joiResolver} from "@hookform/resolvers/joi";
-import {orderValidator} from "../../validators";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { groupActions, orderActions } from "../../redux";
+import { Group } from "../Group/Group";
+import { GroupForm } from "../GroupForm/GroupForm";
+import { IOrder } from "../../interfaces";
+import { IFuncVoid } from "../../types";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { orderValidator } from "../../validators";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
-import {button_css, form_css} from '../../styles/index';
+import { button_css, form_css } from '../../styles/index';
 import css from './OrderForm.module.css';
 
 const OrderForm: FC = () => {
@@ -88,12 +88,12 @@ const OrderForm: FC = () => {
                                 />)
                             }
                         </Form.Select>
-                        <button type="button" className={css.btn_group} onClick={addGroup}>Add group</button>
+                        <button type="button" className={css.btn_group} onClick={addGroup}>Add&#160;group</button>
                     </label>
                     { errors.group && <div className={form_css.err_text}>{errors.group.message}</div> }
                     { errorGroup?.name && <div className={form_css.err_text}>{errorGroup.name}</div> }
                     <label className='w-100'>
-                        First name
+                        First&#160;name
                         <Form.Control
                             type="text"
                             size="sm"
@@ -148,7 +148,7 @@ const OrderForm: FC = () => {
                 </div>
                 <div className={vision ? css.form_block_right_top : css.form_block_right}>
                     <label className='w-100'>
-                        Choose course
+                        Choose&#160;course
                         <Form.Select
                             size="sm"
                             aria-label="Choose_course"
@@ -164,11 +164,11 @@ const OrderForm: FC = () => {
                     </label>
                     { errors.course && <div className={form_css.err_text}>{errors.course.message}</div> }
                     <label className={css.input_paid}>
-                        Already paid
+                        Already&#160;paid
                         <Form.Control
                             type="number"
                             size="sm"
-                            placeholder='already_paid'
+                            placeholder='alreadyPaid'
                             {...register('already_paid')}
                         />
                     </label>
@@ -186,7 +186,7 @@ const OrderForm: FC = () => {
                     </label>
                     { errors.sum && <div className={form_css.err_text}>{errors.sum.message}</div> }
                     <label className='w-100'>
-                        Choose course format
+                        Choose&#160;course&#160;format
                         <Form.Select
                             size="sm"
                             aria-label="Default select example"
@@ -202,7 +202,7 @@ const OrderForm: FC = () => {
                         </div>
                     }
                     <label className='w-100'>
-                        Choose course type
+                        Choose&#160;course&#160;type
                         <Form.Select
                             size="sm"
                             aria-label="Course_type"
@@ -217,7 +217,7 @@ const OrderForm: FC = () => {
                     </label>
                     { errors.course_type && <div className={form_css.err_text}>{errors.course_type.message}</div> }
                     <label className='w-100'>
-                        Choose status
+                        Choose&#160;status
                         <Form.Select
                             size="sm"
                             aria-label="Status"

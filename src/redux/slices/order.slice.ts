@@ -1,9 +1,9 @@
-import {AxiosError, AxiosResponse} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError, AxiosResponse } from "axios";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 import FileSaver from "file-saver";
 
-import {IErrorOrder, IOrder, IPagination, IParams} from "../../interfaces";
-import {orderService} from "../../services";
+import { IErrorOrder, IOrder, IPagination, IParams } from "../../interfaces";
+import { orderService } from "../../services";
 
 interface IState {
     orders: IOrder[];

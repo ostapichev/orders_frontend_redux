@@ -1,10 +1,10 @@
-import {ChangeEvent, FC} from 'react';
-import {useSearchParams} from "react-router-dom";
+import { ChangeEvent, FC } from 'react';
+import { useSearchParams } from "react-router-dom";
 
-import {Pagination, Stack} from '@mui/material';
+import { Pagination, Stack } from '@mui/material';
 
-import {adminActions, orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { adminActions, orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 interface IProps {
     namePage: string;

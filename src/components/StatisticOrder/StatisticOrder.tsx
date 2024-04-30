@@ -1,7 +1,7 @@
-import {FC, useEffect} from 'react';
+import { FC, useEffect } from 'react';
 
-import {adminActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { adminActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './StatisticOrder.module.css';
 

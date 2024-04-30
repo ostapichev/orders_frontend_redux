@@ -1,16 +1,16 @@
-import {FC} from 'react';
-import {joiResolver} from "@hookform/resolvers/joi";
-import {SubmitHandler, useForm} from "react-hook-form";
+import { FC } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Form from 'react-bootstrap/Form';
 
-import {commentActions} from "../../redux";
-import {commentValidator} from "../../validators";
-import {IComment, IOrder} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { commentActions } from "../../redux";
+import { commentValidator } from "../../validators";
+import { IComment, IOrder } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from './CommentForm.module.css';
-import {form_css} from '../../styles/index';
+import { form_css } from '../../styles/index';
 
 interface IProps {
     order_id: number;

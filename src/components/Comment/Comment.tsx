@@ -1,7 +1,7 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {DateFormat} from "../DateFormat/DateFormat";
-import {IComment} from "../../interfaces";
+import { DateFormat } from "../DateFormat/DateFormat";
+import { IComment } from "../../interfaces";
 
 import css from './Comment.module.css';
 
@@ -17,7 +17,7 @@ const Comment: FC<IProps> = ({ commentBody }) => {
         <div className={css.comment_body}>
             <div>{comment}</div>
             <div>
-                {name}&nbsp;{surname}&#44;&nbsp;{<DateFormat originalDate={created_at} />}
+                {name}&#160;{surname}&#44;&#160;{ <DateFormat originalDate={ created_at } />}
             </div>
         </div>
     );

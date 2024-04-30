@@ -1,8 +1,8 @@
-import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {commentService} from "../../services";
-import {IComment, IErrorComment} from "../../interfaces";
+import { commentService } from "../../services";
+import { IComment, IErrorComment } from "../../interfaces";
 
 interface IState {
     comments?: IComment[];

@@ -1,16 +1,16 @@
-import {FC} from 'react';
-import {useLocation} from "react-router-dom";
+import { FC } from 'react';
+import { useLocation } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import {GetExelFile} from "../GetExelFile/GetExelFile";
-import {history} from "../../services";
-import {IFuncVoid} from "../../types";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { GetExelFile } from "../GetExelFile/GetExelFile";
+import { history } from "../../services";
+import { IFuncVoid } from "../../types";
+import { orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from "./MyBlockButton.module.css";
 

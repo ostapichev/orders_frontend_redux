@@ -1,7 +1,7 @@
-import {FC, ReactElement} from 'react';
-import {Navigate} from "react-router-dom";
+import { FC, ReactElement } from 'react';
+import { Navigate } from "react-router-dom";
 
-import {useAppSelector} from "../hooks";
+import { useAppSelector } from "../hooks";
 
 interface IProps {
     children: ReactElement;

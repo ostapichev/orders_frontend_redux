@@ -1,15 +1,15 @@
-import {FC, useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 
-import {adminActions} from "../../redux";
-import {DateFormat} from "../DateFormat/DateFormat";
-import {IFuncVoid} from "../../types";
-import {IUser} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { adminActions } from "../../redux";
+import { DateFormat } from "../DateFormat/DateFormat";
+import { IFuncVoid } from "../../types";
+import { IUser } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from "./Profile.module.css";
 
@@ -90,7 +90,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">Total orders:</div>
+                                <div className="fw">Total&#160;orders:</div>
                             </div>
                             <Badge bg="primary" pill>{count_orders}</Badge>
                         </ListGroup.Item>
@@ -99,7 +99,7 @@ const Profile: FC<IProps> = ({ me }) => {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw">In work:</div>
+                                <div className="fw">In&#160;work:</div>
                             </div>
                             <Badge bg="primary" pill>{in_work}</Badge>
                         </ListGroup.Item>

@@ -1,13 +1,14 @@
-import {FC, MouseEventHandler, useState} from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
 
-import {authActions, adminActions} from "../../redux";
-import {DateFormat} from "../DateFormat/DateFormat";
-import {IUser} from "../../interfaces";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {StatisticUser} from "../StatisticUser/StatisticUser";
-import {url, urls} from "../../constants";
+import { authActions, adminActions } from "../../redux";
+import { DateFormat } from "../DateFormat/DateFormat";
+import { dataTable } from "../../constants";
+import { IUser } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { StatisticUser } from "../StatisticUser/StatisticUser";
+import { url, urls } from "../../constants";
 
-import {button_css} from '../../styles/index';
+import { button_css } from '../../styles/index';
 import css from './User.module.css';
 
 interface IProps {
@@ -51,19 +52,19 @@ const User: FC<IProps> = ({ user }) => {
     return (
         <div className={css.container_user}>
             <div className={css.block_user}>
-                <div className={css.user_content}>id:&nbsp;<span className={css.user_data}>{id}</span></div>
-                <div className={css.user_content}>email:&nbsp;<span className={css.user_data}>{email}</span></div>
-                <div className={css.user_content}>name:&nbsp;
+                <div className={css.user_content}>id:&#160;<span className={css.user_data}>{id}</span></div>
+                <div className={css.user_content}>email:&#160;<span className={css.user_data}>{email}</span></div>
+                <div className={css.user_content}>name:&#160;
                     <span className={css.user_data}>{profile.name}</span>
                 </div>
-                <div className={css.user_content}>surname:&nbsp;
+                <div className={css.user_content}>surname:&#160;
                     <span className={css.user_data}>{profile.surname}</span>
                 </div>
-                <div className={css.user_content}>is active:&nbsp;
+                <div className={css.user_content}>is active:&#160;
                     <span className={css.user_data}>{is_active === true ? 'yes' : 'no'}</span>
                 </div>
-                <div className={css.user_content}>last login:&nbsp;<span className={css.user_data}>
-                    { last_login ? <DateFormat originalDate={last_login} /> : 'no data' }</span>
+                <div className={css.user_content}>last login:&#160;<span className={css.user_data}>
+                    { last_login ? <DateFormat originalDate={last_login} /> : dataTable.noData }</span>
                 </div>
             </div>
             <StatisticUser id={id}/>

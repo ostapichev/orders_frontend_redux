@@ -1,8 +1,8 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {LoginForm} from "../../components";
+import { LoginForm } from "../../components";
 
-import {page_css} from '../../styles/index';
+import { page_css } from '../../styles/index';
 
 const LoginPage: FC = () => {
     return (

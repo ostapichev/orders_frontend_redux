@@ -1,9 +1,9 @@
-import {AxiosRequestConfig} from "axios";
+import { AxiosRequestConfig } from "axios";
 
-import {axiosService} from "./axios.service";
-import {IOrder, IParams} from "../interfaces";
-import {IRes, IResPaginate} from "../types";
-import {urls} from "../constants";
+import { axiosService } from "./axios.service";
+import { IOrder, IParams } from "../interfaces";
+import { IRes, IResPaginate } from "../types";
+import { urls } from "../constants";
 
 class OrderService {
     getAll(params: IParams): IResPaginate<IOrder[]> {

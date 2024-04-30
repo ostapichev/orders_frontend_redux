@@ -1,8 +1,8 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {RegisterFormApp} from "../../components";
+import { RegisterFormApp } from "../../components";
 
-import {page_css} from '../../styles/index';
+import { page_css } from '../../styles/index';
 
 interface IProps {
     page: string;

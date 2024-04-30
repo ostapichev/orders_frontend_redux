@@ -1,9 +1,9 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
-import {Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users} from "../../components";
-import {useAppSelector} from "../../hooks";
+import { Loading, PaginationApp, SearchUser, StatisticOrder, UserForm, Users } from "../../components";
+import { useAppSelector } from "../../hooks";
 
-import {page_css} from '../../styles/index';
+import { page_css } from '../../styles/index';
 
 const AdminPage: FC = () => {
     const {users, loading, openUserForm} = useAppSelector(state => state.adminReducer);
@@ -19,7 +19,7 @@ const AdminPage: FC = () => {
                 <Users/>
                 {!!users.length && <PaginationApp namePage='adminPage'/>}
             </div>
-            <div className={openUserForm ? page_css.overlay : ''}></div>
+            <div className={openUserForm ? page_css.overlay : 'd-none'}></div>
         </div>
     );
 };

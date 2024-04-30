@@ -1,14 +1,14 @@
-import {AxiosError} from "axios";
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue} from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejectedWithValue } from "@reduxjs/toolkit";
 
-import {authService} from "../../services";
-import {IActivateLink, IAuth, IErrorAuth, IUser} from "../../interfaces";
+import { authService } from "../../services";
+import { IActivateLink, IAuth, IErrorAuth, IUser } from "../../interfaces";
 
 interface IState {
     me: IUser;
     loading: boolean;
     authTrigger: boolean;
-    checkMessage: string;
+    textModal: string;
     activateToken: IActivateLink;
     error: IErrorAuth;
     confirmError?: string;
@@ -18,7 +18,7 @@ const initialState: IState = {
     me: null,
     loading: false,
     authTrigger: true,
-    checkMessage: null,
+    textModal: null,
     activateToken: null,
     error: null,
     confirmError: null
@@ -121,7 +121,7 @@ const slice = createSlice({
             state.loading = false;
         },
         closeModal: state => {
-            state.checkMessage = null;
+            state.textModal = null;
             state.error = null;
         }
     },
@@ -134,7 +134,7 @@ const slice = createSlice({
             state.loading = false;
             state.authTrigger = !state.authTrigger;
             state.activateToken = action.payload;
-            state.checkMessage = JSON.stringify(state.activateToken.msg);
+            state.textModal = JSON.stringify(state.activateToken.msg);
         })
         .addMatcher(isFulfilled(login, me), (state, action) => {
             state.me = action.payload;
@@ -144,7 +144,7 @@ const slice = createSlice({
         .addMatcher(isFulfilled(activateUser, recoveryPassword), (state, action) => {
             state.loading = false;
             state.authTrigger = !state.authTrigger;
-            state.checkMessage = action.payload;
+            state.textModal = action.payload;
             state.error = null;
             state.confirmError = null;
         })

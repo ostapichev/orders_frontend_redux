@@ -1,8 +1,8 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,} from 'redux-persist';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import {adminReducer, authReducer, commentReducer, groupReducer, orderReducer} from "./slices";
+import { adminReducer, authReducer, commentReducer, groupReducer, orderReducer } from "./slices";
 
 const rootReducer = combineReducers({
     adminReducer,
@@ -19,7 +19,6 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const setupStore = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>

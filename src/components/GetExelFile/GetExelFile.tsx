@@ -1,16 +1,16 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
 import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import {IFuncVoid} from "../../types";
-import {orderActions} from "../../redux";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import { IFuncVoid } from "../../types";
+import { orderActions } from "../../redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 import css from '../MyBlockButton/MyBlockButton.module.css';
 
-import {exel} from "../../assets";
+import { exel } from "../../assets";
 
 const GetExelFile: FC = () => {
     const dispatch = useAppDispatch();
